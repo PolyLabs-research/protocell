@@ -1,0 +1,27 @@
+# Packaging for protocell (docs/plan.md). The same stack as quantum-rat: Python 3.11, numpy, pytest.
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "protocell"
+version = "0.1.0"
+description = "A single cell whose wall and brain are one neural network, evolved to manage light"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "PolyLabs Research"}]
+# threadpoolctl lets the manifest record the BLAS kernel and thread count actually in force (docs/determinism.md).
+dependencies = [
+  "numpy>=2",
+  "threadpoolctl>=3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.urls]
+Repository = "https://github.com/PolyLabs-research/protocell"
+
+[tool.setuptools]
+packages = ["protocell"]
