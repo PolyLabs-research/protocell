@@ -327,3 +327,36 @@ cave's falloff rule R1 used the same idea, a still cell surviving from at most a
 `beats` stream (stage 0 clarification C5), which every run since has used.
 
 **Impact:** this entry; `README.md`; main. Next: stage 1's preregistration, drafted before any of it is built.
+
+## D6 — Stage 1 drafted: the reflex is within 2% of the ceiling in every cave configuration
+
+**Date:** 2026-11-01  
+**Why:** the owner's "proceed" on D5. While drafting stage 1 (`docs/prereg/stage1.md`), I checked how much better than
+the bar any cell could do, which I had not checked when I recommended the day configuration in D4 F2. A still cell
+placed at the best fixed point pays nothing to travel or beat, so on the same starts it bounds every cell that must
+first get there. The probe (`experiments/stage1_budget.py`, `docs/data/stage1/budget/`, read from D4's tables):
+
+| configuration | the bar | a still cell at the best point | headroom |
+|---|---|---|---|
+| day | B2r 0.698 | 0.712 | 0.014 |
+| burn | B2rr 0.688 | 0.707 | 0.020 |
+| sweep | B2rr 0.685 | 0.548 (no fixed point keeps up) | about 0.02 to burn's ceiling |
+
+**Reading.** Everything the cave's cell needs is sensed in the moment: the light's direction through its own shading,
+night through darkness. A reflex therefore does nearly as well as a cell can. The plan's question for stage 1, "does an
+evolved cell beat the reflex", becomes a test of the last 2% of fitness. Where the plan expects the network to matter
+is stage 3, when direction can no longer be read across the body.
+
+**The draft** keeps D5's decisions (day, both spoke modes, fitness). Its primary questions are whether evolution
+reaches the reflex (within half the headroom) and which parts the evolved cell uses (the plan's removals). Whether it
+beats the reflex is reported, and predicted not to happen. The draft also covers a pilot run per mode, then three
+confirmatory runs per mode, about 8 h of compute in all, and 7 predictions.
+
+### Decisions this surfaces (the owner's; `stage1.md` §13)
+1. **The question:** reaches the bar plus the removals as primary (recommended), or "beats the reflex" as primary.
+2. **The budget:** eight runs, about 8 h here (recommended); fewer replicates; or RunPod, with the cost confirmed
+   first.
+3. **The optimiser:** a simple genetic algorithm (recommended), or CMA-ES.
+4. **The swept day** as a light it never saw: kept as a description (recommended), or dropped.
+
+**Impact:** this entry; `docs/prereg/stage1.md` (draft); `experiments/stage1_budget.py` and its data; `README.md`.
