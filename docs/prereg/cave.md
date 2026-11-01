@@ -183,6 +183,33 @@ interaction between parts shows where it enters.
 pool a dark floor around a lit tenth (§3); the damage rule, whose lethal contour lies inside the threshold's (§5); the
 lifetime to the second sunrise and the matching reserve (§6); B2r's rest threshold 0.01 (§8); seed 2 (§6).
 
+**The open points, decided (2026-11-01, before the build).** The owner: "for this run go with what makes sense."
+All seven stand as drafted, for these reasons. ω_max = 1 rad a tick: the straight rescale cannot be resolved by the
+step, and a radian a second is what a phototactic cell manages. τ to an hour: that is what "widened" was for, and a
+slow random genome only makes random wiring less likely to pass, which K5 reads. d₀ = 750 R: by the rule; a cave's
+floor is dark, and the lit tenth is what has to be found. The damage rule: "an hour at the mouth kills" is a plain
+physical statement, and the lethal contour is always inside the threshold's for a rate-and-repair law; the checks
+report both contours, and the safe edge a cell holds is the lethal one. The lifetime to the second sunrise and the
+matching reserve: the only pair found under which every phase is survivable by a cell that behaves well and no
+phase is survivable without feeding. The rest threshold 0.01 and seed 2: as drafted. One number is added: the
+reserve rule's fill rate uses the light I = 4 in every configuration, so that E₀(φ) does not change when damage is
+switched off.
+
+**Pre-run clarifications (2026-11-01, during the build, before any check ran).**
+- **K1's second clause** ("B0 at its best fixed point survives with its reserve full at each sunset") is read as:
+  B0 placed at the probe's best fixed point for that configuration, on every start's phase, survives on at least 90%
+  and its least reserve at a sunset is at least 0.95 on at least 90%. In `sweep` the probe says no fixed point
+  survives at every phase, so there the clause is read on B2rr: the world is survivable by a cell that follows the
+  light. The best fixed point is computed by the probe inside the run, for the configuration in force.
+- **K7's "killed by damage"** is a death with D reaching 1 before E reaches 0 (each death records its cause).
+- **K2's hours:** "at noon" is any noon (daylight 1, the source due south); "an hour after sunrise" is daylight
+  0.259 with the source where the sweep puts it then. In `noon` the two coincide.
+- **The phase** is an integer tick, uniform over the day; the start's absolute time is its phase plus the tick.
+- **Measures past a cell's own end** (its second sunrise) are not counted; a batch runs to the longest lifetime in
+  it, and each cell is frozen after its own. Fitness and the shares divide by the cell's own lifetime.
+- **B2rr's gain** is chosen as B2r's, on starts 1–50 by mean fitness, from the same grid.
+- **Quick runs** (the smoke test) use a 2,000-tick day; they are not results.
+
 ## 13. The probe, run before the build (`experiments/cave_geometry.py`)
 
 Standalone, with the field of §3 and the economy of §5 written out as formulas; the build ties `protocell/world.py`

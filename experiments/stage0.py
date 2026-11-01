@@ -32,9 +32,10 @@ from protocell.config import STAGE0, Config
 from protocell.manifest import build_manifest, finish_manifest, write_manifest
 from protocell.rng import stream
 from protocell.sim import NOISE_CHUNK, STREAM_BEATS, STREAM_MOTION, STREAM_SENSORS, RunResult, simulate
-from protocell.world import KINDS, Starts, brightest_point, node_light, sample_starts, soak_distance, soak_radius, source_distance
+from protocell.world import Starts, brightest_point, node_light, sample_starts, soak_distance, soak_radius, source_distance
 
 SEED = 0  # stage 0's seed (§8): its starts and genomes are never used to evaluate an evolved cell
+STAGE0_KINDS = ("spot", "lamp")  # stage 0's two worlds (the cave, docs/prereg/cave.md, has its own runner)
 K_GRID: Tuple[float, ...] = (1.0, 3.0, 10.0, 30.0, 100.0)
 DEFAULT_OUT = Path("docs/data/stage0")
 
@@ -299,7 +300,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     sizes = Sizes.quick() if args.quick else Sizes()
     out: Path = args.out
     out.mkdir(parents=True, exist_ok=True)
-    settings = {**cfg.as_dict(), "seed": SEED, "sizes": sizes.__dict__, "k_grid": K_GRID, "modes": MODES, "kinds": KINDS,
+    settings = {**cfg.as_dict(), "seed": SEED, "sizes": sizes.__dict__, "k_grid": K_GRID, "modes": MODES, "kinds": STAGE0_KINDS,
                 "noise_chunk": NOISE_CHUNK, "genome_length": {m: genome_length(cfg, m) for m in MODES}, "quick": args.quick}
     manifest = build_manifest(protocol="stage0", settings=settings, seeds=[SEED], extra={"out": str(out)})
     t0 = time.time()
@@ -311,15 +312,15 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     starts_by_kind: Dict[str, Starts] = {}
     cells = 0
     with ProcessPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        for kind in KINDS:
+        for kind in STAGE0_KINDS:
             checks[kind], starts_by_kind[kind], n = run_kind(cfg, kind, sizes, out, pool, log)
             cells += n
-    w6 = check_w6(cfg, starts_by_kind, {k: checks[k]["W4"]["bar"]["k"] for k in KINDS}, sizes)
+    w6 = check_w6(cfg, starts_by_kind, {k: checks[k]["W4"]["bar"]["k"] for k in STAGE0_KINDS}, sizes)
     log(f"W6 {'passes' if w6['pass'] else 'FAILS'}")
-    for kind in KINDS:
+    for kind in STAGE0_KINDS:
         passed = {c: checks[kind][c]["pass"] for c in ("W1", "W2", "W3", "W4", "W5")}
         log(f"[{kind}] " + ", ".join(f"{c} {'pass' if p else 'FAIL'}" for c, p in passed.items()))
-    summary = {"checks": checks, "W6": w6, "bar": {k: checks[k]["W4"]["bar"]["report"] | {"k": checks[k]["W4"]["bar"]["k"]} for k in KINDS},
+    summary = {"checks": checks, "W6": w6, "bar": {k: checks[k]["W4"]["bar"]["report"] | {"k": checks[k]["W4"]["bar"]["k"]} for k in STAGE0_KINDS},
                "quick": args.quick}
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True, default=_json_default) + "\n")
     finish_manifest(manifest, wall_seconds=time.time() - t0, cells=cells, cell_ticks=cells * cfg.lifetime, workers=args.workers)

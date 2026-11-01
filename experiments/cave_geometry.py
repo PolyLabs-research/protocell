@@ -38,7 +38,7 @@ class Cave:
 
     pool_radius: float = 5000.0  # R
     mouth_light: float = 10.0  # at the mouth at noon, in half-saturations
-    falloff: float = 2000.0  # d0 in I = mouth_light daylight / (1 + (d / d0)^2); the probe sets it
+    falloff: float = 750.0  # d0 in I = mouth_light daylight / (1 + (d / d0)^2); set by the probe's rule R1 (§14)
     shade_floor: float = 0.3
     sweep_deg: float = 60.0  # the source moves from 60 deg east of south at sunrise to 60 deg west at sunset
     sweep: bool = False
