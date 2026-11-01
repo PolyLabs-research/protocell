@@ -305,3 +305,17 @@ does not run there, and their K5 is unchanged.
 **Expected of run 2:** B2rr survives every report start in burn and sweep at fitness about 0.70; K7 passes; sweep's
 K1 passes (its second clause is B2rr's survival); K5 against B2rr passes in both (in run 1 no random genome in either
 configuration survived more than a handful of its 20 starts: mean survival 0.4–1.0%).
+
+## 18. The checks ran (2026-11-01; read in D4)
+
+**Run 1, as preregistered** (`docs/data/cave/`, code `c01b8ff`, clean tree, warnings as errors, 94 min on 16
+workers): noon and day pass every judged check. In noon, sitting survives 38% of starts, which is recorded and not
+judged. Burn and sweep fail K7, K5 is vacuous in both, and sweep fails K1, all through B2rr's retreat rule (§17).
+
+**Run 2 of burn and sweep, under A1** (code `ce46f4e`, the same discipline, 47 min): **every check passes.** B2rr
+survives every report start at fitness 0.688 in burn and 0.685 in sweep. B2r burns on every start. No random genome
+matches the bar's survival or fitness. Every table but B2rr's reproduces run 1's byte for byte.
+
+**The bars, on starts 51–100:** day, B2r at k = 100 (survival 100%, fitness 0.698); burn, B2rr at k = 100 (100%,
+0.688); sweep, B2rr at k = 100 (100%, 0.685); noon, B2r at k = 100 (100%, 0.991). This document is not changed after
+the runs. D4 puts to the owner which configuration stage 1 evolves in and the rulings made for them.

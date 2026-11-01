@@ -15,17 +15,17 @@ starting with the simplest organism and few parts, each understood, and adding c
 - `docs/prereg/`: a preregistration before every build and run
 - `docs/determinism.md`: what is claimed about reproducibility, and the rules
 
-**Status:** stage 0 (the world, the cell, its energy and the baselines) built and checked (D2, 2026-11-01): the
-lamp world passed as preregistered; the spot passed after one geometric amendment; W1–W6 pass in both
-(`docs/data/stage0/`). The world from stage 1 on is a cave pool on a 24-hour cycle (D3): its preregistration is
-drafted (`docs/prereg/cave.md`) with its numbers set by rules and a probe (`experiments/cave_geometry.py`); its open
-points await the owner before it is built.
+**Status:** stage 0 built and checked (D2). The cave pool, the world from stage 1 on, built and checked (D4, 2026-11-01): a south-facing
+cave's pool on a 24-hour cycle, at a 1 s tick, with damage and the sun's sweep as switches. All four configurations pass
+K1–K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` §17; `docs/data/cave/`). Awaiting the owner's
+decisions in D4 before stage 1 is preregistered.
 
 ## Running
 
     uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -e ".[dev]"
     .venv/bin/python -m pytest -q
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage0 --workers 16   # stage 0's checks, from a clean tree
+    .venv/bin/python -W error::RuntimeWarning -m experiments.cave --config all --workers 16   # the cave's checks (about 95 min)
 
 ## Watching a cell
 
@@ -45,8 +45,9 @@ cell with `.venv/bin/python -m tools.network_doc`.
 
 ## The code
 
-The package: `protocell/config.py` (every preregistered number), `world.py` (the dish, the two light fields, the
-starts), `cell.py` (the genome, the topology mask, the two spoke modes, the CTRNN's step), `motion.py` (the cilia),
-`energy.py`, `sim.py` (a whole population at once; the baselines and the network cell as controllers; keyed noise).
-`experiments/stage0.py` runs the checks and writes its tables, `summary.json` and `manifest.json` to
-`docs/data/stage0/`.
+The package: `protocell/config.py` (every preregistered number: `STAGE0`, and `CAVE` at a 1 s tick), `world.py` (the
+dish, stage 0's spot and lamp, the cave's mouth with its day and sweep, the starts and their phases), `cell.py` (the
+genome, the topology mask, the two spoke modes, the CTRNN's step), `motion.py` (the cilia), `energy.py` (with damage
+and the cave's matched reserve), `sim.py` (a whole population at once; the baselines and the network cell as
+controllers; keyed noise; an observer for replays). `experiments/stage0.py` and `experiments/cave.py` run the checks
+and write their tables, `summary.json` and `manifest.json` to `docs/data/stage0/` and `docs/data/cave/`.

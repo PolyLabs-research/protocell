@@ -180,3 +180,120 @@ is at 919 R), which the owner is asked to rule on.
 **Impact:** `docs/prereg/cave.md` (the draft, with its open points for the owner in §12 and the probe's table in
 §14); `experiments/cave_geometry.py`; this entry; `README.md`. Nothing of the world is built until the draft is
 agreed.
+
+## D4 — The cave pool built and checked: all four configurations pass K1–K7 after one amendment to the bar
+
+**Date:** 2026-11-01  
+**Why:** the owner on the cave's open points (D3, `docs/prereg/cave.md` §12): "for this run go with what makes
+sense." I ruled on all seven as drafted, with my reasons, in a dated note in §12 before the build; three pre-run
+clarifications followed during the build, also before any check ran. Built on branch `cave-world` (code `f1fd82f`;
+a crash in the runner's full-size path fixed in `c01b8ff` before any result). Run 1, as preregistered
+(`c01b8ff`, clean tree, warnings as errors, 94 min on 16 workers, 162,900 cells): noon and day passed; burn and
+sweep failed through B2rr. Amendment A1 (§17, `ce46f4e`) with a geometric reason and a probe on fresh starts; run 2
+of burn and sweep (`ce46f4e`, 47 min, 81,800 cells): every check passes. Alongside, at the owner's request, a
+replay viewer and an interactive page of the network (B below).
+
+### A. Built
+The cave as a light kind beside the spot and the lamp (`protocell/world.py`): a mouth on the pool's southern edge,
+its light falling as 1/(1 + (d/750)²), a half-sine day and a dark night, the sun's sweep along the mouth, starts with a
+phase and lifetimes to the second sunrise. Damage live by its rule (`energy.py`, k_D = 1.58 × 10⁻⁴); the reserve
+matched to the phase. Each cell's own time and end, a death's cause, the night and burn measures, the reflexes that
+rest in the dark and also retreat (`sim.py`). The 1 s tick's constants (`config.py`, `CAVE`). The runner of K1–K7 in
+four configurations (`experiments/cave.py`), and the retreat probe (`experiments/cave_retreat_probe.py`). 76 tests,
+among them that the built light equals the probe's formulas and that stage 0's recorded hashes still come out.
+
+### B. Tools for looking at the cell (the owner's request, mid-run)
+- **A replay viewer** (`tools/replay.py`): reruns up to three cells from one start with the checks' code, seed and
+  noise, and writes a page that plays their lifetimes back. It shows the pool with its light and each cell's track,
+  the chosen cell's body, and its reserve and damage over the lifetime. It reads stage 1's evolved genomes from a
+  `.npy` file. To support it, `simulate` takes an observer that only reads (tested: the same bits with one attached).
+- **The network page** (`docs/network.html`, from `tools/network_doc.py`): generated from the code. It shows who
+  connects to whom, the mask, which genome number sets which weight in each spoke mode (found by moving each number
+  and decoding), example genomes, and one tick with a cilia demo.
+
+### C. Measured
+
+| check | noon (run 1) | day (run 1) | burn (run 2, A1) | sweep (run 2, A1) |
+|---|---|---|---|---|
+| K1 sitting fails: B0 survives ≤ 10%; full at each sunset at the best fixed point | recorded, not judged: 38% (probe 26%) | passes: 6% (probe 6.3%); best point full on 100% | passes: 6% (probe 6.1%); best point (424 R out) full on 100% | passes: 2%; the second clause, read on B2rr, 100% |
+| K2 the light can be sensed: contrast ≥ 3 × noise at noon, an hour after sunrise; the rise 1,000 R nearer | passes: 100%, 100%, 100% | passes: the same | passes: the same | passes: the same |
+| K3 the noon soak region within an hour | passes: the farthest start 760 s away | passes | passes | passes |
+| K4 the bar | B2r k = 100: survival 100%, fitness 0.991 | **B2r k = 100: survival 100%, fitness 0.698**, no beating at night | B2r k = 1: survival 0%, fitness 0.199 (it burns; the bar is B2rr) | B2r k = 100: survival 0%, fitness 0.202 |
+| K4 motion without sensing: B1 survives < 50% | passes: 19% | passes: 0% | passes: 0% | passes: 0% |
+| K5 random genomes matching the bar's survival < 5% | passes: uniform 2.7%, fourier1 2.0% | passes: 0.0%, 0.0% | passes: 0.0%, 0.0% against B2rr | passes: 0.0%, 0.0% against B2rr |
+| K5, the same against the bar's fitness | 0% and 0% (best random 0.979 against 0.991) | 0%, 0% (best 0.452) | 0%, 0% (best 0.329) | 0%, 0% (best 0.444) |
+| K6 determinism | passes | passes | passes | passes |
+| K7 damage bites: B2r burnt on ≥ half; B2rr survives most | not judged | not judged | **passes: B2r burnt on 100%; B2rr k = 100 survives 100%, fitness 0.688** | **passes: 100%; B2rr k = 100 survives 100%, fitness 0.685** |
+
+Run 1's burn and sweep, as preregistered (`docs/data/cave/as-preregistered/`): K1–K4 and K6 as in run 2, but **B2rr
+burnt on every report start at every gain** (burn k = 10, fitness 0.323; sweep k = 100, 0.330), so **K7 failed**; K5
+was vacuous ("100%" of genomes matched B2r's zero survival); sweep's K1 failed through B2rr. Run 2 reproduced every
+table but B2rr's two byte for byte.
+
+### D. Reading
+1. **The world works as built; the bar did not.** In every configuration the light can be sensed and reached,
+   sitting fails, random beating dies, and random wiring never reaches the bar's fitness. What failed in run 1 was
+   B2rr's rule. It backed out when its wall's mean light passed the threshold. But damage counts each node, and the
+   cell's own shading makes the mean 0.52 of its lit side. So it held at noon 411 R from the mouth with its lit nodes
+   near 7.7, where damage settles at 1.08. That is the lethal contour the probe had already found. Backing out on its
+   brightest node holds it 920 R out, on the threshold's own contour (the burn replay shows it riding that contour at
+   noon).
+2. **Damage costs a well-behaved reflex almost nothing.** B2rr scores 0.688 in burn against B2r's 0.698 in day
+   without damage. The safe edge has enough light to fill the reserve, so stage 2's question is whether evolution
+   finds the edge, not whether the edge pays.
+3. **Noon alone is too easy to test much.** Without a night, sitting in dim light pays (38% of still cells survive),
+   random beating survives 19%, and the best random genome comes within 0.012 of the reflex's fitness. The night is
+   what makes the task.
+4. **The best random genome parks; it does not seek.** Uniform genome 694 is the best random genome in both day and
+   burn (survival 65% and 35% of its 20 starts). In the day replay it sits on the pool's edge near the mouth, beating
+   every cilium almost fully, so the pulls cancel and it barely moves. It keeps beating at night, so its reserve falls
+   faster than the resting reflex's.
+5. **My errors.** The runner's full-size path called the probe with no phases and crashed at the first configuration
+   of the first launch (no result; fixed in `c01b8ff`; the smoke test never reached that path). B2rr's rule was mine
+   (D3, §8), and I wrote it on the mean without checking it against the per-node damage law. The amendment corrects
+   that.
+6. **Predictions (§11):**
+   - (1) K1 passes in day, burn and sweep ✓ (6%, 6%, 2%). About a quarter of starts survive sitting in noon ✗: 38%.
+   - (2) K2 passes everywhere ✓.
+   - (3) K3 passes trivially ✓.
+   - (4) B1 survives no start with the cycle on ✓ (0%), and few in noon ✓ (19%).
+   - (5) B2r survives most starts in day with fitness near 0.7 ✓ (100%, 0.698). In burn B2r dies on most starts ✓
+     (all). B2rr survives most ✗ as preregistered (0%), ✓ under A1 (100%).
+   - (6) K5 passes everywhere ✓, under A1 for burn and sweep. The uniform mode's share is lower than fourier1's ✗:
+     in noon it was higher (2.7% against 2.0%), and elsewhere both are 0. Burn lowers both further ✓ (to 0). No random
+     genome matches the bar's fitness ✓.
+   - (7) The sweep changes B2r's and B2rr's fitness little ✓ (0.199 against 0.202; 0.688 against 0.685).
+   - (8) K6 passes ✓.
+   - (9) The reflex idles at dim places in the morning: not measured. The checks have no measure for it. A replay can
+     show it, and stage 1 should measure it if comparing over time is to be tested.
+
+### E. Clarifications and the amendment
+- **The open points, decided by me** under the owner's "what makes sense" (§12's dated note): ω_max = 1 rad a tick;
+  τ from 1 s to an hour; d₀ = 750 R by its rule; the damage rule "an hour at the noon mouth kills"; the lifetime to the
+  second sunrise with the matching reserve; B2r's rest threshold 0.01; seed 2. One number added: the reserve rule's
+  fill light, I = 4 in every configuration.
+- **Pre-run clarifications** (§12): K1's second clause read on B2rr in sweep, where no fixed point survives; "killed
+  by damage" as D reaching 1 first; K2's hours; integer phases; each cell frozen after its own lifetime; B2rr's gain
+  chosen as B2r's; quick runs on a 2,000-tick day.
+- **Amendment A1** (§17, after run 1): B2rr backs out while its *brightest node* is above I_d, not the wall's mean.
+  K5, where damage is on, compares with B2rr, the configuration's bar. The world is unchanged. The probe on fresh
+  starts: on the brightest node, every start survives in burn and sweep at every gain; on the mean, none.
+
+### F. Decisions this surfaces (the owner's)
+1. **Whether the cave, as checked, is stage 1's world.** Recommended: yes.
+2. **Which configuration stage 1 evolves in.** Recommended: **day** first, against B2r (fitness 0.698). It holds
+   stage 1's question (seek the light, then rest through the night on what was gathered). Then burn and sweep as stage
+   2, against B2rr (0.688 and 0.685). Noon is too easy to train in (D3).
+3. **Both spoke modes in stage 1** (D2 F2, still open). Recommended: yes. In these runs the best random genome was
+   uniform, and uniform wiring is the strict reading of D1.4's repeated units.
+4. **The bar is fitness**, with survival and effort per unit light beside it (D2 F3, still open). Recommended:
+   yes. Survival is 100% for every bar here, so it cannot rank an evolved cell above one.
+5. **Confirm or overturn the rulings I made for you:** the seven open points, and A1's brightest-node rule.
+6. **Merging:** `stage0-build` and `cave-world` (which contains it) are pushed and unmerged. Merging to main is the
+   owner's call.
+
+**Impact:** this entry; `docs/prereg/cave.md` (§12's rulings and clarifications, §17 run 1 and A1, §18 the record
+that the checks ran); `protocell/` (world, energy, sim, config); `experiments/cave.py`,
+`experiments/cave_retreat_probe.py`; `tools/` (replay, network page); `docs/network.html`; `docs/data/cave/` (noon
+and day from run 1, burn and sweep from run 2, `as-preregistered/` run 1's burn and sweep, `retreat_probe/`);
+`tests/`; `README.md`.
