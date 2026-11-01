@@ -16,9 +16,10 @@ starting with the simplest organism and few parts, each understood, and adding c
 - `docs/determinism.md`: what is claimed about reproducibility, and the rules
 
 **Status:** stage 0 (the world, the cell, its energy and the baselines) built and checked (D2, 2026-11-01): the
-lamp world passed as preregistered; the spot passed after one geometric amendment (A1: narrower, with starts where a
-still cell starves); W1–W6 pass in both (`docs/data/stage0/`). The reflex's score is stage 1's bar. Awaiting the
-owner's decisions in D2 before stage 1 is preregistered.
+lamp world passed as preregistered; the spot passed after one geometric amendment; W1–W6 pass in both
+(`docs/data/stage0/`). The world from stage 1 on is a cave pool on a 24-hour cycle (D3): its preregistration is
+drafted (`docs/prereg/cave.md`) with its numbers set by rules and a probe (`experiments/cave_geometry.py`); its open
+points await the owner before it is built.
 
 ## Running
 

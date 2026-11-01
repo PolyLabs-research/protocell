@@ -145,3 +145,38 @@ The reflex's selection is flat above k = 10 (spot: 0.914, 0.922, 0.924 for k = 1
 (config, world, cell, motion, energy, sim; rng keyed streams), `experiments/stage0.py`,
 `experiments/stage0_geometry.py`, `tests/`; `docs/data/stage0/` (run 2) and `docs/data/stage0/as-preregistered/`
 (run 1); `docs/determinism.md` (rule 3's mechanism); `README.md`.
+
+## D3 — The world from stage 1 on: a cave pool on a 24-hour cycle, its parts as switches, checked in order
+
+**Date:** 2026-11-01  
+**Why:** the owner's direction on reading D2: "imagine a cave with a small flat pool at the bottom, the cave is south
+facing and runs on a 24 hr cycle; the lifetime will need to survive at least a night." Put to the owner as a world
+that holds the plan's stages 1 to 4 at once (seeking; management with damage; comparing over time, since a pool is
+thousands of radii across and distance can only be read from brightness over time; and changing light), with the
+consequence that the preregistered reflex, beating on noise all night, cannot survive one; the owner: "agree with
+your suggestions, let's go with a 1 s tick, a random phase, widened."
+
+### Decided
+1. **The cave pool replaces both of stage 0's worlds from stage 1 on.** The lamp was the cave at a fixed hour and
+   passed; the spot is dropped, so D2 E1's choice about the spot is overtaken.
+2. **Its parts are built as switches and checked one at a time, in order:** the pool at noon; then the day, the
+   night, the random phase and the matching reserve; then damage; then the sun's sweep along the mouth. Each run is
+   minutes, so an interaction between parts shows where it enters (the quantum-rat lesson).
+3. **A tick is 1 s**, with stage 0's per-tick quantities rescaled, not reset (`docs/prereg/cave.md` §1).
+4. **A random phase**, with the reserve set to match it (the reserve of a cell that fills by day and rests by night),
+   and the lifetime running to the second sunrise, so every cell comes through a night on what it gathered.
+5. **The time constants widened** to a second to an hour, so slow integration and a clock are within reach.
+6. **The bar is a reflex that rests in the dark** (and, with damage, one that also retreats), since the preregistered
+   reflex dies every night.
+7. **The open numbers are set by rules and a probe before the build** (`experiments/cave_geometry.py`, fresh points,
+   no simulation): the falloff length is the largest at which a still cell survives from at most a tenth of the pool
+   (750 R), the damage rate the one at which an hour at the noon mouth kills.
+
+**Read from the probe, before the build:** with the sweep on, no fixed point in the pool keeps a still cell alive at
+every phase (sitting fails everywhere); and the damage rule's lethal contour lies well inside the threshold's (a still
+cell is killed only within about 400 R of the mouth, where the noon light is above 7.6, while the threshold's contour
+is at 919 R), which the owner is asked to rule on.
+
+**Impact:** `docs/prereg/cave.md` (the draft, with its open points for the owner in §12 and the probe's table in
+§14); `experiments/cave_geometry.py`; this entry; `README.md`. Nothing of the world is built until the draft is
+agreed.
