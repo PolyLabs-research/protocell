@@ -25,7 +25,7 @@ def test_a_cpu_pod_is_asked_for_as_the_lifecycle_requires() -> None:
     assert b["name"] == "taz-protocell-pilot-dl1900000000" and b["computeType"] == "CPU" and b["cpuFlavorIds"] == ["cpu5c"]
     assert b["vcpuCount"] == 32 and b["volumeInGb"] == 0 and b["imageName"] == m.CPU_IMAGE and b["env"]["TAZ_DEADLINE"] == "1900000000"
     assert "TAZ_DEADLINE" in " ".join(b["dockerStartCmd"]) and b["dockerStartCmd"][-1].endswith("exec /start.sh")
-    assert m.listed_rate(0.07, 32) == pytest.approx(2.24)
+    assert m.listed_rate(0.07, 32) == pytest.approx(1.12)  # the pilot's pod billed $1.12/h
     with pytest.raises(m.cloud.CloudError):
         m.body("protocell-pilot", 1_900_000_000, "cpu9x", 32, 20)
 

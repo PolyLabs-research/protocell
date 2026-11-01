@@ -43,10 +43,10 @@ def cpu_prices(rp: "cloud.RunPod") -> List[Dict[str, Any]]:
 
 
 def listed_rate(price: float, vcpu: int) -> float:
-    """The rate the budget is planned at. RunPod lists one number per flavour without its unit; reading it as a price
-    per vCPU-hour is the larger of the two readings, so the plan is the worst case. The pod's own rate, read after
-    creation, is what binds."""
-    return float(price) * vcpu
+    """The rate the budget is planned at. RunPod lists one number per flavour without its unit. The pilot's pod settled
+    it (2026-11-01: cpu5c listed 0.07, 32 vCPUs, billed $1.12/h), so the listed price is per two vCPUs an hour. The
+    pod's own rate, read after creation, is still what binds."""
+    return float(price) * vcpu / 2.0
 
 
 def body(tag: str, deadline: int, flavor: str, vcpu: int, disk_gb: int) -> Dict[str, Any]:
@@ -94,7 +94,7 @@ def cmd_launch(rp: "cloud.RunPod", args: argparse.Namespace) -> int:
     deadline = int(time.time() + args.hours * 3600)
     b = body(args.tag, deadline, args.flavor, args.vcpu, args.disk)
     print(f"plan: {args.flavor} ({f['displayName']}), {args.vcpu} vCPU, SECURE, planned at ${rate:.3f}/h (listed {f['specifics']['securePrice']} "
-          f"read per vCPU-hour), {args.hours} h cap -> worst case ${worst:.2f}; ceiling ${args.max_rate:.2f}/h; balance ${account['balance']:.2f}\n"
+          f"per two vCPUs an hour), {args.hours} h cap -> worst case ${worst:.2f}; ceiling ${args.max_rate:.2f}/h; balance ${account['balance']:.2f}\n"
           f"      name {b['name']}  deadline {time.strftime('%H:%M:%S %Z', time.localtime(deadline))}  image {CPU_IMAGE}  disk {args.disk} GB")
     if not args.yes:
         print("dry run: nothing created (pass --yes to launch)")
