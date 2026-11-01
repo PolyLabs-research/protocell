@@ -138,6 +138,7 @@ def reflex_spec(cfg: Config, k: float, retreat: bool) -> Dict[str, Any]:
     spec = {"controller": "reflex", "k": k, "rest_below": cfg.rest_below}
     if retreat:
         spec["retreat_above"] = cfg.damage_threshold
+        spec["retreat_on"] = cfg.retreat_on
     return spec
 
 
@@ -263,20 +264,22 @@ def run_configuration(name: str, cfg: Config, sizes: Sizes, out: Path, pool: Pro
         k1["second_clause_read_on"] = "b2rr"
     k1["pass"] = bool(not cfg.cave_cycle or (k1["b0_survival"] <= 0.10 and k1["b0_best_survived_full_share"] >= 0.9))
 
-    # K5
-    k5: Dict[str, Any] = {}
+    # K5: random genomes against the configuration's bar, B2r, or with damage on B2rr (§8 "stage 2's bar"; amendment A1)
+    bar_name = "b2rr" if damage_on else "b2r"
+    k5_bar = k7["b2rr"]["report"] if damage_on else bar["report"]
+    k5: Dict[str, Any] = {"bar": bar_name}
     for mode in MODES:
         rows = [row for f in b3_futures[mode] for row in f.result()]
         cells += sizes.n_genomes * len(numbers(sizes.genome_starts))
         write_csv(out / f"b3_{mode}.csv", B3_COLUMNS, rows)
         survival = np.array([r["survival"] for r in rows])
         fitness = np.array([r["mean_fitness"] for r in rows])
-        matched = survival >= bar["report"]["survival"]
-        k5[mode] = {"n_genomes": len(rows), "share_matching_b2r_survival": share(matched), "share_matching_b2r_fitness": share(fitness >= bar["report"]["mean_fitness"]),
+        matched = survival >= k5_bar["survival"]
+        k5[mode] = {"n_genomes": len(rows), "share_matching_bar_survival": share(matched), "share_matching_bar_fitness": share(fitness >= k5_bar["mean_fitness"]),
                     "mean_survival": float(survival.mean()), "share_any_survival": share(survival > 0), "mean_fitness": float(fitness.mean()),
                     "best_fitness": float(fitness.max()), "share_any_reach": share(np.array([r["reached_share"] for r in rows]) > 0),
                     "pass": bool(share(matched) < 0.05)}
-        log(f"[{name}] K5 {mode}: {k5[mode]['share_matching_b2r_survival']:.1%} of genomes match B2r's survival; mean survival {k5[mode]['mean_survival']:.1%}")
+        log(f"[{name}] K5 {mode}: {k5[mode]['share_matching_bar_survival']:.1%} of genomes match {bar_name.upper()}'s survival; mean survival {k5[mode]['mean_survival']:.1%}")
     k5["pass"] = all(k5[m]["pass"] for m in MODES)
 
     # K6
@@ -286,17 +289,18 @@ def run_configuration(name: str, cfg: Config, sizes: Sizes, out: Path, pool: Pro
     checks = {"K1": k1, "K2": k2, "K3": k3, "K4": k4, "K5": k5, "K6": k6, "K7": k7}
     judged = {c: checks[c]["pass"] for c in checks if checks[c].get("judged", True)}
     log(f"[{name}] " + ", ".join(f"{c} {'pass' if p else 'FAIL'}" for c, p in judged.items()))
-    return {"checks": checks, "bar": bar["report"] | {"k": k_r}, "all_pass": all(judged.values())}, cells
+    config_bar = (k7["b2rr"]["report"] | {"k": k_rr, "controller": "b2rr"}) if damage_on else (bar["report"] | {"k": k_r, "controller": "b2r"})
+    return {"checks": checks, "bar": config_bar, "all_pass": all(judged.values())}, cells
 
 
 def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--config", default="all", choices=["all", *CONFIGURATIONS])
+    parser.add_argument("--config", nargs="+", default=["all"], choices=["all", *CONFIGURATIONS], help="one or more configurations, in order")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--workers", type=int, default=16)
     parser.add_argument("--quick", action="store_true", help="the smoke test's sizes and a 2,000-tick day: not a result")
     args = parser.parse_args(argv)
-    names = list(CONFIGURATIONS) if args.config == "all" else [args.config]
+    names = list(CONFIGURATIONS) if "all" in args.config else [c for c in CONFIGURATIONS if c in args.config]
     sizes = Sizes.quick() if args.quick else Sizes()
     t0 = time.time()
 

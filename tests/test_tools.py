@@ -47,6 +47,7 @@ def test_a_replay_keeps_its_frames_and_matches_the_run(tmp_path) -> None:
     cfg = configure("burn", quick=True)  # a 2,000-tick day
     starts = sample_starts(cfg, "cave", 3, SEED).numbered([3])
     cells = [parse_cell("b0", cfg, "burn"), parse_cell("b2rr:30", cfg, "burn"), parse_cell("genome:fourier1:2", cfg, "burn")]
+    assert cells[1].spec["retreat_on"] == "max"  # the replays' B2rr is the amended one (cave.md A1)
     rep = record(cfg, "burn", starts, cells, stride=7)
     life = int(lifetimes(cfg, starts)[0])
     ticks = _dec(rep["tick"], "<i4")

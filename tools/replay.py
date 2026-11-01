@@ -92,6 +92,7 @@ def parse_cell(text: str, cfg: Config, config: str, *, seed: int = SEED, data_di
             if not math.isfinite(cfg.damage_threshold):
                 raise SystemExit(f"B2rr retreats above the damage threshold, and {config!r} has none")
             spec["retreat_above"] = cfg.damage_threshold
+            spec["retreat_on"] = cfg.retreat_on
             return CellSpec(f"B2rr rests and retreats, k = {k:g}", "B2rr", spec, 0, "reflex")
         return CellSpec(f"B2r rests in the dark, k = {k:g}", "B2r", spec, 0, "reflex")
     if head == "genome" and len(parts) == 3:

@@ -79,6 +79,26 @@ def test_the_reflex_rests_in_the_dark_and_retreats_above_the_threshold() -> None
     assert np.array_equal(retreating.beats(dim, 0), plain.beats(dim, 0))
 
 
+def test_the_retreat_can_be_triggered_by_the_mean_or_the_brightest_node() -> None:
+    sensed = np.full((1, 16), 2.0)
+    sensed[0, 0] = 6.0  # the lit node above the threshold, the wall's mean (2.25) well below it
+    by_mean = Reflex(CAVE, 1, 10.0, rest_below=0.01, retreat_above=4.0, retreat_on="mean").beats(sensed, 0)
+    by_max = Reflex(CAVE, 1, 10.0, rest_below=0.01, retreat_above=4.0, retreat_on="max").beats(sensed, 0)
+    assert by_mean[0, 0] > 0.5 and by_max[0, 0] < 0.5  # only the brightest-node rule backs away from the lit side
+    assert CAVE.retreat_on == "max"  # amendment A1
+    with pytest.raises(ValueError):
+        Reflex(CAVE, 1, 10.0, retreat_above=4.0, retreat_on="median")
+
+
+def test_the_retreat_probe_runs_its_twelve_jobs() -> None:
+    from experiments.cave_retreat_probe import jobs, run_job
+
+    todo = jobs(2, quick=True)
+    assert len(todo) == 12 and {j["trigger"] for j in todo} == {"mean", "max"}
+    row = run_job(todo[3])
+    assert row["trigger"] == "max" and 0 <= row["survival"] <= 1 and row["n"] == 2
+
+
 def test_a_batch_runs_each_cell_to_its_own_end_and_equals_its_singles() -> None:
     cfg = configure("burn", quick=True)  # a 2,000-tick day
     starts = sample_starts(cfg, "cave", 4, seed=2)
@@ -126,6 +146,7 @@ def test_the_quick_run_writes_a_configuration(tmp_path) -> None:
     back = json.loads((tmp_path / "burn" / "summary.json").read_text())
     assert set(back["checks"]) == {"K1", "K2", "K3", "K4", "K5", "K6", "K7"} and back["checks"]["K6"]["pass"] is True
     assert back["checks"]["K7"]["judged"] is True and "b2rr" in back["checks"]["K7"]
+    assert back["checks"]["K5"]["bar"] == "b2rr" and back["bar"]["controller"] == "b2rr"  # with damage on, the bar is B2rr (A1)
     manifest = json.loads((tmp_path / "burn" / "manifest.json").read_text())
     assert manifest["settings"]["configuration"] == "burn" and manifest["settings"]["day_ticks"] == 2000
     assert set(CONFIGURATIONS) == {"noon", "day", "burn", "sweep"}

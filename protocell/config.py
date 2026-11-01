@@ -63,6 +63,7 @@ class Config:
     damage_rate: float = 1.0  # k_D in D <- D + k_D (1/N) sum max(0, I_i - I_d) - r_D D; stage 0's law had none
     fill_light: float = 4.0  # the reserve rule's light (cave.md §6): E0 rises at the net rate of a cell at this light
     rest_below: float = 0.01  # B2r rests when the wall's mean sensed light is below this
+    retreat_on: str = "max"  # B2rr backs out when its brightest node's sensed light is above I_d: amendment A1 to cave.md ("mean" as preregistered)
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)

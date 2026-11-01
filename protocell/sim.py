@@ -125,21 +125,27 @@ class Reflex(Controller):
     """B2: g_i = sigma(k (I_i - mean) / (mean + 0.01)), the mean over the wall of this tick's sensed light (stage0.md
     §11 C6); alpha = 0: the brighter side beats harder and pulls the cell toward the light. With ``rest_below`` (B2r,
     cave.md §8) it does not beat while the mean is below it; with ``retreat_above`` (B2rr) the sign of k reverses
-    while the mean is above it, so the darker side beats harder and the cell backs out of the burn."""
+    while the light is above it, so the darker side beats harder and the cell backs out of the burn. ``retreat_on``
+    says which light: the wall's ``mean`` (as cave.md §8 preregistered) or its brightest node, ``max`` (amendment A1:
+    damage counts each node's light above the threshold, and the lit side gets nearly twice the mean)."""
 
     def __init__(self, cfg: Config, population: int, k: float, rest_below: Optional[float] = None,
-                 retreat_above: Optional[float] = None) -> None:
+                 retreat_above: Optional[float] = None, retreat_on: str = "mean") -> None:
+        if retreat_on not in ("mean", "max"):
+            raise ValueError(f"retreat_on is 'mean' or 'max', not {retreat_on!r}")
         self.alpha = np.zeros(population)
         self.k = float(k)
         self.rest_below = rest_below
         self.retreat_above = retreat_above
+        self.retreat_on = retreat_on
 
     def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
         mean = sensed.mean(axis=1, keepdims=True)
         contrast = (sensed - mean) / (mean + 0.01)
         g = sigmoid(self.k * contrast)
         if self.retreat_above is not None:
-            g = np.where(mean > self.retreat_above, sigmoid(-self.k * contrast), g)
+            trigger = mean if self.retreat_on == "mean" else sensed.max(axis=1, keepdims=True)
+            g = np.where(trigger > self.retreat_above, sigmoid(-self.k * contrast), g)
         if self.rest_below is not None:
             g = np.where(mean < self.rest_below, 0.0, g)
         return g
@@ -168,7 +174,7 @@ class Network(Controller):
 def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed: int,
                      keys: Sequence[Tuple[int, int]]) -> Controller:
     """A controller from a plain spec: ``{"controller": "still"}``, ``{"controller": "random"}``,
-    ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below`` and ``retreat_above``) or
+    ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``) or
     ``{"controller": "network", "mode": ..., "genomes": (P, G)}``."""
     kind = spec["controller"]
     if kind == "still":
@@ -176,7 +182,7 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
     if kind == "random":
         return RandomBeating(cfg, population, CellNoise(seed, STREAM_BEATS, keys, (cfg.n_wall,), "uniform"))
     if kind == "reflex":
-        return Reflex(cfg, population, spec["k"], spec.get("rest_below"), spec.get("retreat_above"))
+        return Reflex(cfg, population, spec["k"], spec.get("rest_below"), spec.get("retreat_above"), spec.get("retreat_on", "mean"))
     if kind == "network":
         genomes = np.asarray(spec["genomes"], dtype=np.float64)
         if genomes.shape[0] != population:
