@@ -49,3 +49,10 @@ def test_the_geometry_probe_derives_the_amended_start_distance() -> None:
     row = probe(STAGE0, 16.0, 38.0, n=20)
     assert row["w2_share"] >= 0.5 and row["b0_starves_in"] < 2000 and row["soak_share"] < 0.4
     assert np.isnan(probe(STAGE0, 20.0, 48.0)["w2_share"])  # the preregistered width has no room for such a start
+
+
+def test_the_stage1_budget_reads_the_headroom_from_the_cave_tables() -> None:
+    from experiments.stage1_budget import headroom
+
+    day = headroom("day")
+    assert day["n"] == 50 and day["bar"] == "b2r" and 0.69 < day["bar_fitness"] < 0.71 and day["gap_mean"] > 0
