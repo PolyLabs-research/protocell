@@ -1,0 +1,245 @@
+{
+ "all_pass": true,
+ "bar": {
+  "burnt_share": 0.0,
+  "effort_per_light": 0.49169690539181876,
+  "k": 100.0,
+  "mean_beat": 0.397182595952581,
+  "mean_burn_share": 0.0,
+  "mean_fitness": 0.991465726743881,
+  "mean_light_soaked": 0.8077793282755722,
+  "mean_soak_share": 0.996243331745699,
+  "median_reach_tick": 534.0,
+  "min_sunset_energy_ge_095_share": 1.0,
+  "n": 50,
+  "night_beat": null,
+  "reached_share": 1.0,
+  "starved_share": 0.0,
+  "survival": 1.0
+ },
+ "checks": {
+  "K1": {
+   "b0": {
+    "burnt_share": 0.0,
+    "effort_per_light": 0.0,
+    "mean_beat": 0.0,
+    "mean_burn_share": 0.0,
+    "mean_fitness": 0.4283759799001824,
+    "mean_light_soaked": 0.11445539009482188,
+    "mean_soak_share": 0.07,
+    "median_reach_tick": 1.0,
+    "min_sunset_energy_ge_095_share": 0.2,
+    "n": 100,
+    "night_beat": null,
+    "reached_share": 0.07,
+    "starved_share": 0.62,
+    "survival": 0.38
+   },
+   "b0_best": {
+    "burnt_share": 0.0,
+    "effort_per_light": 0.0,
+    "mean_beat": 0.0,
+    "mean_burn_share": 0.0,
+    "mean_fitness": 0.9920606191619334,
+    "mean_light_soaked": 0.7953120673890928,
+    "mean_soak_share": 1.0,
+    "median_reach_tick": 1.0,
+    "min_sunset_energy_ge_095_share": 1.0,
+    "n": 100,
+    "night_beat": null,
+    "reached_share": 1.0,
+    "starved_share": 0.0,
+    "survival": 1.0
+   },
+   "b0_best_survived_full_share": 1.0,
+   "b0_survival": 0.38,
+   "judged": false,
+   "pass": true,
+   "probe": {
+    "best_distance_to_mouth": 244.31126529023643,
+    "best_mean_reserve": 0.992625303277592,
+    "best_noon_light": 9.040675890728307,
+    "best_x": 122.69809641205393,
+    "best_y": -4788.734358012064,
+    "burn_share_noon": 0.016,
+    "sitter_share": 0.257,
+    "sitter_share_any_phase": 0.44,
+    "soak_share_noon": 0.097
+   }
+  },
+  "K2": {
+   "median_noon_light": 0.17222167769793717,
+   "min_noon_light": 0.057646838259373834,
+   "pass": true,
+   "share_contrast_ge_3sd_dawn1": 1.0,
+   "share_contrast_ge_3sd_noon": 1.0,
+   "share_rise_ge_3sd": 1.0,
+   "threshold": 0.009486832980505138
+  },
+  "K3": {
+   "max_soak_ticks": 759.9589024547986,
+   "median_soak_ticks": 341.5589936743643,
+   "pass": true,
+   "soak_radius": 2250.0
+  },
+  "K4": {
+   "b1": {
+    "burnt_share": 0.0,
+    "effort_per_light": 2.648133291039569,
+    "mean_beat": 0.24732251695256338,
+    "mean_burn_share": 0.0,
+    "mean_fitness": 0.2711537595361157,
+    "mean_light_soaked": 0.09339504087253583,
+    "mean_soak_share": 0.08944495909288776,
+    "median_reach_tick": 1.0,
+    "min_sunset_energy_ge_095_share": 0.13,
+    "n": 100,
+    "night_beat": null,
+    "reached_share": 0.11,
+    "starved_share": 0.81,
+    "survival": 0.19
+   },
+   "b1_survival": 0.19,
+   "bar": {
+    "k": 100.0,
+    "report": {
+     "burnt_share": 0.0,
+     "effort_per_light": 0.49169690539181876,
+     "mean_beat": 0.397182595952581,
+     "mean_burn_share": 0.0,
+     "mean_fitness": 0.991465726743881,
+     "mean_light_soaked": 0.8077793282755722,
+     "mean_soak_share": 0.996243331745699,
+     "median_reach_tick": 534.0,
+     "min_sunset_energy_ge_095_share": 1.0,
+     "n": 50,
+     "night_beat": null,
+     "reached_share": 1.0,
+     "starved_share": 0.0,
+     "survival": 1.0
+    },
+    "selection": {
+     "1.0": {
+      "burnt_share": 0.0,
+      "effort_per_light": 0.6206059709291833,
+      "mean_beat": 0.49826943675606633,
+      "mean_burn_share": 0.0,
+      "mean_fitness": 0.9853858359205738,
+      "mean_light_soaked": 0.8028756732875897,
+      "mean_soak_share": 0.9903374401525076,
+      "median_reach_tick": 1065.0,
+      "min_sunset_energy_ge_095_share": 1.0,
+      "n": 50,
+      "night_beat": null,
+      "reached_share": 1.0,
+      "starved_share": 0.0,
+      "survival": 1.0
+     },
+     "10.0": {
+      "burnt_share": 0.0,
+      "effort_per_light": 0.49762087855750997,
+      "mean_beat": 0.4024324750991455,
+      "mean_burn_share": 0.0,
+      "mean_fitness": 0.9890428352165506,
+      "mean_light_soaked": 0.8087130030912406,
+      "mean_soak_share": 0.9974955562003774,
+      "median_reach_tick": 282.5,
+      "min_sunset_energy_ge_095_share": 1.0,
+      "n": 50,
+      "night_beat": null,
+      "reached_share": 1.0,
+      "starved_share": 0.0,
+      "survival": 1.0
+     },
+     "100.0": {
+      "burnt_share": 0.0,
+      "effort_per_light": 0.4911071272808468,
+      "mean_beat": 0.39719646019431926,
+      "mean_burn_share": 0.0,
+      "mean_fitness": 0.9890971331847357,
+      "mean_light_soaked": 0.8087776334941615,
+      "mean_soak_share": 0.997580477984343,
+      "median_reach_tick": 274.0,
+      "min_sunset_energy_ge_095_share": 1.0,
+      "n": 50,
+      "night_beat": null,
+      "reached_share": 1.0,
+      "starved_share": 0.0,
+      "survival": 1.0
+     },
+     "3.0": {
+      "burnt_share": 0.0,
+      "effort_per_light": 0.5855575258783757,
+      "mean_beat": 0.47288888093914366,
+      "mean_burn_share": 0.0,
+      "mean_fitness": 0.9881859336250983,
+      "mean_light_soaked": 0.8075874018180852,
+      "mean_soak_share": 0.9961072172513056,
+      "median_reach_tick": 433.0,
+      "min_sunset_energy_ge_095_share": 1.0,
+      "n": 50,
+      "night_beat": null,
+      "reached_share": 1.0,
+      "starved_share": 0.0,
+      "survival": 1.0
+     },
+     "30.0": {
+      "burnt_share": 0.0,
+      "effort_per_light": 0.4909847782823513,
+      "mean_beat": 0.3970968378368856,
+      "mean_burn_share": 0.0,
+      "mean_fitness": 0.9890963103038574,
+      "mean_light_soaked": 0.8087762704702967,
+      "mean_soak_share": 0.9975775412627776,
+      "median_reach_tick": 274.5,
+      "min_sunset_energy_ge_095_share": 1.0,
+      "n": 50,
+      "night_beat": null,
+      "reached_share": 1.0,
+      "starved_share": 0.0,
+      "survival": 1.0
+     }
+    }
+   },
+   "pass": true
+  },
+  "K5": {
+   "fourier1": {
+    "best_fitness": 0.9690029038177617,
+    "mean_fitness": 0.24077384578910244,
+    "mean_survival": 0.12455,
+    "n_genomes": 1000,
+    "pass": true,
+    "share_any_reach": 0.366,
+    "share_any_survival": 0.552,
+    "share_matching_b2r_fitness": 0.0,
+    "share_matching_b2r_survival": 0.02
+   },
+   "pass": true,
+   "uniform": {
+    "best_fitness": 0.9792318427532349,
+    "mean_fitness": 0.2387201136461718,
+    "mean_survival": 0.11700000000000002,
+    "n_genomes": 1000,
+    "pass": true,
+    "share_any_reach": 0.121,
+    "share_any_survival": 0.393,
+    "share_matching_b2r_fitness": 0.0,
+    "share_matching_b2r_survival": 0.027
+   }
+  },
+  "K6": {
+   "batch_equals_singles": true,
+   "cells": 5,
+   "network_run_hash": "5195f87ae66be793a849f03fa223bae129e40de0c830579a45ee370489cc6b42",
+   "pass": true,
+   "same_seed_same_hash_network": true,
+   "same_seed_same_hash_reflex": true,
+   "streams_independent": true
+  },
+  "K7": {
+   "judged": false
+  }
+ },
+ "quick": false
+}
