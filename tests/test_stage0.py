@@ -9,6 +9,7 @@ import protocell  # noqa: F401
 import numpy as np
 
 from experiments.stage0 import B3_COLUMNS, Sizes, b3_job, main, numbers
+from experiments.stage0_geometry import probe, start_distance_for
 from protocell.cell import random_genomes
 from protocell.config import STAGE0
 from protocell.rng import stream
@@ -41,3 +42,10 @@ def test_a_b3_job_scores_each_genome_on_every_start() -> None:
     rows = b3_job({"cfg": cfg, "starts": starts, "genomes": genomes, "numbers": np.array([1, 2, 3]), "mode": "uniform", "seed": 0})
     assert [r["genome"] for r in rows] == [1, 2, 3] and all(r["n_starts"] == 2 for r in rows)
     assert all(0 <= r["survival"] <= 1 and 0 <= r["mean_fitness"] <= 1 for r in rows)
+
+
+def test_the_geometry_probe_derives_the_amended_start_distance() -> None:
+    assert start_distance_for(STAGE0, 16.0) == 38 and start_distance_for(STAGE0, 20.0) == 48
+    row = probe(STAGE0, 16.0, 38.0, n=20)
+    assert row["w2_share"] >= 0.5 and row["b0_starves_in"] < 2000 and row["soak_share"] < 0.4
+    assert np.isnan(probe(STAGE0, 20.0, 48.0)["w2_share"])  # the preregistered width has no room for such a start

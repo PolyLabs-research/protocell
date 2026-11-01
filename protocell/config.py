@@ -22,9 +22,9 @@ class Config:
     # §2 light: each field a single source plus a dim background
     background: float = 0.02
     spot_peak: float = 4.0  # I(p) = spot_peak exp(-|p - c|^2 / (2 spot_sigma^2)) + background
-    spot_sigma: float = 20.0
+    spot_sigma: float = 16.0  # amendment A1 (2026-11-01, after run 1): 20 as preregistered; the soak region 37% of the disc, not 58%
     spot_centre_within: float = 10.0  # the spot's centre is drawn uniformly within this of the dish's centre
-    spot_start_min: float = 42.0  # a start is at least this far from the spot's centre (I < 0.5 there)
+    spot_start_min: float = 38.0  # amendment A1: 42 as preregistered; where a still cell starves within two thirds of the lifetime (I <= 0.26)
     lamp_peak: float = 4.0  # I(p) = lamp_peak / (1 + (d / lamp_scale)^2) + background at distance d from the lamp
     lamp_scale: float = 20.0
     lamp_start_min: float = 60.0  # a start is at least this far from the lamp

@@ -15,12 +15,15 @@ from protocell.world import (brightest_point, centre_light, clamp, lamp_intensit
 ORIGIN = np.zeros((1, 2))
 
 
-def test_the_spot_peaks_at_its_centre_and_its_soak_region_is_33_r() -> None:
+def test_the_spot_peaks_at_its_centre_and_its_soak_region_is_a_third_of_the_disc() -> None:
     assert spot_intensity(cfg, 0.0, 0.0, 0.0, 0.0) == pytest.approx(4.02)
     r = soak_radius(cfg, "spot")
-    assert 33.0 < r < 34.0
+    assert 26.5 < r < 27.0  # amendment A1: sigma 16 (33.5 R as preregistered, with sigma 20)
     assert spot_intensity(cfg, r, 0.0, 0.0, 0.0) == pytest.approx(1.0)
-    assert spot_intensity(cfg, 42.0, 0.0, 0.0, 0.0) < 0.5  # §2: a start's light does not pay for resting
+    assert (r / cfg.clamp_radius) ** 2 < 0.4
+    # amendment A1: at the nearest start a still cell starves within two thirds of the lifetime
+    at_start = spot_intensity(cfg, cfg.spot_start_min, 0.0, 0.0, 0.0)
+    assert cfg.eta * at_start / (1 + at_start) <= cfg.c0 - cfg.energy_start / (2 / 3 * cfg.lifetime)
 
 
 def test_the_lamp_falls_off_with_distance_and_its_soak_region_is_35_r() -> None:

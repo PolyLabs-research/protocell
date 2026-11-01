@@ -178,3 +178,61 @@ Points §1–§7 leave open, fixed here before the run. None changes a stated nu
   the batch; "a batch equals its singles" compares every recorded per-tick array and every per-run measure as well.
 - **C12, the sigmoid** is computed with its argument clipped to ±500, so the exponent cannot overflow under
   warnings-as-errors; the function is unchanged to double precision beyond ±37.
+
+### Amendment A1 (2026-11-01, after run 1, before run 2): the spot narrowed to σ = 16 R, its starts at least 38 R away
+
+**What run 1 found** (`docs/data/stage0/as-preregistered/`, code `e4799c4`, clean tree, warnings as errors, 60 s):
+the lamp passes W1–W5, W6 passes, and the spot fails W1 and W5.
+
+- **W1.** B0 survived on 51 of 100 spot starts: every start nearer than 45.1 R to the spot's centre, none farther.
+  The reason is arithmetic. §2 put the starts where I < 0.5, "where the light does not pay for resting"; but at
+  I = 0.5 the gain η P equals the resting cost c₀ exactly, so a still cell there never starves, and at the nearest
+  allowed start (42 R, I = 0.46) it loses 0.053/1500 a tick and lives 14,000 ticks, nearly five lifetimes. To starve
+  from E = 0.5 within a lifetime a still cell must lose at least 0.25/1500 a tick, so gain at most 0.75/1500: I ≤ 1/3,
+  which the spot reaches only beyond 45.1 R. The lamp's starts pass because the cell shades itself: a still cell's
+  mean shading factor is 0.3 + 0.7/π = 0.52, so at 60 R it gets 0.22 and starves in 1,600 ticks.
+- **W5.** 12.6% of random fourier1 genomes survived all 20 of their starts (uniform: 1.9%, which passes). Every one
+  of them had reached the soak region, and they soaked light at a mean P of 0.62 with a mean beat of 0.75: not still
+  cells but movers. The spot's soak region (I ≥ 1, radius 33.5 R) covers 58% of the disc the cell's centre may occupy,
+  and a start is at most 11 R from its edge, so a cell that moves in any direction for a few seconds enters it, and a
+  mover, once in, is in light more often than not. The lamp's soak region covers 25% of the disc, and there 1.4%
+  (fourier1) and 3.6% (uniform) of random genomes matched the reflex.
+
+**The reason for the amendment, geometric.** A start must be where a still cell starves within the lifetime (W1);
+the soak region must be a smaller share of the dish (W5); and the light's difference across one body at the start
+must still beat the sensor noise (W2). For a Gaussian spot the three pull against each other, because its relative
+gradient, 2r/σ², is small where it is dark. `experiments/stage0_geometry.py` (no simulation; fresh starts, seed 1)
+takes each width σ, puts the start where a still cell starves within two thirds of the lifetime (gain at most
+c₀ − 0.5/2,000 a tick, so I ≤ 0.263; the third is margin for the rounding of the distance and the background's
+gain), and reads W1–W3 off the geometry:
+
+| σ (R) | start ≥ (R) | soak radius (R), share of the disc | I at the nearest start | B0 starves in (ticks) | W2: share of starts with spread ≥ 0.03 | W3: farthest start (ticks) |
+|---|---|---|---|---|---|---|
+| 20 as preregistered | 42 | 33.5, 58% | 0.461 | 14,049 | 1.00 | 19 |
+| 20 | 48 | 33.5, 58% | no such start fits in the dish | | | |
+| 18 | 43 | 30.2, 47% | 0.251 | 1,880 | 0.90 | 22 |
+| 17 | 41 | 28.5, 42% | 0.238 | 1,774 | 0.71 | 24 |
+| **16** | **38** | **26.8, 37%** | **0.258** | **1,953** | **0.69** | **24** |
+| 15 | 36 | 25.2, 33% | 0.245 | 1,827 | 0.56 | 27 |
+| 14 | 34 | 23.5, 28% | 0.230 | 1,705 | 0.47 | 27 |
+| 13 | 31 | 21.8, 25% | 0.253 | 1,902 | 0.43 | 29 |
+| 12 | 29 | 20.1, 21% | 0.236 | 1,753 | 0.35 | 31 |
+
+At σ = 20 the rule asks for 48 R, which the dish cannot hold: the preregistered spot has no start region at all
+where a still cell starves within two thirds of a lifetime. The width taken is the narrowest at which W2 holds with a
+margin, on at least two thirds of fresh starts: **σ = 16 R, with starts at least 38 R from the spot's centre**
+(I ≤ 0.26 there; a still cell starves in at most 1,950 ticks). The soak region's radius becomes 26.8 R, 37% of the
+disc (from 58%); its bright core, I ≥ 2, 19% of the disc (from 29%). The spot cannot be made as small a share as the
+lamp's (25%) without W2 failing. Nothing else changes: the economy of §4, the lamp (which passed), the cell, the
+noise, the measures, the seeds. The spot's starts 1–100 are drawn by the same rule at the same seed, so they move;
+the lamp's are untouched, and run 2 should reproduce run 1's lamp results bit for bit.
+
+**Expected of run 2:** the spot passes W1 (every B0 start starves), W2 narrowly (about 0.69), W3 (at most 25
+ticks); the reflex still survives every start; the spot's W5 comes down from 12.6% but may stay above 5% in the
+fourier1 mode, since movers that found a spot covering 58% of the disc may still find one covering 37%. If it does,
+that is the result, and what follows (stage 1 on the lamp alone, or another change to the spot) is the owner's call
+(D2).
+
+**Not taken:** raising the resting cost (c₀ = 1/1200 would starve a still cell at 42 R in 2,500 ticks) fixes W1 but
+leaves the soak region's share, so W5's reason stands, and it changes the lamp world, which passed; a larger dish
+fails W2 and W3 through the same gradient bind.
