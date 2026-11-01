@@ -9,7 +9,7 @@
 # record into ~/protocell-runs/. When the pod's job marks DONE: pull again, check that every RUN has its champion.json
 # and manifest.json, then write PULLED on the pod (its job then deletes it). If a run's outputs are missing, PULLED is
 # not written, so the pod waits out its pull wait (or its deadline) for them to be fetched by hand. The pod's deadline
-# and the sweeper cap everything if this box is down. Log: ~/protocell-runs/campaign-PHASE.log.
+# and the sweeper cap everything if this box is down. Log: ~/protocell-runs/campaign-PHASE-POD.log.
 set -u
 POD=$1
 PHASE=$2
@@ -21,7 +21,7 @@ cd "$REPO" || exit 1
 CHESS=$HOME/Documents/dev/chess
 RP=("$CHESS/.venv/bin/python" "$CHESS/scripts/runpod_pod.py")
 OUT=$HOME/protocell-runs
-LOG=$OUT/campaign-$PHASE.log
+LOG=$OUT/campaign-$PHASE-$POD.log
 mkdir -p "$OUT" "docs/data/stage1/$PHASE"
 
 log() { echo "$(date -Is) $*" >> "$LOG"; }
@@ -29,7 +29,7 @@ log() { echo "$(date -Is) $*" >> "$LOG"; }
 pull_all() {
     "${RP[@]}" pull "$POD" "/root/protocell/docs/data/stage1/$PHASE/" "docs/data/stage1/$PHASE/" >> "$LOG" 2>&1
     "${RP[@]}" pull "$POD" /root/protocell/logs/ "$OUT/stage1-$PHASE-logs/" >> "$LOG" 2>&1
-    "${RP[@]}" pull "$POD" /root/protocell/pc-job/ "$OUT/stage1-$PHASE-job/" >> "$LOG" 2>&1
+    "${RP[@]}" pull "$POD" /root/protocell/pc-job/ "$OUT/stage1-$PHASE-$POD-job/" >> "$LOG" 2>&1
 }
 
 pod_alive() { "${RP[@]}" status 2> /dev/null | grep -q "^$POD "; }
