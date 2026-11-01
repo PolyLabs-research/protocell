@@ -1,0 +1,129 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/cave_retreat_probe.py --workers 12",
+ "created_at": "2026-11-01T16:16:14+00:00",
+ "git": {
+  "branch": "cave-world",
+  "dirty": false,
+  "sha": "ec684d3097f9952c1026cb7f531dd2fc9a88ee09"
+ },
+ "manifest_version": 1,
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-38-generic",
+  "system": "Linux"
+ },
+ "protocol": "cave/retreat_probe",
+ "seeds": [
+  1
+ ],
+ "settings": {
+  "jobs": [
+   {
+    "config": "burn",
+    "k": 1.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "burn",
+    "k": 10.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "burn",
+    "k": 100.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "burn",
+    "k": 1.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   },
+   {
+    "config": "burn",
+    "k": 10.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   },
+   {
+    "config": "burn",
+    "k": 100.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   },
+   {
+    "config": "sweep",
+    "k": 1.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "sweep",
+    "k": 10.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "sweep",
+    "k": 100.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "mean"
+   },
+   {
+    "config": "sweep",
+    "k": 1.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   },
+   {
+    "config": "sweep",
+    "k": 10.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   },
+   {
+    "config": "sweep",
+    "k": 100.0,
+    "n": 20,
+    "quick": false,
+    "trigger": "max"
+   }
+  ],
+  "seed": 1
+ },
+ "timing": {
+  "cells": 240,
+  "wall_seconds": 26.479753255844116
+ }
+}

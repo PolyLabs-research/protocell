@@ -260,3 +260,48 @@ dated amendments recorded here before stage 1. The build adds to `protocell/`: a
 depend on the tick, the three switches, damage's rate and repair, the phase in a start and its matching reserve, the
 lifetime to the second sunrise, the night and burn measures, B2r and B2rr; and tests for each, including that
 `world.py`'s cave equals this probe's formulas.
+
+## 17. Run 1, and amendment A1 (2026-11-01, after run 1, before run 2)
+
+**What run 1 found** (`docs/data/cave/`, code `c01b8ff`, clean tree, warnings as errors, 94 min on 16 workers; the
+burn and sweep configurations' data moved to `docs/data/cave/as-preregistered/` with this amendment): **noon and day
+pass every judged check.** In burn and sweep, B2r burns on every start, as K7 wants; but **B2rr also burns on every
+report start, at every gain** (median death in the early afternoon of its first day), so K7 fails; **K5 is vacuous**,
+since B2r survives no start and so every random genome "matches" it; and in sweep K1's second clause, read on B2rr,
+fails. K2, K3 and K6 pass everywhere.
+
+**The reason, geometric.** B2rr backs out when the wall's *mean* sensed light passes I_d = 4. Damage counts each
+*node's* light above I_d, and the cell shades itself: its wall's mean is 0.52 of the light on its lit side (0.3 +
+0.7/π). So B2rr holds where its lit side gets twice the threshold. At noon that is 411 R from the mouth (the light at
+its centre 7.7), where the wall's mean excess over I_d is 0.95 and damage settles at k_D × 0.95 / r_D = 1.08, past
+death at 1: the rule as written parks the cell on the lethal contour that §14 found (a still cell is killed within
+about 400 R). Backing out when the *brightest node* passes I_d holds the cell where no node is above it: 920 R from
+the mouth at noon, the threshold's own contour (§5: 919 R), with no excess. The world is not changed; the bar's rule is
+made to measure what damage measures.
+
+**The probe** (`experiments/cave_retreat_probe.py`, code `ec684d3`, fresh starts and noise at seed 1, 20 starts,
+`docs/data/cave/retreat_probe/`, 27 s):
+
+| configuration | B2rr retreats when | survived, k = 1 / 10 / 100 | fitness, k = 1 / 10 / 100 |
+|---|---|---|---|
+| burn | the wall's mean passes 4 (as preregistered) | 0.00 / 0.00 / 0.00 (all burnt) | 0.347 / 0.354 / 0.353 |
+| burn | the brightest node passes 4 | **1.00 / 1.00 / 1.00** | 0.697 / 0.706 / 0.706 |
+| sweep | the wall's mean passes 4 | 0.00 / 0.00 / 0.00 (all burnt) | 0.334 / 0.348 / 0.349 |
+| sweep | the brightest node passes 4 | **1.00 / 1.00 / 1.00** | 0.677 / 0.697 / 0.698 |
+
+With the brightest-node rule, B2rr's fitness in burn and sweep is the resting reflex's in day (0.698): it loses
+nothing to damage.
+
+**The amendment.**
+1. **B2rr reverses the sign of k while its brightest sensed node is above I_d** (§8 said while Ī > I_d). Everything
+   else about it stands: it rests while Ī < 0.01, its gain is chosen on starts 1–50 by mean fitness.
+2. **K5, where damage is on, compares the random genomes with B2rr**, the configuration's bar (§8 calls it stage 2's
+   bar), not with B2r, which K7 requires to burn. Where damage is off, K5 is unchanged.
+
+**What runs again:** burn and sweep, from the same starts, genomes and noise keys at seed 2, so B0, B1, B2r and the
+random genomes reproduce run 1's rows bit for bit, and only B2rr and K5's comparison change. Noon and day stand: B2rr
+does not run there, and their K5 is unchanged.
+
+**Expected of run 2:** B2rr survives every report start in burn and sweep at fitness about 0.70; K7 passes; sweep's
+K1 passes (its second clause is B2rr's survival); K5 against B2rr passes in both (in run 1 no random genome in either
+configuration survived more than a handful of its 20 starts: mean survival 0.4–1.0%).
