@@ -15,8 +15,10 @@ starting with the simplest organism and few parts, each understood, and adding c
 - `docs/prereg/`: a preregistration before every build and run
 - `docs/determinism.md`: what is claimed about reproducibility, and the rules
 
-**Status:** stage 0 (the world, the cell, its energy and the baselines) built as preregistered, with its pre-run
-clarifications in `docs/prereg/stage0.md` §11; its checks W1–W6 not yet run.
+**Status:** stage 0 (the world, the cell, its energy and the baselines) built and checked (D2, 2026-11-01): the
+lamp world passed as preregistered; the spot passed after one geometric amendment (A1: narrower, with starts where a
+still cell starves); W1–W6 pass in both (`docs/data/stage0/`). The reflex's score is stage 1's bar. Awaiting the
+owner's decisions in D2 before stage 1 is preregistered.
 
 ## Running
 

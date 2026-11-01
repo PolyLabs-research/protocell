@@ -236,3 +236,19 @@ that is the result, and what follows (stage 1 on the lamp alone, or another chan
 **Not taken:** raising the resting cost (c₀ = 1/1200 would starve a still cell at 42 R in 2,500 ticks) fixes W1 but
 leaves the soak region's share, so W5's reason stands, and it changes the lamp world, which passed; a larger dish
 fails W2 and W3 through the same gradient bind.
+
+## The checks ran (2026-11-01; read in D2)
+
+**Run 1, as preregistered** (`docs/data/stage0/as-preregistered/`, code `e4799c4`, clean tree, warnings as errors,
+60 s on 16 workers): the lamp passes W1–W5; the spot fails W1 (B0 dies on 49% of starts, every start nearer than
+45.1 R surviving) and W5 (12.6% of fourier1 random genomes match the reflex's survival, all of them movers that
+reached a soak region covering 58% of the disc; uniform 1.9%); W6 passes. The §9 prediction "W1 passes" was wrong,
+by the arithmetic in A1.
+
+**Run 2, under A1** (`docs/data/stage0/`, code `78c4c38`, the same discipline, 60 s): **every check passes in both
+worlds.** Spot: B0 dies on 100% of starts and gains at the brightest point; W2 on 69% of starts; W3 at most 26
+ticks; B2 (k = 100) survives all report starts at fitness 0.924; B1 survives none; 0.0% (uniform) and 4.4%
+(fourier1) of random genomes match B2's survival, none its fitness. Lamp: bit for bit as run 1 (B2 at k = 30,
+fitness 0.857; 3.6% and 1.4%). W6 passes. Stage 1's bar is B2's score above. This document is not changed after
+the run; D2 puts to the owner whether this world is stage 0's last word and whether stage 1 compares both spoke
+modes.
