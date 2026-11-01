@@ -15,10 +15,17 @@ starting with the simplest organism and few parts, each understood, and adding c
 - `docs/prereg/`: a preregistration before every build and run
 - `docs/determinism.md`: what is claimed about reproducibility, and the rules
 
-**Status:** stage 0 (the world, the cell, its energy and the baselines) preregistered as a draft; the scaffolding
-built.
+**Status:** stage 0 (the world, the cell, its energy and the baselines) built as preregistered, with its pre-run
+clarifications in `docs/prereg/stage0.md` §11; its checks W1–W6 not yet run.
 
 ## Running
 
     uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -e ".[dev]"
     .venv/bin/python -m pytest -q
+    .venv/bin/python -W error::RuntimeWarning -m experiments.stage0 --workers 16   # stage 0's checks, from a clean tree
+
+The package: `protocell/config.py` (every preregistered number), `world.py` (the dish, the two light fields, the
+starts), `cell.py` (the genome, the topology mask, the two spoke modes, the CTRNN's step), `motion.py` (the cilia),
+`energy.py`, `sim.py` (a whole population at once; the baselines and the network cell as controllers; keyed noise).
+`experiments/stage0.py` runs the checks and writes its tables, `summary.json` and `manifest.json` to
+`docs/data/stage0/`.

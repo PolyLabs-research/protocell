@@ -130,3 +130,51 @@ where the core can wire a reflex of its own.
 ## 11. What would change this document
 
 Nothing after its checks have run, except dated amendments recorded here before stage 1.
+
+### Pre-run clarifications (2026-11-01, written while building, before any check ran)
+
+Points §1–§7 leave open, fixed here before the run. None changes a stated number.
+
+- **C1, the tick.** Sense at the current pose → update the network → beats → move (velocity, rotation, rotational
+  noise, the dish's edge) → energy (the gain from this tick's noiseless light at the nodes, the cost from this tick's
+  beats) → damage → the death check. The network starts at y = 0; its output σ(y + β) is computed after each update
+  and serves both as this tick's beats and as the next update's input. A cell dead at a tick's end counts 0 for that
+  tick in every per-tick measure (E, light soaked, beat); dead cells do not move. The sensor noise enters the sensors
+  only, never the energy.
+- **C2, where light is read.** The field's intensity at each wall node's own place on the membrane (one radius out
+  from the centre along its normal), for the spot and the lamp alike; the lamp's direction, for cos β, is taken from
+  the cell's centre. "The brightest point" and "the soak region" use the unshaded intensity at the cell's centre,
+  I ≥ 1: for the spot, within 33.5 R of its centre; for the lamp, within 35.1 R of it. The lamp's brightest reachable
+  point is the centre at 44 R toward the lamp (one radius from it, the nearest the centre may be).
+- **C3, the starts.** Uniform over the disc of radius 44 R (where the cell's centre may be), by rejection. For each
+  start, in this order from stream `starts` at seed 0 (stage 0's seed): the layout (spot: its centre, uniform over
+  the disc of radius 10; lamp: its angle, uniform), the heading (uniform), then positions until one is far enough.
+  Start k is the k-th drawn, so starts 1–m are the same whatever n. Stage 1 uses another seed.
+- **C4, the noise is keyed per run.** Streams `sensors` and `motion` are keyed by (cell, start), so a cell's draws are
+  the same bits alone or in a batch (W6): the baselines B0–B2 use cell id 0 (so every baseline and every reflex gain
+  sees the same noise on a start), random genome g uses id g. Draws are made in chunks of 250 ticks; chunking does not
+  change a generator's sequence (tested).
+- **C5, B1's beats have their own stream.** §3 put random beating under `motion`; it draws from its own stream `beats`
+  instead, so that switching the rotational noise off leaves the beats as they were and the other way round (lesson 3
+  of `docs/plan.md`). B1 and B2 use α = 0 (B2 as §6 states; B1 by the same reading: motion without sensing, no turn).
+- **C6, the reflex.** Iᵢ is the sensed light with the same sensor noise a network cell has; Ī is the mean over the 16
+  nodes of this tick's sensed light. Its gain k is the one with the best mean fitness on starts 1–50 (ties: the
+  higher survival, then the smaller k).
+- **C7, B3.** Each random genome runs on starts 51–70, the first twenty of the report starts, so its survival is
+  compared with B2's on the same distribution; W5 compares a genome's survival rate over its 20 starts with B2's over
+  starts 51–100. Genome g is the g-th drawn from stream `genomes` at seed 0, one sequence per spoke mode. In the
+  fourier1 mode each of a spoke's three coefficients a, b, c lies in [−8, 8] (so a spoke weight can reach 8(1 + √2)).
+- **C8, damage's repair constant** is 0.01 a tick as a placeholder, inert here (I_d = 10 is above every field's peak
+  of 4.02, so D stays 0); stage 2's preregistration sets it.
+- **C9, the measures of W1–W3.** W2's spread is the largest minus the smallest of the noiseless light at the 16 nodes
+  at the start pose. W3 uses the straight distance from the start to the soak region's edge at v_max (the dish is
+  convex, so the straight line stays inside it). W1's "E rising": the cell at the brightest point survives and ends
+  the lifetime with more reserve than it started with.
+- **C10, the genome's order and the ring's chirality.** Core weights (64, to j from l, row-major), core biases (8),
+  core log τ (8), the ring (self weight, from the clockwise neighbour, from the anticlockwise neighbour, bias, log τ,
+  g), α, spokes in (wall → core), spokes out (core → wall). Node i + 1 is anticlockwise of node i (θ increasing), so
+  "from the clockwise neighbour" is from i − 1.
+- **C11, the trajectory hash** (W6) is SHA-256 over the per-tick positions, headings and reserves, per cell and over
+  the batch; "a batch equals its singles" compares every recorded per-tick array and every per-run measure as well.
+- **C12, the sigmoid** is computed with its argument clipped to ±500, so the exponent cannot overflow under
+  warnings-as-errors; the function is unchanged to double precision beyond ±37.
