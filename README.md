@@ -27,6 +27,24 @@ points await the owner before it is built.
     .venv/bin/python -m pytest -q
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage0 --workers 16   # stage 0's checks, from a clean tree
 
+## Watching a cell
+
+    .venv/bin/python -m tools.replay --config burn --start 51 --cells b0 b2r b2rr
+    xdg-open replays/burn-start51-B0-B2r-B2rr.html
+
+A replay reruns up to three cells from one start of the cave pool, with the checks' code, seed and noise, and writes
+a page that plays their lifetimes back: the pool with its light and each cell's track, the chosen cell's body (the
+light at each wall node, each cilium's beat, the core's activity), and the reserve and damage over the lifetime.
+`.venv/bin/python -m tools.replay --help` lists the cells: the baselines, the cave's random genomes, and genomes from
+a `.npy` file (stage 1's evolved cells). Replays go to `replays/`, which git ignores. A link ending `#h10` opens a
+replay ten hours in.
+
+`docs/network.html` shows the network's structure: who connects to whom, the mask, which number of the genome sets
+which weight, and one tick of the dynamics. It is generated from the code; regenerate it after any change to the
+cell with `.venv/bin/python -m tools.network_doc`.
+
+## The code
+
 The package: `protocell/config.py` (every preregistered number), `world.py` (the dish, the two light fields, the
 starts), `cell.py` (the genome, the topology mask, the two spoke modes, the CTRNN's step), `motion.py` (the cilia),
 `energy.py`, `sim.py` (a whole population at once; the baselines and the network cell as controllers; keyed noise).

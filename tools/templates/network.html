@@ -1,0 +1,641 @@
+<title>Protocell Network</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap">
+<style>
+/* Layout: a reference sheet. A toolbar over the diagram and its inspector, then the weight matrix, the genome, one tick
+   of the dynamics with a cilia demo, and the counts. Layer identity: ring blue, spokes orange, core aqua. */
+:root {
+  --paper: #f5f6f1;
+  --surface: #fcfcfa;
+  --ink: #151914;
+  --ink-2: #4a5148;
+  --ink-3: #737b70;
+  --rule: #dcdfd6;
+  --accent: #2c6a4a;
+  --ring: #2a78d6;
+  --spoke: #eb6834;
+  --core: #1baf7a;
+  --pos: #e34948;
+  --neg: #2a78d6;
+  --mid: #ebeae5;
+  --font-display: "Literata", "Iowan Old Style", Georgia, serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e110e; --surface: #151915; --ink: #edf0e9; --ink-2: #c0c7bb; --ink-3: #8b9387; --rule: #2a3029;
+    --accent: #7cc79f; --ring: #3987e5; --spoke: #d95926; --core: #199e70; --pos: #e66767; --neg: #3987e5; --mid: #2e322d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e110e; --surface: #151915; --ink: #edf0e9; --ink-2: #c0c7bb; --ink-3: #8b9387; --rule: #2a3029;
+  --accent: #7cc79f; --ring: #3987e5; --spoke: #d95926; --core: #199e70; --pos: #e66767; --neg: #3987e5; --mid: #2e322d;
+  color-scheme: dark;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.page {
+  max-width: 1180px; margin: 0 auto; display: grid; gap: 40px;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header { display: grid; gap: 10px; max-width: 72ch; }
+.eyebrow { font-family: var(--font-data); font-size: 12px; letter-spacing: 0.06em; color: var(--ink-3); text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 4vw, 42px); line-height: 1.1; }
+h2 { font-size: 24px; line-height: 1.2; }
+h3 { font-size: 17px; }
+p { margin: 0; max-width: 70ch; }
+.lede { font-size: 18px; color: var(--ink-2); }
+section { display: grid; gap: 16px; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; padding: 12px 14px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.group > .label { margin-right: 4px; }
+.label { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+button.opt { font: inherit; font-size: 14px; color: var(--ink); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+button.opt:hover { border-color: var(--ink-3); }
+button.opt[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; padding: 3px 8px; border: 1px solid var(--rule); border-radius: 999px; }
+.toggle input { accent-color: var(--accent); margin: 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stage { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 880px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; min-width: 0; }
+svg { display: block; width: 100%; height: auto; max-width: 100%; }
+#diagram text, #matrix text, #demo text, #profile text { font-family: var(--font-data); fill: var(--ink-2); }
+.edge { fill: none; transition: opacity 120ms; }
+.edge.dim { opacity: 0.05 !important; }
+.edge.hl-in { stroke: var(--ink) !important; opacity: 1 !important; marker-end: url(#m-in); }
+.edge.hl-out { stroke: var(--accent) !important; opacity: 1 !important; marker-end: url(#m-out); }
+.edge.hl-gene { opacity: 1 !important; }
+.node circle { stroke: var(--surface); stroke-width: 2.5; cursor: pointer; }
+.node text { font-size: 10px; pointer-events: none; text-anchor: middle; dominant-baseline: central; }
+.node.focus circle { stroke: var(--ink); stroke-width: 3; }
+.node.param circle { stroke: var(--accent); stroke-width: 3; }
+.inspector { display: grid; gap: 12px; align-content: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+.inspector h3 { font-size: 19px; }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0; font-size: 14px; }
+.facts dt { color: var(--ink-3); }
+.facts dd { margin: 0; font-family: var(--font-data); font-size: 13px; overflow-wrap: anywhere; }
+.hint { color: var(--ink-3); font-size: 14px; }
+.key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink-2); align-items: center; }
+.key .line { display: inline-block; width: 22px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+.scroll { overflow-x: auto; }
+.matrix-wrap { display: grid; grid-template-columns: minmax(0, 520px) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 880px) { .matrix-wrap { grid-template-columns: minmax(0, 1fr); } }
+.cellrect { cursor: pointer; }
+.genome { display: grid; gap: 14px; }
+.block { display: grid; gap: 6px; }
+.block-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; }
+.block-head b { font-weight: 700; }
+.block-head span { color: var(--ink-3); }
+.squares { display: flex; flex-wrap: wrap; gap: 3px; }
+.sq { width: 16px; height: 16px; border-radius: 3px; cursor: pointer; border: 1px solid var(--rule); }
+.sq.on { outline: 2px solid var(--ink); outline-offset: 1px; }
+.eq { font-family: var(--font-data); font-size: 15px; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; overflow-x: auto; white-space: nowrap; }
+.eqs { display: grid; gap: 10px; }
+.tick-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 22px; align-items: start; }
+@media (max-width: 880px) { .tick-wrap { grid-template-columns: minmax(0, 1fr); } }
+.demo-controls { display: grid; gap: 10px; }
+.demo-controls label { display: grid; gap: 4px; font-size: 14px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+select { font: inherit; font-size: 14px; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 400; }
+td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+th.n { text-align: right; }
+details summary { cursor: pointer; color: var(--ink-2); }
+footer { color: var(--ink-3); font-size: 14px; display: grid; gap: 6px; }
+code { font-family: var(--font-data); font-size: 0.9em; }
+</style>
+<!--body-->
+<main class="page">
+  <header>
+    <span class="eyebrow" id="eyebrow">protocell · generated from the code</span>
+    <h1>The protocell's network</h1>
+    <p class="lede">One continuous-time recurrent network of 24 neurons. Sixteen wall neurons sit on a closed ring; each senses the light at its place on the membrane and drives a cilium. Eight core neurons sit inside. Wall and brain are one structure, one weight matrix, one mask.</p>
+    <p class="hint">Point at, or tap, any neuron, weight or genome number to see what it connects to and what sets it. Tap again to let go.</p>
+  </header>
+
+  <section aria-labelledby="h-diagram">
+    <h2 id="h-diagram">Who connects to whom</h2>
+    <div class="toolbar" role="group" aria-label="What the diagram shows">
+      <div class="group" role="group" aria-label="Spoke mode">
+        <span class="label">Spoke mode</span>
+        <button type="button" class="opt" data-mode="uniform" aria-pressed="true">uniform · 103 numbers</button>
+        <button type="button" class="opt" data-mode="fourier1" aria-pressed="false">fourier1 · 135 numbers</button>
+      </div>
+      <div class="group" role="group" aria-label="Weights">
+        <span class="label">Weights</span>
+        <button type="button" class="opt" data-view="structure" aria-pressed="true">structure</button>
+        <button type="button" class="opt" data-view="0" aria-pressed="false">genome 1</button>
+        <button type="button" class="opt" data-view="1" aria-pressed="false">genome 2</button>
+        <button type="button" class="opt" data-view="2" aria-pressed="false">genome 3</button>
+      </div>
+      <div class="group" role="group" aria-label="Layers shown">
+        <span class="label">Show</span>
+        <label class="toggle"><input type="checkbox" data-layer="ring" checked><span class="dot" style="background:var(--ring)"></span>ring</label>
+        <label class="toggle"><input type="checkbox" data-layer="in" checked><span class="dot" style="background:var(--spoke)"></span>spokes in</label>
+        <label class="toggle"><input type="checkbox" data-layer="out" checked><span class="dot" style="background:var(--spoke)"></span>spokes out</label>
+        <label class="toggle"><input type="checkbox" data-layer="core" checked><span class="dot" style="background:var(--core)"></span>core</label>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="card">
+        <svg id="diagram" viewBox="0 0 640 640" role="img" aria-label="The network: sixteen wall neurons on a ring around eight core neurons, with every connection the mask allows"></svg>
+        <div class="key" id="diagram-key"></div>
+      </div>
+      <aside class="card inspector" id="inspector" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-matrix">
+    <h2 id="h-matrix">The weight matrix and its mask</h2>
+    <p>Row i, column j holds the weight to neuron i from neuron j. Wall neurons are w0–w15, core neurons c0–c7. The mask allows 368 of the 576 entries: the ring's band, the two blocks of spokes, and the full core. Blank entries are fixed at zero.</p>
+    <div class="matrix-wrap">
+      <div class="card scroll"><svg id="matrix" viewBox="0 0 500 500" role="img" aria-label="The 24 by 24 weight matrix with its mask"></svg></div>
+      <div class="key" id="matrix-key" style="align-content:start"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-genome">
+    <h2 id="h-genome">The genome</h2>
+    <p id="genome-intro"></p>
+    <div class="card genome" id="genome"></div>
+    <details>
+      <summary>Every number, as a table</summary>
+      <div class="scroll"><table id="genome-table"></table></div>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-tick">
+    <h2 id="h-tick">One tick</h2>
+    <div class="tick-wrap">
+      <div class="eqs">
+        <p>Each tick (one second) the network takes one Euler step of Beer's equation, the wall neurons' outputs beat the cilia, and the cell moves with no momentum: its velocity is the summed pull, its turning the summed torque.</p>
+        <div class="eq">y ← y + (1/τ) · ( −y + W σ(y + β) + S )</div>
+        <div class="eq">Sᵢ = g · (Iᵢ + εᵢ) on wall neurons, 0 on core neurons</div>
+        <div class="eq">beatᵢ = σ(yᵢ + β_ring), the output of wall neuron i</div>
+        <div class="eq">v = v_max · (π/N) · Σ beatᵢ · uᵢ,   uᵢ = direction of node i turned by α</div>
+        <div class="eq">ω = ω_max · (1/N) · Σ beatᵢ · sin α  (+ rotational noise)</div>
+        <p class="hint" id="tick-params"></p>
+      </div>
+      <div class="card demo-controls">
+        <h3>The cilia</h3>
+        <svg id="demo" viewBox="0 0 320 320" role="img" aria-label="A cell's cilia: each node's pull, the resulting velocity and turning"></svg>
+        <label for="alpha">Cilium angle α: <span id="alpha-val"></span>
+          <input type="range" id="alpha" min="-180" max="180" step="5" value="0">
+        </label>
+        <label for="pattern">Which cilia beat
+          <select id="pattern">
+            <option value="front">the front half, fully</option>
+            <option value="one">node 4 alone</option>
+            <option value="all">all of them, fully</option>
+            <option value="ramp">brighter side harder (a reflex)</option>
+          </select>
+        </label>
+        <p class="hint" id="demo-out"></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-counts">
+    <h2 id="h-counts">The counts</h2>
+    <div class="scroll"><table id="counts"></table></div>
+  </section>
+
+  <footer id="prov"></footer>
+</main>
+
+<script id="network-data" type="application/json">__DATA_JSON__</script>
+<script>
+(() => {
+  "use strict";
+  const D = JSON.parse(document.getElementById("network-data").textContent);
+  const N = D.n_wall, K = D.n_core, M = N + K;
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(SVGNS, tag);
+    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const fmt = (v, d = 2) => (v === null || v === undefined ? "—" : Number(v).toFixed(d));
+  const nameOf = (n) => (n < N ? `w${n}` : `c${n - N}`);
+  const longName = (n) => (n < N ? `wall neuron ${n}` : `core neuron ${n - N}`);
+  const layerOf = (i, j) => (i < N && j < N ? "ring" : i >= N && j < N ? "in" : i < N && j >= N ? "out" : "core");
+  const LAYER_LABEL = { ring: "ring", in: "spoke in, wall → core", out: "spoke out, core → wall", core: "core" };
+  const LAYER_VAR = { ring: "var(--ring)", in: "var(--spoke)", out: "var(--spoke)", core: "var(--core)" };
+
+  let mode = "uniform", view = "structure", focus = null, pinned = null;
+  const layersOn = { ring: true, in: true, out: true, core: true };
+
+  // --- geometry: the front (node 0, the heading) at the top, angles anticlockwise as in the code ----------------------------
+  const CX = 320, CY = 320, RW = 250, RC = 92;
+  const theta = (i) => 2 * Math.PI * i / N;
+  const pos = (n) => {
+    if (n < N) { const t = theta(n); return [CX - RW * Math.sin(t), CY - RW * Math.cos(t)]; }
+    const t = 2 * Math.PI * (n - N) / K; return [CX - RC * Math.sin(t), CY - RC * Math.cos(t)];
+  };
+
+  // --- the diagram ---------------------------------------------------------------------------------------------------
+  const svg = document.getElementById("diagram");
+  const defs = el("defs", {}, svg);
+  for (const [id, color] of [["m-in", "var(--ink)"], ["m-out", "var(--accent)"]]) {
+    const m = el("marker", { id, viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" }, defs);
+    el("path", { d: "M0,0 L10,5 L0,10 z", fill: color }, m);
+  }
+  const edgeLayer = el("g", {}, svg), nodeLayer = el("g", {}, svg);
+  const edges = new Map();
+  function edgePath(i, j) {
+    const [x1, y1] = pos(j), [x2, y2] = pos(i), L = layerOf(i, j);
+    if (i === j) {
+      const [x, y] = pos(i), dx = x - CX, dy = y - CY, r = Math.hypot(dx, dy) || 1, ux = dx / r, uy = dy / r;
+      const out = i < N ? 1 : -1, cx = x + ux * 16 * out, cy = y + uy * 16 * out;
+      return `M ${x + ux * 10 * out - uy * 6} ${y + uy * 10 * out + ux * 6} A 8 8 0 1 1 ${x + ux * 10 * out + uy * 6} ${y + uy * 10 * out - ux * 6}`;
+    }
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, len = Math.hypot(x2 - x1, y2 - y1) || 1;
+    let nx = -(y2 - y1) / len, ny = (x2 - x1) / len, off;
+    if (L === "ring") { off = 14; }
+    else if (L === "in" || L === "out") {
+      // both directions measured from the wall node toward the core, so in and out bow to opposite sides
+      const w = L === "in" ? j : i, c = L === "in" ? i : j, [wx, wy] = pos(w), [cx, cy] = pos(c), l2 = Math.hypot(cx - wx, cy - wy) || 1;
+      nx = -(cy - wy) / l2; ny = (cx - wx) / l2; off = L === "in" ? 9 : -9;
+    } else { off = 16; }
+    const qx = mx + nx * off, qy = my + ny * off;
+    const sh = (x, y, tx, ty, d) => { const l = Math.hypot(tx - x, ty - y) || 1; return [x + (tx - x) / l * d, y + (ty - y) / l * d]; };
+    const [sx, sy] = sh(x1, y1, qx, qy, j < N ? 14 : 12), [ex, ey] = sh(x2, y2, qx, qy, i < N ? 15 : 13);
+    return `M ${sx} ${sy} Q ${qx} ${qy} ${ex} ${ey}`;
+  }
+  for (let i = 0; i < M; i++) for (let j = 0; j < M; j++) {
+    if (!D.mask[i][j]) continue;
+    const p = el("path", { d: edgePath(i, j), class: "edge" }, edgeLayer);
+    p.dataset.i = i; p.dataset.j = j;
+    edges.set(`${i},${j}`, { i, j, layer: layerOf(i, j), path: p });
+    p.addEventListener("pointerenter", () => hover({ type: "weight", i, j }));
+    p.addEventListener("pointerleave", () => hover(null));
+    p.addEventListener("click", () => pin({ type: "weight", i, j }));
+  }
+  const nodes = [];
+  for (let n = 0; n < M; n++) {
+    const [x, y] = pos(n), g = el("g", { class: "node", tabindex: "0", role: "button", "aria-label": longName(n) }, nodeLayer);
+    el("circle", { cx: x, cy: y, r: n < N ? 13 : 11, fill: n < N ? "var(--ring)" : "var(--core)" }, g);
+    const t = el("text", { x, y }, g); t.textContent = nameOf(n); t.style.fill = "#fff";
+    g.addEventListener("pointerenter", () => hover({ type: "neuron", n }));
+    g.addEventListener("pointerleave", () => hover(null));
+    g.addEventListener("click", () => pin({ type: "neuron", n }));
+    g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pin({ type: "neuron", n }); } });
+    nodes.push(g);
+  }
+  const front = el("text", { x: CX, y: CY - RW - 30, "text-anchor": "middle" }, svg); front.textContent = "front: the heading, node 0";
+  front.style.fontSize = "12px";
+  const coreLab = el("text", { x: CX, y: CY, "text-anchor": "middle", "dominant-baseline": "central" }, svg); coreLab.textContent = "core";
+  coreLab.style.fontSize = "12px";
+
+  // --- the matrix ----------------------------------------------------------------------------------------------------
+  const mat = document.getElementById("matrix"), CELL = 19, MX = 44, MY = 44;
+  const cells = new Map();
+  el("rect", { x: MX, y: MY, width: CELL * M, height: CELL * M, fill: "var(--surface)", stroke: "var(--rule)" }, mat);
+  for (let i = 0; i < M; i++) {
+    const rt = el("text", { x: MX - 6, y: MY + CELL * i + CELL / 2, "text-anchor": "end", "dominant-baseline": "central" }, mat); rt.textContent = nameOf(i); rt.style.fontSize = "9px";
+    const ct = el("text", { x: MX + CELL * i + CELL / 2, y: MY - 6, "text-anchor": "middle" }, mat); ct.textContent = nameOf(i); ct.style.fontSize = "9px";
+    for (const [t, n] of [[rt, i], [ct, i]]) { t.style.cursor = "pointer"; t.addEventListener("pointerenter", () => hover({ type: "neuron", n })); t.addEventListener("pointerleave", () => hover(null)); t.addEventListener("click", () => pin({ type: "neuron", n })); }
+    for (let j = 0; j < M; j++) {
+      const r = el("rect", { x: MX + CELL * j + 1, y: MY + CELL * i + 1, width: CELL - 2, height: CELL - 2, rx: 2, class: "cellrect" }, mat);
+      cells.set(`${i},${j}`, r);
+      if (D.mask[i][j]) {
+        r.addEventListener("pointerenter", () => hover({ type: "weight", i, j }));
+        r.addEventListener("pointerleave", () => hover(null));
+        r.addEventListener("click", () => pin({ type: "weight", i, j }));
+      }
+    }
+  }
+  el("line", { x1: MX + CELL * N, y1: MY - 2, x2: MX + CELL * N, y2: MY + CELL * M + 2, stroke: "var(--ink-3)" }, mat);
+  el("line", { x1: MX - 2, y1: MY + CELL * N, x2: MX + CELL * M + 2, y2: MY + CELL * N, stroke: "var(--ink-3)" }, mat);
+  const ml = el("text", { x: MX, y: 16 }, mat); ml.textContent = "row: to · column: from"; ml.style.fontSize = "11px";
+  const rowHi = el("rect", { fill: "none", stroke: "var(--ink)", "stroke-width": 1.5, visibility: "hidden", "pointer-events": "none" }, mat);
+  const colHi = el("rect", { fill: "none", stroke: "var(--accent)", "stroke-width": 1.5, visibility: "hidden", "pointer-events": "none" }, mat);
+
+  // --- data for the current mode and view ----------------------------------------------------------------------------
+  const MD = () => D.modes[mode];
+  const EX = () => (view === "structure" ? null : MD().examples[Number(view)]);
+  let byEntry = new Map();
+  function indexGenes() {
+    byEntry = new Map();
+    MD().genes.forEach((g) => g.W.forEach(([i, j, c]) => { const k = `${i},${j}`; if (!byEntry.has(k)) byEntry.set(k, []); byEntry.get(k).push([g.index, c]); }));
+  }
+  const wmax = () => { const ex = EX(); if (!ex) return 1; let m = 0; ex.W.forEach((row) => row.forEach((v) => { m = Math.max(m, Math.abs(v)); })); return m || 1; };
+
+  // --- styling ------------------------------------------------------------------------------------------------------
+  function styleAll() {
+    const ex = EX(), wm = wmax();
+    edges.forEach((e) => {
+      const p = e.path, on = layersOn[e.layer];
+      p.style.display = on ? "" : "none";
+      if (!ex) {
+        p.style.stroke = LAYER_VAR[e.layer];
+        p.style.strokeWidth = e.layer === "ring" ? 1.6 : 1;
+        p.style.opacity = { ring: 0.75, in: 0.16, out: 0.16, core: 0.4 }[e.layer];
+      } else {
+        const w = ex.W[e.i][e.j], a = Math.abs(w) / wm;
+        p.style.stroke = w >= 0 ? "var(--pos)" : "var(--neg)";
+        p.style.strokeWidth = 0.5 + 2.6 * a;
+        p.style.opacity = e.layer === "in" || e.layer === "out" ? 0.08 + 0.7 * a : 0.15 + 0.85 * a;
+      }
+    });
+    cells.forEach((r, k) => {
+      const [i, j] = k.split(",").map(Number);
+      if (!D.mask[i][j]) { r.setAttribute("fill", "var(--paper)"); r.setAttribute("opacity", "1"); return; }
+      if (!ex) { r.setAttribute("fill", LAYER_VAR[layerOf(i, j)]); r.setAttribute("opacity", "0.55"); }
+      else {
+        const w = ex.W[i][j], a = Math.min(1, Math.abs(w) / wm);
+        r.setAttribute("fill", `color-mix(in srgb, ${w >= 0 ? "var(--pos)" : "var(--neg)"} ${Math.round(12 + 88 * a)}%, var(--mid))`);
+        r.setAttribute("opacity", "1");
+      }
+    });
+    renderKeys();
+    renderGenome();
+    applyFocus();
+  }
+  function renderKeys() {
+    const ex = EX();
+    const dk = document.getElementById("diagram-key"), mk = document.getElementById("matrix-key");
+    if (!ex) {
+      dk.innerHTML = `<span><span class="line" style="border-color:var(--ring)"></span>ring: self and both neighbours</span>` +
+        `<span><span class="line" style="border-color:var(--spoke)"></span>spokes, every wall neuron ↔ every core neuron</span>` +
+        `<span><span class="line" style="border-color:var(--core)"></span>core, fully recurrent</span>`;
+      mk.innerHTML = `<div style="display:grid;gap:8px"><span><span class="dot" style="background:var(--ring)"></span> ring band: 48 weights, set by 3 numbers</span>` +
+        `<span><span class="dot" style="background:var(--spoke)"></span> spokes: 128 in and 128 out, set by ${mode === "uniform" ? "8 + 8" : "24 + 24"} numbers</span>` +
+        `<span><span class="dot" style="background:var(--core)"></span> core: 64 weights, 64 numbers</span>` +
+        `<span class="hint">Point at an entry to see the number that sets it and every other entry that number sets.</span></div>`;
+    } else {
+      const wm = wmax();
+      dk.innerHTML = `<span><span class="line" style="border-color:var(--pos)"></span>positive (excites)</span><span><span class="line" style="border-color:var(--neg)"></span>negative (inhibits)</span>` +
+        `<span>width and strength by |w|; largest here ${wm.toFixed(2)}</span>`;
+      mk.innerHTML = `<div style="display:grid;gap:8px"><span><span class="dot" style="background:var(--pos)"></span> positive · <span class="dot" style="background:var(--neg)"></span> negative, stronger for larger |w| (to ${wm.toFixed(2)})</span>` +
+        `<span class="hint">${ex.label} of the cave's random genomes, seed ${D.provenance.seed}: ${mode === "fourier1" ? "its spoke weights vary around the ring" : "each spoke weight is the same for all sixteen wall neurons"}.</span></div>`;
+    }
+  }
+
+  // --- the genome ------------------------------------------------------------------------------------------------------
+  const squares = new Map();
+  function geneFill(g, ex) {
+    const fam = { core_w: "var(--core)", core_bias: "var(--core)", core_log_tau: "var(--core)", ring: "var(--ring)", alpha: "var(--ring)", spokes_in: "var(--spoke)", spokes_out: "var(--spoke)" }[g.block];
+    if (!ex) return `color-mix(in srgb, ${fam} 60%, var(--surface))`;
+    const v = ex.genome[g.index];
+    const signed = g.block === "ring" ? ["log τ, every wall neuron", "sensory gain g"].indexOf(g.name) < 0 : g.block !== "core_log_tau";
+    if (signed) {
+      const half = (g.hi - g.lo) / 2, a = Math.min(1, Math.abs(v - (g.hi + g.lo) / 2) / half);
+      return `color-mix(in srgb, ${v >= (g.hi + g.lo) / 2 ? "var(--pos)" : "var(--neg)"} ${Math.round(10 + 90 * a)}%, var(--mid))`;
+    }
+    const a = (v - g.lo) / (g.hi - g.lo);
+    return `color-mix(in srgb, var(--ink) ${Math.round(8 + 80 * a)}%, var(--mid))`;
+  }
+  function renderGenome() {
+    const md = MD(), ex = EX(), host = document.getElementById("genome");
+    document.getElementById("genome-intro").textContent =
+      `In the ${mode} spoke mode the genome has ${md.length} numbers, laid out in this order. Most weights are not their own numbers: the ring's three weights are shared by all sixteen wall neurons (the repeated membrane unit), and ` +
+      (mode === "uniform" ? "each spoke number sets that spoke for every wall neuron at once, so the core sees only the ring's total light." : "each spoke is three numbers, a + b·cos θ + c·sin θ, so its weight varies smoothly around the ring and the cell has a front.") +
+      (ex ? ` Shown: ${ex.label}; positive red, negative blue, time constants and gain in grey by their place in the range.` : "");
+    host.innerHTML = ""; squares.clear();
+    md.blocks.forEach((b) => {
+      const block = document.createElement("div"); block.className = "block";
+      const head = document.createElement("div"); head.className = "block-head";
+      const genes = md.genes.slice(b.start, b.stop), lo = genes[0].lo, hi = genes[0].hi;
+      head.innerHTML = `<b></b><span></span>`;
+      head.firstChild.textContent = `${b.label} · ${b.stop - b.start}`;
+      const range = b.key === "ring" ? "" : b.key === "core_log_tau"
+        ? ` · τ from ${Math.round(Math.exp(lo))} s to ${Math.round(Math.exp(hi)).toLocaleString("en-GB")} s, log-uniform`
+        : b.key === "alpha" ? " · range −180° to 180°" : ` · range ${fmt(lo)} to ${fmt(hi)}`;
+      head.lastChild.textContent = `${b.note} · numbers ${b.start + 1}–${b.stop}${range}`;
+      block.appendChild(head);
+      const row = document.createElement("div"); row.className = "squares"; row.setAttribute("aria-hidden", "true");
+      genes.forEach((g) => {
+        const s = document.createElement("span"); s.className = "sq"; s.style.background = geneFill(g, ex);
+        s.addEventListener("pointerenter", () => hover({ type: "gene", g: g.index }));
+        s.addEventListener("pointerleave", () => hover(null));
+        s.addEventListener("click", () => pin({ type: "gene", g: g.index }));
+        row.appendChild(s); squares.set(g.index, s);
+      });
+      block.appendChild(row); host.appendChild(block);
+    });
+    const tbl = document.getElementById("genome-table");
+    tbl.innerHTML = `<thead><tr><th class="n">#</th><th>Number</th><th>Block</th><th class="n">Range</th><th class="n">Sets weights</th>${ex ? '<th class="n">Value</th>' : ""}</tr></thead>`;
+    const tb = document.createElement("tbody");
+    md.genes.forEach((g) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td class="n">${g.index + 1}</td><td></td><td></td><td class="n">${fmt(g.lo)} to ${fmt(g.hi)}</td><td class="n">${g.W.length || "—"}</td>${ex ? `<td class="n">${fmt(ex.genome[g.index], 3)}</td>` : ""}`;
+      tr.children[1].textContent = g.name; tr.children[2].textContent = md.blocks.find((b) => b.key === g.block).label;
+      tb.appendChild(tr);
+    });
+    tbl.appendChild(tb);
+  }
+
+  // --- focus: what is pointed at -----------------------------------------------------------------------------------------
+  function hover(f) { focus = f; applyFocus(); }
+  function pin(f) { pinned = pinned && JSON.stringify(pinned) === JSON.stringify(f) ? null : f; focus = null; applyFocus(); }
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pinned) { pinned = null; applyFocus(); } });
+  function clearMarks() {
+    edges.forEach((e) => e.path.classList.remove("dim", "hl-in", "hl-out", "hl-gene"));
+    nodes.forEach((n) => n.classList.remove("focus", "param"));
+    squares.forEach((s) => s.classList.remove("on"));
+    cells.forEach((r) => { r.removeAttribute("stroke"); r.removeAttribute("stroke-width"); });
+    rowHi.setAttribute("visibility", "hidden"); colHi.setAttribute("visibility", "hidden");
+  }
+  function markCell(i, j, color) { const r = cells.get(`${i},${j}`); if (r) { r.setAttribute("stroke", color); r.setAttribute("stroke-width", "2"); } }
+  function applyFocus() {
+    clearMarks();
+    const f = focus || pinned;
+    const ins = document.getElementById("inspector");
+    if (!f) { ins.innerHTML = defaultInspector(); return; }
+    edges.forEach((e) => e.path.classList.add("dim"));
+    const ex = EX();
+    if (f.type === "neuron") {
+      const n = f.n;
+      nodes[n].classList.add("focus");
+      edges.forEach((e) => { if (e.i === n) { e.path.classList.remove("dim"); e.path.classList.add("hl-in"); } else if (e.j === n) { e.path.classList.remove("dim"); e.path.classList.add("hl-out"); } });
+      rowHi.setAttribute("x", MX); rowHi.setAttribute("y", MY + CELL * n); rowHi.setAttribute("width", CELL * M); rowHi.setAttribute("height", CELL); rowHi.setAttribute("visibility", "visible");
+      colHi.setAttribute("x", MX + CELL * n); colHi.setAttribute("y", MY); colHi.setAttribute("width", CELL); colHi.setAttribute("height", CELL * M); colHi.setAttribute("visibility", "visible");
+      MD().genes.forEach((g) => { if (g.bias.includes(n) || g.tau.includes(n) || (n < N && (g.gain || g.alpha))) squares.get(g.index)?.classList.add("on"); });
+      ins.innerHTML = neuronInspector(n, ex);
+      if (n >= N) drawProfile(n, ex);
+    } else if (f.type === "weight") {
+      const { i, j } = f, e = edges.get(`${i},${j}`), setters = byEntry.get(`${i},${j}`) || [];
+      if (e) { e.path.classList.remove("dim"); e.path.classList.add("hl-in"); }
+      const siblings = new Set();
+      setters.forEach(([g]) => { squares.get(g)?.classList.add("on"); MD().genes[g].W.forEach(([a, b]) => siblings.add(`${a},${b}`)); });
+      siblings.forEach((k) => { const s = edges.get(k); if (s && k !== `${i},${j}`) { s.path.classList.remove("dim"); s.path.classList.add("hl-gene"); } const [a, b] = k.split(",").map(Number); markCell(a, b, "var(--accent)"); });
+      markCell(i, j, "var(--ink)");
+      nodes[i].classList.add("focus"); nodes[j].classList.add("focus");
+      ins.innerHTML = weightInspector(i, j, setters, siblings.size, ex);
+    } else if (f.type === "gene") {
+      const g = MD().genes[f.g];
+      squares.get(g.index)?.classList.add("on");
+      const cmax = Math.max(1e-9, ...g.W.map(([, , c]) => Math.abs(c)));
+      g.W.forEach(([i, j, c]) => { const e = edges.get(`${i},${j}`); if (e) { e.path.classList.remove("dim"); e.path.classList.add("hl-gene"); e.path.style.opacity = String(0.25 + 0.75 * Math.abs(c) / cmax); } markCell(i, j, "var(--accent)"); });
+      g.bias.concat(g.tau).forEach((n) => nodes[n].classList.add("param"));
+      if (g.gain || g.alpha) for (let n = 0; n < N; n++) nodes[n].classList.add("param");
+      ins.innerHTML = geneInspector(g, ex);
+    }
+  }
+  function defaultInspector() {
+    const md = MD();
+    return `<h3>${mode === "uniform" ? "Uniform spokes" : "Fourier spokes"}</h3>` +
+      `<p>${mode === "uniform"
+        ? "Every wall neuron sends core neuron j the same weight and receives the same weight from it. The core sees only the ring's total light, never its direction: steering has to come from the wall's own local reflexes, from a pattern the ring forms, or from the core comparing the total over time."
+        : "A spoke's weight varies smoothly with the wall neuron's angle θ: a + b·cos θ + c·sin θ, three numbers per spoke and direction. The core can read the light's direction in the body's frame and set the wall's pattern by direction: the cell has a front."}</p>` +
+      `<dl class="facts"><dt>neurons</dt><dd>${M}: ${N} wall, ${K} core</dd><dt>weights allowed</dt><dd>368 of 576</dd><dt>genome</dt><dd>${md.length} numbers</dd></dl>` +
+      `<p class="hint">Point at a neuron, an edge, a matrix entry or a genome number. In-coming connections are drawn dark, out-going green.</p>`;
+  }
+  function neuronInspector(n, ex) {
+    const wall = n < N, deg = wall ? `θ = ${(theta(n) * 180 / Math.PI).toFixed(1)}° from the heading` : "";
+    let html = `<h3>${longName(n)[0].toUpperCase() + longName(n).slice(1)}</h3>`;
+    html += `<p>${wall ? `Senses the light at its place on the membrane (${deg}) and beats its cilium with its output. Receives from itself, its two ring neighbours and all eight core neurons; sends to the same.` : "Receives from all sixteen wall neurons and all eight core neurons, itself included; sends to all of them."}</p>`;
+    html += `<dl class="facts"><dt>in</dt><dd>${D.mask[n].reduce((a, b) => a + b, 0)} weights (dark)</dd><dt>out</dt><dd>${D.mask.reduce((a, row) => a + row[n], 0)} weights (green)</dd>`;
+    if (ex) {
+      html += `<dt>bias β</dt><dd>${fmt(ex.bias[n], 3)}${wall ? " (shared by the ring)" : ""}</dd><dt>time constant τ</dt><dd>${fmt(ex.tau[n], 1)} s${wall ? " (shared)" : ""}</dd>`;
+      if (wall) html += `<dt>sensory gain g</dt><dd>${fmt(ex.gain, 3)} (shared)</dd><dt>cilium angle α</dt><dd>${fmt(ex.alpha * 180 / Math.PI, 1)}° (shared)</dd>`;
+    } else {
+      html += `<dt>own parameters</dt><dd>${wall ? "none: bias, τ, g and α are the ring's, shared" : "bias and τ, its own"}</dd>`;
+    }
+    html += `</dl>`;
+    if (!wall) html += `<div><span class="label">Its spokes around the ring</span><svg id="profile" viewBox="0 0 300 150" role="img" aria-label="Spoke weights by the wall neuron's angle"></svg></div>`;
+    return html;
+  }
+  function weightInspector(i, j, setters, nSib, ex) {
+    const md = MD(), L = layerOf(i, j);
+    let html = `<h3>W[${nameOf(i)} ← ${nameOf(j)}]</h3><p>The weight to ${longName(i)} from ${longName(j)}: ${LAYER_LABEL[L]}${i === j ? ", a self link" : ""}.</p><dl class="facts">`;
+    if (ex) html += `<dt>value</dt><dd>${fmt(ex.W[i][j], 4)}</dd>`;
+    setters.forEach(([g, c]) => {
+      const gene = md.genes[g];
+      html += `<dt>set by #${g + 1}</dt><dd>${gene.name}${Math.abs(c - 1) > 1e-6 ? ` × ${fmt(c, 3)}` : ""}</dd>`;
+    });
+    html += `<dt>shared with</dt><dd>${nSib > 1 ? `${nSib - 1} other weights (outlined)` : "nothing: its own number"}</dd></dl>`;
+    return html;
+  }
+  function geneInspector(g, ex) {
+    const md = MD(), b = md.blocks.find((x) => x.key === g.block);
+    let html = `<h3>Number ${g.index + 1}: ${g.name}</h3><dl class="facts"><dt>block</dt><dd>${b.label}</dd><dt>range</dt><dd>${fmt(g.lo, 3)} to ${fmt(g.hi, 3)}</dd>`;
+    if (ex) html += `<dt>value</dt><dd>${fmt(ex.genome[g.index], 4)}</dd>`;
+    const sets = [];
+    if (g.W.length) sets.push(`${g.W.length} weight${g.W.length > 1 ? "s" : ""}`);
+    if (g.bias.length) sets.push(`the bias of ${g.bias.length > 1 ? `${g.bias.length} neurons` : longName(g.bias[0])}`);
+    if (g.tau.length) sets.push(`the time constant of ${g.tau.length > 1 ? `${g.tau.length} neurons` : longName(g.tau[0])}`);
+    if (g.gain) sets.push("the sensory gain of every wall neuron");
+    if (g.alpha) sets.push("the angle of every cilium");
+    html += `<dt>sets</dt><dd>${sets.join("; ") || "nothing"}</dd></dl>`;
+    if (mode === "fourier1" && g.block.startsWith("spokes") && g.W.length < N) html += `<p class="hint">It reaches ${g.W.length} of the 16 wall neurons: the two it misses sit where its cos θ or sin θ is zero.</p>`;
+    if (g.block === "ring" && g.W.length) html += `<p class="hint">One number for all sixteen wall neurons: the repeated membrane unit.</p>`;
+    return html;
+  }
+  function drawProfile(n, ex) {
+    const s = document.getElementById("profile");
+    if (!s) return;
+    const j = n, W0 = 34, W1 = 290, H0 = 14, H1 = 120;
+    const ax = (deg) => W0 + (W1 - W0) * deg / 360;
+    if (!ex) {
+      const t = el("text", { x: 150, y: 70, "text-anchor": "middle" }, s); t.textContent = "choose a genome to see the weights"; t.style.fontSize = "11px";
+      return;
+    }
+    const inW = [], outW = [];
+    for (let i = 0; i < N; i++) { inW.push(ex.W[j][i]); outW.push(ex.W[i][j]); }
+    const m = Math.max(1e-9, ...inW.map(Math.abs), ...outW.map(Math.abs));
+    const ay = (v) => (H0 + H1) / 2 - v / m * (H1 - H0) / 2;
+    el("line", { x1: W0, y1: ay(0), x2: W1, y2: ay(0), stroke: "var(--rule)" }, s);
+    [0, 90, 180, 270, 360].forEach((d) => { const t = el("text", { x: ax(d), y: 140, "text-anchor": "middle" }, s); t.textContent = `${d}°`; t.style.fontSize = "10px"; });
+    [[m, fmt(m, 1)], [-m, fmt(-m, 1)]].forEach(([v, lab]) => { const t = el("text", { x: W0 - 4, y: ay(v), "text-anchor": "end", "dominant-baseline": "central" }, s); t.textContent = lab; t.style.fontSize = "10px"; });
+    [[inW, "var(--spoke)", "in"], [outW, "var(--ink-2)", "out"]].forEach(([arr, color]) => {
+      const pts = arr.map((v, i) => `${ax(i * 360 / N)},${ay(v)}`).concat([`${ax(360)},${ay(arr[0])}`]);
+      el("polyline", { points: pts.join(" "), fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round" }, s);
+      arr.forEach((v, i) => el("circle", { cx: ax(i * 360 / N), cy: ay(v), r: 3, fill: color, stroke: "var(--surface)", "stroke-width": 1.5 }, s));
+    });
+    const lg = el("text", { x: W0, y: 10 }, s); lg.style.fontSize = "10px"; lg.textContent = "▬ in: wall → this core   ▬ out: this core → wall";
+    const key = document.createElement("div"); key.className = "key";
+    key.innerHTML = `<span><span class="line" style="border-color:var(--spoke)"></span>in, wall → c${j - N}</span><span><span class="line" style="border-color:var(--ink-2)"></span>out, c${j - N} → wall</span><span>by the wall neuron's angle θ</span>`;
+    lg.remove();
+    s.after(key);
+  }
+
+  // --- controls ------------------------------------------------------------------------------------------------------
+  document.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => {
+    mode = b.dataset.mode; document.querySelectorAll("[data-mode]").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    pinned = null; indexGenes(); styleAll();
+  }));
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
+    view = b.dataset.view; document.querySelectorAll("[data-view]").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    styleAll();
+  }));
+  document.querySelectorAll("[data-layer]").forEach((c) => c.addEventListener("change", () => { layersOn[c.dataset.layer] = c.checked; styleAll(); }));
+
+  // --- the cilia demo (the formulas of protocell/motion.py, in the body's frame, the heading up) ------------------------
+  const demo = document.getElementById("demo"), alphaIn = document.getElementById("alpha"), patternIn = document.getElementById("pattern");
+  function beatsFor(p) {
+    return Array.from({ length: N }, (_, i) => {
+      const t = theta(i);
+      if (p === "front") return Math.cos(t) > 1e-9 ? 1 : 0;
+      if (p === "one") return i === 4 ? 1 : 0;
+      if (p === "all") return 1;
+      return 1 / (1 + Math.exp(-6 * Math.cos(t - Math.PI / 4)));
+    });
+  }
+  function drawDemo() {
+    demo.innerHTML = "";
+    const P = D.params, a = Number(alphaIn.value) * Math.PI / 180, b = beatsFor(patternIn.value);
+    document.getElementById("alpha-val").textContent = `${alphaIn.value}°`;
+    const cx = 160, cy = 160, r = 78, sc = (t, R) => [cx - R * Math.sin(t), cy - R * Math.cos(t)];
+    const ring = Array.from({ length: N }, (_, i) => sc(theta(i), r));
+    el("polygon", { points: ring.map((p) => p.join(",")).join(" "), fill: "none", stroke: "var(--ink-3)", "stroke-width": 1.5 }, demo);
+    let vx = 0, vy = 0, sb = 0;
+    ring.forEach(([x, y], i) => {
+      const dir = theta(i) + a, ux = -Math.sin(dir), uy = -Math.cos(dir), L = 6 + 40 * b[i];
+      vx += b[i] * Math.cos(dir); vy += b[i] * Math.sin(dir); sb += b[i];
+      el("line", { x1: x + ux * 8, y1: y + uy * 8, x2: x + ux * (8 + L), y2: y + uy * (8 + L), stroke: "var(--core)", "stroke-width": 2, "stroke-linecap": "round", opacity: 0.25 + 0.75 * b[i] }, demo);
+      el("circle", { cx: x, cy: y, r: 6, fill: i === 0 ? "var(--ink)" : "var(--ring)", stroke: "var(--surface)", "stroke-width": 2 }, demo);
+    });
+    vx *= P.v_max * Math.PI / N; vy *= P.v_max * Math.PI / N;
+    const omega = P.omega_max * sb / N * Math.sin(a), sp = Math.hypot(vx, vy);
+    if (sp > 1e-6) {
+      const L = Math.min(70, 60 * sp / P.v_max), ang = Math.atan2(vy, vx), ex = cx - L * Math.sin(ang), ey = cy - L * Math.cos(ang);
+      el("line", { x1: cx, y1: cy, x2: ex, y2: ey, stroke: "var(--ink)", "stroke-width": 2.5, "marker-end": "url(#d-arrow)" }, demo);
+    }
+    const dd = el("defs", {}, demo), mk = el("marker", { id: "d-arrow", viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "6", markerHeight: "6", orient: "auto" }, dd);
+    el("path", { d: "M0,0 L10,5 L0,10 z", fill: "var(--ink)" }, mk);
+    const lab = el("text", { x: cx, y: 14, "text-anchor": "middle" }, demo); lab.textContent = "front (node 0)"; lab.style.fontSize = "11px";
+    document.getElementById("demo-out").textContent =
+      `Speed ${sp.toFixed(2)} R/s (v_max ${P.v_max}), turning ${omega.toFixed(2)} rad/s (ω_max ${P.omega_max}). ` +
+      (Math.abs(a) < 1e-9 ? "At α = 0 a cilium pulls the cell toward its own side and nothing turns it." : "A non-zero α turns every pull the same way, so the cell also rotates.");
+  }
+  alphaIn.addEventListener("input", drawDemo); patternIn.addEventListener("change", drawDemo);
+
+  // --- counts, parameters, provenance --------------------------------------------------------------------------------------
+  const U = D.modes.uniform, F = D.modes.fourier1, cnt = (md, key) => { const b = md.blocks.find((x) => x.key === key); return b.stop - b.start; };
+  document.getElementById("counts").innerHTML =
+    `<thead><tr><th>Part</th><th class="n">Weights the mask allows</th><th class="n">Numbers, uniform</th><th class="n">Numbers, fourier1</th></tr></thead><tbody>` +
+    `<tr><td>The ring: self and two neighbours, each wall neuron</td><td class="n">48</td><td class="n">3</td><td class="n">3</td></tr>` +
+    `<tr><td>Spokes in, wall → core</td><td class="n">128</td><td class="n">${cnt(U, "spokes_in")}</td><td class="n">${cnt(F, "spokes_in")}</td></tr>` +
+    `<tr><td>Spokes out, core → wall</td><td class="n">128</td><td class="n">${cnt(U, "spokes_out")}</td><td class="n">${cnt(F, "spokes_out")}</td></tr>` +
+    `<tr><td>The core, fully recurrent</td><td class="n">64</td><td class="n">${cnt(U, "core_w")}</td><td class="n">${cnt(F, "core_w")}</td></tr>` +
+    `<tr><td>Biases and time constants: the ring's shared pair, each core neuron's own</td><td class="n">—</td><td class="n">${2 + cnt(U, "core_bias") + cnt(U, "core_log_tau")}</td><td class="n">${2 + cnt(F, "core_bias") + cnt(F, "core_log_tau")}</td></tr>` +
+    `<tr><td>Sensory gain g and cilium angle α, shared</td><td class="n">—</td><td class="n">2</td><td class="n">2</td></tr>` +
+    `<tr><td><b>All</b></td><td class="n"><b>368 of 576</b></td><td class="n"><b>${U.length}</b></td><td class="n"><b>${F.length}</b></td></tr></tbody>`;
+  const P = D.params;
+  document.getElementById("tick-params").textContent =
+    `In the cave: weights and biases in [${P.weight_range.join(", ")}]; τ from ${P.tau_range[0]} s to ${Math.round(P.tau_range[1]).toLocaleString("en-GB")} s (log-uniform); g in [${P.gain_range.join(", ")}]; ` +
+    `sensor noise ε ${P.sensor_noise_sd.toFixed(4)} a node a tick; rotational noise ${P.rotation_noise_sd.toFixed(3)} rad a tick.`;
+  const pv = D.provenance;
+  document.getElementById("eyebrow").textContent = `protocell · generated from the code at ${(pv.sha || "unknown").slice(0, 7)}${pv.dirty ? " with uncommitted changes" : ""}`;
+  document.getElementById("prov").innerHTML =
+    `<span>Generated by <code>tools/network_doc.py</code> from <code>protocell/cell.py</code> on ${pv.created_at}. What each number sets was found by moving it and decoding the genome, not copied from the layout.</span>` +
+    `<span>The example genomes are the cave's random genomes 1–3 at seed ${pv.seed}, the first three its B3 baseline ran; none of them is evolved.</span>`;
+
+  indexGenes(); styleAll(); drawDemo();
+  const rerender = () => { styleAll(); drawDemo(); };
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", rerender);
+})();
+</script>
