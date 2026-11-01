@@ -306,3 +306,24 @@ that the checks ran); `protocell/` (world, energy, sim, config); `experiments/ca
 `experiments/cave_retreat_probe.py`; `tools/` (replay, network page); `docs/network.html`; `docs/data/cave/` (noon
 and day from run 1, burn and sweep from run 2, `as-preregistered/` run 1's burn and sweep, `retreat_probe/`);
 `tests/`; `README.md`.
+
+## D5 — The owner's decisions on D4: the cave is stage 1's world, evolved in day first, both spoke modes, fitness as the bar; merged
+
+**Date:** 2026-11-01  
+**Why:** the owner's answers to D4 F1–F6: "1. Yes 2. Agree 3. Yes 4. Yes 5. Confirm 6. Merge".
+
+### Decided
+1. **The cave pool, as checked in D4, is stage 1's world.**
+2. **Stage 1 evolves in the day configuration**, against B2r at k = 100 (on starts 51–100 at seed 2: survival 100%,
+   fitness 0.698). Burn and sweep are stage 2's, against B2rr (0.688 and 0.685).
+3. **Stage 1 compares both spoke modes**, uniform and fourier1 (D2 E2 closed).
+4. **The bar is fitness**, with survival and effort per unit light reported beside it (D2 E3 closed).
+5. **The rulings made under "go with what makes sense" are confirmed**: the seven open points of
+   `docs/prereg/cave.md` §12 and amendment A1 (§17, B2rr backs out on its brightest node).
+6. **`stage0-build` and `cave-world` are merged to main.**
+
+Not asked again in D4, and so still open from D2: E4, the starvation rule as a standing rule for later worlds (the
+cave's falloff rule R1 used the same idea, a still cell surviving from at most a tenth of the pool), and E5, B1's own
+`beats` stream (stage 0 clarification C5), which every run since has used.
+
+**Impact:** this entry; `README.md`; main. Next: stage 1's preregistration, drafted before any of it is built.

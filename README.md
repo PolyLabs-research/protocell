@@ -17,8 +17,9 @@ starting with the simplest organism and few parts, each understood, and adding c
 
 **Status:** stage 0 built and checked (D2). The cave pool, the world from stage 1 on, built and checked (D4, 2026-11-01): a south-facing
 cave's pool on a 24-hour cycle, at a 1 s tick, with damage and the sun's sweep as switches. All four configurations pass
-K1–K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` §17; `docs/data/cave/`). Awaiting the owner's
-decisions in D4 before stage 1 is preregistered.
+K1–K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` §17; `docs/data/cave/`). The owner's decisions
+(D5): the cave is stage 1's world, evolved in day first, both spoke modes, fitness as the bar. Next: stage 1's
+preregistration.
 
 ## Running
 
