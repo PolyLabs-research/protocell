@@ -292,6 +292,15 @@ table but B2rr's two byte for byte.
 6. **Merging:** `stage0-build` and `cave-world` (which contains it) are pushed and unmerged. Merging to main is the
    owner's call.
 
+**Correction (2026-11-01, after this entry was pushed): CI was red from `f1fd82f` to `3929b03`, my error.** The
+test I added to pin stage 0's recorded trajectory hashes (`tests/test_stage0_pinned.py`) failed on GitHub's runners.
+There the spot hash comes out different, because numpy's vectorised exp, sin and cos depend on the CPU's instruction
+set, and this machine has AVX-512. `docs/determinism.md` claims the same bits on the same platform only, so the test
+overstated the claim. I had checked CI while `f1fd82f`'s run was still in progress and did not look again. No result is
+affected: every run was made on this machine and checked by its own manifest, and the 76 tests passed here. The test
+now runs only on the platform that recorded the hashes (machine, numpy version, SIMD extensions) and says why it skips
+elsewhere. The observer's test compares runs with and without an observer, on any platform.
+
 **Impact:** this entry; `docs/prereg/cave.md` (§12's rulings and clarifications, §17 run 1 and A1, §18 the record
 that the checks ran); `protocell/` (world, energy, sim, config); `experiments/cave.py`,
 `experiments/cave_retreat_probe.py`; `tools/` (replay, network page); `docs/network.html`; `docs/data/cave/` (noon

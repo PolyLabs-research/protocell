@@ -16,7 +16,7 @@ from protocell.config import CAVE, STAGE0
 from protocell.rng import stream
 from protocell.sim import simulate
 from protocell.world import lifetimes, sample_starts
-from tests.test_stage0_pinned import RECORDED
+from tests.test_stage0_pinned import RECORDED, RECORDED_ON, platform_fingerprint
 from tools import pages
 from tools.network_doc import describe
 from tools.replay import MAX_CELLS, parse_cell, record, write_page
@@ -30,9 +30,13 @@ def test_the_observer_reads_without_changing_a_run() -> None:
     genomes = random_genomes(STAGE0, "fourier1", 5, stream(0, "genomes"))
     few = sample_starts(STAGE0, "spot", 100, 0).numbered(range(51, 56))
     seen = []
-    run = simulate(STAGE0, few, {"controller": "network", "mode": "fourier1", "genomes": genomes}, seed=0, cell_ids=[1, 2, 3, 4, 5],
-                   record=True, observe=lambda t, s: seen.append((t, s["beats"].shape, float(s["energy"][0]))))
-    assert run.run_hash() == RECORDED["spot"]  # stage 0's recorded hash, with an observer attached
+    spec = {"controller": "network", "mode": "fourier1", "genomes": genomes}
+    run = simulate(STAGE0, few, spec, seed=0, cell_ids=[1, 2, 3, 4, 5], record=True,
+                   observe=lambda t, s: seen.append((t, s["beats"].shape, float(s["energy"][0]))))
+    alone = simulate(STAGE0, few, spec, seed=0, cell_ids=[1, 2, 3, 4, 5], record=True)
+    assert run.run_hash() == alone.run_hash()  # the same bits with an observer attached, on any platform
+    if platform_fingerprint() == RECORDED_ON:
+        assert run.run_hash() == RECORDED["spot"]  # and stage 0's recorded hash, on the platform that recorded it
     assert [t for t, _, _ in seen] == list(range(STAGE0.lifetime)) and seen[0][1] == (5, 16)
     assert seen[-1][2] == run.final_energy[0]
     cfg = configure("burn", quick=True)
