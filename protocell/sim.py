@@ -21,7 +21,7 @@ from __future__ import annotations
 import hashlib
 import math
 from dataclasses import dataclass
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -38,6 +38,7 @@ STREAM_MOTION = "motion"
 STREAM_BEATS = "beats"
 BASELINE_CELL_ID = 0  # B0–B2 share this id, so every baseline (and every reflex gain) sees the same noise on a start
 STARVED, BURNT = 1, 2  # a death's cause
+Observer = Callable[[int, Mapping[str, Any]], None]
 
 
 class CellNoise:
@@ -259,9 +260,16 @@ class RunResult:
 
 
 def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *, seed: int,
-             cell_ids: Optional[Sequence[int]] = None, ticks: Optional[int] = None, record: bool = False) -> RunResult:
+             cell_ids: Optional[Sequence[int]] = None, ticks: Optional[int] = None, record: bool = False,
+             observe: Optional[Observer] = None) -> RunResult:
     """Run every start of the batch under one controller spec, each for its own lifetime (``ticks`` overrides it for
-    every cell). ``cell_ids`` (default: the baselines' 0) key the noise with the start's number."""
+    every cell). ``cell_ids`` (default: the baselines' 0) key the noise with the start's number.
+
+    ``observe(t, state)``, when given, is called at the end of every tick t with the batch's state: ``time`` (each
+    cell's time at the tick's start), ``light`` and ``sensed`` (at the pose the tick began with), ``beats``, then
+    ``pos``, ``heading``, ``energy``, ``damage``, ``alive`` and ``active`` after the tick, and the ``controller``. It
+    only reads: the arrays may be reused, so it copies what it keeps, and a run's results are the same bits with or
+    without it (tested). The replays use it (``tools/replay.py``)."""
     population = len(starts)
     ends = lifetimes(cfg, starts) if ticks is None else np.full(population, int(ticks), dtype=np.int64)
     T = int(ends.max())
@@ -331,6 +339,9 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
             traj_heading.append(heading.copy())
             traj_energy.append(energy.copy())
             traj_beat.append(np.where(counting, effort, 0.0))
+        if observe is not None:
+            observe(t, {"time": time, "light": light, "sensed": sensed, "beats": beats, "pos": pos, "heading": heading,
+                        "energy": energy, "damage": damage, "alive": alive, "active": active, "controller": controller})
 
     light_soaked = soaked_sum / ends
     mean_beat = beat_sum / ends

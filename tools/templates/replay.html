@@ -1,0 +1,660 @@
+<title>Cave Pool Replay</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+/* Layout: an instrument console. The clock and the controls on top; the pool and the chosen cell's body side by side;
+   the lifetime's traces and the outcome below. One dark look on purpose: a cave floor lit from its mouth. */
+:root {
+  color-scheme: dark;
+  --rock: #12110f;
+  --panel: #1a1815;
+  --panel-2: #24211d;
+  --line: #3a352e;
+  --ink: #efe9dd;
+  --ink-2: #c2b9a9;
+  --ink-3: #8c8475;
+  --sun: #f0b23e;
+  --cilia: #8fd8ac;
+  --burn: #d03b3b;
+  --night: #1b2030;
+  --cell-1: #3987e5;
+  --cell-2: #d95926;
+  --cell-3: #199e70;
+  --font-ui: "IBM Plex Sans Condensed", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+body { background: var(--rock); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
+.console {
+  max-width: 1320px; margin: 0 auto; display: grid; gap: 14px;
+  padding-block: 16px 36px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.bar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; }
+h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: 0.01em; text-wrap: balance; }
+.sub { margin: 2px 0 0; color: var(--ink-2); font-size: 14px; }
+.clock { font-family: var(--font-data); font-size: 22px; font-variant-numeric: tabular-nums; text-align: right; }
+.clock small { display: block; font-size: 12px; color: var(--ink-3); }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.controls .scrub { flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 10px; }
+input[type="range"] { width: 100%; accent-color: var(--sun); }
+button, select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+button:hover, select:hover { border-color: var(--ink-3); }
+button:focus-visible, select:focus-visible, input:focus-visible, canvas:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; }
+button.play { background: var(--sun); color: var(--rock); border-color: var(--sun); font-weight: 600; min-width: 74px; }
+.label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; }
+.chip[aria-pressed="true"] { border-color: var(--ink); background: #2e2a24; }
+.swatch { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px var(--rock); }
+.views { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 860px) { .views { grid-template-columns: minmax(0, 1fr); } }
+.panel { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.seg button[aria-pressed="true"] { border-color: var(--sun); color: var(--sun); }
+canvas { display: block; width: 100%; max-width: 100%; }
+#pool, #body { aspect-ratio: 1 / 1; height: auto; border-radius: 6px; }
+.key { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.ramp { display: inline-grid; grid-template-columns: auto 140px auto; align-items: center; gap: 6px; font-family: var(--font-data); font-size: 12px; }
+.ramp i { height: 8px; border-radius: 4px; display: block; }
+.rule { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 4px; }
+dl.readout { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+dl.readout div { min-width: 0; }
+dl.readout dt { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+dl.readout dd { margin: 0; font-family: var(--font-data); font-size: 14px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.status-dead { color: #ec835a; }
+.traces { position: relative; }
+#trace { height: 250px; cursor: crosshair; touch-action: none; }
+.tip { position: absolute; pointer-events: none; background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; font-family: var(--font-data); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; z-index: 2; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+td { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+td:first-child { font-family: var(--font-ui); }
+.cellname { display: inline-flex; align-items: center; gap: 8px; }
+footer { color: var(--ink-3); font-size: 13px; }
+footer code { font-family: var(--font-data); font-size: 12px; color: var(--ink-2); }
+.note { color: var(--ink-3); font-size: 13px; margin: 0; }
+</style>
+<!--body-->
+<main class="console">
+  <header class="bar">
+    <div>
+      <h1>Cave pool replay</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="clock" id="clock" aria-live="off"></div>
+  </header>
+
+  <section class="controls" aria-label="Playback">
+    <button type="button" class="play" id="play" aria-label="Play">Play</button>
+    <button type="button" id="back" aria-label="Back one hour">−1 h</button>
+    <button type="button" id="fwd" aria-label="Forward one hour">+1 h</button>
+    <label class="chip"><span class="label">Speed</span>
+      <select id="speed">
+        <option value="60">1 min a second</option>
+        <option value="600">10 min a second</option>
+        <option value="3600" selected>1 hour a second</option>
+        <option value="14400">4 hours a second</option>
+      </select>
+    </label>
+    <div class="scrub"><input type="range" id="scrub" min="0" max="1" step="1" value="0" aria-label="Time in the lifetime"></div>
+    <div class="chips" id="chips" role="group" aria-label="Cells (choose the one shown close up)"></div>
+  </section>
+
+  <section class="views">
+    <figure class="panel">
+      <div class="panel-head">
+        <span class="label">The pool, seen from above · north up</span>
+        <div class="seg" id="zoom" role="group" aria-label="View">
+          <button type="button" data-zoom="pool" aria-pressed="true">Whole pool</button>
+          <button type="button" data-zoom="1000" aria-pressed="false">±1,000 R</button>
+          <button type="button" data-zoom="120" aria-pressed="false">±120 R</button>
+        </div>
+      </div>
+      <canvas id="pool" aria-label="The pool: the light from the mouth, each cell's position and its last two hours of track"></canvas>
+      <figcaption class="key">
+        <span class="ramp"><span>0.001</span><i id="rampbar"></i><span id="rampmax">10</span></span>
+        <span>light, half-saturations (log)</span>
+        <span><span class="rule" style="border-color: var(--ink-2)"></span>soak, I ≥ 1</span>
+        <span id="burnkey"><span class="rule" style="border-color: var(--burn)"></span>burn, I ≥ <span id="burnval"></span></span>
+      </figcaption>
+    </figure>
+
+    <figure class="panel">
+      <div class="panel-head">
+        <span class="label" id="bodytitle">The cell's body</span>
+      </div>
+      <canvas id="body" aria-label="The chosen cell's body: the light at each wall node, each cilium's beat, the core's activity"></canvas>
+      <dl class="readout" id="readout"></dl>
+      <p class="note">Wall nodes are coloured by the light they receive; a cilium's length is its beat. The arrow is the cell's velocity; the sun marks the direction to the mouth. Node 0 is the cell's heading.</p>
+    </figure>
+  </section>
+
+  <section class="panel traces" aria-label="The lifetime">
+    <div class="panel-head"><span class="label">The lifetime · night shaded · click or drag to move through it</span></div>
+    <canvas id="trace" tabindex="0" aria-label="Reserve and damage over the lifetime"></canvas>
+    <div class="tip" id="tip" hidden></div>
+  </section>
+
+  <section class="panel" aria-label="Outcome">
+    <span class="label">Outcome over the lifetime</span>
+    <div class="table-wrap"><table id="outcome"></table></div>
+  </section>
+
+  <footer id="prov"></footer>
+</main>
+
+<script id="replay-data" type="application/json">__DATA_JSON__</script>
+<script>
+(() => {
+  "use strict";
+  const D = JSON.parse(document.getElementById("replay-data").textContent);
+  const W = D.world;
+  const NW = W.n_wall, NK = W.n_core;
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const COL = { rock: css("--rock"), panel: css("--panel"), panel2: css("--panel-2"), line: css("--line"), ink: css("--ink"),
+    ink2: css("--ink-2"), ink3: css("--ink-3"), sun: css("--sun"), cilia: css("--cilia"), burn: css("--burn"), night: css("--night") };
+  const CELL_COLORS = [css("--cell-1"), css("--cell-2"), css("--cell-3")];
+  const MONO = css("--font-data"), UI = css("--font-ui");
+
+  function dec(b64, Type) {
+    const bin = atob(b64), u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return new Type(u8.buffer);
+  }
+  const N = D.frames, STRIDE = D.stride, LIFE = D.start.lifetime, DAY = W.day_ticks;
+  const tick = dec(D.tick, Int32Array), daylight = dec(D.daylight, Float32Array), mouthAngle = dec(D.mouth_angle, Float32Array);
+  const cells = D.cells.map((c, i) => ({
+    ...c, color: CELL_COLORS[i],
+    x: dec(c.x, Float32Array), y: dec(c.y, Float32Array), heading: dec(c.heading, Float32Array),
+    energy: dec(c.energy, Float32Array), damage: dec(c.damage, Float32Array), alive: dec(c.alive, Uint8Array),
+    beats: dec(c.beats, Uint8Array), light: dec(c.light, Uint16Array), core: c.core ? dec(c.core, Uint8Array) : null,
+  }));
+  const damageOn = W.damage_threshold !== null;
+  const HOURS_PER_TICK = 24 / DAY;
+  const THETA = Array.from({ length: NW }, (_, i) => 2 * Math.PI * i / NW);
+
+  // --- time ------------------------------------------------------------------------------------------------------
+  const frameAt = (T) => (T >= tick[N - 1] ? N - 1 : Math.max(0, Math.min(N - 1, Math.floor(T / STRIDE))));
+  const pad = (n) => String(n).padStart(2, "0");
+  function clockOf(t) {
+    const time = D.start.phase + t;
+    const dayIdx = Math.floor(time / DAY) + 1;
+    const h = (6 + 24 * (time % DAY) / DAY) % 24;
+    const hh = Math.floor(h), mm = Math.floor((h - hh) * 60);
+    return { day: dayIdx, text: `${pad(hh)}:${pad(mm)}` };
+  }
+  function since(t) {
+    const h = t * HOURS_PER_TICK, hh = Math.floor(h), mm = Math.floor((h - hh) * 60);
+    return `${hh} h ${pad(mm)} min`;
+  }
+  const fmt = (v, d = 3) => (v === null || v === undefined || Number.isNaN(v) ? "—" : Number(v).toFixed(d));
+  const fmtInt = (v) => Math.round(v).toLocaleString("en-GB");
+
+  // --- the light's colour scale (log, from the dark floor to the mouth at noon) ----------------------------------
+  const STOPS = [[-3, [30, 27, 22]], [-2, [35, 31, 24]], [-1, [56, 42, 22]], [-0.5, [94, 66, 24]], [0, [150, 98, 28]],
+    [Math.log10(4), [215, 150, 45]], [1, [255, 228, 160]]];
+  const NIGHT_FLOOR = [24, 27, 38], OUTSIDE = [12, 11, 10];
+  function lightRGB(I) {
+    if (!(I > 1e-3)) return STOPS[0][1];
+    const l = Math.log10(I);
+    for (let s = 1; s < STOPS.length; s++) {
+      if (l <= STOPS[s][0]) {
+        const [l0, c0] = STOPS[s - 1], [l1, c1] = STOPS[s], f = (l - l0) / (l1 - l0);
+        return [c0[0] + f * (c1[0] - c0[0]), c0[1] + f * (c1[1] - c0[1]), c0[2] + f * (c1[2] - c0[2])];
+      }
+    }
+    return STOPS[STOPS.length - 1][1];
+  }
+  const rgb = (c) => `rgb(${c[0] | 0},${c[1] | 0},${c[2] | 0})`;
+  document.getElementById("rampbar").style.background =
+    `linear-gradient(90deg, ${STOPS.map(([l, c]) => `${rgb(c)} ${((l + 3) / 4 * 100).toFixed(1)}%`).join(", ")})`;
+  document.getElementById("rampmax").textContent = String(W.mouth_light);
+  if (damageOn) document.getElementById("burnval").textContent = String(W.damage_threshold);
+  else document.getElementById("burnkey").hidden = true;
+
+  // --- state -----------------------------------------------------------------------------------------------------
+  let T = 0, playing = false, speed = 3600, sel = 0, zoom = "pool", lastNow = 0, hoverT = null;
+  const scrub = document.getElementById("scrub");
+  scrub.max = String(tick[N - 1]);
+
+  // --- headers, chips, outcome, provenance ---------------------------------------------------------------------------
+  const startClock = clockOf(0);
+  document.getElementById("sub").textContent =
+    `Configuration ${D.configuration} · start ${D.start.number} at ${startClock.text} · lifetime ${(LIFE * HOURS_PER_TICK).toFixed(1)} h to the second sunrise · ` +
+    `${cells.length} cell${cells.length > 1 ? "s" : ""} on the same start and noise`;
+  const chips = document.getElementById("chips");
+  cells.forEach((c, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", i === sel ? "true" : "false");
+    b.innerHTML = `<span class="swatch" style="background:${c.color}"></span><span></span>`;
+    b.lastChild.textContent = c.label;
+    b.addEventListener("click", () => { sel = i; [...chips.children].forEach((x, j) => x.setAttribute("aria-pressed", j === sel ? "true" : "false")); draw(true); });
+    chips.appendChild(b);
+  });
+  function fate(c) {
+    const s = c.summary;
+    if (s.survived) return "survived";
+    const at = clockOf(s.death_tick);
+    return `${s.death_cause} on day ${at.day} at ${at.text}`;
+  }
+  const outcome = document.getElementById("outcome");
+  const pct = (v) => (v === null ? "—" : `${(100 * v).toFixed(1)}%`);
+  outcome.innerHTML = `<thead><tr><th>Cell</th><th>Fate</th><th>Fitness</th><th>Light soaked</th><th>Mean beat</th><th>Beat at night</th><th>In the soak zone</th>${damageOn ? "<th>In the burn zone</th>" : ""}</tr></thead>`;
+  const tb = document.createElement("tbody");
+  cells.forEach((c) => {
+    const s = c.summary, tr = document.createElement("tr");
+    tr.innerHTML = `<td><span class="cellname"><span class="swatch" style="background:${c.color}"></span><span></span></span></td>` +
+      `<td></td><td>${fmt(s.fitness)}</td><td>${fmt(s.light_soaked)}</td><td>${fmt(s.mean_beat)}</td><td>${fmt(s.night_beat)}</td>` +
+      `<td>${pct(s.soak_share)}</td>${damageOn ? `<td>${pct(s.burn_share)}</td>` : ""}`;
+    tr.querySelector(".cellname span:last-child").textContent = c.label;
+    tr.children[1].textContent = fate(c);
+    tr.children[1].style.fontFamily = "var(--font-ui)";
+    tb.appendChild(tr);
+  });
+  outcome.appendChild(tb);
+  const P = D.provenance;
+  document.getElementById("prov").innerHTML =
+    `Recorded every ${STRIDE} tick${STRIDE > 1 ? "s" : ""} (1 tick = 1 s) from the checks' code, seed ${P.seed} and noise keys, so each cell's fate is its row in the checks' tables. ` +
+    `Code <code></code>${P.dirty ? " (with uncommitted changes)" : ""}; recorded ${P.created_at}. Fitness is the mean reserve over the lifetime, dead time counting 0.`;
+  document.querySelector("#prov code").textContent = (P.sha || "unknown").slice(0, 7);
+
+  // --- canvases ------------------------------------------------------------------------------------------------------
+  const pool = document.getElementById("pool"), pctx = pool.getContext("2d");
+  const body = document.getElementById("body"), bctx = body.getContext("2d");
+  const trace = document.getElementById("trace"), tctx = trace.getContext("2d");
+  const field = document.createElement("canvas"), FN = 220; field.width = field.height = FN;
+  const fctx = field.getContext("2d"), fimg = fctx.createImageData(FN, FN);
+  const traceStatic = document.createElement("canvas"), sctx = traceStatic.getContext("2d");
+  let dpr = 1;
+  function fit(canvas) {
+    const r = canvas.getBoundingClientRect();
+    const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; return true; }
+    return false;
+  }
+
+  // --- the pool ------------------------------------------------------------------------------------------------------
+  function viewFor(k) {
+    if (zoom === "pool") return { cx: 0, cy: 0, half: W.pool_radius * 1.06 };
+    const c = cells[sel];
+    return { cx: c.x[k], cy: c.y[k], half: Number(zoom) };
+  }
+  function sourceAt(k) { const a = mouthAngle[k]; return [W.pool_radius * Math.cos(a), W.pool_radius * Math.sin(a)]; }
+  function niceLength(target) {
+    const p = Math.pow(10, Math.floor(Math.log10(target)));
+    for (const m of [1, 2, 5, 10]) if (m * p >= target) return m * p;
+    return 10 * p;
+  }
+  function drawSun(ctx, x, y, r, color, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = Math.max(1, r / 4);
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill();
+    for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4;
+      ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * r * 1.6, y + Math.sin(a) * r * 1.6); ctx.lineTo(x + Math.cos(a) * r * 2.3, y + Math.sin(a) * r * 2.3); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function drawPool(k) {
+    fit(pool);
+    const S = pool.width, v = viewFor(k), half = v.half;
+    const px = (x) => (x - v.cx) / half * (S / 2) + S / 2, py = (y) => S / 2 - (y - v.cy) / half * (S / 2), pr = (r) => r / half * (S / 2);
+    const scale = W.mouth_light * daylight[k], [sx, sy] = sourceAt(k);
+    const R2 = W.pool_radius * W.pool_radius, inv = 1 / (W.falloff * W.falloff), d = fimg.data;
+    for (let j = 0; j < FN; j++) {
+      const y = v.cy + (1 - 2 * (j + 0.5) / FN) * half;
+      for (let i = 0; i < FN; i++) {
+        const x = v.cx + (2 * (i + 0.5) / FN - 1) * half, o = 4 * (j * FN + i);
+        let c;
+        if (x * x + y * y > R2) c = OUTSIDE;
+        else if (!(scale > 0)) c = NIGHT_FLOOR;
+        else { const dx = x - sx, dy = y - sy; c = lightRGB(scale / (1 + (dx * dx + dy * dy) * inv)); }
+        d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
+      }
+    }
+    fctx.putImageData(fimg, 0, 0);
+    pctx.imageSmoothingEnabled = true;
+    pctx.drawImage(field, 0, 0, S, S);
+    // the pool's edge, and the contours clipped to it
+    pctx.save();
+    pctx.beginPath(); pctx.arc(px(0), py(0), pr(W.pool_radius), 0, 2 * Math.PI); pctx.clip();
+    const contour = (thr, color, width, label) => {
+      if (!(scale > thr)) return;
+      const r = W.falloff * Math.sqrt(scale / thr - 1);
+      pctx.strokeStyle = color; pctx.lineWidth = width * dpr;
+      pctx.beginPath(); pctx.arc(px(sx), py(sy), pr(r), 0, 2 * Math.PI); pctx.stroke();
+      const len = Math.hypot(sx, sy), lx = sx - sx / len * r, ly = sy - sy / len * r;
+      const X = px(lx), Y = py(ly);
+      if (X > 0 && X < S && Y > 0 && Y < S) {
+        pctx.font = `${12 * dpr}px ${UI}`; pctx.fillStyle = color; pctx.textAlign = "center"; pctx.textBaseline = "bottom";
+        pctx.fillText(label, X, Y - 4 * dpr);
+      }
+    };
+    contour(W.soak_threshold, COL.ink2, 1, `soak, I ≥ ${W.soak_threshold}`);
+    if (damageOn) contour(W.damage_threshold, COL.burn, 1.5, `burn, I ≥ ${W.damage_threshold}`);
+    pctx.restore();
+    pctx.strokeStyle = COL.line; pctx.lineWidth = 1.5 * dpr;
+    pctx.beginPath(); pctx.arc(px(0), py(0), pr(W.pool_radius), 0, 2 * Math.PI); pctx.stroke();
+    // the mouth
+    const mx = px(sx), my = py(sy);
+    drawSun(pctx, mx, my, 5 * dpr, COL.sun, scale > 0 ? 1 : 0.35);
+    if (zoom === "pool") {
+      pctx.font = `${12 * dpr}px ${UI}`; pctx.fillStyle = COL.ink2; pctx.textBaseline = "middle";
+      const left = mx > S / 2;
+      pctx.textAlign = left ? "right" : "left";
+      pctx.fillText(scale > 0 ? "mouth" : "mouth · night", mx + (left ? -18 : 18) * dpr, Math.min(S - 10 * dpr, my + 6 * dpr));
+    }
+    // tracks: the last two hours, fading
+    const trailFrames = Math.max(2, Math.ceil(2 * DAY / 24 / STRIDE));
+    cells.forEach((c) => {
+      const k0 = Math.max(0, k - trailFrames);
+      const chunks = 4;
+      for (let q = 0; q < chunks; q++) {
+        const a = k0 + Math.floor((k - k0) * q / chunks), b = k0 + Math.floor((k - k0) * (q + 1) / chunks);
+        if (b <= a) continue;
+        pctx.strokeStyle = c.color; pctx.globalAlpha = 0.2 + 0.6 * (q + 1) / chunks; pctx.lineWidth = 1.5 * dpr; pctx.lineJoin = "round";
+        pctx.beginPath(); pctx.moveTo(px(c.x[a]), py(c.y[a]));
+        for (let f = a + 1; f <= b; f++) pctx.lineTo(px(c.x[f]), py(c.y[f]));
+        pctx.stroke();
+      }
+      pctx.globalAlpha = 1;
+    });
+    // the cells
+    cells.forEach((c, i) => {
+      const X = px(c.x[k]), Y = py(c.y[k]), h = c.heading[k], alive = c.alive[k] === 1;
+      pctx.lineWidth = 2 * dpr;
+      if (alive) {
+        pctx.strokeStyle = COL.rock; pctx.beginPath(); pctx.moveTo(X, Y); pctx.lineTo(X + Math.cos(h) * 13 * dpr, Y - Math.sin(h) * 13 * dpr); pctx.lineWidth = 4 * dpr; pctx.stroke();
+        pctx.strokeStyle = c.color; pctx.lineWidth = 2 * dpr; pctx.beginPath(); pctx.moveTo(X, Y); pctx.lineTo(X + Math.cos(h) * 13 * dpr, Y - Math.sin(h) * 13 * dpr); pctx.stroke();
+        pctx.fillStyle = COL.rock; pctx.beginPath(); pctx.arc(X, Y, 7 * dpr, 0, 2 * Math.PI); pctx.fill();
+        pctx.fillStyle = c.color; pctx.beginPath(); pctx.arc(X, Y, 5 * dpr, 0, 2 * Math.PI); pctx.fill();
+      } else {
+        pctx.strokeStyle = COL.rock; pctx.lineWidth = 4 * dpr; pctx.beginPath(); pctx.arc(X, Y, 5 * dpr, 0, 2 * Math.PI); pctx.stroke();
+        pctx.strokeStyle = c.color; pctx.lineWidth = 2 * dpr; pctx.beginPath(); pctx.arc(X, Y, 5 * dpr, 0, 2 * Math.PI); pctx.stroke();
+      }
+      // labels stagger by cell, so cells on the same spot (every start) stay legible
+      pctx.font = `${i === sel ? 600 : 500} ${12 * dpr}px ${UI}`; pctx.textAlign = "left"; pctx.textBaseline = "middle";
+      const text = alive ? c.short : `${c.short} · ${c.summary.death_cause}`, LY = Y + (i * 15 - 12) * dpr;
+      pctx.lineWidth = 3 * dpr; pctx.strokeStyle = COL.rock; pctx.strokeText(text, X + 12 * dpr, LY);
+      pctx.fillStyle = COL.ink; pctx.fillText(text, X + 12 * dpr, LY);
+    });
+    // compass and scale bar
+    pctx.font = `${12 * dpr}px ${UI}`; pctx.fillStyle = COL.ink2; pctx.textAlign = "right"; pctx.textBaseline = "top";
+    pctx.fillText("N ↑", S - 10 * dpr, 10 * dpr);
+    const len = niceLength(half * 0.35), Lpx = pr(len), x0 = 12 * dpr, y0 = S - 14 * dpr;
+    pctx.strokeStyle = COL.ink2; pctx.lineWidth = 1.5 * dpr;
+    pctx.beginPath(); pctx.moveTo(x0, y0 - 4 * dpr); pctx.lineTo(x0, y0); pctx.lineTo(x0 + Lpx, y0); pctx.lineTo(x0 + Lpx, y0 - 4 * dpr); pctx.stroke();
+    const um = len * 5;
+    pctx.textAlign = "left"; pctx.textBaseline = "bottom";
+    pctx.fillText(`${fmtInt(len)} R · ${um >= 1000 ? `${(um / 1000).toLocaleString("en-GB")} mm` : `${um} µm`}`, x0, y0 - 6 * dpr);
+  }
+
+  // --- the body ------------------------------------------------------------------------------------------------------
+  function arrow(ctx, x0, y0, x1, y1, color, width) {
+    const a = Math.atan2(y1 - y0, x1 - x0), h = 8 * dpr;
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = width;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - h * Math.cos(a - 0.4), y1 - h * Math.sin(a - 0.4)); ctx.lineTo(x1 - h * Math.cos(a + 0.4), y1 - h * Math.sin(a + 0.4)); ctx.closePath(); ctx.fill();
+  }
+  function bodyState(c, k) {
+    const h = c.heading[k], beats = [], light = [];
+    for (let i = 0; i < NW; i++) { beats.push(c.beats[k * NW + i] / 255); light.push(c.light[k * NW + i] * D.light_scale); }
+    let vx = 0, vy = 0, sb = 0;
+    for (let i = 0; i < NW; i++) { const a = h + THETA[i] + c.alpha; vx += beats[i] * Math.cos(a); vy += beats[i] * Math.sin(a); sb += beats[i]; }
+    vx *= W.v_max * Math.PI / NW; vy *= W.v_max * Math.PI / NW;
+    const omega = W.omega_max * sb / NW * Math.sin(c.alpha);
+    return { h, beats, light, vx, vy, omega, meanBeat: sb / NW };
+  }
+  function drawBody(k) {
+    fit(body);
+    const S = body.width, cx = S / 2, cy = S / 2, rr = S * 0.28, c = cells[sel], st = bodyState(c, k);
+    bctx.fillStyle = COL.panel; bctx.fillRect(0, 0, S, S);
+    const toX = (a, r) => cx + r * Math.cos(a), toY = (a, r) => cy - r * Math.sin(a);
+    // direction to the mouth
+    const [sx, sy] = sourceAt(k), toSun = Math.atan2(sy - c.y[k], sx - c.x[k]), lit = daylight[k] > 0;
+    bctx.strokeStyle = COL.sun; bctx.globalAlpha = lit ? 0.5 : 0.2; bctx.lineWidth = 1 * dpr;
+    bctx.beginPath(); bctx.moveTo(toX(toSun, rr * 1.18), toY(toSun, rr * 1.18)); bctx.lineTo(toX(toSun, rr * 1.48), toY(toSun, rr * 1.48)); bctx.stroke();
+    bctx.globalAlpha = 1;
+    drawSun(bctx, toX(toSun, rr * 1.58), toY(toSun, rr * 1.58), 6 * dpr, COL.sun, lit ? 1 : 0.3);
+    const nodes = THETA.map((t) => st.h + t);
+    // spokes and core (network cells)
+    const coreR = rr * 0.34;
+    if (c.core) {
+      bctx.strokeStyle = COL.line; bctx.globalAlpha = 0.45; bctx.lineWidth = 1 * dpr;
+      nodes.forEach((a) => { for (let j = 0; j < NK; j++) { const b = st.h + 2 * Math.PI * j / NK; bctx.beginPath(); bctx.moveTo(toX(a, rr), toY(a, rr)); bctx.lineTo(toX(b, coreR), toY(b, coreR)); bctx.stroke(); } });
+      bctx.globalAlpha = 1;
+      for (let j = 0; j < NK; j++) {
+        const b = st.h + 2 * Math.PI * j / NK, act = c.core[k * NK + j] / 255;
+        bctx.fillStyle = COL.rock; bctx.beginPath(); bctx.arc(toX(b, coreR), toY(b, coreR), 9 * dpr, 0, 2 * Math.PI); bctx.fill();
+        bctx.fillStyle = `rgba(239,233,221,${(0.12 + 0.88 * act).toFixed(3)})`; bctx.beginPath(); bctx.arc(toX(b, coreR), toY(b, coreR), 7 * dpr, 0, 2 * Math.PI); bctx.fill();
+      }
+      bctx.font = `${11 * dpr}px ${UI}`; bctx.fillStyle = COL.ink3; bctx.textAlign = "center"; bctx.textBaseline = "middle";
+      bctx.fillText("core", cx, cy);
+    } else {
+      bctx.font = `${12 * dpr}px ${UI}`; bctx.fillStyle = COL.ink3; bctx.textAlign = "center"; bctx.textBaseline = "middle";
+      const note = { still: "still: no beating", reflex: "no network: light drives each cilium", random: "no network: random beats" }[c.kind] || "";
+      bctx.fillText(note, cx, cy + rr * 0.62);
+    }
+    // the ring
+    bctx.strokeStyle = COL.ink3; bctx.lineWidth = 2 * dpr;
+    bctx.beginPath(); nodes.forEach((a, i) => (i ? bctx.lineTo(toX(a, rr), toY(a, rr)) : bctx.moveTo(toX(a, rr), toY(a, rr)))); bctx.closePath(); bctx.stroke();
+    // cilia: along the pull, length by beat
+    nodes.forEach((a, i) => {
+      const b = st.beats[i], pull = a + c.alpha, x0 = toX(a, rr), y0 = toY(a, rr), L = rr * (0.06 + 0.5 * b);
+      bctx.strokeStyle = COL.cilia; bctx.globalAlpha = 0.25 + 0.75 * b; bctx.lineWidth = 2 * dpr; bctx.lineCap = "round";
+      bctx.beginPath(); bctx.moveTo(x0 + Math.cos(pull) * 8 * dpr, y0 - Math.sin(pull) * 8 * dpr); bctx.lineTo(x0 + Math.cos(pull) * (8 * dpr + L), y0 - Math.sin(pull) * (8 * dpr + L)); bctx.stroke();
+    });
+    bctx.globalAlpha = 1;
+    // nodes, by their light
+    nodes.forEach((a, i) => {
+      const x = toX(a, rr), y = toY(a, rr);
+      bctx.fillStyle = COL.rock; bctx.beginPath(); bctx.arc(x, y, 9 * dpr, 0, 2 * Math.PI); bctx.fill();
+      bctx.fillStyle = rgb(lit || st.light[i] > 0 ? lightRGB(st.light[i]) : NIGHT_FLOOR); bctx.beginPath(); bctx.arc(x, y, 7 * dpr, 0, 2 * Math.PI); bctx.fill();
+      if (i === 0) {
+        bctx.strokeStyle = COL.ink; bctx.lineWidth = 1.5 * dpr; bctx.beginPath(); bctx.arc(x, y, 11 * dpr, 0, 2 * Math.PI); bctx.stroke();
+      }
+    });
+    // velocity
+    const sp = Math.hypot(st.vx, st.vy);
+    if (sp > 0.02 * W.v_max) {
+      const L = rr * 0.9 * Math.min(1.2, sp / W.v_max);
+      arrow(bctx, cx, cy, cx + st.vx / sp * L, cy - st.vy / sp * L, COL.ink, 2 * dpr);
+    }
+    bctx.font = `${12 * dpr}px ${UI}`; bctx.fillStyle = COL.ink2; bctx.textAlign = "right"; bctx.textBaseline = "top";
+    bctx.fillText("N ↑", S - 10 * dpr, 10 * dpr);
+    return st;
+  }
+  const readout = document.getElementById("readout");
+  const RO = {};
+  ["Status", "Reserve E", damageOn ? "Damage D" : null, "Wall light, mean / max", "Mean beat", "Speed", "Turning", "From the mouth"].filter(Boolean).forEach((name) => {
+    const div = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd");
+    dt.textContent = name; div.append(dt, dd); readout.appendChild(div); RO[name] = dd;
+  });
+  function setText(el, text) { if (el.textContent !== text) el.textContent = text; }
+  function updateReadout(k, st) {
+    const c = cells[sel];
+    document.getElementById("bodytitle").textContent = `${c.label} · close up, north up`;
+    const alive = c.alive[k] === 1;
+    setText(RO["Status"], alive ? (daylight[k] > 0 ? "alive · day" : "alive · night") : fate(c));
+    RO["Status"].className = alive ? "" : "status-dead";
+    setText(RO["Reserve E"], fmt(c.energy[k]));
+    if (damageOn) setText(RO["Damage D"], fmt(c.damage[k]));
+    const mean = st.light.reduce((a, b) => a + b, 0) / NW, max = Math.max(...st.light);
+    setText(RO["Wall light, mean / max"], `${fmt(mean)} / ${fmt(max)}`);
+    setText(RO["Mean beat"], fmt(st.meanBeat, 2));
+    setText(RO["Speed"], `${fmt(Math.hypot(st.vx, st.vy), 2)} R/s`);
+    setText(RO["Turning"], `${fmt(st.omega, 2)} rad/s`);
+    const [sx, sy] = sourceAt(k);
+    setText(RO["From the mouth"], `${fmtInt(Math.hypot(sx - c.x[k], sy - c.y[k]))} R`);
+  }
+
+  // --- the traces ----------------------------------------------------------------------------------------------------
+  const M = { l: 46, r: 14, t: 22, b: 26, gap: 30 };
+  function traceGeom() {
+    const w = trace.width, h = trace.height, panels = damageOn ? 2 : 1;
+    const ph = (h - (M.t + M.b) * dpr - (panels - 1) * M.gap * dpr) / panels;
+    return { w, h, x0: M.l * dpr, x1: w - M.r * dpr, panels, ph };
+  }
+  const xOf = (g, t) => g.x0 + (g.x1 - g.x0) * t / Math.max(1, LIFE - 1);
+  const tOf = (g, x) => Math.max(0, Math.min(tick[N - 1], (x - g.x0) / (g.x1 - g.x0) * (LIFE - 1)));
+  function panelTop(g, p) { return M.t * dpr + p * (g.ph + M.gap * dpr); }
+  function renderTraceStatic() {
+    const g = traceGeom();
+    traceStatic.width = g.w; traceStatic.height = g.h;
+    const s = sctx;
+    s.fillStyle = COL.panel; s.fillRect(0, 0, g.w, g.h);
+    const series = [["energy", "Reserve E"], ...(damageOn ? [["damage", "Damage D"]] : [])];
+    series.forEach(([key, title], p) => {
+      const top = panelTop(g, p), bot = top + g.ph, yOf = (v) => bot - v * g.ph;
+      // nights
+      s.fillStyle = COL.night;
+      let k = 0;
+      while (k < N) {
+        if (daylight[k] === 0) { const a = k; while (k < N && daylight[k] === 0) k++; s.fillRect(xOf(g, tick[a]), top, xOf(g, tick[k - 1]) - xOf(g, tick[a]) + 1, g.ph); }
+        else k++;
+      }
+      // grid
+      s.strokeStyle = COL.line; s.lineWidth = 1;
+      s.font = `${11 * dpr}px ${MONO}`; s.fillStyle = COL.ink3; s.textAlign = "right"; s.textBaseline = "middle";
+      [0, 0.5, 1].forEach((v) => { s.beginPath(); s.moveTo(g.x0, Math.round(yOf(v)) + 0.5); s.lineTo(g.x1, Math.round(yOf(v)) + 0.5); s.stroke(); s.fillText(v.toFixed(1), g.x0 - 6 * dpr, yOf(v)); });
+      s.font = `500 ${12 * dpr}px ${UI}`; s.fillStyle = COL.ink2; s.textAlign = "left"; s.textBaseline = "bottom";
+      s.fillText(key === "damage" ? `${title} · death at 1` : `${title} · death at 0`, g.x0, top - 6 * dpr);
+      // lines, one sample per device pixel
+      cells.forEach((c) => {
+        const arr = c[key];
+        s.strokeStyle = c.color; s.lineWidth = 2 * dpr; s.lineJoin = "round"; s.lineCap = "round";
+        s.beginPath();
+        const span = Math.max(1, Math.round(g.x1 - g.x0));
+        for (let q = 0; q <= span; q++) {
+          const kk = frameAt(tOf(g, g.x0 + q)), X = g.x0 + q, Y = yOf(arr[kk]);
+          q ? s.lineTo(X, Y) : s.moveTo(X, Y);
+        }
+        s.stroke();
+      });
+    });
+    // the clock along the bottom: every six hours
+    s.font = `${11 * dpr}px ${MONO}`; s.fillStyle = COL.ink3; s.textAlign = "center"; s.textBaseline = "top";
+    const q = DAY / 4, first = Math.ceil(D.start.phase / q);
+    for (let n = first; (n * q - D.start.phase) <= LIFE; n++) {
+      const t = n * q - D.start.phase, X = xOf(g, t);
+      if (X < g.x0 - 1 || X > g.x1 + 1) continue;
+      const lab = clockOf(t).text;
+      s.fillText(lab === "06:00" ? `06:00 d${clockOf(t).day}` : lab, X, g.h - (M.b - 6) * dpr);
+    }
+  }
+  function drawTrace(k) {
+    if (fit(trace)) renderTraceStatic();
+    const g = traceGeom();
+    tctx.drawImage(traceStatic, 0, 0);
+    const X = xOf(g, Math.min(T, tick[N - 1]));
+    const series = damageOn ? ["energy", "damage"] : ["energy"];
+    tctx.strokeStyle = COL.ink2; tctx.lineWidth = 1 * dpr;
+    tctx.beginPath(); tctx.moveTo(Math.round(X) + 0.5, panelTop(g, 0) - 2 * dpr); tctx.lineTo(Math.round(X) + 0.5, panelTop(g, series.length - 1) + g.ph); tctx.stroke();
+    series.forEach((key, p) => {
+      const top = panelTop(g, p), bot = top + g.ph;
+      cells.forEach((c) => {
+        const Y = bot - c[key][k] * g.ph;
+        tctx.fillStyle = COL.panel; tctx.beginPath(); tctx.arc(X, Y, 6 * dpr, 0, 2 * Math.PI); tctx.fill();
+        tctx.fillStyle = c.color; tctx.beginPath(); tctx.arc(X, Y, 4 * dpr, 0, 2 * Math.PI); tctx.fill();
+      });
+    });
+    if (hoverT !== null) {
+      const HX = xOf(g, hoverT);
+      tctx.strokeStyle = COL.ink3; tctx.lineWidth = 1 * dpr;
+      tctx.beginPath(); tctx.moveTo(Math.round(HX) + 0.5, panelTop(g, 0)); tctx.lineTo(Math.round(HX) + 0.5, panelTop(g, series.length - 1) + g.ph); tctx.stroke();
+    }
+  }
+  const tip = document.getElementById("tip");
+  function showTip(evt) {
+    const r = trace.getBoundingClientRect(), g = traceGeom(), x = (evt.clientX - r.left) * dpr;
+    hoverT = tOf(g, x);
+    const kk = frameAt(hoverT), cl = clockOf(tick[kk]);
+    tip.innerHTML = "";
+    const head = document.createElement("div"); head.textContent = `day ${cl.day} ${cl.text} · +${since(tick[kk])}${daylight[kk] === 0 ? " · night" : ""}`; tip.appendChild(head);
+    cells.forEach((c) => {
+      const row = document.createElement("div");
+      row.innerHTML = `<span class="swatch" style="background:${c.color}"></span><span></span>`;
+      row.lastChild.textContent = `${c.short}  E ${fmt(c.energy[kk])}${damageOn ? `  D ${fmt(c.damage[kk])}` : ""}${c.alive[kk] ? "" : "  dead"}`;
+      tip.appendChild(row);
+    });
+    tip.hidden = false;
+    const host = trace.parentElement.getBoundingClientRect();
+    const left = evt.clientX - host.left + 14, maxLeft = host.width - tip.offsetWidth - 8;
+    tip.style.left = `${Math.max(8, Math.min(left, maxLeft))}px`;
+    tip.style.top = `${evt.clientY - host.top + 14}px`;
+  }
+  let dragging = false;
+  trace.addEventListener("pointerdown", (e) => { dragging = true; trace.setPointerCapture(e.pointerId); seekFromEvent(e); });
+  trace.addEventListener("pointermove", (e) => { showTip(e); if (dragging) seekFromEvent(e); else draw(false); });
+  trace.addEventListener("pointerup", () => { dragging = false; });
+  trace.addEventListener("pointerleave", () => { hoverT = null; tip.hidden = true; draw(false); });
+  function seekFromEvent(e) { const r = trace.getBoundingClientRect(); setT(tOf(traceGeom(), (e.clientX - r.left) * dpr)); }
+
+  // --- the clock -----------------------------------------------------------------------------------------------------
+  const clock = document.getElementById("clock");
+  function updateClock(k) {
+    const cl = clockOf(tick[k]);
+    clock.innerHTML = "";
+    clock.append(`Day ${cl.day} · ${cl.text}`);
+    const small = document.createElement("small");
+    small.textContent = `+${since(tick[k])} since the start · ${daylight[k] > 0 ? `daylight ${Math.round(100 * daylight[k])}%` : "night"}`;
+    clock.appendChild(small);
+  }
+
+  // --- drawing and playback ----------------------------------------------------------------------------------------------
+  let lastK = -1;
+  function draw(force) {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    const k = frameAt(T);
+    const st = drawBody(k);
+    drawPool(k);
+    drawTrace(k);
+    if (force || k !== lastK) { updateReadout(k, st); updateClock(k); scrub.value = String(Math.round(T)); lastK = k; }
+  }
+  function setT(t) { T = Math.max(0, Math.min(tick[N - 1], t)); draw(true); }
+  const playBtn = document.getElementById("play");
+  function setPlaying(p) {
+    playing = p; playBtn.textContent = p ? "Pause" : "Play"; playBtn.setAttribute("aria-label", p ? "Pause" : "Play");
+    if (p) { if (T >= tick[N - 1]) T = 0; lastNow = performance.now(); requestAnimationFrame(loop); }
+  }
+  function loop(now) {
+    if (!playing) return;
+    const dt = Math.min(0.1, (now - lastNow) / 1000); lastNow = now;
+    T += dt * speed / (86400 / DAY);
+    if (T >= tick[N - 1]) { T = tick[N - 1]; setPlaying(false); }
+    draw(false);
+    if (playing) requestAnimationFrame(loop);
+  }
+  playBtn.addEventListener("click", () => setPlaying(!playing));
+  const hour = DAY / 24;
+  document.getElementById("back").addEventListener("click", () => setT(T - hour));
+  document.getElementById("fwd").addEventListener("click", () => setT(T + hour));
+  document.getElementById("speed").addEventListener("change", (e) => { speed = Number(e.target.value); });
+  scrub.addEventListener("input", () => setT(Number(scrub.value)));
+  document.querySelectorAll("#zoom button").forEach((b) => b.addEventListener("click", () => {
+    zoom = b.dataset.zoom;
+    document.querySelectorAll("#zoom button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    draw(true);
+  }));
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    if (["INPUT", "SELECT", "BUTTON", "TEXTAREA"].includes(tag)) return;
+    if (e.key === " ") { e.preventDefault(); setPlaying(!playing); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); setT(T + (e.shiftKey ? hour : STRIDE)); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); setT(T - (e.shiftKey ? hour : STRIDE)); }
+  });
+  const ro = new ResizeObserver(() => { dpr = Math.min(2, window.devicePixelRatio || 1); fit(trace); renderTraceStatic(); draw(true); });
+  [pool, body, trace].forEach((c) => ro.observe(c));
+  // a link can open at an hour of the lifetime: #h10 is ten hours after the start
+  const at = /^#h(\d{1,3})$/.exec(location.hash || "");
+  if (at) T = Math.min(tick[N - 1], Number(at[1]) * hour);
+  draw(true);
+})();
+</script>
