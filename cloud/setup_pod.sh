@@ -28,4 +28,4 @@ echo "code:  $(git rev-parse --short HEAD) $(git status --porcelain --untracked-
 echo "stack: $(python3 -c 'import protocell, sys, numpy; print(sys.version.split()[0], "numpy", numpy.__version__)')"
 echo "cpu:   $(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)  quota '$quota'  RUNPOD_CPU_COUNT=${RUNPOD_CPU_COUNT:-?}"
 echo "tests: $(python3 -W error::RuntimeWarning -m pytest -q 2>&1 | tail -1)"
-echo "cost:  $(python3 -W error::RuntimeWarning -c 'import protocell; from experiments.stage1_budget import cost; r = cost(48); print(f"{r[\"us_per_tick\"]:.0f} us a tick for 48 cells")')"
+echo "cost:  $(python3 -W error::RuntimeWarning -c "import protocell; from experiments.stage1_budget import cost; r = cost(48); print(round(r['us_per_tick']), 'us a tick for 48 cells')")"
