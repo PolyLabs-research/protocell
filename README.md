@@ -45,6 +45,19 @@ replay ten hours in.
 which weight, and one tick of the dynamics. It is generated from the code; regenerate it after any change to the
 cell with `.venv/bin/python -m tools.network_doc`.
 
+## Running on RunPod
+
+Stage 1's runs go on RunPod CPU pods (docs/prereg/stage1.md §13), under the chess project's lifecycle library: the
+pod's deadline watchdog, the sweeper timer on this box, the budget check and the ledger. The owner confirms the
+flavour, the rate ceiling, the hours and the worst cost before every launch.
+
+    .venv/bin/python cloud/cpu_pod.py launch --tag protocell-pilot --flavor cpu5c --vcpu 32 --hours 4 --max-rate 2.24   # dry run; --yes creates it
+    (cd ~/Documents/dev/chess && .venv/bin/python scripts/runpod_pod.py wait-ssh POD_ID)
+    bash cloud/stage_pod.sh POD_ID     # pushes this commit, installs, runs the tests, measures the cost a tick
+
+The chess tool's `status`, `ssh`, `push`, `pull` and `terminate POD_ID` work on any `taz-` pod. Never use its
+`terminate --all-ours` here: the chess project's own pods carry the same prefix.
+
 ## The code
 
 The package: `protocell/config.py` (every preregistered number: `STAGE0`, and `CAVE` at a 1 s tick), `world.py` (the

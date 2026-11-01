@@ -179,6 +179,16 @@ Running on RunPod has one consequence. Evolution runs on RunPod CPU pods, so its
 machine. The test, the removals and the swept day (§6–§8) run here, B2r and the still cell included, so every
 comparison of stage 1 is made on one platform.
 
+**Clarifications (2026-11-01, after the build, before the pilot).**
+- **Where the runs go:** each run goes on a RunPod CPU pod, flavour cpu5c (compute-optimized, fifth generation),
+  32 vCPUs, with two runs side by side at 16 workers each (`cloud/`). The pod's cost a tick is measured when it is
+  set up, before any run starts.
+- **Pulling and resuming:** the run directories are pulled back to this machine every hour while a pod runs, so a
+  pod lost to its deadline costs at most an hour. A run resumes from its pulled checkpoint bit for bit on the same
+  platform (tested).
+- **The champion's noise key** in a training start is (0, start number), with the noise seed the run's seed. In
+  validation it is (0, start) at seed 4. In the test it is (0, start) at seed 5, for every controller.
+
 ## 14. What would be built
 
 - `protocell/evolve.py`: the genetic algorithm, its streams, and the run's checkpoints and champion.
