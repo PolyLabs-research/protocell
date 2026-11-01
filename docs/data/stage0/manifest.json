@@ -1,0 +1,126 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage0.py --workers 16",
+ "created_at": "2026-11-01T13:07:50+00:00",
+ "git": {
+  "branch": "stage0-build",
+  "dirty": false,
+  "sha": "78c4c388a73661ec6a3d4d8fe0e3219cd3727a64"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage0",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-38-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage0",
+ "seeds": [
+  0
+ ],
+ "settings": {
+  "alpha_range": [
+   -3.141592653589793,
+   3.141592653589793
+  ],
+  "background": 0.02,
+  "c0": 0.0006666666666666666,
+  "c1": 0.0006666666666666666,
+  "clamp_radius": 44.0,
+  "damage_repair": 0.01,
+  "damage_threshold": 10.0,
+  "dish_radius": 45.0,
+  "energy_start": 0.5,
+  "eta": 0.002,
+  "gain_range": [
+   0.0,
+   20.0
+  ],
+  "genome_length": {
+   "fourier1": 135,
+   "uniform": 103
+  },
+  "k_grid": [
+   1.0,
+   3.0,
+   10.0,
+   30.0,
+   100.0
+  ],
+  "kinds": [
+   "spot",
+   "lamp"
+  ],
+  "lamp_peak": 4.0,
+  "lamp_scale": 20.0,
+  "lamp_start_min": 60.0,
+  "lifetime": 3000,
+  "log_tau_range": [
+   0.0,
+   2.995732273553991
+  ],
+  "modes": [
+   "uniform",
+   "fourier1"
+  ],
+  "n_core": 8,
+  "n_wall": 16,
+  "noise_chunk": 250,
+  "omega_max": 0.5,
+  "quick": false,
+  "rotation_noise_sd": 0.05,
+  "seed": 0,
+  "sensor_noise_sd": 0.01,
+  "shade_floor": 0.3,
+  "sizes": {
+   "genome_starts": [
+    51,
+    70
+   ],
+   "genomes_per_job": 50,
+   "n_genomes": 1000,
+   "n_starts": 100,
+   "report": [
+    51,
+    100
+   ],
+   "select": [
+    1,
+    50
+   ],
+   "w6_cells": 5
+  },
+  "soak_threshold": 1.0,
+  "spot_centre_within": 10.0,
+  "spot_peak": 4.0,
+  "spot_sigma": 16.0,
+  "spot_start_min": 38.0,
+  "v_max": 1.0,
+  "weight_range": [
+   -8.0,
+   8.0
+  ]
+ },
+ "timing": {
+  "cell_ticks": 243600000,
+  "cells": 81200,
+  "wall_seconds": 60.48625135421753,
+  "workers": 16
+ }
+}

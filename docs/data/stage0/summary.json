@@ -1,0 +1,338 @@
+{
+ "W6": {
+  "lamp": {
+   "batch_equals_singles": true,
+   "cells": 5,
+   "network_run_hash": "95f316c711fd28e759690990998b9a8a706546074f01a84e35aa953e4cd4250a",
+   "same_seed_same_hash_network": true,
+   "same_seed_same_hash_reflex": true,
+   "streams_independent": true
+  },
+  "pass": true,
+  "spot": {
+   "batch_equals_singles": true,
+   "cells": 5,
+   "network_run_hash": "8297cc6ac46d0b72941ce5d9ae18e88586e70cf4f3474833bfae0735ceba3ee0",
+   "same_seed_same_hash_network": true,
+   "same_seed_same_hash_reflex": true,
+   "streams_independent": true
+  }
+ },
+ "bar": {
+  "lamp": {
+   "effort_per_light": 0.6359967925250678,
+   "k": 30.0,
+   "mean_beat": 0.4021007753227272,
+   "mean_fitness": 0.8573592627804817,
+   "mean_light_soaked": 0.6322371119613444,
+   "median_reach_tick": 38.0,
+   "n": 50,
+   "reached_share": 1.0,
+   "survival": 1.0
+  },
+  "spot": {
+   "effort_per_light": 0.6275438220631411,
+   "k": 100.0,
+   "mean_beat": 0.49991338104253413,
+   "mean_fitness": 0.9242976429202823,
+   "mean_light_soaked": 0.7966190781689103,
+   "median_reach_tick": 16.0,
+   "n": 50,
+   "reached_share": 1.0,
+   "survival": 1.0
+  }
+ },
+ "checks": {
+  "lamp": {
+   "W1": {
+    "b0": {
+     "effort_per_light": 0.0,
+     "mean_beat": 0.0,
+     "mean_fitness": 0.10739056011248752,
+     "mean_light_soaked": 0.059944142227711376,
+     "median_reach_tick": null,
+     "n": 100,
+     "reached_share": 0.0,
+     "survival": 0.0
+    },
+    "b0_brightest": {
+     "effort_per_light": 0.0,
+     "mean_beat": 0.0,
+     "mean_fitness": 0.9321037091074165,
+     "mean_light_soaked": 0.6398026602329367,
+     "median_reach_tick": 1.0,
+     "n": 100,
+     "reached_share": 1.0,
+     "survival": 1.0
+    },
+    "b0_brightest_energy_rose_share": 1.0,
+    "b0_dead_share": 1.0,
+    "b0_median_death_tick": 1266.0,
+    "pass": true
+   },
+   "W2": {
+    "median_spread": 0.2242814006843266,
+    "min_spread": 0.1551747610061403,
+    "pass": true,
+    "share_spread_ge_3sd": 1.0,
+    "threshold": 0.03
+   },
+   "W3": {
+    "budget_ticks": 300.0,
+    "max_soak_ticks": 53.02635470546069,
+    "median_soak_ticks": 36.46776227737596,
+    "pass": true,
+    "share_within_budget": 1.0,
+    "soak_radius": 35.10915922127002
+   },
+   "W4": {
+    "b1": {
+     "effort_per_light": 3.592961469027089,
+     "mean_beat": 0.11544514378024796,
+     "mean_fitness": 0.057609964966234266,
+     "mean_light_soaked": 0.032130916174703227,
+     "median_reach_tick": null,
+     "n": 100,
+     "reached_share": 0.0,
+     "survival": 0.0
+    },
+    "b1_survival": 0.0,
+    "bar": {
+     "k": 30.0,
+     "report": {
+      "effort_per_light": 0.6359967925250678,
+      "mean_beat": 0.4021007753227272,
+      "mean_fitness": 0.8573592627804817,
+      "mean_light_soaked": 0.6322371119613444,
+      "median_reach_tick": 38.0,
+      "n": 50,
+      "reached_share": 1.0,
+      "survival": 1.0
+     },
+     "selection": {
+      "1.0": {
+       "effort_per_light": 0.8134001716081103,
+       "mean_beat": 0.49823838332796866,
+       "mean_fitness": 0.7432994559815822,
+       "mean_light_soaked": 0.6125378389617748,
+       "median_reach_tick": 147.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "10.0": {
+       "effort_per_light": 0.6368030923694559,
+       "mean_beat": 0.40253416888192894,
+       "mean_fitness": 0.8563229122262302,
+       "mean_light_soaked": 0.6321171704492753,
+       "median_reach_tick": 41.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "100.0": {
+       "effort_per_light": 0.6375133471791777,
+       "mean_beat": 0.40298681439984496,
+       "mean_fitness": 0.8567682392645046,
+       "mean_light_soaked": 0.6321229448496277,
+       "median_reach_tick": 40.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "3.0": {
+       "effort_per_light": 0.7520337341245158,
+       "mean_beat": 0.472644427789532,
+       "mean_fitness": 0.8204349054059551,
+       "mean_light_soaked": 0.6284883328269357,
+       "median_reach_tick": 61.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "30.0": {
+       "effort_per_light": 0.6363171158913087,
+       "mean_beat": 0.40221112156053623,
+       "mean_fitness": 0.8569381351500118,
+       "mean_light_soaked": 0.6320922563856339,
+       "median_reach_tick": 40.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      }
+     }
+    },
+    "pass": true
+   },
+   "W5": {
+    "fourier1": {
+     "mean_fitness": 0.07659837578321373,
+     "mean_survival": 0.053149999999999996,
+     "n_genomes": 1000,
+     "pass": true,
+     "share_any_reach": 0.277,
+     "share_any_survival": 0.11,
+     "share_matching_b2_fitness": 0.0,
+     "share_matching_b2_survival": 0.014
+    },
+    "pass": true,
+    "uniform": {
+     "mean_fitness": 0.08586980416421497,
+     "mean_survival": 0.0629,
+     "n_genomes": 1000,
+     "pass": true,
+     "share_any_reach": 0.151,
+     "share_any_survival": 0.088,
+     "share_matching_b2_fitness": 0.0,
+     "share_matching_b2_survival": 0.036
+    }
+   }
+  },
+  "spot": {
+   "W1": {
+    "b0": {
+     "effort_per_light": 0.0,
+     "mean_beat": 0.0,
+     "mean_fitness": 0.10678682149294731,
+     "mean_light_soaked": 0.059138531866268725,
+     "median_reach_tick": null,
+     "n": 100,
+     "reached_share": 0.0,
+     "survival": 0.0
+    },
+    "b0_brightest": {
+     "effort_per_light": 0.0,
+     "mean_beat": 0.0,
+     "mean_fitness": 0.9554869586469016,
+     "mean_light_soaked": 0.8004866181035659,
+     "median_reach_tick": 1.0,
+     "n": 100,
+     "reached_share": 1.0,
+     "survival": 1.0
+    },
+    "b0_brightest_energy_rose_share": 1.0,
+    "b0_dead_share": 1.0,
+    "b0_median_death_tick": 1226.5,
+    "pass": true
+   },
+   "W2": {
+    "median_spread": 0.041964167145778386,
+    "min_spread": 0.007181599178749408,
+    "pass": true,
+    "share_spread_ge_3sd": 0.69,
+    "threshold": 0.03
+   },
+   "W3": {
+    "budget_ticks": 300.0,
+    "max_soak_ticks": 25.88754330154318,
+    "median_soak_ticks": 15.132950237441907,
+    "pass": true,
+    "share_within_budget": 1.0,
+    "soak_radius": 26.835172796908797
+   },
+   "W4": {
+    "b1": {
+     "effort_per_light": 3.132500359723047,
+     "mean_beat": 0.12239895893237795,
+     "mean_fitness": 0.05970213806448142,
+     "mean_light_soaked": 0.03907388503642489,
+     "median_reach_tick": 930.0,
+     "n": 100,
+     "reached_share": 0.02,
+     "survival": 0.0
+    },
+    "b1_survival": 0.0,
+    "bar": {
+     "k": 100.0,
+     "report": {
+      "effort_per_light": 0.6275438220631411,
+      "mean_beat": 0.49991338104253413,
+      "mean_fitness": 0.9242976429202823,
+      "mean_light_soaked": 0.7966190781689103,
+      "median_reach_tick": 16.0,
+      "n": 50,
+      "reached_share": 1.0,
+      "survival": 1.0
+     },
+     "selection": {
+      "1.0": {
+       "effort_per_light": 0.7023802200598981,
+       "mean_beat": 0.49999986934349594,
+       "mean_fitness": 0.7585593006527247,
+       "mean_light_soaked": 0.7118649629695674,
+       "median_reach_tick": 337.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "10.0": {
+       "effort_per_light": 0.6324321132491556,
+       "mean_beat": 0.49999059869165197,
+       "mean_fitness": 0.9139265632625977,
+       "mean_light_soaked": 0.7905838242826129,
+       "median_reach_tick": 37.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "100.0": {
+       "effort_per_light": 0.6279051667014977,
+       "mean_beat": 0.49991924138298677,
+       "mean_fitness": 0.9235218487993901,
+       "mean_light_soaked": 0.7961699758088555,
+       "median_reach_tick": 17.5,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "3.0": {
+       "effort_per_light": 0.6488383886746,
+       "mean_beat": 0.49999893142127,
+       "mean_fitness": 0.8782001069139231,
+       "mean_light_soaked": 0.7706062713746509,
+       "median_reach_tick": 113.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      },
+      "30.0": {
+       "effort_per_light": 0.6286156676234477,
+       "mean_beat": 0.49995796860628494,
+       "mean_fitness": 0.9220760208711577,
+       "mean_light_soaked": 0.7953317016364424,
+       "median_reach_tick": 20.0,
+       "n": 50,
+       "reached_share": 1.0,
+       "survival": 1.0
+      }
+     }
+    },
+    "pass": true
+   },
+   "W5": {
+    "fourier1": {
+     "mean_fitness": 0.1278983799072255,
+     "mean_survival": 0.16069999999999998,
+     "n_genomes": 1000,
+     "pass": true,
+     "share_any_reach": 0.488,
+     "share_any_survival": 0.329,
+     "share_matching_b2_fitness": 0.0,
+     "share_matching_b2_survival": 0.044
+    },
+    "pass": true,
+    "uniform": {
+     "mean_fitness": 0.07857125867970552,
+     "mean_survival": 0.038,
+     "n_genomes": 1000,
+     "pass": true,
+     "share_any_reach": 0.09,
+     "share_any_survival": 0.063,
+     "share_matching_b2_fitness": 0.0,
+     "share_matching_b2_survival": 0.0
+    }
+   }
+  }
+ },
+ "quick": false
+}
