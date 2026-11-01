@@ -189,6 +189,31 @@ comparison of stage 1 is made on one platform.
 - **The champion's noise key** in a training start is (0, start number), with the noise seed the run's seed. In
   validation it is (0, start) at seed 4. In the test it is (0, start) at seed 5, for every controller.
 
+**The pilot's outcome (2026-11-01, before the confirmatory runs).**
+
+The data are in `docs/data/stage1/pilot/`. Both runs went side by side on one RunPod CPU pod (AMD EPYC 9575F,
+32 vCPUs, Python 3.12.3, numpy 2.4.6), at code `b5cdd84`, from a clean tree with warnings as errors. Each took 83
+minutes.
+
+| run | champion's generation | validation fitness | validation survival | best training fitness at generation 100 |
+|---|---|---|---|---|
+| uniform, seed 1001 | 90 | 0.688 | 100% of 24 | 0.695 |
+| fourier1, seed 1002 | 60 | 0.697 | 100% of 24 | 0.680 |
+
+- **Evolution climbs in both modes.** §12's rule, that a pilot champion survive at least half the validation starts,
+  is met: both survive every start.
+- **The two runs end differently.** The uniform run was still improving at generation 90. The fourier1 run's
+  validation fitness plateaued from generation 60, and the same elite topped validation until generation 100.
+- **Training fitness is noisy.** The best training fitness swings from one generation to the next (0.585 to 0.695
+  after generation 10 in uniform), because each generation draws new starts. The validation curve is the steadier
+  reading.
+- **No amendment.** The confirmatory runs go as registered.
+- **Noted, not judged.** Both champions beat at about 0.35 on the validation starts, more than twice B2r's mean beat
+  in the cave's day checks (0.154). The test will show whether that costs them fitness (§11, prediction 5).
+- **Cost.** The pod ran 3.1 hours at $1.12 an hour, about $3.45. About 1.6 hours of that passed between the launch
+  and the job's start, which was my delay. The next launches chain every step in one detached script
+  (`cloud/launch_phase.sh`).
+
 ## 14. What would be built
 
 - `protocell/evolve.py`: the genetic algorithm, its streams, and the run's checkpoints and champion.
