@@ -165,6 +165,20 @@ The simulation's fixed cost of about 120 µs a tick could be lowered in the buil
 4. **The swept day (§8):** kept as a description, or dropped. Recommended: kept. It is cheap, and it is the plan's
    "layouts it never saw" in the only form the cave has.
 
+**The owner's answers (2026-11-01, before the build).**
+
+The owner answered: "1. the first 2. runpod 3. agree 4. agree".
+
+1. Q1 (reaches the bar) and Q2 (the removals) are primary, and Q3 (beats the bar) is reported.
+2. The runs go on RunPod, with the owner confirming the cost of every launch before it.
+3. The optimiser is the genetic algorithm of §4.
+4. The swept day (§8) is kept as a description.
+
+Running on RunPod has one consequence. Evolution runs on RunPod CPU pods, so its numbers are that platform's bits
+(`docs/determinism.md`), and every run's manifest records the platform. The champions' genomes come back to this
+machine. The test, the removals and the swept day (§6–§8) run here, B2r and the still cell included, so every
+comparison of stage 1 is made on one platform.
+
 ## 14. What would be built
 
 - `protocell/evolve.py`: the genetic algorithm, its streams, and the run's checkpoints and champion.

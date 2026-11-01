@@ -59,6 +59,14 @@ class Starts:
         lookup = {int(n): i for i, n in enumerate(self.index.tolist())}
         return self.take([lookup[int(n)] for n in numbers])
 
+    def renumbered(self, index: Sequence[int]) -> "Starts":
+        """The same starts under other numbers (the numbers key the noise: stage 1 numbers its training starts
+        uniquely within a run)."""
+        idx = np.asarray(list(index), dtype=np.int64)
+        if idx.shape != self.index.shape:
+            raise ValueError("one number per start")
+        return Starts(self.kind, self.source.copy(), self.pos.copy(), self.heading.copy(), idx, self.phase.copy())
+
     def with_pos(self, pos: np.ndarray) -> "Starts":
         return Starts(self.kind, self.source.copy(), np.array(pos, dtype=np.float64), self.heading.copy(), self.index.copy(),
                       self.phase.copy())
@@ -71,17 +79,18 @@ def _uniform_disc(rng: np.random.Generator, radius: float) -> np.ndarray:
     return np.array([r * math.cos(a), r * math.sin(a)], dtype=np.float64)
 
 
-def sample_starts(cfg: Config, kind: str, n: int, seed: int) -> Starts:
+def sample_starts(cfg: Config, kind: str, n: int, seed: int, *, stream_name: str = STREAM_STARTS, key: Sequence[int] = ()) -> Starts:
     """Starts 1..n of this light kind from stream ``starts``. Spot and lamp (stage0.md §2, §11 C3): for each start,
     in this order, the layout (spot: its centre uniform within ``spot_centre_within`` of the dish's centre; lamp: its
     angle uniform, the lamp on the dish's edge), the heading (uniform), then positions uniform over the disc of
     radius ``clamp_radius`` until one is at least ``spot_start_min`` from the spot's centre or ``lamp_start_min``
     from the lamp. Cave (cave.md §6): the phase (an integer tick uniform over the day), the heading, the position
     uniform over the disc; the mouth is due south for every start. Start k is the k-th drawn, so starts 1..m are the
-    same for every n >= m."""
+    same for every n >= m. ``stream_name`` and ``key`` choose another stream (stage 1 draws its training starts from
+    stream ``train`` keyed by the run and the generation); by default the starts are stage 0's and the cave's."""
     if kind not in KINDS:
         raise ValueError(f"unknown light kind {kind!r}")
-    rng = stream(seed, STREAM_STARTS)
+    rng = stream(seed, stream_name, key)
     source, pos, heading = np.empty((n, 2)), np.empty((n, 2)), np.empty(n)
     phase = np.zeros(n, dtype=np.int64)
     for s in range(n):

@@ -189,6 +189,35 @@ def gene_names(cfg: Config, mode: str) -> Dict[str, slice]:
             "alpha": lay.alpha, "spokes_in": lay.spokes_in, "spokes_out": lay.spokes_out}
 
 
+REMOVALS = ("blind", "ring_links", "loop", "core", "core_recurrence")
+
+
+def apply_removal(cfg: Config, params: Params, removal: str) -> Params:
+    """A copy of the networks with one part removed (docs/prereg/stage1.md §7), without re-evolving:
+    ``blind`` the sensory gain g set to 0; ``ring_links`` the weights between ring neighbours, both directions (the
+    self weights kept); ``loop`` the two weights between nodes N-1 and 0, so the ring becomes a chain; ``core`` every
+    spoke, both directions, so the wall is alone; ``core_recurrence`` every core-to-core weight, self links included."""
+    if removal not in REMOVALS:
+        raise ValueError(f"unknown removal {removal!r}; one of {REMOVALS}")
+    n = cfg.n_wall
+    out = Params(params.W.copy(), params.bias.copy(), params.tau.copy(), params.gain.copy(), params.alpha.copy())
+    if removal == "blind":
+        out.gain[:] = 0.0
+    elif removal == "ring_links":
+        idx = np.arange(n)
+        out.W[:, idx, (idx - 1) % n] = 0.0
+        out.W[:, idx, (idx + 1) % n] = 0.0
+    elif removal == "loop":
+        out.W[:, 0, n - 1] = 0.0
+        out.W[:, n - 1, 0] = 0.0
+    elif removal == "core":
+        out.W[:, n:, :n] = 0.0
+        out.W[:, :n, n:] = 0.0
+    else:
+        out.W[:, n:, n:] = 0.0
+    return out
+
+
 def sigmoid(x: np.ndarray) -> np.ndarray:
     """The logistic function, its argument clipped to +-500 so the exponent cannot overflow (§11 C12)."""
     return 1.0 / (1.0 + np.exp(-np.clip(x, -500.0, 500.0)))

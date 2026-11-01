@@ -25,7 +25,7 @@ from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
 
-from protocell.cell import Params, ctrnn_step, decode, sigmoid
+from protocell.cell import Params, apply_removal, ctrnn_step, decode, sigmoid
 from protocell.config import Config
 from protocell.energy import damage_step, energy_step, start_energy
 from protocell.motion import cilia_motion, move
@@ -175,7 +175,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
                      keys: Sequence[Tuple[int, int]]) -> Controller:
     """A controller from a plain spec: ``{"controller": "still"}``, ``{"controller": "random"}``,
     ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``) or
-    ``{"controller": "network", "mode": ..., "genomes": (P, G)}``."""
+    ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7).
+    """
     kind = spec["controller"]
     if kind == "still":
         return Still(cfg, population)
@@ -187,7 +188,10 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
         genomes = np.asarray(spec["genomes"], dtype=np.float64)
         if genomes.shape[0] != population:
             raise ValueError(f"{genomes.shape[0]} genomes for {population} cells")
-        return Network(cfg, decode(cfg, spec["mode"], genomes))
+        params = decode(cfg, spec["mode"], genomes)
+        if spec.get("removal"):
+            params = apply_removal(cfg, params, spec["removal"])
+        return Network(cfg, params)
     raise ValueError(f"unknown controller {kind!r}")
 
 

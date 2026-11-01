@@ -29,6 +29,7 @@ import numpy as np
 
 from protocell.cell import MODES, STREAM_GENOMES, genome_length, random_genomes
 from protocell.config import STAGE0, Config
+from protocell import tables
 from protocell.manifest import build_manifest, finish_manifest, write_manifest
 from protocell.rng import stream
 from protocell.sim import NOISE_CHUNK, STREAM_BEATS, STREAM_MOTION, STREAM_SENSORS, RunResult, simulate
@@ -61,23 +62,8 @@ def numbers(span: Tuple[int, int]) -> List[int]:
     return list(range(span[0], span[1] + 1))
 
 
-def write_csv(path: Path, columns: Sequence[str], rows: Iterable[Mapping[str, Any]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(fh, fieldnames=list(columns), lineterminator="\n")
-        writer.writeheader()
-        for row in rows:
-            writer.writerow({k: _fmt(row.get(k)) for k in columns})
-
-
-def _fmt(value: Any) -> Any:
-    if isinstance(value, (bool, np.bool_)):
-        return int(value)
-    if isinstance(value, (float, np.floating)):
-        return format(float(value), ".12g")
-    if isinstance(value, np.integer):
-        return int(value)
-    return value
+write_csv = tables.write_csv  # moved to protocell/tables.py; kept here for the experiments that import it
+_fmt = tables.fmt
 
 
 RUN_COLUMNS = ("start", "cell", "start_distance", "survived", "fitness", "light_soaked", "mean_beat", "effort_per_light",
