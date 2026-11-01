@@ -108,8 +108,11 @@ def parse_cell(text: str, cfg: Config, config: str, *, seed: int = SEED, data_di
         genome = np.asarray(genomes[row:row + 1], dtype=np.float64)
         if genome.shape != (1, genome_length(cfg, mode)):
             raise SystemExit(f"{path} row {row}: not a {mode} genome of {genome_length(cfg, mode)} numbers")
-        return CellSpec(f"{path.stem} row {row} ({mode})", f"E{row}", {"controller": "network", "mode": mode, "genomes": genome},
-                        row + 1, "network")
+        if path.stem == "champion":  # a stage 1 run's champion: named by its run (docs/data/stage1/PHASE/MODE-SEED/)
+            label, short = f"evolved {path.parent.name} ({path.parent.parent.name})", f"{mode[0].upper()}{path.parent.name.rsplit('-', 1)[-1]}"
+        else:
+            label, short = f"{path.stem} row {row} ({mode})", f"E{row}"
+        return CellSpec(label, short, {"controller": "network", "mode": mode, "genomes": genome}, row + 1, "network")
     raise SystemExit(f"cannot read the cell {text!r}; see --help")
 
 
