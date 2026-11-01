@@ -67,6 +67,19 @@ def cave_for(cfg: Config) -> Cave:
                 energy_fill=1.0 - cfg.c0 * (cfg.day_ticks / 2))
 
 
+PROBE_KEYS = ("sitter_share", "sitter_share_any_phase", "best_distance_to_mouth", "best_noon_light", "best_mean_reserve",
+              "burn_share_noon", "soak_share_noon", "best_x", "best_y")
+
+
+def best_fixed_point(cfg: Config, n_points: int, phases: Optional[Sequence[int]]) -> Tuple[np.ndarray, Dict[str, Any]]:
+    """K1's best fixed point for this configuration, from the probe (cave.md §13; its default phases unless given),
+    with the probe's shares. The quick run's day is not the probe's, so there B0 is placed one radius from the mouth."""
+    if cfg.day_ticks != 86_400:
+        return np.array([0.0, -cfg.clamp_radius]), {k: None for k in PROBE_KEYS}
+    r = probe(cave_for(cfg), n_points=n_points, **({"phases": tuple(phases)} if phases else {}))
+    return np.array([r["best_x"], r["best_y"]]), {k: r[k] for k in PROBE_KEYS}
+
+
 def run_summary(result: RunResult) -> Dict[str, Any]:
     out = {"n": len(result), "survival": share(result.survived), "mean_fitness": float(result.fitness.mean()),
            "mean_light_soaked": float(result.light_soaked.mean()), "mean_beat": float(result.mean_beat.mean()),
@@ -181,17 +194,8 @@ def run_configuration(name: str, cfg: Config, sizes: Sizes, out: Path, pool: Pro
     log(f"[{name}] K2 contrast >= 3 sd at noon on {k2['share_contrast_ge_3sd_noon']:.0%}, an hour after sunrise on {k2['share_contrast_ge_3sd_dawn1']:.0%}; "
         f"rise on {k2['share_rise_ge_3sd']:.0%}; K3 farthest {k3['max_soak_ticks']:.0f} ticks")
 
-    probed = probe(cave_for(cfg), n_points=1000 if sizes.n_genomes >= 100 else 40, phases=(0, cfg.day_ticks // 2) if sizes.n_genomes < 100 else None) \
-        if cfg.day_ticks == 86_400 else None
-    if probed is None:  # the quick run's day is not the probe's; place B0 one radius from the mouth
-        best_point = np.array([0.0, -cfg.clamp_radius])
-        probed = {"sitter_share": None, "best_distance_to_mouth": None}
-    else:
-        noon = cfg.day_ticks // 4
-        angle = -math.pi / 2
-        best_point = np.array([0.0, -(cfg.dish_radius - probed["best_distance_to_mouth"])])
-        probed = {k: probed[k] for k in ("sitter_share", "sitter_share_any_phase", "best_distance_to_mouth", "best_noon_light", "best_mean_reserve",
-                                          "burn_share_noon", "soak_share_noon")}
+    full = sizes.n_genomes >= 100
+    best_point, probed = best_fixed_point(cfg, 1000 if full else 40, None if full else (0, cfg.day_ticks // 2))
     select, report = numbers(sizes.select), numbers(sizes.report)
     chosen, reported = starts.numbered(select), starts.numbered(report)
     jobs: Dict[str, Dict[str, Any]] = {

@@ -12,7 +12,7 @@ import numpy as np
 import pytest
 
 from experiments import cave_geometry as probe_mod
-from experiments.cave import CONFIGURATIONS, configure, main
+from experiments.cave import CONFIGURATIONS, best_fixed_point, configure, main
 from protocell.config import CAVE, cave_damage_rate
 from protocell.energy import start_reserve
 from protocell.sim import BURNT, STARVED, Reflex, simulate
@@ -107,6 +107,14 @@ def test_deaths_record_their_cause() -> None:
     assert r.burn_share[0] > 0 and r.burn_share[1] == 0
     assert 0.28 * 60_000 <= r.death_tick[1] < 25_000  # after the pure-resting bound: the back gets a little morning light
     assert (r.night_beat == 0).all()  # daylight is 0 at the sunrise tick itself, the only "night" tick before mid-afternoon; B0 never beats
+
+
+def test_the_best_fixed_point_comes_from_the_probe_at_the_real_day() -> None:
+    point, probed = best_fixed_point(configure("day", quick=False), 40, (0, HALF))
+    assert math.hypot(point[0], point[1]) <= CAVE.dish_radius and 0 <= probed["sitter_share"] <= 1
+    assert math.hypot(point[0], point[1] + CAVE.dish_radius) == pytest.approx(probed["best_distance_to_mouth"])
+    quick_point, quick_probed = best_fixed_point(configure("day", quick=True), 40, (0, 1000))
+    assert quick_point.tolist() == [0.0, -CAVE.clamp_radius] and quick_probed["sitter_share"] is None
 
 
 def test_the_quick_run_writes_a_configuration(tmp_path) -> None:

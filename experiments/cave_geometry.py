@@ -179,6 +179,7 @@ def probe(cave: Cave, n_points: int = 1000, phases: Sequence[int] = PHASES) -> D
     contrast_dawn1 = 0.7 * centre_light(cave, pos, 3600)
     return {"falloff": cave.falloff, "sitter_share": float((survived == 1.0).mean()), "sitter_share_any_phase": float((survived > 0).mean()),
             "best_mean_reserve": float(mean_reserve[best]), "best_distance_to_mouth": float(d[best]), "best_noon_light": float(at_noon[best]),
+            "best_x": float(pos[best, 0]), "best_y": float(pos[best, 1]),
             "burn_share_noon": float((at_noon >= cave.damage_threshold).mean()), "soak_share_noon": float((at_noon >= 1.0).mean()),
             "direction_sensible_noon": float((contrast_noon >= 3 * cave.sensor_sd).mean()),
             "direction_sensible_dawn_plus_1h": float((contrast_dawn1 >= 3 * cave.sensor_sd).mean()),
