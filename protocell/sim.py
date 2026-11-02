@@ -25,7 +25,7 @@ from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
 
-from protocell.cell import Params, apply_removal, ctrnn_step, decode, sigmoid
+from protocell.cell import Params, apply_removal, ctrnn_step, decode, hold_at_average, sigmoid
 from protocell.config import Config
 from protocell.energy import damage_step, energy_step, start_energy
 from protocell.motion import cilia_motion, move
@@ -163,10 +163,12 @@ class Network(Controller):
         self.y = np.zeros_like(params.bias)
         self.output = sigmoid(self.y + params.bias)
         self.sensory = np.zeros_like(params.bias)
+        self.extra = params.extra  # a constant input, when a pathway is held at its average (stage 1b)
 
     def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
         self.sensory[:, :self.n_wall] = self.params.gain[:, None] * sensed
-        self.y = ctrnn_step(self.y, self.output, self.Wt, self.params.tau, self.sensory)
+        inputs = self.sensory if self.extra is None else self.sensory + self.extra
+        self.y = ctrnn_step(self.y, self.output, self.Wt, self.params.tau, inputs)
         self.output = sigmoid(self.y + self.params.bias)
         return self.output[:, :self.n_wall]
 
@@ -175,7 +177,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
                      keys: Sequence[Tuple[int, int]]) -> Controller:
     """A controller from a plain spec: ``{"controller": "still"}``, ``{"controller": "random"}``,
     ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``) or
-    ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7).
+    ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7, or
+    ``hold``: ``{"pathway": ..., "means": (M,)}``, stage 1b's §1).
     """
     kind = spec["controller"]
     if kind == "still":
@@ -191,6 +194,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
         params = decode(cfg, spec["mode"], genomes)
         if spec.get("removal"):
             params = apply_removal(cfg, params, spec["removal"])
+        if spec.get("hold"):
+            params = hold_at_average(cfg, params, spec["hold"]["pathway"], spec["hold"]["means"])
         return Network(cfg, params)
     raise ValueError(f"unknown controller {kind!r}")
 

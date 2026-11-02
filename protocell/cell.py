@@ -16,7 +16,7 @@ way in ``fourier1`` (a_j + b_j cos theta_i + c_j sin theta_i). 103 numbers (unif
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 import numpy as np
 
@@ -101,13 +101,15 @@ class Params:
     tau: np.ndarray
     gain: np.ndarray
     alpha: np.ndarray
+    extra: Optional[np.ndarray] = None  # a constant input to each neuron, (P, M): stage 1b's pathways held at their average
 
     def __len__(self) -> int:
         return int(self.gain.shape[0])
 
     def take(self, which) -> "Params":
         idx = np.asarray(list(which), dtype=np.intp)
-        return Params(self.W[idx].copy(), self.bias[idx].copy(), self.tau[idx].copy(), self.gain[idx].copy(), self.alpha[idx].copy())
+        return Params(self.W[idx].copy(), self.bias[idx].copy(), self.tau[idx].copy(), self.gain[idx].copy(), self.alpha[idx].copy(),
+                      None if self.extra is None else self.extra[idx].copy())
 
 
 def topology_mask(cfg: Config) -> np.ndarray:
@@ -200,7 +202,8 @@ def apply_removal(cfg: Config, params: Params, removal: str) -> Params:
     if removal not in REMOVALS:
         raise ValueError(f"unknown removal {removal!r}; one of {REMOVALS}")
     n = cfg.n_wall
-    out = Params(params.W.copy(), params.bias.copy(), params.tau.copy(), params.gain.copy(), params.alpha.copy())
+    out = Params(params.W.copy(), params.bias.copy(), params.tau.copy(), params.gain.copy(), params.alpha.copy(),
+                 None if params.extra is None else params.extra.copy())
     if removal == "blind":
         out.gain[:] = 0.0
     elif removal == "ring_links":
@@ -216,6 +219,43 @@ def apply_removal(cfg: Config, params: Params, removal: str) -> Params:
     else:
         out.W[:, n:, n:] = 0.0
     return out
+
+
+PATHWAYS = ("core_drive", "core_recurrence", "ring_links")
+
+
+def pathway_mask(cfg: Config, pathway: str) -> np.ndarray:
+    """Which weights carry a pathway (docs/prereg/stage1b.md §1), ``(M, M)`` bool, to row from column:
+    ``core_drive`` core -> wall; ``core_recurrence`` core -> core, self links included; ``ring_links`` each wall
+    neuron's two neighbours."""
+    n, k = cfg.n_wall, cfg.n_core
+    m = np.zeros((n + k, n + k), dtype=bool)
+    if pathway == "core_drive":
+        m[:n, n:] = True
+    elif pathway == "core_recurrence":
+        m[n:, n:] = True
+    elif pathway == "ring_links":
+        idx = np.arange(n)
+        m[idx, (idx - 1) % n] = True
+        m[idx, (idx + 1) % n] = True
+    else:
+        raise ValueError(f"unknown pathway {pathway!r}; one of {PATHWAYS}")
+    return m
+
+
+def hold_at_average(cfg: Config, params: Params, pathway: str, means: np.ndarray) -> Params:
+    """A copy of the networks with one pathway held at its average (stage1b.md §1): its weights set to zero, and each
+    neuron given instead the constant ``means`` (``(M,)`` or ``(P, M)``), the pathway's mean input to it in the intact
+    network. ``means`` is zero for the neurons the pathway does not feed."""
+    mask = pathway_mask(cfg, pathway)
+    receives = mask.any(axis=1)
+    means = np.broadcast_to(np.asarray(means, dtype=np.float64), params.bias.shape)
+    if np.any(means[:, ~receives] != 0.0):
+        raise ValueError(f"{pathway} feeds only {np.flatnonzero(receives).tolist()}")
+    W = params.W.copy()
+    W[:, mask] = 0.0
+    extra = means.copy() if params.extra is None else params.extra + means
+    return Params(W, params.bias.copy(), params.tau.copy(), params.gain.copy(), params.alpha.copy(), extra)
 
 
 def sigmoid(x: np.ndarray) -> np.ndarray:
