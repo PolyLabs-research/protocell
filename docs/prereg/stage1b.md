@@ -72,3 +72,21 @@ The result is read into the next decisions entry and into stage 3's design.
 ## 6. What would change this document
 
 Nothing after the run. Clarifications during the build are recorded here as dated notes, before the run.
+
+## 7. The run (2026-11-02; read in D9)
+
+The data are in `docs/data/stage1b/`. The run used code `e293b37`, on this machine, from a clean tree with warnings
+as errors, and took 5 minutes.
+
+- **The check holds:** the intact and zeroed versions reproduce stage 1's test bit for bit.
+- **Every pathway computes, in both modes.** Holding each at its average breaks all six confirmatory champions:
+
+  | pathway | drop when held at its average | drop when zeroed, stage 1 |
+  |---|---|---|
+  | the core's drive to the wall | 0.27–0.41 | 0.09–0.53 |
+  | the core's recurrence | 0.02–0.35 | 0.08–0.33 |
+  | the ring's links | 0.02–0.29 | 0.012–0.06 |
+
+- **Holding is often worse than zeroing:** in 9 of the 18 champion-pathway pairs.
+
+This document is not changed after the run.

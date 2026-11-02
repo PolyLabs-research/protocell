@@ -21,8 +21,8 @@ K1â€“K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` Â
 (D5): the cave is stage 1's world, evolved in day first, both spoke modes, fitness as the bar. Stage 1 ran (D7, 2026-11-02): evolution
 in the cave's day configuration on RunPod, three runs per spoke mode. Every champion survives, but none reaches the
 reflex's fitness (the best falls 0.011 short), and every one depends on its core, the core's recurrence and the ring's
-links. The owner's decisions (D8): stage 1 stands; a
-clamped-removal stage 1b; stage 3's translucent cell next.
+links. Stage 1b (D9): holding any of those parts at
+its average also breaks every champion, so each part's moment-to-moment signal matters. Next: stage 3's translucent cell.
 
 ## Running
 

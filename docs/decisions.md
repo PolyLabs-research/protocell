@@ -495,3 +495,52 @@ lower bound above δ = 0.007):
 4. **`stage1-build` (with `stage1-prereg`) is merged to main.**
 
 **Impact:** this entry; main; next, `docs/prereg/stage1b.md` and stage 3's draft.
+
+## D9 — Stage 1b: every pathway of the evolved cells computes; none can be replaced by its average
+
+**Date:** 2026-11-02  
+**Why:** D8 2. Preregistered in `docs/prereg/stage1b.md` (`9cee8a5`), before any build. Code `e293b37`, run here in
+5 minutes (`docs/data/stage1b/`).
+
+### A. Measured
+Each pathway was held at its average: its weights set to zero, and each receiving neuron fed its mean input from the
+intact champion's living ticks on stage 1's validation starts. The test used stage 1's 100 test starts, with shared
+noise. The intact and zeroed versions reproduce stage 1's test bit for bit.
+
+| pathway | drop when held, uniform (3) | drop when held, fourier1 (3) | breaks | drop when zeroed (stage 1) | held worse than zeroed |
+|---|---|---|---|---|---|
+| the core's drive to the wall | 0.37–0.41 | 0.27–0.33 | all 6 | 0.09–0.54 | 3 of 6 |
+| the core's recurrence | 0.02–0.35 | 0.05–0.32 | all 6 | 0.08–0.33 | 2 of 6 |
+| the ring's links | 0.05–0.29 | 0.02–0.05 | all 6 | 0.012–0.062 | 4 of 6 |
+
+With the core's drive held at its average:
+- The uniform champions barely beat (mean beat 0.07–0.10, against 0.30–0.35 intact). They never beat at night, and
+  only 22–30% survive.
+- Two fourier1 champions beat more at night (0.024 and 0.17, against 0.018 and 0.021 intact), and one stops
+  altogether.
+
+### B. Reading
+1. **No part of the evolved networks can be replaced by a constant.** As registered, all three pathways compute in
+   both modes. Their moment-to-moment signals matter, not only their averages. Stage 1's zeroed removals did not
+   just measure lost steady drive.
+2. **The averages are inputs the intact cells rarely see.** In half the cases, holding a pathway at its average hurt
+   more than removing it. The pathways carry signals that differ sharply between the cell's states (day and night,
+   near the mouth and far from it), and their average falls between the states. A neuron fed that average sits at
+   an operating point the intact cell seldom visits. With the core's drive held, the uniform champions cannot switch
+   their wall on by day. That suggests the core's drive is what turns the wall on in the light, though stage 1b does
+   not show it directly.
+3. **For the hypothesis:** stage 1b strengthens D7's weak sense. The evolved cells' behaviour depends on the
+   time-varying interaction of their core, its recurrence and the ring. It still does not show the strong sense (D6,
+   D7).
+4. **A sharper probe, not run:** hold each pathway at its typical value in each state, its day average by day and its
+   night average by night. That would show whether the pathways carry more than the day-and-night state. It is noted
+   for a later design, not preregistered.
+5. **Predictions (`stage1b.md` §4):**
+   - (1) The check holds ✓.
+   - (2) The core's drive computes in both modes ✓.
+   - (3) Night beating rises when the core's drive is held ✗: it fell to zero in four champions and rose in two.
+   - (4) The core's recurrence computes in both modes ✓.
+   - (5) The ring's links supply steady drive only ✗: holding them breaks all six, worse than zeroing in four.
+
+**Impact:** this entry; `docs/prereg/stage1b.md` (§7); `protocell/cell.py` (pathways, `hold_at_average`),
+`protocell/sim.py`; `experiments/stage1b.py`; `docs/data/stage1b/`; `tests/test_stage1b.py`.
