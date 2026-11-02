@@ -191,16 +191,19 @@ def gene_names(cfg: Config, mode: str) -> Dict[str, slice]:
             "alpha": lay.alpha, "spokes_in": lay.spokes_in, "spokes_out": lay.spokes_out}
 
 
-REMOVALS = ("blind", "ring_links", "loop", "core", "core_recurrence")
+REMOVALS = ("blind", "ring_links", "loop", "core", "core_recurrence")  # stage 1's (stage1.md §7)
+TIME_REMOVALS = ("wall_fast", "core_fast")  # stage 3b's (stage3b.md §6): memory in slow decay, not loops
 
 
 def apply_removal(cfg: Config, params: Params, removal: str) -> Params:
     """A copy of the networks with one part removed (docs/prereg/stage1.md §7), without re-evolving:
     ``blind`` the sensory gain g set to 0; ``ring_links`` the weights between ring neighbours, both directions (the
     self weights kept); ``loop`` the two weights between nodes N-1 and 0, so the ring becomes a chain; ``core`` every
-    spoke, both directions, so the wall is alone; ``core_recurrence`` every core-to-core weight, self links included."""
-    if removal not in REMOVALS:
-        raise ValueError(f"unknown removal {removal!r}; one of {REMOVALS}")
+    spoke, both directions, so the wall is alone; ``core_recurrence`` every core-to-core weight, self links included;
+    ``wall_fast`` the wall's time constant set to 1 tick and ``core_fast`` every core neuron's (stage3b.md §6), so a
+    neuron keeps nothing of its past input but what its links feed back."""
+    if removal not in REMOVALS + TIME_REMOVALS:
+        raise ValueError(f"unknown removal {removal!r}; one of {REMOVALS + TIME_REMOVALS}")
     n = cfg.n_wall
     out = Params(params.W.copy(), params.bias.copy(), params.tau.copy(), params.gain.copy(), params.alpha.copy(),
                  None if params.extra is None else params.extra.copy())
@@ -216,8 +219,12 @@ def apply_removal(cfg: Config, params: Params, removal: str) -> Params:
     elif removal == "core":
         out.W[:, n:, :n] = 0.0
         out.W[:, :n, n:] = 0.0
-    else:
+    elif removal == "core_recurrence":
         out.W[:, n:, n:] = 0.0
+    elif removal == "wall_fast":
+        out.tau[:, :n] = 1.0
+    else:
+        out.tau[:, n:] = 1.0
     return out
 
 

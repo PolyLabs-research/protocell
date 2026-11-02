@@ -119,13 +119,13 @@ def test_job(job: Mapping[str, Any]) -> Dict[str, Any]:
     if spec["controller"] == "network":
         spec["genomes"] = np.repeat(np.asarray(job["genome"])[None], n, axis=0)
     st = starts.with_pos(np.repeat(job["pos"][None], n, axis=0)) if job.get("pos") is not None else starts
-    r = simulate(job["cfg"], st, spec, seed=TEST_SEED, cell_ids=[0] * n)
+    r = simulate(job["cfg"], st, spec, seed=job.get("seed", TEST_SEED), cell_ids=[0] * n)
     return {"label": job["label"], "fitness": r.fitness, "survived": r.survived, "mean_beat": r.mean_beat, "light_soaked": r.light_soaked,
             "night_beat": r.night_beat, "reach_tick": r.reach_tick, "start": starts.index}
 
 
-def bootstrap_ci(diff: np.ndarray, key: int, resamples: int) -> Tuple[float, float, float]:
-    rng = stream(BOOTSTRAP_SEED, "bootstrap", (key,))
+def bootstrap_ci(diff: np.ndarray, key: int, resamples: int, seed: int = BOOTSTRAP_SEED) -> Tuple[float, float, float]:
+    rng = stream(seed, "bootstrap", (key,))
     idx = rng.integers(0, diff.shape[0], size=(resamples, diff.shape[0]))
     means = diff[idx].mean(axis=1)
     return float(diff.mean()), float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))

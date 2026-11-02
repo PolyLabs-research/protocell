@@ -17,6 +17,7 @@ PHASE=$4
 shift 4
 RUNS=("$@")
 PULL_WAIT=${PULL_WAIT:-3600}
+EXPERIMENT=${EXPERIMENT:-stage1}  # the stage's module: stage1, stage3b
 WORKERS=${WORKERS:-16}
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 cd "$REPO" || exit 1
@@ -27,9 +28,9 @@ say() { echo "$(date -Is) $*"; }
 
 names=()
 for run in "${RUNS[@]}"; do
-    names+=("$("$PY" -c "from experiments.stage1 import seed_for; m, r = '$run'.split(':'); print(f'{m}-{seed_for(\"$PHASE\", m, int(r))}')")")
+    names+=("$("$PY" -c "from experiments.$EXPERIMENT import seed_for; m, r = '$run'.split(':'); print(f'{m}-{seed_for(\"$PHASE\", m, int(r))}')")")
 done
-say "launch $TAG: $PHASE ${RUNS[*]} -> ${names[*]}; ${HOURS} h cap at most \$${MAX_RATE}/h"
+say "launch $TAG: $EXPERIMENT $PHASE ${RUNS[*]} -> ${names[*]}; ${HOURS} h cap at most \$${MAX_RATE}/h"
 out=$("$PY" cloud/cpu_pod.py launch --tag "$TAG" --flavor cpu5c --vcpu 32 --hours "$HOURS" --max-rate "$MAX_RATE" --yes 2>&1)
 echo "$out"
 POD=$(echo "$out" | sed -n 's/^launched \([a-z0-9]*\) .*/\1/p')
@@ -46,9 +47,9 @@ fail() {
 "${RP[@]}" wait-ssh "$POD" --timeout 900 || fail "no SSH"
 bash cloud/stage_pod.sh "$POD" || fail "staging"
 # Start the job detached on the pod; the local ssh is cut after 30 s (the job is setsid and nohup there, so it lives on).
-timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_phase.sh $PHASE $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
+timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && EXPERIMENT=$EXPERIMENT nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_phase.sh $PHASE $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
 sleep 20
 "${RP[@]}" ssh "$POD" -- "grep -q 'job start' /root/protocell/pc-job/lifecycle.log" || fail "the job did not start"
 say "job started on $POD"
-setsid nohup bash cloud/campaign.sh "$POD" "$PHASE" "${names[@]}" > /dev/null 2>&1 < /dev/null &
-say "campaign started for $POD (log ~/protocell-runs/campaign-$PHASE-$POD.log)"
+EXPERIMENT=$EXPERIMENT setsid nohup bash cloud/campaign.sh "$POD" "$PHASE" "${names[@]}" > /dev/null 2>&1 < /dev/null &
+say "campaign started for $POD (log ~/protocell-runs/campaign-$EXPERIMENT-$PHASE-$POD.log)"

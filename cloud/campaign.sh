@@ -16,20 +16,21 @@ PHASE=$2
 shift 2
 RUNS=("$@")
 PULL_EVERY=${PULL_EVERY:-600}
+EXPERIMENT=${EXPERIMENT:-stage1}  # the data's folder under docs/data/
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 cd "$REPO" || exit 1
 CHESS=$HOME/Documents/dev/chess
 RP=("$CHESS/.venv/bin/python" "$CHESS/scripts/runpod_pod.py")
 OUT=$HOME/protocell-runs
-LOG=$OUT/campaign-$PHASE-$POD.log
-mkdir -p "$OUT" "docs/data/stage1/$PHASE"
+LOG=$OUT/campaign-$EXPERIMENT-$PHASE-$POD.log
+mkdir -p "$OUT" "docs/data/$EXPERIMENT/$PHASE"
 
 log() { echo "$(date -Is) $*" >> "$LOG"; }
 
 pull_all() {
-    "${RP[@]}" pull "$POD" "/root/protocell/docs/data/stage1/$PHASE/" "docs/data/stage1/$PHASE/" >> "$LOG" 2>&1
-    "${RP[@]}" pull "$POD" /root/protocell/logs/ "$OUT/stage1-$PHASE-logs/" >> "$LOG" 2>&1
-    "${RP[@]}" pull "$POD" /root/protocell/pc-job/ "$OUT/stage1-$PHASE-$POD-job/" >> "$LOG" 2>&1
+    "${RP[@]}" pull "$POD" "/root/protocell/docs/data/$EXPERIMENT/$PHASE/" "docs/data/$EXPERIMENT/$PHASE/" >> "$LOG" 2>&1
+    "${RP[@]}" pull "$POD" /root/protocell/logs/ "$OUT/$EXPERIMENT-$PHASE-logs/" >> "$LOG" 2>&1
+    "${RP[@]}" pull "$POD" /root/protocell/pc-job/ "$OUT/$EXPERIMENT-$PHASE-$POD-job/" >> "$LOG" 2>&1
 }
 
 pod_alive() { "${RP[@]}" status 2> /dev/null | grep -q "^$POD "; }
@@ -42,21 +43,21 @@ while pod_alive; do
         missing=0
         for run in "${RUNS[@]}"; do
             for f in champion.json manifest.json; do
-                [ -s "docs/data/stage1/$PHASE/$run/$f" ] || { log "MISSING docs/data/stage1/$PHASE/$run/$f"; missing=1; }
+                [ -s "docs/data/$EXPERIMENT/$PHASE/$run/$f" ] || { log "MISSING docs/data/$EXPERIMENT/$PHASE/$run/$f"; missing=1; }
             done
         done
         if [ "$missing" = 0 ]; then
             "${RP[@]}" ssh "$POD" -- touch /root/protocell/pc-job/PULLED >> "$LOG" 2>&1
             log "every run pulled; PULLED written; the pod deletes itself"
-            notify-send "protocell $PHASE" "pulled; the pod deletes itself" 2> /dev/null || true
+            notify-send "protocell $EXPERIMENT $PHASE" "pulled; the pod deletes itself" 2> /dev/null || true
         else
             log "outputs missing: PULLED NOT written; fetch by hand before the pod's pull wait or deadline"
-            notify-send -u critical "protocell $PHASE" "outputs missing on $POD" 2> /dev/null || true
+            notify-send -u critical "protocell $EXPERIMENT $PHASE" "outputs missing on $POD" 2> /dev/null || true
         fi
         exit "$missing"
     fi
     pull_all
-    log "pulled ($(du -sh "docs/data/stage1/$PHASE" | cut -f1))"
+    log "pulled ($(du -sh "docs/data/$EXPERIMENT/$PHASE" | cut -f1))"
     sleep "$PULL_EVERY"
 done
 log "the pod is gone"
