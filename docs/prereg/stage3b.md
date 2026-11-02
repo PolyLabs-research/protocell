@@ -183,3 +183,25 @@ its eyespot would have to adapt. The owner chose this amendment among three ("ag
 3. During the fade, the best training fitness falls as the shading goes, then partly recovers.
 4. If the fourier1 mode climbs, its confirmatory champions find comparison over time (Q1). Its memory lives in slow
    decay more than in the core's loops: R6 breaks more champions than R4.
+
+**The amended pilot's outcome (2026-11-02, before any confirmatory run).**
+
+The data are in `docs/data/stage3b/pilot/`. Both runs went side by side on one RunPod pod (AMD EPYC 9575F), at code
+`fca8740`, from a clean tree with warnings as errors. Each took 86 minutes and cost about $1.85.
+
+| run | champion's generation | validation fitness | validation survival | the best training fitness: shaded (generation 40) → just after the fade (60) → 100 |
+|---|---|---|---|---|
+| uniform, seed 1201 | 60 | 0.393 | 50% (12 of 24) | 0.68 → 0.28 → 0.50 |
+| fourier1, seed 1202 | 100 | 0.270 | 21% | 0.54 → 0.34 → 0.41 |
+
+- **The pilot's rule** (§5: survive at least half the validation starts) is met by the uniform pilot, exactly at the
+  bound, and not by the fourier1 pilot. Fourier1's validation curve after the fade (0.22, 0.26, 0.26, 0.21, 0.17) is
+  not rising, so the extension does not apply.
+- **What follows:** one mode climbs, so §9's first row ("does not climb in either mode") does not apply. The
+  confirmatory runs go as amended, with no further change.
+- **Predictions under A1:**
+  - (1) The fourier1 pilot climbs ✗.
+  - (2) The uniform pilot does not climb ✗: it meets the rule.
+  - (3) Training fitness falls as the shading goes, then partly recovers ✓, in both runs.
+- **Noted, not judged:** the uniform champion's 0.393 on validation is above stage 3a's B2r (0.317 on its own starts).
+  It is below the level Q1 asks for, about 0.51 on those starts. The test will measure both on the same starts.
