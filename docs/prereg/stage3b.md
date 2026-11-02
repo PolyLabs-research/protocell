@@ -109,6 +109,34 @@ breaks a champion if the interval of its fitness drop has its lower bound above 
 **The owner's answers (2026-11-02, before the build).** "Happy with all that, go": 100 generations, extendable after the
 pilot; the removals R5 and R6; RunPod as in stage 1, each launch's cost confirmed.
 
+**The pilot's outcome (2026-11-02, before any confirmatory run).**
+
+The data are in `docs/data/stage3b/pilot/`. Both runs went side by side on one RunPod pod (AMD EPYC 4564P, 32
+vCPUs), at code `841ff1f`, from a clean tree with warnings as errors. Each took 96 minutes. **Neither climbs.**
+
+| run | champion's validation fitness | validation survival | validation curve |
+|---|---|---|---|
+| uniform, seed 1101 | 0.197, from generation 100 | 4% of 24 | 0.197 at every checkpoint |
+| fourier1, seed 1102 | 0.227, from generation 80 | 8% of 24 | 0.18–0.21 throughout |
+
+§5's rule (survive at least half the validation starts) fails in both modes, and neither curve is rising. So the
+rule's extension of the generations does not apply, and §9's first row does: an amendment, then the pilot again on
+fresh seeds.
+
+**Diagnosis (no new evolution; the pilot's validation starts):**
+- **The uniform champion is a still cell.** It never beats, and its fitness equals B0's on the same starts, 0.1973.
+- **The fourier1 champion beats 0.6% of the time.** It barely moves.
+- **Both populations collapsed.** At generation 100 the genomes differ by 4.7% and 6.3% of each range, against 33%
+  at generation 0.
+
+**The reason, read from stage 3a's numbers:** in this world moving without comparing costs more than it finds.
+Random beating scores 0.116 and sitting still 0.206, so selection drives a random population to stillness before
+the three parts of comparing over time can come together. Those parts are resting at night, swimming straight, and
+swimming only while the light rises, and none pays on its own. In stage 1 the shading made one part, steering toward
+the light, pay on its own.
+
+The amendment is the owner's choice: its kind changes the method. Recorded here before any confirmatory run.
+
 ## 11. What would be built
 
 - R5 and R6 as removals.
