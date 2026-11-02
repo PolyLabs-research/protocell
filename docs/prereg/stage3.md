@@ -112,6 +112,9 @@ About 25 minutes on this machine, like one of the cave's configurations. No clou
    light falls (it would need a non-zero cilium angle).
 3. **Where it runs:** on this machine, about 25 minutes (recommended), or on RunPod.
 
+**The owner's answers (2026-11-02, before the build).** "Agree on all, go": the falloff is 600 R by the cave's rule;
+B5 (run and wait, §3) is stage 3's bar; the checks run on this machine.
+
 ## 10. What would change this document
 
 The owner's answers, as dated notes before the build. After the checks have run, nothing but dated amendments
