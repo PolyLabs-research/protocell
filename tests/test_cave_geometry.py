@@ -61,3 +61,12 @@ def test_the_probe_runs_and_reports_shares() -> None:
     r = probe(Cave(), n_points=40, phases=(0, HALF))
     assert set(r) >= {"sitter_share", "best_distance_to_mouth", "burn_share_noon", "soak_share_noon", "direction_sensible_noon"}
     assert 0 <= r["sitter_share"] <= 1 and r["soak_share_noon"] < 0.6
+
+
+def test_the_stage3_probe_reads_a_translucent_cell() -> None:
+    from experiments.stage3_geometry import probe as probe3
+
+    shaded = probe3(Cave(shade_floor=0.3), n=30)
+    clear = probe3(Cave(shade_floor=1.0), n=30)
+    assert shaded["at_once_noon"] > 0.9 and clear["at_once_noon"] < 0.2  # without shading the direction is lost at once
+    assert clear["over_100R_noon"] > 0.3  # but the rise can be read by moving
