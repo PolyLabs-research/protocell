@@ -480,3 +480,18 @@ lower bound above δ = 0.007):
 **Impact:** this entry; `docs/prereg/stage1.md` (the owner's answers, the clarifications, the pilot's outcome, §16);
 `protocell/` (evolve, tables, cell, sim, world); `experiments/stage1.py`, `experiments/stage1_budget.py`; `cloud/`;
 `tools/replay.py`; `docs/data/stage1/` (budget, pilot, confirm, test); `tests/`; `README.md`.
+
+## D8 — The owner's decisions on D7: stage 1 stands, a clamped-removal stage 1b, stage 3's translucent cell next; merged
+
+**Date:** 2026-11-02  
+**Why:** the owner's answers to D7 D1–D4: "1. let it stand 2. agree 3. agree 4. yes merge".
+
+### Decided
+1. **Stage 1 stands as it ran.** No longer runs.
+2. **Stage 1b:** the removals repeated with each part's input held at its average instead of zeroed, preregistered
+   first (`docs/prereg/stage1b.md`), run here on the existing champions.
+3. **The next world is stage 3's:** the cave with the cell made translucent, so the light's direction cannot be read
+   across the body and must be compared over time. Stage 2 (damage) comes after it, or folded in.
+4. **`stage1-build` (with `stage1-prereg`) is merged to main.**
+
+**Impact:** this entry; main; next, `docs/prereg/stage1b.md` and stage 3's draft.
