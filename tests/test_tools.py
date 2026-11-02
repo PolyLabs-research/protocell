@@ -123,3 +123,15 @@ def test_pages_escape_the_data_and_write_whole_or_fragment() -> None:
     assert "</script><b>" not in whole.split("replay-data")[1].split("</script>")[0]
     assert whole.startswith("<!doctype html>") and "<head>" in whole and not frag.startswith("<!doctype")
     assert frag.lstrip().startswith("<title>")
+
+
+def test_replays_run_in_the_translucent_world_with_b5() -> None:
+    from tools.replay import TRANSLUCENT, world
+
+    cfg, seed = world(TRANSLUCENT, quick=True)
+    assert cfg.shade_floor == 1.0 and cfg.cave_falloff == 600.0 and seed == 8
+    b5 = parse_cell("b5:30", cfg, TRANSLUCENT)
+    assert b5.spec == {"controller": "runwait", "tau": 30.0, "rest_below": cfg.rest_below} and b5.short == "B5" and b5.kind == "runwait"
+    starts = sample_starts(cfg, "cave", 2, seed).numbered([2])
+    rep = record(cfg, TRANSLUCENT, starts, [b5], seed=seed, stride=50)
+    assert rep["configuration"] == TRANSLUCENT and rep["cells"][0]["summary"]["fitness"] > 0

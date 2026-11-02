@@ -9,6 +9,7 @@ Cells:
   b0                 the still cell
   b1                 random beating
   b2:K               the plain reflex at gain K
+  b5[:TAU]           run and wait (stage 3a's bar), its memory's time constant TAU s (default: stage 3a's choice)
   b2r[:K], b2rr[:K]  the reflex that rests in the dark, and the one that also retreats above the damage threshold;
                      without K, the gain the checks chose for the configuration (docs/data/cave/<config>/summary.json)
   genome:MODE:G      random genome G (1-based) of the cave's B3 at its seed, MODE uniform or fourier1
@@ -62,7 +63,30 @@ class CellSpec:
     kind: str
 
 
+TRANSLUCENT = "translucent"  # stage 3's world (docs/prereg/stage3.md): the cave's day with the cell translucent
+STAGE3_SUMMARY = Path("docs/data/stage3/summary.json")
+
+
+def world(config: str, quick: bool) -> "tuple[Config, int]":
+    """The world a replay runs in and the seed of its starts and noise: one of the cave's four configurations (the
+    cave's starts, seed 2), or the translucent cell's (stage 3a's starts, seed 8)."""
+    if config == TRANSLUCENT:
+        from experiments import stage3
+
+        return stage3.configure(quick), stage3.SEED
+    return configure(config, quick), SEED
+
+
 def _checks_gain(config: str, which: str, data_dir: Path) -> float:
+    if config == TRANSLUCENT:
+        if not STAGE3_SUMMARY.exists():
+            raise SystemExit(f"stage 3a's checks have not run ({STAGE3_SUMMARY} is missing): give the value, as {which}:X")
+        s = json.loads(STAGE3_SUMMARY.read_text())
+        if which == "b5":
+            return float(s["bar"]["tau"])
+        if which == "b2r":
+            return float(s["checks"]["T4"]["b2r"]["k"])
+        raise SystemExit(f"{which} does not run in the translucent world")
     path = data_dir / config / "summary.json"
     if not path.exists():
         raise SystemExit(f"no checks have run for {config!r} ({path} is missing): give the gain, as {which}:K")
@@ -95,6 +119,9 @@ def parse_cell(text: str, cfg: Config, config: str, *, seed: int = SEED, data_di
             spec["retreat_on"] = cfg.retreat_on
             return CellSpec(f"B2rr rests and retreats, k = {k:g}", "B2rr", spec, 0, "reflex")
         return CellSpec(f"B2r rests in the dark, k = {k:g}", "B2r", spec, 0, "reflex")
+    if head == "b5" and len(parts) <= 2:
+        tau = float(parts[1]) if len(parts) == 2 else _checks_gain(config, "b5", data_dir)
+        return CellSpec(f"B5 run and wait, memory {tau:g} s", "B5", {"controller": "runwait", "tau": tau, "rest_below": cfg.rest_below}, 0, "runwait")
     if head == "genome" and len(parts) == 3:
         mode, g = parts[1], int(parts[2])
         if g < 1:
@@ -221,8 +248,8 @@ def write_page(replay: Mapping[str, Any], path: Path, *, fragment: bool = False)
 def main(argv: Optional[Sequence[str]] = None) -> Path:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0], epilog=__doc__.split("\n\n", 2)[2],
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--config", default="burn", choices=list(CONFIGURATIONS))
-    parser.add_argument("--start", type=int, default=51, help="the start's number (1-based), from the cave's starts at its seed")
+    parser.add_argument("--config", default="burn", choices=[*CONFIGURATIONS, TRANSLUCENT])
+    parser.add_argument("--start", type=int, default=51, help="the start's number (1-based), from the world's check starts")
     parser.add_argument("--cells", nargs="+", default=["b0", "b2r", "b2rr"])
     parser.add_argument("--stride", type=int, default=DEFAULT_STRIDE, help="keep every n-th tick (1 s each)")
     parser.add_argument("--ticks", type=int, default=None, help="stop after this many ticks (default: the whole lifetime)")
@@ -230,10 +257,10 @@ def main(argv: Optional[Sequence[str]] = None) -> Path:
     parser.add_argument("--out", type=Path, default=None)
     parser.add_argument("--fragment", action="store_true", help="write the page without its document skeleton (for publishing)")
     args = parser.parse_args(argv)
-    cfg = configure(args.config, args.quick)
-    starts = sample_starts(cfg, "cave", args.start, SEED).numbered([args.start])
-    cells = [parse_cell(text, cfg, args.config) for text in args.cells]
-    replay = record(cfg, args.config, starts, cells, stride=args.stride, ticks=args.ticks)
+    cfg, seed = world(args.config, args.quick)
+    starts = sample_starts(cfg, "cave", args.start, seed).numbered([args.start])
+    cells = [parse_cell(text, cfg, args.config, seed=seed) for text in args.cells]
+    replay = record(cfg, args.config, starts, cells, seed=seed, stride=args.stride, ticks=args.ticks)
     out = args.out or OUT_DIR / f"{args.config}-start{args.start}-{'-'.join(c.short for c in cells)}.html"
     write_page(replay, out, fragment=args.fragment)
     for c in replay["cells"]:

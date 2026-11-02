@@ -205,3 +205,33 @@ The data are in `docs/data/stage3b/pilot/`. Both runs went side by side on one R
   - (3) Training fitness falls as the shading goes, then partly recovers ✓, in both runs.
 - **Noted, not judged:** the uniform champion's 0.393 on validation is above stage 3a's B2r (0.317 on its own starts).
   It is below the level Q1 asks for, about 0.51 on those starts. The test will measure both on the same starts.
+
+## 14. The runs and the test ran (2026-11-02; read in D11)
+
+- **The pilot as preregistered** (`pilot-as-preregistered/`, code `841ff1f`): neither mode climbed.
+- **Amendment A1** (§13): the shading fades over the first 50 generations.
+- **The amended pilot** (`pilot/`, code `fca8740`): the uniform pilot met the rule at its bound; the fourier1 pilot
+  did not.
+- **The confirmatory runs** (`confirm/`, code `1cc757d`, three RunPod pods): champions' validation fitness 0.197–0.535.
+
+**The test** (`test/`, code `8ae8f3f`, this machine, 100 starts at seed 11 with shared noise): B5 scores 0.715 and
+B2r 0.332, so half the gap is 0.191; the still cell at the best point scores 0.733.
+
+| champion | fitness | above B2r, 95% interval |
+|---|---|---|
+| fourier1 3202 | 0.483 | +0.151 (0.111 to 0.193) |
+| fourier1 3201 | 0.263 | below B2r |
+| fourier1 3203 | 0.267 | below B2r |
+| uniform 2203 | 0.397 | +0.065 (0.023 to 0.108) |
+| uniform 2201 | 0.240 | below B2r, almost still |
+| uniform 2202 | 0.242 | below B2r, almost still |
+
+- **Q1 fails** in both modes: 0 of 3 each.
+- **Q3 fails** in both modes.
+- **Q2:**
+  - In the fourier1 mode, R0, R3, R4, R6 and holding the core's drive break at least 2 of 3 champions. In the uniform
+    mode only R3 does.
+  - The two working champions lose 0.15–0.37 to every removal, but only 0.03–0.05 when the core's recurrence is
+    held at its average.
+
+This document is not changed after the test.

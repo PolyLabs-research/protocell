@@ -600,3 +600,109 @@ bar, the run here. Built at `55b0092`; checked in 27 minutes (`docs/data/stage3/
 **Impact:** this entry; `docs/prereg/stage3.md` (the owner's answers, §11); `protocell/sim.py` (`RunAndWait`);
 `experiments/stage3.py`, `experiments/stage3_geometry.py`, `experiments/cave.py` (`check_k6`'s seed);
 `docs/data/stage3/`; `tests/test_stage3.py`.
+
+## D11 — Stage 3b: comparing over time evolved only sometimes and partly, and its best evolved form is far below a one-number memory
+
+**Date:** 2026-11-02  
+**Why:**
+- The owner's go on stage 3b's draft ("Happy with all that, go") and on the pilot's pod ("Launch").
+- After the pilot failed, the owner chose amendment A1, the shading fading, among three ("agree with 1. proceed").
+- The owner then approved the confirmatory pods ("Yes, proceed").
+
+**Ran.**
+- Built at `841ff1f`; A1 built at `fca8740`.
+- The pilots and the confirmatory runs on RunPod: about $9 for stage 3b (the failed pilot $2, A1's pilot $1.85, the
+  three confirmatory pods $5.15).
+- The test here at `8ae8f3f`, in 10 minutes.
+
+### A. Measured
+1. **The pilot as preregistered** collapsed onto still cells in both modes. In the translucent world every part of
+   comparing over time scores below sitting still when it stands alone.
+2. **Under A1** every run first built a working shaded cell: the best training fitness was 0.5–0.7 while shaded.
+   Every run then lost most of it as the shading vanished near generation 50.
+3. **The test** (100 fresh starts, seed 11):
+
+| controller | fitness | survival | above B2r (95% interval) | share of B5's lead over B2r recovered | mean beat |
+|---|---|---|---|---|---|
+| B5, run and wait | 0.715 | 100% | — | — | 0.020 |
+| B2r, the spatial reflex | 0.332 | 35% | — | — | 0.113 |
+| the still cell at the best point | 0.733 | 100% | — | — | 0 |
+| fourier1 3202 | 0.483 | 63% | +0.151 (0.111, 0.193) | 39% | 0.284 |
+| uniform 2203 | 0.397 | 50% | +0.065 (0.023, 0.108) | 17% | 0.175 |
+| fourier1 3201, 3203 | 0.263, 0.267 | 20–22% | below | — | 0.08–0.13 |
+| uniform 2201, 2202 | 0.240, 0.242 | 11% | below, almost still | — | 0.01–0.02 |
+
+4. **The verdicts:**
+   - Q1 (recover at least half of B5's lead, 0.191) fails in both modes: 0 of 3 each.
+   - Q3 fails.
+   - Q2: in the fourier1 mode the sensors, the core, its recurrence, the core's slow decay (R6) and the core's drive
+     held at its average are needed. In the uniform mode only the core is.
+5. **The two working champions** lose 0.15–0.37 to each of the six removals and to two of the holds. Holding the
+   core's recurrence at its average costs them only 0.03–0.05.
+
+### B. Reading
+1. **Comparing over time evolved only sometimes and partly.** The fading shading gave evolution its path: every run
+   built a working shaded cell. Only 2 of 6 kept a working cell once the cue was gone, one per mode, recovering 39%
+   and 17% of what memory is worth over the reflex. Two uniform runs sank to near stillness, and two fourier1 runs
+   settled below the reflex. Which outcome a run reaches depends on its seed. Three runs per mode cannot say how
+   often it succeeds.
+2. **The working cells are not B5.** B5 beats 2% of the time and spends almost nothing. The evolved cells beat most
+   of the day. In the replay they reach the mouth and park there, beating every cilium, as stage 1's champions did.
+3. **Where their memory lives: everywhere.**
+   - Making either the core or the wall fast breaks them.
+   - So does zeroing the core's recurrence, cutting the ring's links, or removing the core.
+   - Stage 3b asked whether memory sits in loops or in slow decay; the answer is both, and in the ring. Holding the
+     recurrence at its average costs little, so its steady drive matters more than its fluctuations.
+4. **My uniform-mode prediction was wrong.** A uniform cell with no front found a working strategy (2203, above the
+   reflex). How it holds a course is not yet understood.
+5. **For the hypothesis.** In the one world built so that memory pays, evolution sometimes found cells whose
+   behaviour depends on all their interacting parts. The best of them scores 0.48, far below a one-number memory
+   (0.715). The strong sense, interacting parts doing better than a simple mechanism, is still not shown.
+   - In stage 1 the world gave it no room.
+   - Here, too, the simple mechanism (B5) is within 0.02 of the ceiling, so there is no room above it either.
+   - And evolution as configured does not reliably reach even the simple mechanism.
+6. **A pattern across every world so far.** In the shaded cave, with damage, and in the translucent world, a simple
+   rule sits within 2–3% of the ceiling:
+   - the reflex in the shaded cave;
+   - the reflex that backs out, with damage;
+   - run and wait, in the translucent world.
+
+   A world where interacting parts can beat every simple rule has not been built yet. Building one is a design
+   question, to be probed before any more evolution.
+7. **Predictions (§8):**
+   - (1) The fourier1 pilot climbs ✗: as preregistered neither did, and under A1 the uniform one did.
+   - (2) The uniform mode does not find comparison over time ✓ (0 of 3); the fourier1 mode does ✗ (0 of 3).
+   - (3) Neither reaches B5 ✓.
+   - (4) In the fourier1 mode:
+     - R0 breaks every champion ✓.
+     - Holding the core's drive breaks every champion ✗ (2 of 3).
+     - R6 breaks at least 2 of 3 ✓.
+     - R4 breaks fewer than R6 ✗ (2 and 2).
+   - (5) The champions spend more than B5 ✓.
+   - Under A1:
+     - (1) ✗.
+     - (2) ✗.
+     - (3) training fitness falls with the shading and partly recovers ✓.
+     - (4) ✗.
+
+### C. A clarification
+Q1's "exceeds B2r's by at least half the gap" was read as the interval's lower bound. The best champion's mean
+(+0.151) is also below the 0.191 bar, so no reading of the criterion would have passed it.
+
+### D. Decisions this surfaces (the owner's)
+1. **Whether stage 3b stands as it ran.** Recommended: yes. Comparing over time is reachable by this evolution
+   sometimes and partly; that is the result.
+2. **What comes next.** Recommended: design a world where every simple rule leaves real room below the ceiling, and
+   probe the baselines' headroom before any evolution, as D6 and stage 3a did.
+   - Candidates come from the plan's stage 4: light that changes in ways a rule cannot follow. Examples are a sun
+     whose track shifts from day to day, a mouth that moves, or damage that rises with the hour, so a cell has to
+     anticipate rather than react.
+   - The alternatives: more search in stage 3b's world (longer runs or more runs per mode, about $15–20), or a
+     stronger optimiser (CMA-ES, deferred in D6). Neither would show the strong sense while B5 sits at the ceiling.
+3. **Merging.** The branch chain is `stage1b` ⊂ `stage3-prereg` ⊂ `stage3-build` ⊂ `stage3b-prereg` ⊂
+   `stage3b-build`. Merging the last brings everything to main.
+
+**Impact:** this entry; `docs/prereg/stage3b.md` (the owner's answers, the pilot's outcome, A1, the amended pilot's
+outcome, §14); `protocell/evolve.py` (a world per generation, the champion's first generation), `protocell/cell.py`
+(the time removals); `experiments/stage3b.py`, `experiments/stage1.py` (seeds as options); `cloud/` (any stage);
+`tools/replay.py` (the translucent world, B5); `docs/data/stage3b/`; `tests/`.

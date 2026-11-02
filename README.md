@@ -24,7 +24,9 @@ reflex's fitness (the best falls 0.011 short), and every one depends on its core
 links. Stage 1b (D9): holding any of those parts at
 its average also breaks every champion, so each part's moment-to-moment signal matters. Stage 3a (D10): the translucent cell's
 world passes every check; without shading the reflex survives a third of its starts, while a cell that compares
-its light over time (B5) survives all of them. Next: stage 3b's evolution.
+its light over time (B5) survives all of them. Stage 3b (D11): comparing over time
+evolved only sometimes and partly (the best champion recovers 39% of what memory is worth over the reflex), and its
+best form scores far below B5. Awaiting the owner's decisions in D11.
 
 ## Running
 
