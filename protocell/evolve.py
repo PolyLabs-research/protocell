@@ -161,7 +161,7 @@ def evaluate(cfg: Config, mode: str, ga: GA, population: np.ndarray, seed: int, 
 
 # --- a run --------------------------------------------------------------------------------------------------------------
 
-GENERATION_COLUMNS = ("generation", "best_fitness", "median_fitness", "mean_fitness", "best_survival", "share_surviving_all",
+GENERATION_COLUMNS = ("generation", "shade_floor", "best_fitness", "median_fitness", "mean_fitness", "best_survival", "share_surviving_all",
                       "best_mean_beat", "seconds")
 VALIDATION_COLUMNS = ("generation", "rank", "train_fitness", "validation_fitness", "validation_survival", "validation_mean_beat", "champion")
 
@@ -180,11 +180,16 @@ def _load_checkpoint(path: Path) -> Dict[str, Any]:
 
 
 def run(cfg: Config, mode: str, ga: GA, seed: int, out: Path, mapper: Mapper, *, log: Callable[[str], None] = print,
-        stop_after: Optional[int] = None) -> Dict[str, Any]:
+        stop_after: Optional[int] = None, world_for: Optional[Callable[[int], Config]] = None, champion_from: int = 1) -> Dict[str, Any]:
     """Evolve one run, checkpointing after every generation to ``out/checkpoint.npz`` and resuming from it if it is
     there. ``stop_after`` ends this call after that many generations (a resumed call goes on from there). Returns the
     run's state; when the run is complete it also writes ``generations.csv``, ``validation.csv``, ``champion.npy``,
-    ``champion.json`` and ``population.npy``."""
+    ``champion.json`` and ``population.npy``.
+
+    ``world_for(generation)`` (1-based), when given, is the world the generation's training starts run in (stage 3b's
+    amendment A1 fades the cell's shading this way); validation always runs in ``cfg``. Only checkpoints at or after
+    generation ``champion_from`` can supply the champion; earlier ones are recorded. With neither given, a run is the
+    same bits as before they existed."""
     out.mkdir(parents=True, exist_ok=True)
     ckpt = out / "checkpoint.npz"
     vstarts = validation_starts(cfg, ga)
@@ -199,7 +204,8 @@ def run(cfg: Config, mode: str, ga: GA, seed: int, out: Path, mapper: Mapper, *,
         g = state["next_generation"]
         t0 = time.time()
         pop = state["population"]
-        ev = evaluate(cfg, mode, ga, pop, seed, g, mapper)
+        train_cfg = cfg if world_for is None else world_for(g + 1)
+        ev = evaluate(train_cfg, mode, ga, pop, seed, g, mapper)
         fit = ev["mean_fitness"]
         order = np.argsort(-fit, kind="stable")
         best = int(order[0])
@@ -208,14 +214,14 @@ def run(cfg: Config, mode: str, ga: GA, seed: int, out: Path, mapper: Mapper, *,
             jobs = [{"cfg": cfg, "mode": mode, "seed": ga.validation_seed, "starts": vstarts, "genome": pop[i]} for i in top]
             for rank, (i, v) in enumerate(zip(top, mapper(validation_job, jobs)), start=1):
                 info = state["champion_info"]
-                better = info is None or v["fitness"] > info["validation_fitness"]
+                better = (g + 1) >= champion_from and (info is None or v["fitness"] > info["validation_fitness"])
                 if better:
                     state["champion"] = pop[i].copy()
                     state["champion_info"] = {"generation": g + 1, "rank": rank, "train_fitness": float(fit[i]),
                                               "validation_fitness": v["fitness"], "validation_survival": v["survival"]}
                 state["validation"].append({"generation": g + 1, "rank": rank, "train_fitness": float(fit[i]), "validation_fitness": v["fitness"],
                                             "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "champion": int(better)})
-        row = {"generation": g + 1, "best_fitness": float(fit[best]), "median_fitness": float(np.median(fit)), "mean_fitness": float(fit.mean()),
+        row = {"generation": g + 1, "shade_floor": train_cfg.shade_floor, "best_fitness": float(fit[best]), "median_fitness": float(np.median(fit)), "mean_fitness": float(fit.mean()),
                "best_survival": float(ev["survived"][best].mean()), "share_surviving_all": float(ev["survived"].all(axis=1).mean()),
                "best_mean_beat": float(ev["mean_beat"][best].mean()), "seconds": round(time.time() - t0, 3)}
         state["history"].append(row)

@@ -36,8 +36,13 @@ from protocell.manifest import build_manifest, finish_manifest, write_manifest
 from protocell.tables import write_csv
 from protocell.world import sample_starts
 
-SEEDS = {"pilot": {"uniform": (1101,), "fourier1": (1102,)},
-         "confirm": {"uniform": (2101, 2102, 2103), "fourier1": (3101, 3102, 3103)}}
+# amendment A1's run seeds (stage3b.md §13); the preregistered pilot's (1101, 1102) are in pilot-as-preregistered/
+SEEDS = {"pilot": {"uniform": (1201,), "fourier1": (1202,)},
+         "confirm": {"uniform": (2201, 2202, 2203), "fourier1": (3201, 3202, 3203)}}
+SEEDS_AS_PREREGISTERED = {"pilot": {"uniform": (1101,), "fourier1": (1102,)},
+                          "confirm": {"uniform": (2101, 2102, 2103), "fourier1": (3101, 3102, 3103)}}
+FADE_GENERATIONS = 50  # amendment A1: the shading fades over generations 1-50
+SHADE_START = 0.3  # the cave's shaded cell
 VALIDATION_SEED = 10
 TEST_SEED = 11
 BOOTSTRAP_SEED = 12
@@ -51,6 +56,18 @@ STAGE3_SUMMARY = Path("docs/data/stage3/summary.json")
 
 def ga_for(quick: bool) -> GA:
     return (GA.quick() if quick else GA()).but(validation_seed=VALIDATION_SEED)
+
+
+def fade_generations(quick: bool) -> int:
+    return 2 if quick else FADE_GENERATIONS
+
+
+def shade_floor_for(generation: int, fade: int) -> float:
+    """Amendment A1: the training cell's shading floor in a generation (1-based), from the cave's 0.3 at generation 1
+    rising in a straight line to fully translucent (1) after ``fade`` generations."""
+    if generation <= fade:
+        return SHADE_START + (1.0 - SHADE_START) * (generation - 1) / fade
+    return 1.0
 
 
 def seed_for(phase: str, mode: str, replicate: int) -> int:
@@ -74,8 +91,11 @@ def run_phase(phase: str, mode: str, replicate: int, out_root: Path, workers: in
     ga = ga_for(quick)
     seed = seed_for(phase, mode, replicate)
     out = out_root / phase / f"{mode}-{seed}"
+    fade = fade_generations(quick)
     manifest = build_manifest(protocol=f"stage3b/{phase}", settings={**cfg.as_dict(), "world": "stage 3a, translucent", "mode": mode,
-                                                                     "genome_length": genome_length(cfg, mode), "ga": ga.as_dict(), "quick": quick},
+                                                                     "genome_length": genome_length(cfg, mode), "ga": ga.as_dict(), "quick": quick,
+                                                                     "amendment": "A1: the shading fades", "fade_generations": fade,
+                                                                     "shade_start": SHADE_START, "champion_from": fade + 1},
                               seeds=[seed], extra={"out": str(out)})
     t0 = time.time()
 
@@ -83,7 +103,8 @@ def run_phase(phase: str, mode: str, replicate: int, out_root: Path, workers: in
         print(f"{time.time() - t0:8.1f}s [{mode}-{seed}] {msg}", flush=True)
 
     with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
-        state = run(cfg, mode, ga, seed, out, pool.map, log=log, stop_after=stop_after)
+        state = run(cfg, mode, ga, seed, out, pool.map, log=log, stop_after=stop_after,
+                    world_for=lambda g: cfg.but(shade_floor=shade_floor_for(g, fade)), champion_from=fade + 1)
     if state["next_generation"] >= ga.generations:
         finish_manifest(manifest, wall_seconds=time.time() - t0, generations=ga.generations, workers=workers)
         write_manifest(out / "manifest.json", manifest)
