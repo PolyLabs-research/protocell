@@ -1,0 +1,636 @@
+{
+ "bar_k": 100.0,
+ "champions": [
+  {
+   "generation": 90,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-3001",
+   "seed": 3001,
+   "validation_fitness": 0.6867625184168838
+  },
+  {
+   "generation": 90,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-3002",
+   "seed": 3002,
+   "validation_fitness": 0.6955076092993324
+  },
+  {
+   "generation": 100,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-3003",
+   "seed": 3003,
+   "validation_fitness": 0.6926421108174523
+  },
+  {
+   "generation": 90,
+   "mode": "uniform",
+   "phase": "confirm",
+   "run": "uniform-2001",
+   "seed": 2001,
+   "validation_fitness": 0.7038051902329882
+  },
+  {
+   "generation": 80,
+   "mode": "uniform",
+   "phase": "confirm",
+   "run": "uniform-2002",
+   "seed": 2002,
+   "validation_fitness": 0.7008450286848164
+  },
+  {
+   "generation": 100,
+   "mode": "uniform",
+   "phase": "confirm",
+   "run": "uniform-2003",
+   "seed": 2003,
+   "validation_fitness": 0.7006819141359729
+  },
+  {
+   "generation": 60,
+   "mode": "fourier1",
+   "phase": "pilot",
+   "run": "fourier1-1002",
+   "seed": 1002,
+   "validation_fitness": 0.6974190066905089
+  },
+  {
+   "generation": 90,
+   "mode": "uniform",
+   "phase": "pilot",
+   "run": "uniform-1001",
+   "seed": 1001,
+   "validation_fitness": 0.6879187982839959
+  }
+ ],
+ "delta": 0.007,
+ "n_starts": 100,
+ "quick": false,
+ "rows": {
+  "B2r": {
+   "effort_per_light": 0.5787222505353665,
+   "fitness": 0.7074426493873195,
+   "light_soaked": 0.28025469354247357,
+   "mean_beat": 0.16218962696999972,
+   "median_reach_tick": 3802.0,
+   "night_beat": 0.0,
+   "survival": 1.0
+  },
+  "B2r swept": {
+   "effort_per_light": 0.5739973218967449,
+   "fitness": 0.7019010388265411,
+   "light_soaked": 0.27606906111869195,
+   "mean_beat": 0.15846290174067798,
+   "median_reach_tick": 3869.0,
+   "night_beat": 0.0,
+   "survival": 1.0
+  },
+  "fourier1-1002": {
+   "effort_per_light": 1.3098004980492526,
+   "fitness": 0.6901636613785951,
+   "light_soaked": 0.27442782626353174,
+   "mean_beat": 0.35944570351854765,
+   "median_reach_tick": 5473.0,
+   "night_beat": 0.012833267411203785,
+   "survival": 1.0
+  },
+  "fourier1-1002 -blind": {
+   "effort_per_light": 0.943164102653783,
+   "fitness": 0.20742694475551307,
+   "light_soaked": 0.03182550375316648,
+   "mean_beat": 0.030016672688859866,
+   "median_reach_tick": 16075.5,
+   "night_beat": 0.06213251387352616,
+   "survival": 0.05
+  },
+  "fourier1-1002 -core": {
+   "effort_per_light": 4.479428178554522,
+   "fitness": 0.21109361851515318,
+   "light_soaked": 0.057954324538752634,
+   "mean_beat": 0.25960223440798236,
+   "median_reach_tick": 3377.5,
+   "night_beat": 0.513796831359921,
+   "survival": 0.0
+  },
+  "fourier1-1002 -core_recurrence": {
+   "effort_per_light": 1.5341690690495517,
+   "fitness": 0.5577672778471474,
+   "light_soaked": 0.21563622780515496,
+   "mean_beat": 0.33082243086519164,
+   "median_reach_tick": 6620.0,
+   "night_beat": 0.10296581457903259,
+   "survival": 0.81
+  },
+  "fourier1-1002 -loop": {
+   "effort_per_light": 1.3145011603160772,
+   "fitness": 0.6886829057006739,
+   "light_soaked": 0.2737099822256597,
+   "mean_beat": 0.35979208922572253,
+   "median_reach_tick": 5657.5,
+   "night_beat": 0.013642163282426043,
+   "survival": 1.0
+  },
+  "fourier1-1002 -ring_links": {
+   "effort_per_light": 1.4495590218313412,
+   "fitness": 0.6821199462645602,
+   "light_soaked": 0.2696815873178202,
+   "mean_beat": 0.3909193779183429,
+   "median_reach_tick": 5408.5,
+   "night_beat": 0.022902492394544824,
+   "survival": 1.0
+  },
+  "fourier1-1002 swept": {
+   "effort_per_light": 1.3890073300040715,
+   "fitness": 0.6248780659627402,
+   "light_soaked": 0.22620321465241297,
+   "mean_beat": 0.31419792322268597,
+   "median_reach_tick": 6215.0,
+   "night_beat": 0.012833638776904084,
+   "survival": 0.99
+  },
+  "fourier1-3001": {
+   "effort_per_light": 1.2936711762999091,
+   "fitness": 0.6706726467776793,
+   "light_soaked": 0.2618763631414273,
+   "mean_beat": 0.33878190275031245,
+   "median_reach_tick": 7726.0,
+   "night_beat": 0.01820023252230525,
+   "survival": 0.99
+  },
+  "fourier1-3001 -blind": {
+   "effort_per_light": 0.2844555698035065,
+   "fitness": 0.22077650450183225,
+   "light_soaked": 0.03258247122554869,
+   "mean_beat": 0.00926826541806981,
+   "median_reach_tick": 16212.0,
+   "night_beat": 0.018395289674446307,
+   "survival": 0.09
+  },
+  "fourier1-3001 -core": {
+   "effort_per_light": 1.6524759663718196,
+   "fitness": 0.5775911545832909,
+   "light_soaked": 0.21998422480644517,
+   "mean_beat": 0.36351864447358606,
+   "median_reach_tick": 7562.0,
+   "night_beat": 0.07411567762346591,
+   "survival": 0.87
+  },
+  "fourier1-3001 -core_recurrence": {
+   "effort_per_light": 1.2686922027844076,
+   "fitness": 0.3632794988322361,
+   "light_soaked": 0.1098745874007246,
+   "mean_beat": 0.13939703231945322,
+   "median_reach_tick": 11558.0,
+   "night_beat": 0.02058659995121035,
+   "survival": 0.4
+  },
+  "fourier1-3001 -loop": {
+   "effort_per_light": 1.290435254870664,
+   "fitness": 0.6704786746864414,
+   "light_soaked": 0.26175384397253704,
+   "mean_beat": 0.33777638836007684,
+   "median_reach_tick": 7681.0,
+   "night_beat": 0.01817930320007,
+   "survival": 0.99
+  },
+  "fourier1-3001 -ring_links": {
+   "effort_per_light": 1.2949606561024103,
+   "fitness": 0.6550610996403706,
+   "light_soaked": 0.2516829810681562,
+   "mean_beat": 0.32591955829383,
+   "median_reach_tick": 10307.0,
+   "night_beat": 0.01788970900673057,
+   "survival": 0.98
+  },
+  "fourier1-3001 swept": {
+   "effort_per_light": 1.3152454580914748,
+   "fitness": 0.6449903555913106,
+   "light_soaked": 0.24125442678054604,
+   "mean_beat": 0.3173087890675754,
+   "median_reach_tick": 11080.0,
+   "night_beat": 0.018201644290730973,
+   "survival": 0.99
+  },
+  "fourier1-3002": {
+   "effort_per_light": 1.3760256373572932,
+   "fitness": 0.6874900979145606,
+   "light_soaked": 0.2699264569577893,
+   "mean_beat": 0.371425724974938,
+   "median_reach_tick": 5621.0,
+   "night_beat": 0.013582485986398322,
+   "survival": 1.0
+  },
+  "fourier1-3002 -blind": {
+   "effort_per_light": 1.0565412204340967,
+   "fitness": 0.2069150024214884,
+   "light_soaked": 0.03142160899508698,
+   "mean_beat": 0.03319822511567219,
+   "median_reach_tick": 16669.0,
+   "night_beat": 0.06817314725628393,
+   "survival": 0.06
+  },
+  "fourier1-3002 -core": {
+   "effort_per_light": 2.164213696346424,
+   "fitness": 0.47755665909924927,
+   "light_soaked": 0.1950914783810486,
+   "mean_beat": 0.42221964955273755,
+   "median_reach_tick": 22673.0,
+   "night_beat": 0.09578734464670526,
+   "survival": 0.57
+  },
+  "fourier1-3002 -core_recurrence": {
+   "effort_per_light": 1.2753127404690296,
+   "fitness": 0.35813354001403597,
+   "light_soaked": 0.10359590165058156,
+   "mean_beat": 0.13211717323536326,
+   "median_reach_tick": 13193.0,
+   "night_beat": 0.0011220651308406196,
+   "survival": 0.37
+  },
+  "fourier1-3002 -loop": {
+   "effort_per_light": 1.3833587466684836,
+   "fitness": 0.6840552013950404,
+   "light_soaked": 0.26692143211834074,
+   "mean_beat": 0.3692480977941846,
+   "median_reach_tick": 6145.5,
+   "night_beat": 0.01370379340881719,
+   "survival": 1.0
+  },
+  "fourier1-3002 -ring_links": {
+   "effort_per_light": 1.4356682508171226,
+   "fitness": 0.6596996206853444,
+   "light_soaked": 0.24759806605703136,
+   "mean_beat": 0.35546868240180063,
+   "median_reach_tick": 9618.0,
+   "night_beat": 0.013402407382570196,
+   "survival": 0.99
+  },
+  "fourier1-3002 swept": {
+   "effort_per_light": 1.5467941578927271,
+   "fitness": 0.6434219879231877,
+   "light_soaked": 0.22364762227524612,
+   "mean_beat": 0.34593683556195004,
+   "median_reach_tick": 6280.0,
+   "night_beat": 0.01392080827305015,
+   "survival": 1.0
+  },
+  "fourier1-3003": {
+   "effort_per_light": 1.4057763703877322,
+   "fitness": 0.6856265700895392,
+   "light_soaked": 0.26925211655700454,
+   "mean_beat": 0.37850826313272046,
+   "median_reach_tick": 5463.5,
+   "night_beat": 0.020943856871669716,
+   "survival": 1.0
+  },
+  "fourier1-3003 -blind": {
+   "effort_per_light": 0.34283394524884603,
+   "fitness": 0.2200941809257705,
+   "light_soaked": 0.03167916913178236,
+   "mean_beat": 0.010860694535654409,
+   "median_reach_tick": 14508.0,
+   "night_beat": 0.022391789498024072,
+   "survival": 0.07
+  },
+  "fourier1-3003 -core": {
+   "effort_per_light": 5.634665284260869,
+   "fitness": 0.1499143596781133,
+   "light_soaked": 0.029342745796175088,
+   "mean_beat": 0.16533655108259931,
+   "median_reach_tick": 15057.0,
+   "night_beat": 0.40490783970229677,
+   "survival": 0.0
+  },
+  "fourier1-3003 -core_recurrence": {
+   "effort_per_light": 2.1017777341105703,
+   "fitness": 0.3582209344789598,
+   "light_soaked": 0.11666924441572091,
+   "mean_beat": 0.24521282016846618,
+   "median_reach_tick": 10409.5,
+   "night_beat": 0.133244878125682,
+   "survival": 0.39
+  },
+  "fourier1-3003 -loop": {
+   "effort_per_light": 1.4064931097061413,
+   "fitness": 0.6848202274253486,
+   "light_soaked": 0.2686209573130207,
+   "mean_beat": 0.3778135255834312,
+   "median_reach_tick": 5464.5,
+   "night_beat": 0.02093781631964187,
+   "survival": 1.0
+  },
+  "fourier1-3003 -ring_links": {
+   "effort_per_light": 1.3496754588692979,
+   "fitness": 0.6240989066641657,
+   "light_soaked": 0.23472545163283393,
+   "mean_beat": 0.3168031816408483,
+   "median_reach_tick": 12110.0,
+   "night_beat": 0.022249992679928953,
+   "survival": 0.94
+  },
+  "fourier1-3003 swept": {
+   "effort_per_light": 1.5688330943330517,
+   "fitness": 0.6535737330936476,
+   "light_soaked": 0.22383362225743053,
+   "mean_beat": 0.3511575942219002,
+   "median_reach_tick": 5960.0,
+   "night_beat": 0.020942680015013534,
+   "survival": 1.0
+  },
+  "still at the best point": {
+   "effort_per_light": 0.0,
+   "fitness": 0.7200368741320592,
+   "light_soaked": 0.2767800744804117,
+   "mean_beat": 0.0,
+   "median_reach_tick": 1475.0,
+   "night_beat": 0.0,
+   "survival": 1.0
+  },
+  "uniform-1001": {
+   "effort_per_light": 1.457996815904896,
+   "fitness": 0.6719077525663835,
+   "light_soaked": 0.2546686659198181,
+   "mean_beat": 0.37130610402184255,
+   "median_reach_tick": 6985.0,
+   "night_beat": 0.01301387034499903,
+   "survival": 1.0
+  },
+  "uniform-1001 -blind": {
+   "effort_per_light": 0.19715477404888632,
+   "fitness": 0.22328508490570745,
+   "light_soaked": 0.03365671990218857,
+   "mean_beat": 0.0066355830075426414,
+   "median_reach_tick": 14380.0,
+   "night_beat": 0.014248830187884615,
+   "survival": 0.07
+  },
+  "uniform-1001 -core": {
+   "effort_per_light": 15.64956458809108,
+   "fitness": 0.09076801615839367,
+   "light_soaked": 0.013625622528763759,
+   "mean_beat": 0.21323505981683735,
+   "median_reach_tick": 10011.0,
+   "night_beat": 0.9986900830072766,
+   "survival": 0.0
+  },
+  "uniform-1001 -core_recurrence": {
+   "effort_per_light": 1.4140765253234187,
+   "fitness": 0.4683576179160333,
+   "light_soaked": 0.15949661431998502,
+   "mean_beat": 0.22554041817845383,
+   "median_reach_tick": 14122.0,
+   "night_beat": 0.008364157574409737,
+   "survival": 0.57
+  },
+  "uniform-1001 -loop": {
+   "effort_per_light": 1.443905315395712,
+   "fitness": 0.6726601884314148,
+   "light_soaked": 0.2561506697596706,
+   "mean_beat": 0.36985731360816004,
+   "median_reach_tick": 7112.0,
+   "night_beat": 0.012893327846036265,
+   "survival": 1.0
+  },
+  "uniform-1001 -ring_links": {
+   "effort_per_light": 1.4032457910748983,
+   "fitness": 0.6525183142344136,
+   "light_soaked": 0.24676796161748926,
+   "mean_beat": 0.3462761035118739,
+   "median_reach_tick": 7684.0,
+   "night_beat": 0.01173805599085543,
+   "survival": 0.98
+  },
+  "uniform-1001 swept": {
+   "effort_per_light": 1.7621235447522938,
+   "fitness": 0.6054231519844241,
+   "light_soaked": 0.19973145381231552,
+   "mean_beat": 0.3519514973902865,
+   "median_reach_tick": 8382.5,
+   "night_beat": 0.013012668769037991,
+   "survival": 1.0
+  },
+  "uniform-2001": {
+   "effort_per_light": 1.0802763216012081,
+   "fitness": 0.696715611163347,
+   "light_soaked": 0.2763521343063741,
+   "mean_beat": 0.2985366671151328,
+   "median_reach_tick": 5463.5,
+   "night_beat": 0.012452664541370083,
+   "survival": 1.0
+  },
+  "uniform-2001 -blind": {
+   "effort_per_light": 0.966969006105102,
+   "fitness": 0.20956333416811934,
+   "light_soaked": 0.03205718974250632,
+   "mean_beat": 0.030998308903834006,
+   "median_reach_tick": 14380.0,
+   "night_beat": 0.06392137519690465,
+   "survival": 0.06
+  },
+  "uniform-2001 -core": {
+   "effort_per_light": 4.625617279746841,
+   "fitness": 0.1898291523351056,
+   "light_soaked": 0.0462803509647716,
+   "mean_beat": 0.2140751911353959,
+   "median_reach_tick": 5181.5,
+   "night_beat": 0.4942797207773972,
+   "survival": 0.0
+  },
+  "uniform-2001 -core_recurrence": {
+   "effort_per_light": 1.05119731594787,
+   "fitness": 0.5047096844239226,
+   "light_soaked": 0.1747292602116887,
+   "mean_beat": 0.1836749293520841,
+   "median_reach_tick": 12662.5,
+   "night_beat": 0.010200272369045246,
+   "survival": 0.69
+  },
+  "uniform-2001 -loop": {
+   "effort_per_light": 1.0957908518710033,
+   "fitness": 0.695700047067552,
+   "light_soaked": 0.2760933319871119,
+   "mean_beat": 0.30254054745406106,
+   "median_reach_tick": 5463.5,
+   "night_beat": 0.01294230346773551,
+   "survival": 1.0
+  },
+  "uniform-2001 -ring_links": {
+   "effort_per_light": 1.256622123990748,
+   "fitness": 0.6845461164944795,
+   "light_soaked": 0.2711153132785038,
+   "mean_beat": 0.34068950081845045,
+   "median_reach_tick": 6367.5,
+   "night_beat": 0.018428511681348826,
+   "survival": 1.0
+  },
+  "uniform-2001 swept": {
+   "effort_per_light": 1.0715582373484895,
+   "fitness": 0.5817872656171148,
+   "light_soaked": 0.22517274381726352,
+   "mean_beat": 0.2412857084637499,
+   "median_reach_tick": 6082.0,
+   "night_beat": 0.01275907511737653,
+   "survival": 0.54
+  },
+  "uniform-2002": {
+   "effort_per_light": 1.2345205601048141,
+   "fitness": 0.6951061742956619,
+   "light_soaked": 0.27757930768064587,
+   "mean_beat": 0.3426773623914175,
+   "median_reach_tick": 4557.0,
+   "night_beat": 0.016756179460952713,
+   "survival": 1.0
+  },
+  "uniform-2002 -blind": {
+   "effort_per_light": 1.3099489634068533,
+   "fitness": 0.20377202173576625,
+   "light_soaked": 0.03157658484129613,
+   "mean_beat": 0.041363714580784416,
+   "median_reach_tick": 14381.0,
+   "night_beat": 0.08800392725119782,
+   "survival": 0.06
+  },
+  "uniform-2002 -core": {
+   "effort_per_light": 1.4013909801523483,
+   "fitness": 0.5097595844680427,
+   "light_soaked": 0.1790243194649495,
+   "mean_beat": 0.2508830665260927,
+   "median_reach_tick": 11029.0,
+   "night_beat": 0.006363171586386348,
+   "survival": 0.66
+  },
+  "uniform-2002 -core_recurrence": {
+   "effort_per_light": 1.2733485678267635,
+   "fitness": 0.6172482067966026,
+   "light_soaked": 0.23210456784694358,
+   "mean_beat": 0.29555001905395545,
+   "median_reach_tick": 11090.0,
+   "night_beat": 0.029220643801534062,
+   "survival": 0.92
+  },
+  "uniform-2002 -loop": {
+   "effort_per_light": 1.2477578880140094,
+   "fitness": 0.6943407536178532,
+   "light_soaked": 0.27746284006014177,
+   "mean_beat": 0.34620644731581135,
+   "median_reach_tick": 5186.0,
+   "night_beat": 0.01707019144942489,
+   "survival": 1.0
+  },
+  "uniform-2002 -ring_links": {
+   "effort_per_light": 1.40793646014703,
+   "fitness": 0.682710226172306,
+   "light_soaked": 0.2695536014786195,
+   "mean_beat": 0.3795143434856908,
+   "median_reach_tick": 5363.5,
+   "night_beat": 0.026020324615909737,
+   "survival": 1.0
+  },
+  "uniform-2002 swept": {
+   "effort_per_light": 1.2913956721439406,
+   "fitness": 0.5798003702214986,
+   "light_soaked": 0.2197216029198729,
+   "mean_beat": 0.28374752708725326,
+   "median_reach_tick": 5156.0,
+   "night_beat": 0.016756966282467173,
+   "survival": 0.54
+  },
+  "uniform-2003": {
+   "effort_per_light": 1.2887539987239127,
+   "fitness": 0.69532975656345,
+   "light_soaked": 0.2748448903019818,
+   "mean_beat": 0.35420745140551413,
+   "median_reach_tick": 5127.5,
+   "night_beat": 0.012718352046579687,
+   "survival": 1.0
+  },
+  "uniform-2003 -blind": {
+   "effort_per_light": 0.21196578731021404,
+   "fitness": 0.22314278475079274,
+   "light_soaked": 0.03363885039379044,
+   "mean_beat": 0.007130285407930295,
+   "median_reach_tick": 14380.0,
+   "night_beat": 0.013664131253084758,
+   "survival": 0.07
+  },
+  "uniform-2003 -core": {
+   "effort_per_light": 4.946373167829668,
+   "fitness": 0.16276946651346563,
+   "light_soaked": 0.035690013493495286,
+   "mean_beat": 0.17653612510370387,
+   "median_reach_tick": 13427.0,
+   "night_beat": 0.4306744172536444,
+   "survival": 0.0
+  },
+  "uniform-2003 -core_recurrence": {
+   "effort_per_light": 1.2536925684270235,
+   "fitness": 0.530991205454512,
+   "light_soaked": 0.1880339032596256,
+   "mean_beat": 0.2357367071289185,
+   "median_reach_tick": 8541.0,
+   "night_beat": 0.0031366789615926796,
+   "survival": 0.73
+  },
+  "uniform-2003 -loop": {
+   "effort_per_light": 1.282853720278395,
+   "fitness": 0.6951205783006561,
+   "light_soaked": 0.2752329196345912,
+   "mean_beat": 0.35308357489631975,
+   "median_reach_tick": 5124.0,
+   "night_beat": 0.0125133254417869,
+   "survival": 1.0
+  },
+  "uniform-2003 -ring_links": {
+   "effort_per_light": 1.2328871048940602,
+   "fitness": 0.6787523961801918,
+   "light_soaked": 0.2629513740808046,
+   "mean_beat": 0.3241893583183982,
+   "median_reach_tick": 7557.0,
+   "night_beat": 0.010501820701642095,
+   "survival": 1.0
+  },
+  "uniform-2003 swept": {
+   "effort_per_light": 1.4585957297061358,
+   "fitness": 0.6727171306000583,
+   "light_soaked": 0.2385307092453151,
+   "mean_beat": 0.34791987390899254,
+   "median_reach_tick": 5528.5,
+   "night_beat": 0.01271662023422917,
+   "survival": 1.0
+  }
+ },
+ "test_seed": 5,
+ "verdicts": {
+  "fourier1": {
+   "Q1_reaches_the_bar": false,
+   "Q2_parts_needed": {
+    "blind": true,
+    "core": true,
+    "core_recurrence": true,
+    "loop": false,
+    "ring_links": true
+   },
+   "Q3_beats_the_bar": false,
+   "beat": 0,
+   "champions": 3,
+   "reach": 0
+  },
+  "uniform": {
+   "Q1_reaches_the_bar": false,
+   "Q2_parts_needed": {
+    "blind": true,
+    "core": true,
+    "core_recurrence": true,
+    "loop": false,
+    "ring_links": true
+   },
+   "Q3_beats_the_bar": false,
+   "beat": 0,
+   "champions": 3,
+   "reach": 0
+  }
+ }
+}
