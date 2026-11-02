@@ -106,6 +106,9 @@ breaks a champion if the interval of its fitness drop has its lower bound above 
 3. **RunPod** as in stage 1, with each launch's cost confirmed: the pilot about $2 and the confirmatory runs about $6
    at stage 1's rates.
 
+**The owner's answers (2026-11-02, before the build).** "Happy with all that, go": 100 generations, extendable after the
+pilot; the removals R5 and R6; RunPod as in stage 1, each launch's cost confirmed.
+
 ## 11. What would be built
 
 - R5 and R6 as removals.
