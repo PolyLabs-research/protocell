@@ -230,3 +230,22 @@ minutes.
 The owner's answers to §13, as dated notes before the build. After the build and before the pilot, clarifications as
 dated notes. After the pilot, its outcome and any amendment as dated notes, before the confirmatory runs. After
 those, nothing.
+
+## 16. The runs and the test ran (2026-11-02; read in D7)
+
+**The pilot** (`docs/data/stage1/pilot/`, code `b5cdd84`, one RunPod pod) climbed in both modes, so no amendment was
+made (§15 above).
+
+**The confirmatory runs** (`docs/data/stage1/confirm/`, code `923e8d6`, three RunPod pods, 80–94 min a run): six
+champions. Each survives all 24 validation starts, at validation fitness 0.687–0.704.
+
+**The test** (`docs/data/stage1/test/`, code `d7ef2ff`, this machine, 100 starts at seed 5 with shared noise):
+
+- **The references:** B2r scores 0.707 and the still cell at the best point 0.720.
+- **Q1 fails in both modes:** no champion reaches the bar. The uniform champions score 0.695–0.697, short of B2r by
+  0.011–0.012, every interval below −0.008. The fourier1 champions score 0.671–0.688, short by 0.020–0.037.
+- **Q3 fails:** no champion beats the bar.
+- **Q2:** every removal except opening the loop breaks every confirmatory champion, in both modes.
+- **The swept day:** the champions lose 0.02–0.12, where B2r loses 0.006.
+
+This document is not changed after the test. D7 reads the result and puts the next step to the owner.

@@ -360,3 +360,123 @@ confirmatory runs per mode, about 8 h of compute in all, and 7 predictions.
 4. **The swept day** as a light it never saw: kept as a description (recommended), or dropped.
 
 **Impact:** this entry; `docs/prereg/stage1.md` (draft); `experiments/stage1_budget.py` and its data; `README.md`.
+
+## D7 — Stage 1 ran: evolved cells survive but fall short of the reflex, and every one depends on its core, the core's recurrence and the ring's links
+
+**Date:** 2026-11-02  
+**Why:** the owner's answers to `docs/prereg/stage1.md` §13: "1. the first 2. runpod 3. agree 4. agree". Then the
+owner's go for each launch: the pilot ("yes go", at most $8.96) and the confirmatory runs ("go on the three pods", at
+most $10.08).
+
+**Built.**
+- The genetic algorithm and its runner (`protocell/evolve.py`, `experiments/stage1.py`; code `dccf0c3`). A resumed
+  run is the same bits as one run straight through.
+- The removals (`protocell.cell.apply_removal`).
+- RunPod CPU pods under the chess project's lifecycle library (`cloud/`).
+
+**Ran.**
+- The pilot: one pod, both modes side by side, code `b5cdd84`, 83 min a run.
+- The confirmatory runs: three pods, code `923e8d6`, 80–94 min a run. All four pods were AMD EPYC 9575F with
+  32 vCPUs.
+- The test: here, code `d7ef2ff`, 4.5 min.
+- RunPod cost about $9 in all: the pilot's pod $3.45 (1.6 h of it idle before the job started, my delay), and the
+  three confirmatory pods about $5.50.
+
+### A. Measured (the test: 100 fresh starts at seed 5, every controller sharing the noise on a start)
+
+| controller | fitness | against B2r (95% interval) | survival | effort per unit light | beat at night | median time to the soak region | swept day |
+|---|---|---|---|---|---|---|---|
+| B2r, k = 100 | 0.707 | — | 100% | 0.58 | 0 | 3,802 s | 0.702 |
+| the still cell at the best point | 0.720 | — | 100% | — | — | — | — |
+| uniform 2001 | 0.697 | −0.011 (−0.013, −0.008) | 100% | 1.08 | 0.012 | 5,464 s | 0.582 |
+| uniform 2002 | 0.695 | −0.012 (−0.014, −0.010) | 100% | 1.24 | 0.017 | 4,557 s | 0.580 |
+| uniform 2003 | 0.695 | −0.012 (−0.013, −0.011) | 100% | 1.29 | 0.013 | 5,128 s | 0.673 |
+| fourier1 3001 | 0.671 | −0.037 (−0.048, −0.028) | 99% | 1.29 | 0.018 | 7,726 s | 0.645 |
+| fourier1 3002 | 0.688 | −0.020 (−0.023, −0.017) | 100% | 1.38 | 0.014 | 5,621 s | 0.643 |
+| fourier1 3003 | 0.686 | −0.022 (−0.024, −0.020) | 100% | 1.41 | 0.021 | 5,464 s | 0.654 |
+| the pilot's uniform 1001 | 0.672 | −0.036 | 100% | 1.46 | 0.013 | 6,985 s | 0.605 |
+| the pilot's fourier1 1002 | 0.690 | −0.017 | 100% | 1.31 | 0.013 | 5,473 s | 0.625 |
+
+**The removals** (drop in fitness against the intact champion, the confirmatory champions; "breaks" = the interval's
+lower bound above δ = 0.007):
+
+| removal | uniform (3 champions) | fourier1 (3 champions) | breaks |
+|---|---|---|---|
+| R0, blind | 0.47–0.49 | 0.45–0.48 | all 6 |
+| R1, the ring's links cut | 0.012–0.017 | 0.016–0.062 | all 6 (the pilot's fourier1: 0.008, just under) |
+| R2, the loop opened | at most 0.001 | at most 0.003 | none |
+| R3, the core removed | 0.19–0.53 | 0.09–0.54 | all 6 |
+| R4, the core's recurrence removed | 0.08–0.19 | 0.31–0.33 | all 6 |
+
+**The verdicts (§9).**
+- **Q1 fails in both modes:** 0 of 3 champions reach the bar in either. The closest, uniform 2001, falls 0.011 short
+  against δ = 0.007.
+- **Q3 fails in both modes.**
+- **Q2:** in both modes the ring's links, the core and the core's recurrence are needed, and the loop's closure is
+  not.
+
+### B. Reading
+1. **Evolution gets close, not level.** From random wiring (fitness about 0.1, 1% surviving), 100 generations give
+   cells that survive every test start and score within 1.5% of the reflex in the uniform mode (3–5% in fourier1).
+   They lose the rest in two ways. They arrive later: the median time to the soak region is 4,600–7,700 s, against
+   3,800. And they beat about twice as hard per unit of light, including a little at night. The replay shows why: a
+   champion that has reached the mouth parks there and beats every cilium at once, and the pulls cancel. The
+   reflex's own waste, pressing half its cilia against the edge, is smaller. Four of the six validation curves were
+   still rising at generation 90–100.
+2. **The evolved cells are built on the interaction of their parts.** Removing the core, the core's recurrence or
+   the ring's links breaks every confirmatory champion. Only the loop's closure does nothing. Two cautions limit how
+   far this goes:
+   - Removing a part also removes its steady drive. A wall neuron that received a constant push from the core has
+     its operating point shifted when the core is cut, whatever the core was computing. "Needed" here means the
+     evolved solution is built on the part, not that the task requires it.
+   - The reflex, with no core, no recurrence and no ring links, does better and generalises better.
+3. **They generalise worse than the reflex.** When the sun sweeps along the mouth, a light they never saw in
+   training, the champions lose 0.02–0.12 while the reflex loses 0.006. Whatever the evolved cells rely on is tuned
+   to a fixed mouth. The reflex follows the light wherever it is.
+4. **For the hypothesis:** this is the weak sense of "behaviour emerges from the interaction of parts". The evolved
+   behaviour is a property of the interactions, since removing any internal part breaks it. It is not the strong
+   sense, in which interacting parts do better than a simpler mechanism. D6 found that this world cannot show the
+   strong sense, because the reflex is within 2% of the ceiling. The test confirms that evolution did not find a way
+   around it.
+5. **The uniform mode did better than fourier1** (0.695–0.697 against 0.671–0.688), as the cave's random genomes
+   suggested.
+6. **My errors.**
+   - The pilot's pod idled 1.6 h before its job started (`cloud/launch_phase.sh` now chains every step).
+   - Setup's cost line was mis-quoted, and the SSH call that started the pilot's job hung, harmlessly.
+   - Most predictions about the removals and the effort were wrong (below).
+   - The campaign's 10-minute pull interval left two pods up to 10 minutes after their jobs ended (about $0.40).
+7. **Predictions (§11):**
+   - (1) Evolution climbs ✓.
+   - (2) Both modes reach the bar ✗ (0 of 3 in each).
+   - (3) Neither beats it ✓.
+   - (4) The removals:
+     - R0 breaks every champion ✓.
+     - R1 breaks none ✗ (it breaks all six).
+     - R2 breaks none ✓.
+     - R4 breaks none ✗ (it breaks all six).
+     - R3 breaks fourier1 champions ✓ but not uniform ones ✗ (it breaks all three).
+   - (5) The champions' effort per unit light is below B2r's ✗ (it is twice B2r's).
+   - (6) The uniform champions are at least as fit as fourier1's ✓.
+   - (7) The swept day costs each less than 0.02: ✓ for B2r (0.006), ✗ for the champions (0.02–0.12).
+
+### C. Clarifications and amendments
+- The owner's answers and the pre-pilot clarifications are recorded in `stage1.md`: RunPod CPU pods, two runs side by
+  side, hourly pulls, the test on this machine, and the noise keys.
+- No amendment was made after the pilot.
+
+### D. Decisions this surfaces (the owner's)
+1. **Whether stage 1 stands as it is, or the runs go longer.** The decision table (§12) leaves it to the owner.
+   Running longer (300 generations, three pods, about 4.5 h, about $15) would show whether evolution closes the last
+   1.5%. Recommended: stand as it is. Matching a reflex to the third decimal is not the project's question.
+2. **A sharper reading of Q2 before it is used.** Repeat the removals with each part clamped at its average activity
+   instead of zeroed. This separates what a part computes from the steady drive it supplies. It is cheap: the six
+   champions, here, minutes, and needs no evolution. Recommended: yes, preregistered as a short stage 1b.
+3. **The next world.** The plan puts damage next (stage 2: burn, then sweep). But there the reflex is again within 2%
+   of the ceiling (D6), so stage 2 would show the same limit. Stage 3's question needs a world where direction cannot
+   be read across the body and must be compared over time. That is the cave with the cell made translucent (no
+   self-shading), and there a reflex should fail. Recommended: stage 3's world next; stage 2 after it, or folded in.
+4. **Merging** `stage1-prereg` and `stage1-build` (which contains it) to main.
+
+**Impact:** this entry; `docs/prereg/stage1.md` (the owner's answers, the clarifications, the pilot's outcome, §16);
+`protocell/` (evolve, tables, cell, sim, world); `experiments/stage1.py`, `experiments/stage1_budget.py`; `cloud/`;
+`tools/replay.py`; `docs/data/stage1/` (budget, pilot, confirm, test); `tests/`; `README.md`.

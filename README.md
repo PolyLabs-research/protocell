@@ -18,9 +18,10 @@ starting with the simplest organism and few parts, each understood, and adding c
 **Status:** stage 0 built and checked (D2). The cave pool, the world from stage 1 on, built and checked (D4, 2026-11-01): a south-facing
 cave's pool on a 24-hour cycle, at a 1 s tick, with damage and the sun's sweep as switches. All four configurations pass
 K1–K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` §17; `docs/data/cave/`). The owner's decisions
-(D5): the cave is stage 1's world, evolved in day first, both spoke modes, fitness as the bar. Stage 1's
-preregistration drafted (`docs/prereg/stage1.md`, D6), awaiting the owner: in every cave configuration the reflex is
-within 2% of the best a cell can do.
+(D5): the cave is stage 1's world, evolved in day first, both spoke modes, fitness as the bar. Stage 1 ran (D7, 2026-11-02): evolution
+in the cave's day configuration on RunPod, three runs per spoke mode. Every champion survives, but none reaches the
+reflex's fitness (the best falls 0.011 short), and every one depends on its core, the core's recurrence and the ring's
+links. Awaiting the owner's decisions in D7.
 
 ## Running
 
