@@ -148,3 +148,38 @@ The amendment is the owner's choice: its kind changes the method. Recorded here 
 
 The owner's answers, as dated notes before the build. The pilot's outcome and any amendment, as dated notes before
 the confirmatory runs. After those, nothing.
+
+## 13. Amendment A1 (2026-11-02, after the pilot, before any confirmatory run): the shading fades
+
+**Why.** The pilot (§12's note above) did not climb in either mode. Its populations collapsed onto still cells,
+because in the translucent world every part of comparing over time scores below sitting still when it stands alone
+(stage 3a: random beating 0.116, sitting 0.206). Selection therefore has no path from random wiring to the strategy.
+In stage 1 the shading gave evolution one: steering toward the light paid on its own, and rest at night followed
+(D7). The amendment gives stage 3b's evolution that path, then takes the cue away gradually, so that comparing over
+time can take over from it a step at a time while every step keeps a working cell. It is also how a cell that loses
+its eyespot would have to adapt. The owner chose this amendment among three ("agree with 1. proceed"):
+- this one, the shading fading;
+- harder exploration within §3's numbers;
+- stopping.
+
+**The amendment.**
+1. **The fade.** In generation g (1 to 100), the training starts' cell has the shading floor 0.3 + 0.7 × (g − 1)/50
+   for g ≤ 50, and 1 for g > 50. It starts as the cave's shaded cell (0.3) and is fully translucent from
+   generation 51.
+2. **The judging.** Validation is always in the translucent world (stage 3a's, shading floor 1). The champion is the
+   best on validation among the checkpoints after the fade (generations 60, 70, …, 100). The checkpoints during the
+   fade are recorded but cannot be chosen.
+3. **Everything else unchanged:** stage 3a's world with the falloff 600 R, the algorithm of §3 with 100 generations,
+   the test (§6–§7) entirely in the translucent world, the criteria, the removals.
+4. **Fresh run seeds:** the pilot 1201 (uniform) and 1202 (fourier1); the confirmatory runs 2201–2203 (uniform) and
+   3201–3203 (fourier1). The validation starts stay at seed 10 and the test starts at seed 11. The test starts have
+   not been used.
+5. **The data:** the failed pilot's data moves to `docs/data/stage3b/pilot-as-preregistered/`. Its champions are
+   reported in the test, not judged.
+
+**Predictions under A1 (written before the build):**
+1. The fourier1 pilot climbs: its champion survives at least half the validation starts.
+2. The uniform pilot does not climb: a cell with no front cannot hold a straight run once the shading has gone.
+3. During the fade, the best training fitness falls as the shading goes, then partly recovers.
+4. If the fourier1 mode climbs, its confirmatory champions find comparison over time (Q1). Its memory lives in slow
+   decay more than in the core's loops: R6 breaks more champions than R4.
