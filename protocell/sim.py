@@ -151,6 +151,35 @@ class Reflex(Controller):
         return g
 
 
+class RunAndWait(Controller):
+    """B5 (docs/prereg/stage3.md §3): the simplest cell that compares over time. Its memory is one number per cell, an
+    exponential average m of the wall's mean sensed light, m <- m + (mean - m) / tau, starting at the first reading.
+    Each tick: in the dark (mean < ``rest_below``) it rests; if the light is rising (mean > m, the reading compared with
+    the average of the readings before it) it runs, the nodes on its front half (cos theta_i > 0) beating fully, the
+    rest not at all, so with alpha = 0 it swims straight ahead; otherwise it waits and its rotational noise turns it."""
+
+    FRONT_TOLERANCE = 1e-9  # the node at 90 degrees has cos = 6e-17 in floating point: it is not on the front half
+
+    def __init__(self, cfg: Config, population: int, tau: float, rest_below: float) -> None:
+        if tau < 1.0:
+            raise ValueError("the memory's time constant is at least one tick")
+        self.alpha = np.zeros(population)
+        self.tau = float(tau)
+        self.rest_below = float(rest_below)
+        theta = 2.0 * math.pi * np.arange(cfg.n_wall) / cfg.n_wall
+        self.front = (np.cos(theta) > self.FRONT_TOLERANCE).astype(np.float64)[None, :]
+        self.memory: Optional[np.ndarray] = None
+
+    def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
+        mean = sensed.mean(axis=1, keepdims=True)
+        if self.memory is None:
+            self.memory = mean.copy()
+        rising = mean > self.memory
+        self.memory = self.memory + (mean - self.memory) / self.tau
+        g = np.where(rising, self.front, 0.0)
+        return np.where(mean < self.rest_below, 0.0, g)
+
+
 class Network(Controller):
     """The cell of §3: the CTRNN's wall outputs are the beats. The state starts at y = 0; the output sigma(y + bias)
     is computed after each update and serves both as this tick's beats and as the next update's input (§11 C1)."""
@@ -176,7 +205,8 @@ class Network(Controller):
 def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed: int,
                      keys: Sequence[Tuple[int, int]]) -> Controller:
     """A controller from a plain spec: ``{"controller": "still"}``, ``{"controller": "random"}``,
-    ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``) or
+    ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``),
+    ``{"controller": "runwait", "tau": 30, "rest_below": 0.01}`` (B5) or
     ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7, or
     ``hold``: ``{"pathway": ..., "means": (M,)}``, stage 1b's §1).
     """
@@ -187,6 +217,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
         return RandomBeating(cfg, population, CellNoise(seed, STREAM_BEATS, keys, (cfg.n_wall,), "uniform"))
     if kind == "reflex":
         return Reflex(cfg, population, spec["k"], spec.get("rest_below"), spec.get("retreat_above"), spec.get("retreat_on", "mean"))
+    if kind == "runwait":
+        return RunAndWait(cfg, population, spec["tau"], spec["rest_below"])
     if kind == "network":
         genomes = np.asarray(spec["genomes"], dtype=np.float64)
         if genomes.shape[0] != population:

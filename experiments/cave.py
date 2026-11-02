@@ -148,31 +148,31 @@ def best_gain(by_k: Mapping[float, Mapping[str, Any]]) -> float:
 
 # --- K6 ---------------------------------------------------------------------------------------------------------------
 
-def check_k6(cfg: Config, starts: Starts, reflex: Mapping[str, Any], cells: int) -> Dict[str, Any]:
+def check_k6(cfg: Config, starts: Starts, reflex: Mapping[str, Any], cells: int, seed: int = SEED) -> Dict[str, Any]:
     """Same seed, same hash (B2r and a network cell, each run twice); a batch equals its singles; the streams are
     independent (stage 0's W6, on the cave's cells and lifetimes)."""
     mode = "fourier1"
-    genomes = random_genomes(cfg, mode, cells, stream(SEED, STREAM_GENOMES))
+    genomes = random_genomes(cfg, mode, cells, stream(seed, STREAM_GENOMES))
     ids = list(range(1, cells + 1))
     net = {"controller": "network", "mode": mode, "genomes": genomes}
-    same_reflex = simulate(cfg, starts, reflex, seed=SEED, record=True).run_hash() == simulate(cfg, starts, reflex, seed=SEED, record=True).run_hash()
-    batch = simulate(cfg, starts, net, seed=SEED, cell_ids=ids, record=True)
-    same_net = batch.run_hash() == simulate(cfg, starts, net, seed=SEED, cell_ids=ids, record=True).run_hash()
+    same_reflex = simulate(cfg, starts, reflex, seed=seed, record=True).run_hash() == simulate(cfg, starts, reflex, seed=seed, record=True).run_hash()
+    batch = simulate(cfg, starts, net, seed=seed, cell_ids=ids, record=True)
+    same_net = batch.run_hash() == simulate(cfg, starts, net, seed=seed, cell_ids=ids, record=True).run_hash()
     singles_equal = True
     for i in range(cells):
-        single = simulate(cfg, starts.take([i]), {**net, "genomes": genomes[i:i + 1]}, seed=SEED, cell_ids=ids[i:i + 1], record=True)
+        single = simulate(cfg, starts.take([i]), {**net, "genomes": genomes[i:i + 1]}, seed=seed, cell_ids=ids[i:i + 1], record=True)
         assert single.trajectory is not None and batch.trajectory is not None
         own = int(single.lifetime[0])
         singles_equal &= all(np.array_equal(single.trajectory[n][0, :own], batch.trajectory[n][i, :own]) for n in ("pos", "heading", "energy", "beat"))
         singles_equal &= bool(single.survived[0] == batch.survived[i] and single.fitness[0] == batch.fitness[i]
                               and single.night_beat[0] == batch.night_beat[i] if not math.isnan(single.night_beat[0]) else True)
     both = batch.noise_digests
-    no_sensors = simulate(cfg.but(sensor_noise_sd=0.0), starts, net, seed=SEED, cell_ids=ids)
-    no_motion = simulate(cfg.but(rotation_noise_sd=0.0), starts, net, seed=SEED, cell_ids=ids)
-    random_both = simulate(cfg, starts, {"controller": "random"}, seed=SEED)
-    random_no_motion = simulate(cfg.but(rotation_noise_sd=0.0), starts, {"controller": "random"}, seed=SEED)
-    still_on = simulate(cfg, starts, {"controller": "still"}, seed=SEED, record=True)
-    still_off = simulate(cfg.but(sensor_noise_sd=0.0), starts, {"controller": "still"}, seed=SEED, record=True)
+    no_sensors = simulate(cfg.but(sensor_noise_sd=0.0), starts, net, seed=seed, cell_ids=ids)
+    no_motion = simulate(cfg.but(rotation_noise_sd=0.0), starts, net, seed=seed, cell_ids=ids)
+    random_both = simulate(cfg, starts, {"controller": "random"}, seed=seed)
+    random_no_motion = simulate(cfg.but(rotation_noise_sd=0.0), starts, {"controller": "random"}, seed=seed)
+    still_on = simulate(cfg, starts, {"controller": "still"}, seed=seed, record=True)
+    still_off = simulate(cfg.but(sensor_noise_sd=0.0), starts, {"controller": "still"}, seed=seed, record=True)
     independent = (no_sensors.noise_digests[STREAM_MOTION] == both[STREAM_MOTION]
                    and no_motion.noise_digests[STREAM_SENSORS] == both[STREAM_SENSORS]
                    and random_no_motion.noise_digests[STREAM_BEATS] == random_both.noise_digests[STREAM_BEATS]
