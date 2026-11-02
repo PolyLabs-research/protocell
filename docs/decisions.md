@@ -544,3 +544,59 @@ With the core's drive held at its average:
 
 **Impact:** this entry; `docs/prereg/stage1b.md` (§7); `protocell/cell.py` (pathways, `hold_at_average`),
 `protocell/sim.py`; `experiments/stage1b.py`; `docs/data/stage1b/`; `tests/test_stage1b.py`.
+
+## D10 — Stage 3a: the translucent cell's world passes every check; comparing over time pays, and its simplest form is near the ceiling
+
+**Date:** 2026-11-02  
+**Why:** the owner's "agree on all, go" on `docs/prereg/stage3.md` §9: the falloff 600 R by the cave's rule, B5 as the
+bar, the run here. Built at `55b0092`; checked in 27 minutes (`docs/data/stage3/`).
+
+### A. Measured (starts 1–100 at seed 8; the bars on starts 51–100)
+
+| | B0 | B1 | B2r, the spatial reflex (k = 100) | B5, run and wait (τₘ = 30 s) | the still cell at the best point |
+|---|---|---|---|---|---|
+| survival | 4% | 0% | 34% | 100% | 100% |
+| fitness | — | — | 0.317 | 0.709 | 0.730 |
+| effort per unit light | — | — | 1.08 | 0.06 | 0 |
+| median time to the soak region | — | — | 20,577 s | 14,886 s | — |
+
+- **The checks:** T1–T7 all pass.
+  - T2: the direction is readable at once on 1% of starts.
+  - T3: its rise over 100 R is readable on 65%.
+  - T5: B5 is above B2r by 0.392, interval 0.323 to 0.459.
+  - T6: no random genome of 2,000 matches B5. The best scores 0.18 (uniform) and 0.24 (fourier1).
+- **B5's memory:** its choice of time constant hardly matters between 10 and 100 s (fitness 0.706–0.710). At 3 s and
+  at 300 s it loses some starts.
+
+### B. Reading
+1. **The world tests what stage 3 asks.** Without its shading the cell cannot read the light's direction at once.
+   The reflex that worked in the cave now survives only a third of its starts, and the simplest memory, one
+   remembered number, takes every start. Comparing over time pays by 0.39 of fitness, about thirty times stage 1's
+   whole headroom.
+2. **The simplest comparator is again near the ceiling:** B5 is 0.021 below the still cell at the best point.
+   It wins by thrift. It beats only while the light rises (2% of the time) and waits the rest, so it arrives slowly
+   but spends almost nothing. As in stage 1, beating the bar is a last-2% question.
+3. **What stage 3b can now show** is the one D6 found missing: a contrast a network has to work for. A cell with no
+   memory (B2r) scores 0.32. A cell that compares over time can reach 0.71. Whether evolution finds comparison over
+   time, and where in the network it puts it (the core's recurrence, or the slow time constants of the wall), is
+   the plan's stage 3 question. It has a large signal here.
+4. **Random wiring finds almost nothing.** Uniform random genomes all die, and in fourier1 0.4% of starts survive.
+   Evolution starts from a harder place than in stage 1.
+5. **Predictions (§5):**
+   - (1) T1, T2, T3, T6 and T7 pass ✓.
+   - (2) B2r survives under 30% ✗ (34%), with fitness under 0.35 ✓ (0.317).
+   - (3) B5 survives over 80% ✓ (100%), fitness over 0.55 ✓ (0.709), τₘ at 30 or 100 s ✓ (30).
+   - (4) T5 by more than 0.2 ✓ (0.392).
+   - (5) B5's headroom over 0.05 ✗ (0.021).
+
+### C. Decisions this surfaces (the owner's)
+1. **Stage 3b's preregistration:** evolution in this world against B5, both spoke modes, with the removals. The
+   primary questions:
+   - does evolution find comparison over time (above B2r by a wide margin, and near B5)?
+   - which parts carry it?
+   A draft follows.
+2. **Merging** `stage1b`, `stage3-prereg` and `stage3-build` (each contains the one before) to main.
+
+**Impact:** this entry; `docs/prereg/stage3.md` (the owner's answers, §11); `protocell/sim.py` (`RunAndWait`);
+`experiments/stage3.py`, `experiments/stage3_geometry.py`, `experiments/cave.py` (`check_k6`'s seed);
+`docs/data/stage3/`; `tests/test_stage3.py`.

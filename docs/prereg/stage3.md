@@ -119,3 +119,22 @@ B5 (run and wait, §3) is stage 3's bar; the checks run on this machine.
 
 The owner's answers, as dated notes before the build. After the checks have run, nothing but dated amendments
 before stage 3b.
+
+## 11. The checks ran (2026-11-02; read in D10)
+
+The data are in `docs/data/stage3/`. The run used code `55b0092`, on this machine, from a clean tree with warnings
+as errors, and took 27 minutes. **Every check passes.**
+
+| check | result |
+|---|---|
+| T1, sitting fails | B0 survives on 4% of starts; at the best fixed point it is full at each sunset on 100% |
+| T2, the direction cannot be read at once | readable at once on 1% of starts |
+| T3, the rise can be read over time | readable over 100 R on 65% of starts |
+| T4, the bars | B2r (k = 100) survives on 34%, fitness 0.317; B5 (τₘ = 30 s) on every start, fitness 0.709; B1 on none |
+| T5, comparing over time pays | B5 is above B2r by 0.392, interval 0.323 to 0.459 |
+| T6, random wiring rarely works | no random genome of 2,000 matches B5; the best scores 0.24 |
+| T7, determinism | passes |
+
+**B5's headroom** below the still cell at the best point is 0.021, against the 0.05 predicted.
+
+Stage 3b's preregistration follows (§6). This document is not changed after the run.

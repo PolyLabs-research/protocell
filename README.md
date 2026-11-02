@@ -22,7 +22,9 @@ K1â€“K7 after one amendment to the damage reflex's rule (`docs/prereg/cave.md` Â
 in the cave's day configuration on RunPod, three runs per spoke mode. Every champion survives, but none reaches the
 reflex's fitness (the best falls 0.011 short), and every one depends on its core, the core's recurrence and the ring's
 links. Stage 1b (D9): holding any of those parts at
-its average also breaks every champion, so each part's moment-to-moment signal matters. Next: stage 3's translucent cell.
+its average also breaks every champion, so each part's moment-to-moment signal matters. Stage 3a (D10): the translucent cell's
+world passes every check; without shading the reflex survives a third of its starts, while a cell that compares
+its light over time (B5) survives all of them. Next: stage 3b's evolution.
 
 ## Running
 
