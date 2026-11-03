@@ -125,3 +125,31 @@ machine.
 
 The owner's answers, as dated notes before the build. After the checks have run, nothing but dated amendments before
 stage 4b.
+
+## 12. The checks ran (2026-11-03; read in D17)
+
+The data are in `docs/data/stage4a/`. The run used code `3f70b42`, on this machine, from a clean tree with warnings as
+errors, and took 26 minutes. **Every check passes.**
+
+| check | result |
+|---|---|
+| U1, sitting fails and the best place pays | B0 survives on no start; the ceiling on every start |
+| U2, real room | the bar is B8 (τ = 10 s): 0.576, surviving 90% of starts; the ceiling 0.694; the headroom +0.118 (0.099, 0.139), 22% of the room |
+| U3, the room is about information | B6 with perfect reading scores 0.662, recovering 73% of the headroom |
+| U4, random wiring rarely works | no random genome of 2,000 matches the bar's survival; the best scores 0.165 |
+| U5, determinism | passes |
+
+**The other cells, on starts 51–100:**
+- B5 0.540 (τ = 3 s); B6 0.404; B2r 0.227.
+- B0, still, 0.162; B7, run anywhere, 0.144.
+- The stage 3b champions: uniform 2203 0.216; fourier1 3202 0.164.
+
+**The predictions:**
+- 1, U1–U5 pass ✓.
+- 2, the bar is B5 or B8, at 0.50–0.58 ✓.
+- 3 ✗: the headroom is 0.118 and 22% of the room, against 0.12–0.18 and 25–33% predicted.
+- 4, 73% recovered ✓.
+- 5, the champions below 0.40 ✓.
+- 6, no random genome near the bar ✓.
+
+Stage 4b's preregistration follows (§7). This document is not changed after the run.

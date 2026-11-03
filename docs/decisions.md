@@ -1024,3 +1024,42 @@ Stage 4a's draft, `docs/prereg/stage4.md` §10:
   `protocell/sim.py` (the sky, B8), `protocell/rng.py`;
 - `experiments/stage4_probe.py` and `experiments/stage4_economy.py`; `tests/`;
 - `docs/data/stage4/`.
+
+## D17 — Stage 4a: the world with room above every simple rule passes its checks
+
+**Date:** 2026-11-03  
+**Why:** the owner on stage 4a's draft: "agree on all, proceed".  
+**Ran:** built at `3f70b42`; the checks here in 26 minutes, from a clean tree with warnings as errors; data at
+`0201ab2`. The world is stage 3's translucent pool, with the mouth sweeping along the edge through the day and
+photosynthesis at 0.55 of the cave's gain. The starts are fresh: 1–100 at seed 18.
+
+### A. Measured
+**Every check passes** (`docs/prereg/stage4.md` §12):
+- No still cell survives, and the ceiling survives every start.
+- The bar is B8, run toward the light while it rises, at 0.576, surviving 90% of starts.
+- The ceiling is 0.694, so the room above the bar is +0.118 (0.099, 0.139), 22% of the room between sitting still and
+  the ceiling.
+- B6 with perfect reading recovers 73% of that room.
+- No random genome comes near the bar: the best of 2,000 scores 0.165, against the still cell's 0.162.
+- Determinism holds.
+- Five of six predictions hold. The headroom fell just below the range I predicted.
+
+### B. Reading
+1. **This is the world stage 4 asked for.** No simple rule known here comes near its ceiling. For the first time in the
+   project, a cell that beats every simple rule has room to show it.
+2. **On fresh starts the bar is B8,** which combines B5's trigger with B6's aim, ahead of B5 (0.540). In the probe it
+   was the other way round. Both rules are close, and both are simple.
+3. **The landscape is as deceptive as stage 3b's.** The best random genome is no better than sitting still, so evolution
+   from random wiring will likely collapse onto still cells, as stage 3b's first pilot did. It will need a path.
+4. **The stage 3b champions fail here:** 0.216 and 0.164. They beat their cilia for much of the day, which this economy
+   cannot pay for.
+
+### C. Decisions this surfaces (the owner's)
+Stage 4b's draft, `docs/prereg/stage4b.md` §10:
+- the path for evolution;
+- the generations;
+- the criteria;
+- the cost on RunPod.
+
+**Impact:** this entry; `docs/prereg/stage4.md` (the owner's answers, §12); `experiments/stage4a.py` and its tests;
+`docs/data/stage4a/`; next, stage 4b's draft.
