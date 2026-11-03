@@ -177,3 +177,36 @@ The amendment is the owner's choice: its kind changes the method. Recorded here 
 
 The owner's answers, as dated notes before the build. The pilot's outcome and any amendment, as dated notes before
 the confirmatory runs. After those, nothing.
+
+## 13. Amendment A1 (2026-11-03, after the pilot, before any confirmatory run): one change at a time
+
+**The owner's choice,** after the pilot's outcome and D18's options: "go with option 1".
+
+**What changes:**
+- **The path has three parts instead of one.**
+  - Generations 1–50: the shading fades from the cave's 0.3 to none, in straight lines, with the gain at the cave's.
+    This is stage 3b's amendment A1 exactly.
+  - Generations 51–100: the cell is translucent, and the gain falls in a straight line from the cave's to 0.55 of it.
+  - Generations 101–200: stage 4a's world.
+- **200 generations,** and the champion is chosen from generation 101, by validation in stage 4a's world as before.
+- **Fresh seeds:** pilot 1401 (uniform) and 1402 (fourier1); confirmatory 2401–2403 and 3401–3403.
+- **The preregistered pilot's data** move to `docs/data/stage4b/pilot-as-preregistered/`. The amended pilot writes
+  `docs/data/stage4b/pilot/`.
+
+**The reason.** The pilot's runs peaked while the world was near the shaded, generous cave. They declined from the
+moment the shading and the economy began to tighten together, and no working cell survived the path. In stage 3b,
+where only the shading faded, every run first built a working cell and two of six kept one. A1 asks whether changing
+one thing at a time leaves a working cell to carry into stage 4a's world.
+
+**Unchanged:** the world, the cell, the algorithm, the bar, the test, the criteria (§2, §3 apart from the path, §6,
+§7).
+
+**The cost, confirmed by the owner with the choice:** the pilot pod about 2.9 hours, about $3.20, at most $4.48 with a
+4-hour cap at $1.12 an hour.
+
+**Predictions for the amended pilot (written before it runs):**
+1. **By generation 50, each run has built a working translucent cell** in the cave's economy: its best training fitness
+   is above 0.4, as in stage 3b's amended pilot.
+2. **During generations 51–100 most of that is lost:** the best training fitness falls below 0.3 by generation 100. The
+   working cells of stage 3b beat for much of the day, and the tightening economy punishes that (D17 B4).
+3. **The pilot's rule is met in at most one mode.**
