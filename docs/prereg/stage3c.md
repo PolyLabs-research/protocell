@@ -165,16 +165,16 @@ which is K.
 - **The flat pool:** D_early, D_late and T for each cell, level and step, with intervals over replicates.
 
 **Criteria:**
-- **C1, it reads the direction.** The onset bias is above 0 in G1 (interval above 0), and lies within ±0.1 in G0. The
-  fitness drop from G1 to G0 is above 0 (interval above 0).
+- **C1, it reads the direction.** The onset bias is above 0 in G1 (interval above 0). In G0 its mean lies within
+  ±0.1. The fitness drop from G1 to G0 is above 0 (interval above 0).
 - **C2, it follows what it reads.** The onset bias is below 0 in G−1 (interval below 0). It is higher in G10 than in
   G1 (interval of the difference above 0).
 - **C3, the worlds separate the mechanisms.** B6 meets C1 and C2. B5 and B7 change by less than 0.01 in mean fitness
   in G0, G−1 and G10.
 - **C4, the creep holds the course.** L1 and L2 each lower the champion's fitness (interval of the drop above 0). L3
   does not (interval of the drop includes 0 or lies below it).
-- **C5, comparing over time.** A cell compares over time if T exceeds 1 R/s, interval above 0, after steps both up
-  and down, at either level. B5 must meet C5, or the flat pool does not work.
+- **C5, comparing over time.** A cell compares over time if, at some level, T exceeds 1 R/s with its interval above
+  0, after the step up and after the step down. B5 must meet C5 at both levels, or the flat pool does not work.
 
 H's reading (parts 1, 2 and 4) is confirmed if C1 and C2 hold for the champion and C3 holds. Its course (part 3) is
 confirmed if C4 holds.
@@ -182,7 +182,8 @@ confirmed if C4 holds.
 ## 8. Predictions (written before the build)
 
 The champion in the goggles:
-1. **G0:** its onset bias falls to within ±0.1 (from about 0.6 in G1), and its fitness drops by more than 0.10.
+1. **G0:** its onset bias's mean falls to within ±0.1 (from about 0.6 in G1), and its fitness drops by more than
+   0.10.
 2. **G−1:** its onset bias falls below −0.3, and its fitness drops by more than 0.15. It flees the light.
 3. **G10:** its onset bias rises above 0.85, and its fitness rises by more than 0.10.
 4. **Gq:** its fitness rises by more than 0.15. Its reading is limited by the noise.
