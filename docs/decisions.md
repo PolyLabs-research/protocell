@@ -943,3 +943,84 @@ the lesions, and running here.
    - The design probe comes first, then a preregistration draft with the owner's open points.
 
 **Impact:** this entry; main; next, stage 4's design probe and draft.
+
+## D16 — Stage 4's design probes: changing light alone leaves no room above the simple rules; a tighter economy does
+
+**Date:** 2026-11-03  
+**Why:** D15 3, a world where every simple rule leaves real room below the ceiling, probed before any evolution.  
+**Ran:**
+- The first probe (`experiments/stage4_probe.py`) at `9eb1bde`, from a clean tree with warnings as errors: 28 minutes
+  here, data at `222f36b`.
+- A design check in scratch code (not a result, disclosed here) between the probes.
+- The second probe (`experiments/stage4_economy.py`) at `331d0c2`: 21 minutes here, data at `8845d7b`.
+- Both used fresh starts 1–100 at seed 16. Each simple rule had its parameter chosen on starts 1–50 and was reported on
+  51–100.
+- The ceiling is a still cell put at the brightest point every tick: no cell can get more light, and it pays nothing
+  to move.
+
+### A. Measured
+1. **Changing light alone leaves little room.** The headroom is the ceiling less the best simple rule, start by start,
+   with its 95% interval:
+
+| world (stage 3's translucent pool with one change) | ceiling | best simple rule | headroom |
+|---|---|---|---|
+| none | 0.736 | B5, 0.716 | +0.020 (0.016, 0.025) |
+| clouds, slow (sun 10 min, shade at 0.3 for 5) | 0.730 | B5, 0.700 | +0.030 |
+| clouds, fast (2 and 1 min) | 0.730 | B5, 0.664 | +0.065 (0.042, 0.097) |
+| the mouth sweeping along the edge through the day | 0.736 | B5, 0.686 | +0.049 |
+| a spot circling the pool's centre at 2,500 R: daily, every 6 h, every 2 h | 0.736 | B8 or B6, 0.709–0.719 | +0.017 to +0.027 |
+
+2. **The check between the probes.** B5 spent 68% of its daylight ticks with a full reserve. The ceiling survives every
+   start down to 0.40 of the cave's photosynthetic gain, 44% at 0.35 and none at 0.30.
+3. **A tighter economy opens room.** For each world, this is the mildest gain probed at which the best simple rule
+   leaves about a quarter of the room or more between the still cell (B0) and the ceiling. The ceiling survives every
+   start in each:
+
+| world, gain | ceiling | best simple rule (survival) | headroom | share of the room | perfect reading recovers |
+|---|---|---|---|---|---|
+| the sweep, 0.55 | 0.692 | B5, 0.544 (88%) | +0.148 (0.114, 0.186) | 28% | 78% |
+| fast clouds, 0.55 | 0.678 | B8, 0.545 (86%) | +0.134 (0.090, 0.184) | 26% | 84% |
+| spot every 2 h, 0.45 | 0.659 | B6, 0.512 (80%) | +0.148 (0.131, 0.165) | 29% | 53% |
+| spot every 6 h, 0.45 | 0.659 | B6, 0.535 (84%) | +0.124 (0.092, 0.162) | 24% | 66% |
+| the fixed mouth, 0.40 | 0.588 | B5, 0.431 (66%) | +0.157 (0.128, 0.190) | 34% | 46% |
+
+   - At 0.45 the sweep and the clouds leave about half the room, but their best rules survive only 40–50% of starts.
+   - "Perfect reading" is B6 with the direction across the body magnified 10,000 times and no sensor noise. The
+     column is the share of the headroom it recovers.
+4. **Each kind of world has its own best simple rule.**
+   - Comparing over time (B5) is best with the mouth, fixed or sweeping.
+   - B5's trigger with B6's aim (B8) is best under clouds.
+   - Reading the wall (B6) is best with the spot. With the spot circling every 2 hours, comparing over time fails:
+     0.166 at 0.45.
+5. **Running anywhere (B7) scores below sitting still** in every world and economy.
+
+### B. Reading
+1. **The ceiling problem was the economy, not the light.**
+   - The reserve stops at full. In the cave's economy a few hours of good light fill it, and light after that is
+     wasted.
+   - So any rule that reaches good light for part of the day ends the day near the ceiling.
+   - This is what D6 and D11 saw in every world: the reflex within 2% of the ceiling in the shaded cave, run and wait
+     within 3% in the translucent one.
+2. **When light is worth more, every hour counts, and room opens above every simple rule.** It opens most where the
+   light moves, and differently in each kind of world.
+3. **The room is mostly about information.** Perfect reading of the direction recovers 53–84% of it. A cell could
+   claim it by reading the direction better than B6, as uniform 2203's ring does, or by combining reading with
+   comparing over time better than B8 does.
+4. **For the owner's hypothesis.** This is the first world built where no simple rule known here is near the ceiling.
+   The strong sense, interacting parts doing better than every simple mechanism, can now be tested.
+5. **A lesson.** I built the first probe's candidates around the light's dynamics, as D11 suggested. Checking first
+   whether the reserve saturates would have saved a probe.
+
+### C. Decisions this surfaces (the owner's)
+Stage 4a's draft, `docs/prereg/stage4.md` §10:
+- the world, with the sweep at 0.55 of the cave's gain recommended;
+- the bar;
+- the checks' thresholds;
+- running here.
+
+**Impact:**
+- this entry and the draft;
+- `protocell/config.py` and `protocell/world.py` (the circling spot, the clouds, the translucent cell's shading),
+  `protocell/sim.py` (the sky, B8), `protocell/rng.py`;
+- `experiments/stage4_probe.py` and `experiments/stage4_economy.py`; `tests/`;
+- `docs/data/stage4/`.

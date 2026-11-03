@@ -27,8 +27,9 @@ world passes every check; without shading the reflex survives a third of its sta
 its light over time (B5) survives all of them. Stage 3b (D11): comparing over time
 evolved only sometimes and partly (the best champion recovers 39% of what memory is worth over the reflex), and its
 best form scores far below B5. Stage 3c (D14): the uniform cell reads the light's direction with
-its ring, confirmed by changing what it senses; neither stage 3b champion compares over time (D11 corrected). Next
-(D15): stage 4, a world with headroom for every simple rule, probed first.
+its ring, confirmed by changing what it senses; neither stage 3b champion compares over time (D11 corrected). Stage 4's
+probes (D16): changing light alone leaves no room above the simple rules, a tighter economy does. Stage 4a's draft
+(`docs/prereg/stage4.md`) awaits the owner.
 
 ## Running
 
