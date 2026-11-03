@@ -121,6 +121,14 @@ neither mode's pilot does, an amendment comes before any confirmatory run (§9).
    - The three confirmatory pods: about $8.10, at most $11.80.
    - The balance today is $23.59. The chess project's pods are spending $2.03 an hour from it.
 
+**The owner's answers (2026-11-03, before the build).** "agree, go":
+- the path, the shading and the gain easing in together over generations 1–50;
+- 150 generations;
+- the criteria as in §7;
+- RunPod, with the pilot pod confirmed at $1.12 an hour, a 3.5-hour cap and at most $3.90.
+
+The confirmatory pods' cost is confirmed after the pilot's outcome.
+
 ## 11. What would be built
 
 - **`experiments/stage4b.py`:**
