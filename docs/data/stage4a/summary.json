@@ -1,0 +1,328 @@
+{
+ "bar": {
+  "param": "tau=10",
+  "report_fitness": 0.5757735474482635,
+  "report_mean_beat": 0.03969055940104615,
+  "report_survival": 0.9,
+  "rule": "B8"
+ },
+ "ceiling": {
+  "report_fitness": 0.6941007081595099,
+  "survival": 1.0
+ },
+ "checks": {
+  "U1": {
+   "b0_survival": 0.0,
+   "ceiling_survival": 1.0,
+   "pass": true
+  },
+  "U2": {
+   "bar": "B8",
+   "headroom": 0.11832716071124658,
+   "high": 0.1392577705216425,
+   "low": 0.09895580634465932,
+   "pass": true,
+   "room": 0.5317744817675245,
+   "share_of_room": 0.22251380005664803
+  },
+  "U3": {
+   "b6_perfect": 0.6617409234381575,
+   "pass": true,
+   "recovered_share": 0.7265227651298077
+  },
+  "U4": {
+   "bar_survival": 0.9,
+   "fourier1": {
+    "best_fitness": 0.16548533929359682,
+    "mean_survival": 5e-05,
+    "n_genomes": 1000,
+    "share_matching_bar_survival": 0.0
+   },
+   "pass": true,
+   "uniform": {
+    "best_fitness": 0.15610902402738394,
+    "mean_survival": 0.0,
+    "n_genomes": 1000,
+    "share_matching_bar_survival": 0.0
+   }
+  },
+  "U5": {
+   "batch_equals_singles": true,
+   "cells": 5,
+   "network_run_hash": "7fcabf419f22169c2ce530b54ed436d8e3dbd984a58180bf431bb43bdd13b621",
+   "pass": true,
+   "same_seed_same_hash_network": true,
+   "same_seed_same_hash_reflex": true,
+   "streams_independent": true
+  }
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "U1-U5 pass",
+   "values": {
+    "U1": true,
+    "U2": true,
+    "U3": true,
+    "U4": true,
+    "U5": true
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "the bar is B5 or B8, with fitness 0.50-0.58",
+   "values": {
+    "bar": "B8",
+    "fitness": 0.5757735474482635
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "the headroom is 0.12-0.18, 25-33% of the room",
+   "values": {
+    "headroom": 0.11832716071124658,
+    "share_of_room": 0.22251380005664803
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "B6 with perfect reading recovers 70-85% of the headroom",
+   "values": {
+    "recovered": 0.7265227651298077
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "both stage 3b champions score below 0.40",
+   "values": {
+    "F3202": 0.16361537106514187,
+    "U2203": 0.21638272353490426
+   }
+  },
+  {
+   "holds": true,
+   "number": 6,
+   "text": "no random genome matches the bar's survival, and the best scores below 0.25",
+   "values": {
+    "best_random": 0.16548533929359682,
+    "fourier1": 0.0,
+    "uniform": 0.0
+   }
+  }
+ ],
+ "quick": false,
+ "rules": {
+  "B0": {
+   "param": "-",
+   "report_fitness": 0.16232622639198535,
+   "report_mean_beat": 0.0,
+   "report_survival": 0.0
+  },
+  "B2r": {
+   "param": "k=100",
+   "report_fitness": 0.22655229837026256,
+   "report_mean_beat": 0.09545400171163539,
+   "report_survival": 0.16
+  },
+  "B5": {
+   "param": "tau=3",
+   "report_fitness": 0.540076849595973,
+   "report_mean_beat": 0.02306374495405889,
+   "report_survival": 0.84
+  },
+  "B6": {
+   "param": "cycle=50,run=18",
+   "report_fitness": 0.40403649522295315,
+   "report_mean_beat": 0.02848204306870144,
+   "report_survival": 0.54
+  },
+  "B6 perfect": {
+   "param": "cycle=20,run=10",
+   "report_fitness": 0.6617409234381575,
+   "report_mean_beat": 0.03139071636062684,
+   "report_survival": 1.0
+  },
+  "B7": {
+   "param": "-",
+   "report_fitness": 0.1438582338319641,
+   "report_mean_beat": 0.030169910372639816,
+   "report_survival": 0.0
+  },
+  "B8": {
+   "param": "tau=10",
+   "report_fitness": 0.5757735474482635,
+   "report_mean_beat": 0.03969055940104615,
+   "report_survival": 0.9
+  },
+  "F3202": {
+   "param": "-",
+   "report_fitness": 0.16361537106514187,
+   "report_mean_beat": 0.17146521989792107,
+   "report_survival": 0.0
+  },
+  "U2203": {
+   "param": "-",
+   "report_fitness": 0.21638272353490426,
+   "report_mean_beat": 0.10628170680467175,
+   "report_survival": 0.04
+  }
+ },
+ "run_summaries": {
+  "B0 -": {
+   "burnt_share": 0.0,
+   "effort_per_light": 0.0,
+   "mean_beat": 0.0,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.17217939574471888,
+   "mean_light_soaked": 0.026365284450095037,
+   "mean_soak_share": 0.008133796314679625,
+   "median_reach_tick": 33003.5,
+   "min_sunset_energy_ge_095_share": 0.05,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 0.12,
+   "starved_share": 1.0,
+   "survival": 0.0
+  },
+  "B2r k=100": {
+   "burnt_share": 0.0,
+   "effort_per_light": 1.3752268425857819,
+   "mean_beat": 0.07928340026184039,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.20963987316799992,
+   "mean_light_soaked": 0.057651143656247364,
+   "mean_soak_share": 0.0589997536795329,
+   "median_reach_tick": 23760.0,
+   "min_sunset_energy_ge_095_share": 0.15,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 0.27,
+   "starved_share": 0.9,
+   "survival": 0.1
+  },
+  "B5 tau=3": {
+   "burnt_share": 0.0,
+   "effort_per_light": 0.10307663006287561,
+   "mean_beat": 0.02256885444862513,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.5271855516871443,
+   "mean_light_soaked": 0.21895219541867422,
+   "mean_soak_share": 0.2763369895658238,
+   "median_reach_tick": 16196.5,
+   "min_sunset_energy_ge_095_share": 0.45,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 0.94,
+   "starved_share": 0.18,
+   "survival": 0.82
+  },
+  "B6 cycle=50,run=18": {
+   "burnt_share": 0.0,
+   "effort_per_light": 0.18282069022491082,
+   "mean_beat": 0.02792933235339345,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.39371891262693,
+   "mean_light_soaked": 0.1527689908567463,
+   "mean_soak_share": 0.18057826697194038,
+   "median_reach_tick": 30164.0,
+   "min_sunset_energy_ge_095_share": 0.29,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 0.72,
+   "starved_share": 0.47,
+   "survival": 0.53
+  },
+  "B6 perfect cycle=20,run=10": {
+   "burnt_share": 0.0,
+   "effort_per_light": 0.10518995999454228,
+   "mean_beat": 0.030680852151832885,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.6576502710379789,
+   "mean_light_soaked": 0.29167091758020197,
+   "mean_soak_share": 0.357063956842547,
+   "median_reach_tick": 2295.5,
+   "min_sunset_energy_ge_095_share": 1.0,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 1.0,
+   "starved_share": 0.0,
+   "survival": 1.0
+  },
+  "B7 -": {
+   "burnt_share": 0.0,
+   "effort_per_light": 1.314118704774834,
+   "mean_beat": 0.028494578994030996,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.16132318399455284,
+   "mean_light_soaked": 0.021683413294777937,
+   "mean_soak_share": 0.009387927845977743,
+   "median_reach_tick": 23796.0,
+   "min_sunset_energy_ge_095_share": 0.05,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 0.27,
+   "starved_share": 1.0,
+   "survival": 0.0
+  },
+  "B8 tau=10": {
+   "burnt_share": 0.0,
+   "effort_per_light": 0.15909358538537718,
+   "mean_beat": 0.037863455767575036,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.5599854707589231,
+   "mean_light_soaked": 0.23799486117468058,
+   "mean_soak_share": 0.2824489834857023,
+   "median_reach_tick": 10176.0,
+   "min_sunset_energy_ge_095_share": 0.25,
+   "n": 100,
+   "night_beat": 0.0,
+   "reached_share": 1.0,
+   "starved_share": 0.11,
+   "survival": 0.89
+  },
+  "F3202 -": {
+   "burnt_share": 0.0,
+   "effort_per_light": 1.88511644315389,
+   "mean_beat": 0.14016049541572762,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.17142980145646758,
+   "mean_light_soaked": 0.07435110755345829,
+   "mean_soak_share": 0.10135682077375417,
+   "median_reach_tick": 18106.0,
+   "min_sunset_energy_ge_095_share": 0.02,
+   "n": 100,
+   "night_beat": 0.03086184132425821,
+   "reached_share": 0.63,
+   "starved_share": 1.0,
+   "survival": 0.0
+  },
+  "U2203 -": {
+   "burnt_share": 0.0,
+   "effort_per_light": 1.196144497361034,
+   "mean_beat": 0.10311805201698715,
+   "mean_burn_share": 0.0,
+   "mean_fitness": 0.22282528041798522,
+   "mean_light_soaked": 0.08620869154561923,
+   "mean_soak_share": 0.09810166421608535,
+   "median_reach_tick": 32520.5,
+   "min_sunset_energy_ge_095_share": 0.05,
+   "n": 100,
+   "night_beat": 0.09870071926762367,
+   "reached_share": 0.42,
+   "starved_share": 0.97,
+   "survival": 0.03
+  }
+ },
+ "verdict": {
+  "U1": true,
+  "U2": true,
+  "U3": true,
+  "U4": true,
+  "U5": true
+ }
+}
