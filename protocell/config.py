@@ -70,6 +70,18 @@ class Config:
     # 0 removes the direction across the body, -1 reverses it, 10 magnifies it.
     sense_contrast: float = 1.0
 
+    # stage 4's candidate worlds (experiments/stage4_probe.py), each off by default.
+    # Where the cave's light comes from: "mouth", on the pool's edge as in the cave (with its sweep), or "circle", a spot
+    # circling the pool's centre anticlockwise at path_radius, a turn every path_period ticks of the world's clock.
+    cave_path: str = "mouth"
+    path_radius: float = 2500.0
+    path_period: int = 21_600
+    # Clouds: spells of sun (the light as it is) and of shade (the light times cloud_shade), each spell's length
+    # exponential with its mean in ticks (stream `sky`, keyed by the start). cloud_shade 1 is a clear sky.
+    cloud_shade: float = 1.0
+    cloud_sun_mean: float = 600.0
+    cloud_shade_mean: float = 300.0
+
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
 

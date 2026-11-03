@@ -5,7 +5,7 @@ Streams in use (docs/prereg/stage0.md §3 and §11 C4–C5): ``sensors`` (sensor
 ``beats`` (B1's random beating), ``starts`` (layouts and starting positions), ``genomes`` (random genomes). Later
 stages add ``train`` (stage 1's training starts), ``bootstrap`` (resampling for intervals), ``walk`` (B7's run
 directions, stage 3c), ``tether`` and ``tether_angles`` (the sensor noise and the brighter side's direction of a cell
-held in place, stage 3c).
+held in place, stage 3c), ``sky`` (the clouds over each start, stage 4's probe).
 
 A stream may be keyed, ``stream(seed, "sensors", (cell, start))``: a cell's draws are then its own, the same whether it
 runs alone or in a batch (rule 3, stage 0's W6), and the same for every controller that shares its key.

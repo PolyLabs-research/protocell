@@ -33,7 +33,7 @@ from protocell.config import Config
 from protocell.energy import damage_step, energy_step, start_energy
 from protocell.motion import cilia_motion, move
 from protocell.rng import stream
-from protocell.world import Starts, centre_light, daylight, lifetimes, node_light, source_distance
+from protocell.world import Sky, Starts, centre_light, daylight, lifetimes, node_light, source_distance
 
 NOISE_CHUNK = 250  # ticks of draws made at once; chunking does not change a generator's sequence (tested)
 STREAM_SENSORS = "sensors"
@@ -238,6 +238,44 @@ class ReadAndRun(Controller):
         return {} if self.noise is None else {STREAM_WALK: self.noise.digest}
 
 
+class AimAndRun(Controller):
+    """B8 (stage 4's probe): B5's trigger with B6's aim. Its memory is B5's, an exponential average m of the wall's mean
+    sensed light with time constant ``tau``, starting at the first reading. While the light is rising (the mean above
+    m) it runs toward the brighter side: the half of the wall facing psi beats fully and the rest not at all, psi the
+    direction of an exponential average (time constant ``aim_tau``) of the wall's first Fourier mode, sum_i s_i
+    e^(i theta_i). Otherwise it waits; in the dark it rests. alpha = 0."""
+
+    HALF_TOLERANCE = 1e-9
+
+    def __init__(self, cfg: Config, population: int, tau: float, aim_tau: float, rest_below: float) -> None:
+        if tau < 1.0 or aim_tau < 1.0:
+            raise ValueError("the memories' time constants are at least one tick")
+        self.alpha = np.zeros(population)
+        self.tau, self.aim_tau, self.rest_below = float(tau), float(aim_tau), float(rest_below)
+        theta = 2.0 * math.pi * np.arange(cfg.n_wall) / cfg.n_wall
+        self.theta, self.cos, self.sin = theta, np.cos(theta), np.sin(theta)
+        self.memory: Optional[np.ndarray] = None
+        self.re, self.im = np.zeros(population), np.zeros(population)
+
+    def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
+        mean = sensed.mean(axis=1, keepdims=True)
+        re, im = sensed[:, 0] * self.cos[0], sensed[:, 0] * self.sin[0]
+        for i in range(1, sensed.shape[1]):  # node by node, in a fixed order
+            re = re + sensed[:, i] * self.cos[i]
+            im = im + sensed[:, i] * self.sin[i]
+        if self.memory is None:
+            self.memory, self.re, self.im = mean.copy(), re, im
+        else:
+            self.re = self.re + (re - self.re) / self.aim_tau
+            self.im = self.im + (im - self.im) / self.aim_tau
+        rising = mean > self.memory
+        self.memory = self.memory + (mean - self.memory) / self.tau
+        psi = np.arctan2(self.im, self.re)
+        half = (np.cos(self.theta[None, :] - psi[:, None]) > self.HALF_TOLERANCE).astype(np.float64)
+        g = np.where(rising, half, 0.0)
+        return np.where(mean < self.rest_below, 0.0, g)
+
+
 class Network(Controller):
     """The cell of §3: the CTRNN's wall outputs are the beats. The state starts at y = 0; the output sigma(y + bias)
     is computed after each update and serves both as this tick's beats and as the next update's input (§11 C1)."""
@@ -266,7 +304,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
     ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``),
     ``{"controller": "runwait", "tau": 30, "rest_below": 0.01}`` (B5),
     ``{"controller": "readrun", "aim": "read" or "random", "cycle": 100, "run": 36, "rest_below": 0.01,
-    "still_above": 4.5}`` (B6 and B7, stage 3c's §5) or
+    "still_above": 4.5}`` (B6 and B7, stage 3c's §5), ``{"controller": "aimrun", "tau": 30, "aim_tau": 10,
+    "rest_below": 0.01}`` (B8, stage 4's probe) or
     ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7, or
     ``hold``: ``{"pathway": ..., "means": (M,)}``, stage 1b's §1).
     """
@@ -279,6 +318,8 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
         return Reflex(cfg, population, spec["k"], spec.get("rest_below"), spec.get("retreat_above"), spec.get("retreat_on", "mean"))
     if kind == "runwait":
         return RunAndWait(cfg, population, spec["tau"], spec["rest_below"])
+    if kind == "aimrun":
+        return AimAndRun(cfg, population, spec["tau"], spec["aim_tau"], spec["rest_below"])
     if kind == "readrun":
         noise = CellNoise(seed, STREAM_WALK, keys, (), "uniform") if spec["aim"] == "random" else None
         return ReadAndRun(cfg, population, spec["aim"], spec["cycle"], spec["run"], spec["rest_below"], spec["still_above"], noise)
@@ -399,6 +440,7 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
     keys = [(int(c), int(s)) for c, s in zip(ids.tolist(), starts.index.tolist())]
     controller = build_controller(cfg, controller_spec, population, seed, keys)
     sensors = CellNoise(seed, STREAM_SENSORS, keys, (cfg.n_wall,), "normal", cfg.sensor_noise_sd) if cfg.sensor_noise_sd > 0 else None
+    sky = Sky(cfg, seed, starts.index.tolist()) if cfg.cloud_shade != 1.0 else None  # stage 4's clouds; off by default
     motion = CellNoise(seed, STREAM_MOTION, keys, (), "normal", cfg.rotation_noise_sd) if cfg.rotation_noise_sd > 0 else None
 
     kind, source, cave = starts.kind, starts.source, starts.kind == "cave"
@@ -423,6 +465,9 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
         time = starts.phase + t
         active = alive & (t < ends)
         light = node_light(cfg, kind, source, pos, heading, time)
+        cover = sky.at(t) if sky is not None else None
+        if cover is not None:
+            light = light * cover[:, None]
         seen = light if cfg.sense_contrast == 1.0 else sense(cfg, light)
         sensed = seen + sensors.at(t) if sensors is not None else seen
         beats = controller.beats(sensed, t)
@@ -445,6 +490,8 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
         soaked_sum += np.where(counting, soaked, 0.0)
         beat_sum += np.where(counting, effort, 0.0)
         at_centre = centre_light(cfg, kind, source, pos, time)
+        if cover is not None:
+            at_centre = at_centre * cover
         reach_tick = np.where(counting & (reach_tick < 0) & (at_centre >= cfg.soak_threshold), t + 1, reach_tick)
         if cave:
             night = active & (daylight(cfg, time) == 0.0)

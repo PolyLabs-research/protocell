@@ -20,7 +20,9 @@ from protocell.config import Config
 from protocell.rng import stream
 
 KINDS = ("spot", "lamp", "cave")
+PATHS = ("mouth", "circle")
 STREAM_STARTS = "starts"
+STREAM_SKY = "sky"
 _MAX_REJECTIONS = 100_000
 
 
@@ -115,6 +117,8 @@ def sample_starts(cfg: Config, kind: str, n: int, seed: int, *, stream_name: str
                 break
         else:  # pragma: no cover - the stated geometry always has room
             raise RuntimeError(f"no start found at least {at_least} R from the {kind}")
+    if kind == "cave" and cfg.cave_path != "mouth":  # the light's source where it is at each start's first tick (no draws)
+        source = mouth_position(cfg, phase)
     return Starts(kind, source, pos, heading, np.arange(1, n + 1), phase)
 
 
@@ -150,9 +154,48 @@ def mouth_angle(cfg: Config, time: np.ndarray) -> np.ndarray:
 
 
 def mouth_position(cfg: Config, time: np.ndarray) -> np.ndarray:
-    """The source on the pool's edge at each cell's time, ``(P, 2)``."""
+    """The light's source at each cell's time, ``(P, 2)``: the mouth on the pool's edge (``cave_path`` "mouth"), or
+    the spot circling the pool's centre (``cave_path`` "circle"; stage 4's probe), at angle 2 pi t / path_period from
+    east, anticlockwise."""
+    if cfg.cave_path == "circle":
+        t = np.asarray(time, dtype=np.float64)
+        a = 2.0 * math.pi * (t % cfg.path_period) / cfg.path_period
+        return np.stack([cfg.path_radius * np.cos(a), cfg.path_radius * np.sin(a)], axis=-1)
+    if cfg.cave_path != "mouth":
+        raise ValueError(f"unknown cave_path {cfg.cave_path!r}; one of {PATHS}")
     a = mouth_angle(cfg, time)
     return np.stack([cfg.dish_radius * np.cos(a), cfg.dish_radius * np.sin(a)], axis=-1)
+
+
+class Sky:
+    """The clouds over each start of a batch (stage 4's probe): spells of sun (factor 1) and shade (factor
+    ``cloud_shade``), each spell's length in ticks exponential with its mean (``cloud_sun_mean``, ``cloud_shade_mean``)
+    and at least one tick; the first spell's kind drawn from the two kinds' shares of the time. Each start draws from
+    stream ``sky`` keyed by its number alone, so every cell on a start, under any controller, has the same sky.
+    ``at(t)`` is the factor at tick t of each start's life, ``(P,)``; ticks are asked for in order."""
+
+    def __init__(self, cfg: Config, seed: int, numbers: Sequence[int]) -> None:
+        if not 0.0 <= cfg.cloud_shade < 1.0:
+            raise ValueError("a sky with clouds has a shade factor in [0, 1)")
+        self.shade = float(cfg.cloud_shade)
+        self.means = (float(cfg.cloud_shade_mean), float(cfg.cloud_sun_mean))  # by kind: 0 shade, 1 sun
+        self.generators = [stream(seed, STREAM_SKY, (int(k),)) for k in numbers]
+        share_sun = self.means[1] / (self.means[0] + self.means[1])
+        self.sun = np.array([g.random() < share_sun for g in self.generators])
+        self.ends = np.array([self._spell(g, bool(s)) for g, s in zip(self.generators, self.sun)], dtype=np.int64)
+        self.tick = -1
+
+    def _spell(self, generator: np.random.Generator, sun: bool) -> int:
+        return max(1, int(round(generator.exponential(self.means[1 if sun else 0]))))
+
+    def at(self, t: int) -> np.ndarray:
+        if t != self.tick + 1:
+            raise ValueError("ticks must be asked for in order")
+        self.tick = t
+        for p in np.flatnonzero(self.ends <= t).tolist():
+            self.sun[p] = not self.sun[p]
+            self.ends[p] = t + self._spell(self.generators[p], bool(self.sun[p]))
+        return np.where(self.sun, 1.0, self.shade)
 
 
 def cave_falloff(cfg: Config, d: np.ndarray) -> np.ndarray:
@@ -196,9 +239,13 @@ def cave_intensity(cfg: Config, x: np.ndarray, y: np.ndarray, sx: np.ndarray, sy
 
 def _shaded(cfg: Config, raw: np.ndarray, nx: np.ndarray, ny: np.ndarray, pos: np.ndarray, source: np.ndarray) -> np.ndarray:
     """Self-shading (stage0.md §2, §11 C2): I (shade_floor + (1 - shade_floor) max(0, cos beta)), beta between the
-    node's outward normal and the direction from the cell's centre to the source (never shorter than one radius)."""
+    node's outward normal and the direction from the cell's centre to the source (never shorter than one radius). A
+    translucent cell (floor 1) is not shaded at all: it gets the light itself, the same bits the formula gives, with no
+    direction needed when its centre sits on a source inside the pool (stage 4's spot)."""
+    if cfg.shade_floor == 1.0:
+        return raw
     tx, ty = source[:, 0:1] - pos[:, 0:1], source[:, 1:2] - pos[:, 1:2]
-    t = np.sqrt(tx * tx + ty * ty)
+    t = np.maximum(np.sqrt(tx * tx + ty * ty), 1.0)
     cos_beta = (nx * tx + ny * ty) / t
     return raw * (cfg.shade_floor + (1.0 - cfg.shade_floor) * np.maximum(0.0, cos_beta))
 
