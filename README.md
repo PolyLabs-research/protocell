@@ -26,7 +26,8 @@ its average also breaks every champion, so each part's moment-to-moment signal m
 world passes every check; without shading the reflex survives a third of its starts, while a cell that compares
 its light over time (B5) survives all of them. Stage 3b (D11): comparing over time
 evolved only sometimes and partly (the best champion recovers 39% of what memory is worth over the reflex), and its
-best form scores far below B5. Awaiting the owner's decisions in D11.
+best form scores far below B5. Next (D12): stage 3c, a world built to expose
+how a uniform cell, which has no front, finds and holds the light.
 
 ## Running
 

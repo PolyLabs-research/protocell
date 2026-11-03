@@ -706,3 +706,22 @@ Q1's "exceeds B2r's by at least half the gap" was read as the interval's lower b
 outcome, §14); `protocell/evolve.py` (a world per generation, the champion's first generation), `protocell/cell.py`
 (the time removals); `experiments/stage3b.py`, `experiments/stage1.py` (seeds as options); `cloud/` (any stage);
 `tools/replay.py` (the translucent world, B5); `docs/data/stage3b/`; `tests/`.
+
+## D12 — The owner's decisions on D11: stage 3b stands; the next world is built to expose how a cell with no front navigates; merged
+
+**Date:** 2026-11-03  
+**Why:** the owner on D11's unexplained observation, that uniform champion 2203 found a working strategy although a
+uniform cell has no front: "im always interested in observations we can't explain - lets have our next world try and
+expose how its managing this. agree with your points, proceed".
+
+### Decided
+1. **Stage 3b stands as it ran.**
+2. **The next world is built to expose how uniform 2203 reaches and holds the light** (stage 3c). It starts with a
+   design probe that describes the champion's movement on fresh starts in its own world. Then a preregistration
+   follows: worlds built so that the candidate mechanisms predict different behaviour, with a simple rule for each
+   mechanism run beside the champion as a positive control.
+3. **D11 D2's principle stands** for any world built for evolution: probe the baselines' headroom first. Stage 3c's
+   worlds are for observation, not evolution.
+4. **`stage3b-build` (with `stage1b`, `stage3-prereg`, `stage3-build` and `stage3b-prereg`) is merged to main.**
+
+**Impact:** this entry; main; next, stage 3c's design probe and draft.
