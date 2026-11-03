@@ -1106,3 +1106,46 @@ Stage 4b's draft, `docs/prereg/stage4b.md` §10:
 
 **Impact:** this entry; `docs/prereg/stage4b.md` (the owner's answers, the pilot's outcome); `cloud/campaign.sh`;
 `docs/data/stage4b/pilot/`.
+
+## D19 — Stage 4b's amended pilot: still no climb; this search does not reach a working cell in stage 4a's world
+
+**Date:** 2026-11-03  
+**Why:** the owner's "go with option 1" (amendment A1, one change at a time).  
+**Ran:**
+- One RunPod pod at `91e2c5b`, 2.85 hours a run, about $3.36. The first launch found no instance; the retry got one.
+- The data are at `c203bf8`. The outcome is in `docs/prereg/stage4b.md` §13.
+
+### A. Measured
+1. **Neither mode meets the pilot's rule.** Uniform validates at 0.155 and survives none of the validation starts.
+   Fourier1 validates at 0.241 and survives a quarter.
+2. **Both runs built working cells while the shading faded,** peaking at 0.65 and 0.56. They then lost most of it: as
+   the shading went, and more as the gain fell.
+3. **In stage 4a's world, uniform sat at the still cell's level.** Fourier1 climbed slowly to 0.241 by generation 160,
+   then stopped.
+
+### B. Reading
+1. **One change at a time did not save the path.** The cells this search builds find the light, but they spend too much
+   to live in stage 4a's economy. Over 50 generations of the economy tightening, it did not make them thrifty.
+2. **Across the project, this search has never matched the best simple rule in any world:**
+   - stage 1, 0.011 below the reflex;
+   - stage 3b, 0.23 below B5;
+   - here, 0.33 below B8.
+
+   The world now leaves room. The search is what is missing.
+3. **What the owner's hypothesis needs next is a cell that beats B8,** found by some means. Without one, the strong sense
+   stays untested: this neither shows it false nor shows it true.
+
+### C. Decisions this surfaces (the owner's)
+1. **A stronger search (recommended).** CMA-ES, deferred in D6, adapts its steps to the landscape, where this search
+   mutates every gene by the same small step. It needs its own draft and build, here first, then on RunPod with costs
+   confirmed. The test, the criteria and stage 4a's world stay.
+2. **Seed from stage 3b's working cells** and ease only the gain in. This is cheap, about $3, but A1's middle part
+   suggests the same search will not make them thrifty either.
+3. **Run the fourier1 line on** from its checkpoint, at about $3.20 for 200 more generations. Its champion stopped
+   improving after generation 160.
+4. **Stop stage 4b here** and record the result as it stands.
+
+The balance is $52.56; it has been topped up.
+
+**Impact:** this entry; `docs/prereg/stage4b.md` §13; `experiments/stage4b.py`, `tests/test_stage4b.py`;
+`docs/data/stage4b/`.

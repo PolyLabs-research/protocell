@@ -210,3 +210,37 @@ one thing at a time leaves a working cell to carry into stage 4a's world.
 2. **During generations 51–100 most of that is lost:** the best training fitness falls below 0.3 by generation 100. The
    working cells of stage 3b beat for much of the day, and the tightening economy punishes that (D17 B4).
 3. **The pilot's rule is met in at most one mode.**
+
+**The amended pilot's outcome (2026-11-03, before any confirmatory run).**
+
+The data are in `docs/data/stage4b/pilot/`. Both runs went side by side on one RunPod pod (AMD EPYC 9575F, 32
+vCPUs), at code `91e2c5b`, from a clean tree with warnings as errors. Each took 2.85 hours, and the pod cost about
+$3.36. **Neither meets the pilot's rule.**
+
+| run | champion's validation fitness | validation survival | the champion's generation |
+|---|---|---|---|
+| uniform, seed 1401 | 0.155 | 0% of 24 | 150 |
+| fourier1, seed 1402 | 0.241 | 25% of 24 | 160 |
+
+**The runs' records:**
+
+| generations | the training world | mean of each generation's best, uniform | the same, fourier1 |
+|---|---|---|---|
+| 1–50 | the shading fades, the cave's economy | 0.533 (peak 0.651) | 0.414 (peak 0.555) |
+| 51–100 | translucent, the gain falling | 0.245 | 0.310 |
+| 101–150 | stage 4a's world | 0.169 | 0.232 |
+| 151–200 | stage 4a's world | 0.162 | 0.259 |
+
+- **Both runs built working cells while shaded.** They lost much of that as the shading went, ending generation 50 at
+  0.391 and 0.325, below stage 3b's champions in the same generous translucent world.
+- **The falling gain cut them further.** Both were near 0.2 at generation 100.
+- **In stage 4a's world the uniform run sat at the still cell's level.** The fourier1 run climbed a little, to a champion
+  that validates at 0.241 and survives a quarter of the validation starts. That is the first evolved cell above the
+  still cell in this world, and it is far below the bar (0.576). Its champion stopped improving after generation 160.
+
+**A1's predictions:**
+1. Above 0.4 at generation 50 ✗: 0.391 and 0.325.
+2. Below 0.3 by generation 100 ✓: 0.220 and 0.198.
+3. The rule met in at most one mode ✓: in neither.
+
+The confirmatory runs do not go ahead. What follows is the owner's choice.
