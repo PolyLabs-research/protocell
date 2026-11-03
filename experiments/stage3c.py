@@ -129,7 +129,7 @@ def flat_job(job: Mapping[str, Any]) -> Dict[str, Any]:
     cfg: Config = job["cfg"]
     reps, settle, hold, stagger = job["replicates"], job["settle"], job["hold"], job["stagger"]
     keys = [(r, job["condition"]) for r in range(reps)]
-    spec, _ = cell_spec(cfg, job["cell"], reps)
+    spec = job["spec"] if job.get("spec") is not None else cell_spec(cfg, job["cell"], reps)[0]  # a ready spec: stage 4b's champions
     ctl = build_controller(cfg, spec, reps, SEED, keys)
     noise = CellNoise(SEED, probe.STREAM_TETHER, keys, (cfg.n_wall,), "normal", cfg.sensor_noise_sd)
     step_at = settle + stagger * np.arange(reps)

@@ -161,7 +161,7 @@ def evaluate(cfg: Config, mode: str, ga: GA, population: np.ndarray, seed: int, 
 
 # --- a run --------------------------------------------------------------------------------------------------------------
 
-GENERATION_COLUMNS = ("generation", "shade_floor", "best_fitness", "median_fitness", "mean_fitness", "best_survival", "share_surviving_all",
+GENERATION_COLUMNS = ("generation", "shade_floor", "eta", "best_fitness", "median_fitness", "mean_fitness", "best_survival", "share_surviving_all",
                       "best_mean_beat", "seconds")
 VALIDATION_COLUMNS = ("generation", "rank", "train_fitness", "validation_fitness", "validation_survival", "validation_mean_beat", "champion")
 
@@ -221,7 +221,7 @@ def run(cfg: Config, mode: str, ga: GA, seed: int, out: Path, mapper: Mapper, *,
                                               "validation_fitness": v["fitness"], "validation_survival": v["survival"]}
                 state["validation"].append({"generation": g + 1, "rank": rank, "train_fitness": float(fit[i]), "validation_fitness": v["fitness"],
                                             "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "champion": int(better)})
-        row = {"generation": g + 1, "shade_floor": train_cfg.shade_floor, "best_fitness": float(fit[best]), "median_fitness": float(np.median(fit)), "mean_fitness": float(fit.mean()),
+        row = {"generation": g + 1, "shade_floor": train_cfg.shade_floor, "eta": train_cfg.eta, "best_fitness": float(fit[best]), "median_fitness": float(np.median(fit)), "mean_fitness": float(fit.mean()),
                "best_survival": float(ev["survived"][best].mean()), "share_surviving_all": float(ev["survived"].all(axis=1).mean()),
                "best_mean_beat": float(ev["mean_beat"][best].mean()), "seconds": round(time.time() - t0, 3)}
         state["history"].append(row)
