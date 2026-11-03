@@ -33,7 +33,16 @@ pull_all() {
     "${RP[@]}" pull "$POD" /root/protocell/pc-job/ "$OUT/$EXPERIMENT-$PHASE-$POD-job/" >> "$LOG" 2>&1
 }
 
-pod_alive() { "${RP[@]}" status 2> /dev/null | grep -q "^$POD "; }
+# One failed status call is not a missing pod: the API can fail for a moment (it ended stage 4b's pilot campaign while the
+# pod ran on). Three misses in a row, 30 s apart, are.
+pod_alive() {
+    for _ in 1 2 3; do
+        "${RP[@]}" status 2> /dev/null | grep -q "^$POD " && return 0
+        log "the pod was not listed; asking again"
+        sleep 30
+    done
+    return 1
+}
 
 log "campaign start: pod $POD phase $PHASE runs ${RUNS[*]}, pulling every ${PULL_EVERY}s"
 while pod_alive; do
