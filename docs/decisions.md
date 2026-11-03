@@ -1063,3 +1063,46 @@ Stage 4b's draft, `docs/prereg/stage4b.md` §10:
 
 **Impact:** this entry; `docs/prereg/stage4.md` (the owner's answers, §12); `experiments/stage4a.py` and its tests;
 `docs/data/stage4a/`; next, stage 4b's draft.
+
+## D18 — Stage 4b's pilot: evolution does not climb in stage 4a's world; the amendment is the owner's
+
+**Date:** 2026-11-03  
+**Why:** the owner's "agree, go" on stage 4b's draft, the pilot pod confirmed at most $3.90.  
+**Ran:**
+- The pilot ran on one RunPod pod at `93c97b2`, 2.1 hours a run, about $2.58. The data are at `293faf9`.
+- The outcome and its diagnosis are in `docs/prereg/stage4b.md`, "The pilot's outcome".
+
+### A. Measured
+1. **Neither mode climbs.** Both champions validate at the still cell's level and survive no validation start:
+   uniform 0.148, fourier1 0.155.
+2. **Both runs peaked in their first ten generations,** at 0.43 and 0.55. The world was then still close to the shaded,
+   generous cave. Both declined from the moment the world began to tighten, and sat at the still cell's level through
+   generations 51–150.
+3. **The pull campaign stopped once on a failed status call** while the pod ran on. It was restarted and every run was
+   pulled. The campaign now needs three misses in a row (`df75a63`).
+
+### B. Reading
+1. **The path failed.** Changing the shading and the economy together left no working cell to carry into stage 4a's
+   world. In stage 3b, where only the shading faded, every run first built a working cell and two of six kept one.
+2. **Stage 4a's world has no gradient for this search at the still cell's level.** A hundred generations there found
+   nothing better. This is what stage 4a's random genomes showed (D17 B3).
+3. **Prediction 1 (the pilot climbs in at least one mode) was wrong.** The other predictions wait for a test.
+
+### C. Decisions this surfaces (the owner's)
+1. **The amendment.** Each option changes the method, so it is the owner's choice:
+   - **A1, one change at a time, slower (recommended).**
+     - Generations 1–50: the shading fades in the cave's economy, as stage 3b's amendment A1.
+     - Generations 51–100: the gain falls to 0.55 with the cell translucent.
+     - Generations 101–200: stage 4a's world, with the champion from generation 101.
+     - It keeps the preregistered method, from random wiring, and asks whether two changes at once were the failure.
+     - About 2.9 hours a pod. The pilot about $3.20, at most $4.48 with a 4-hour cap.
+   - **A2, start from stage 3b's working cells.** The population is seeded with mutants of uniform 2203 and fourier1
+     3202, and only the gain eases in. Those cells already read the light without shading; what they lack is thrift.
+     It no longer evolves from random wiring. About $2.70 for the pilot.
+   - **A3, a stronger search,** CMA-ES or a larger population. It is a new method with its own draft and build.
+   - **Stop here** and record that evolution as configured does not climb in this world.
+2. **The balance:** $13.94. The chess project's pod is drawing $2.03 an hour from it. A1's pilot fits; its three
+   confirmatory pods, at most about $13.40, would need a top-up.
+
+**Impact:** this entry; `docs/prereg/stage4b.md` (the owner's answers, the pilot's outcome); `cloud/campaign.sh`;
+`docs/data/stage4b/pilot/`.

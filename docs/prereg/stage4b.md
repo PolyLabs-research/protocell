@@ -129,6 +129,41 @@ neither mode's pilot does, an amendment comes before any confirmatory run (§9).
 
 The confirmatory pods' cost is confirmed after the pilot's outcome.
 
+**The pilot's outcome (2026-11-03, before any confirmatory run).**
+
+The data are in `docs/data/stage4b/pilot/`. Both runs went side by side on one RunPod pod (AMD EPYC 9575F, 32
+vCPUs), at code `93c97b2`, from a clean tree with warnings as errors. Each took 2.1 hours, and the pod cost about $2.58.
+**Neither climbs.**
+
+| run | champion's validation fitness | validation survival | the champion's generation |
+|---|---|---|---|
+| uniform, seed 1301 | 0.148 | 0% of 24 | 70 |
+| fourier1, seed 1302 | 0.155 | 0% of 24 | 90 |
+
+§5's rule, survive at least half the validation starts, fails in both modes. So §9's first row applies: an amendment
+to the path or the generations, then the pilot again on fresh seeds.
+
+**Diagnosis (the runs' own records):**
+
+| generations | the training world | mean of each generation's best, uniform | the same, fourier1 |
+|---|---|---|---|
+| 1–25 | near the shaded, generous cave | 0.320 | 0.413 |
+| 26–50 | the shading and the gain tightening together | 0.231 | 0.299 |
+| 51–100 | stage 4a's world | 0.160 | 0.186 |
+| 101–150 | stage 4a's world | 0.161 | 0.178 |
+
+- **Both runs peaked in their first ten generations,** at 0.43 and 0.55. They declined from the moment the world began to
+  tighten.
+- **In stage 4a's world the populations sat at the still cell's level** (0.162 in stage 4a's check). In the uniform run
+  the median equalled the best: the population had converged.
+- **No cell that worked in the easier worlds ever validated above 0.156 in stage 4a's world.**
+- **Unlike stage 3b's amendment A1, where every run first built a working shaded cell, nothing that worked survived
+  the path here.** Here the shading and the economy changed together from the first generation.
+- A note on the record: the pull campaign stopped at 15:28 on a single failed status call while the pod ran on. It was
+  restarted at 15:37 and pulled every run. `cloud/campaign.sh` now waits for three misses in a row (`df75a63`).
+
+The amendment is the owner's choice: its kind changes the method. Recorded here before any further run.
+
 ## 11. What would be built
 
 - **`experiments/stage4b.py`:**

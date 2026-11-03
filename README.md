@@ -29,7 +29,8 @@ evolved only sometimes and partly (the best champion recovers 39% of what memory
 best form scores far below B5. Stage 3c (D14): the uniform cell reads the light's direction with
 its ring, confirmed by changing what it senses; neither stage 3b champion compares over time (D11 corrected). Stage 4's
 probes (D16): changing light alone leaves no room above the simple rules, a tighter economy does. Stage 4a (D17):
-that world passes its checks. Stage 4b's draft, evolution in it (`docs/prereg/stage4b.md`), awaits the owner.
+that world passes its checks. Stage 4b's pilot (D18): evolution does not climb
+there; the amendment awaits the owner.
 
 ## Running
 
