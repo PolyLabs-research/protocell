@@ -928,3 +928,18 @@ the lesions, and running here.
 - `protocell/config.py` (the senses), `protocell/sim.py` (the senses, B6 and B7) and `protocell/rng.py`;
 - `experiments/stage3c.py`; `tools/replay.py` (`b6`, `b7`, `@K`); `tests/`;
 - `docs/data/stage3c/test/`.
+
+## D15 — The owner's decisions on D14: stage 3c stands; merged; next, a world with headroom for every simple rule
+
+**Date:** 2026-11-03  
+**Why:** the owner on D14 C: "agree - go for it".
+
+### Decided
+1. **Stage 3c stands as it ran.**
+2. **`stage3c` is merged to main.**
+3. **Next: a world where every simple rule leaves real room below the ceiling** (D11 D2), probed before any evolution.
+   - The simple rules now include B6, the rule that reads the wall before each run, besides B2r and B5.
+   - The plan's stage 4 names the direction: changing light, moving spots.
+   - The design probe comes first, then a preregistration draft with the owner's open points.
+
+**Impact:** this entry; main; next, stage 4's design probe and draft.
