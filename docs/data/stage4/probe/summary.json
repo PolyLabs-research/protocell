@@ -1,0 +1,355 @@
+{
+ "quick": false,
+ "worlds": {
+  "clouds": {
+   "best_random_genome": 0.24955482861771264,
+   "best_simple_rule": "B5",
+   "ceiling": 0.7296284294558084,
+   "ceiling_survival": 1.0,
+   "headroom": 0.029839746763042924,
+   "headroom_high": 0.03628121290118792,
+   "headroom_low": 0.02402004261961178,
+   "perfect_reading_gain": 0.01923314176437147,
+   "perfect_reading_high": 0.02410035800235808,
+   "perfect_reading_low": 0.0148469663256389,
+   "random_share_above_b0": 0.1,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.23519854137879456,
+     "report_survival": 0.06
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.3203234817716204,
+     "report_survival": 0.32
+    },
+    "B5": {
+     "param": "tau=30",
+     "report_fitness": 0.6997886826927656,
+     "report_survival": 1.0
+    },
+    "B6": {
+     "param": "cycle=50,run=18",
+     "report_fitness": 0.4718948671365911,
+     "report_survival": 0.6
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7190218244571372,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.19561634915639478,
+     "report_survival": 0.02
+    },
+    "B8": {
+     "param": "tau=10",
+     "report_fitness": 0.656483481479421,
+     "report_survival": 0.94
+    }
+   }
+  },
+  "flicker": {
+   "best_random_genome": 0.24848080424712066,
+   "best_simple_rule": "B5",
+   "ceiling": 0.7295679643913284,
+   "ceiling_survival": 1.0,
+   "headroom": 0.06522475779869481,
+   "headroom_high": 0.09745869873642393,
+   "headroom_low": 0.04155775782870804,
+   "perfect_reading_gain": 0.054718503165079806,
+   "perfect_reading_high": 0.08645972714449433,
+   "perfect_reading_low": 0.03161676613961659,
+   "random_share_above_b0": 0.08,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.23534777582496197,
+     "report_survival": 0.06
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.32012922626842427,
+     "report_survival": 0.32
+    },
+    "B5": {
+     "param": "tau=10",
+     "report_fitness": 0.6643432065926337,
+     "report_survival": 0.96
+    },
+    "B6": {
+     "param": "cycle=200,run=72",
+     "report_fitness": 0.43108535400240533,
+     "report_survival": 0.54
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7190617097577134,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.18427828625653067,
+     "report_survival": 0.0
+    },
+    "B8": {
+     "param": "tau=10",
+     "report_fitness": 0.6297456607284515,
+     "report_survival": 0.88
+    }
+   }
+  },
+  "reference": {
+   "best_random_genome": 0.26993343951115656,
+   "best_simple_rule": "B5",
+   "ceiling": 0.7359907053969882,
+   "ceiling_survival": 1.0,
+   "headroom": 0.020106360921616037,
+   "headroom_high": 0.02521011199541773,
+   "headroom_low": 0.015563217386900086,
+   "perfect_reading_gain": 0.011169456451445103,
+   "perfect_reading_high": 0.014598433800272379,
+   "perfect_reading_low": 0.008046763618213814,
+   "random_share_above_b0": 0.08,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.26096605494856395,
+     "report_survival": 0.12
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.33882025608569605,
+     "report_survival": 0.36
+    },
+    "B5": {
+     "param": "tau=30",
+     "report_fitness": 0.7158843444753722,
+     "report_survival": 1.0
+    },
+    "B6": {
+     "param": "cycle=50,run=18",
+     "report_fitness": 0.5102612323286552,
+     "report_survival": 0.66
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7270538009268174,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.20147845844537485,
+     "report_survival": 0.04
+    },
+    "B8": {
+     "param": "tau=10",
+     "report_fitness": 0.7060323667565848,
+     "report_survival": 1.0
+    }
+   }
+  },
+  "spot_2h": {
+   "best_random_genome": 0.3075439010640819,
+   "best_simple_rule": "B6",
+   "ceiling": 0.7359907412594352,
+   "ceiling_survival": 1.0,
+   "headroom": 0.026580185456722097,
+   "headroom_high": 0.03038019900115478,
+   "headroom_low": 0.02283554882975637,
+   "perfect_reading_gain": 0.020278200388391943,
+   "perfect_reading_high": 0.024158528643535532,
+   "perfect_reading_low": 0.016472954630631222,
+   "random_share_above_b0": 0.0,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.3275761271576447,
+     "report_survival": 0.0
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.2766834755981939,
+     "report_survival": 0.0
+    },
+    "B5": {
+     "param": "tau=3",
+     "report_fitness": 0.5210623833102893,
+     "report_survival": 0.64
+    },
+    "B6": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.709410555802713,
+     "report_survival": 1.0
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7296887561911051,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.2599838521569351,
+     "report_survival": 0.0
+    },
+    "B8": {
+     "param": "tau=300",
+     "report_fitness": 0.6871264084768411,
+     "report_survival": 1.0
+    }
+   }
+  },
+  "spot_6h": {
+   "best_random_genome": 0.3044089997121201,
+   "best_simple_rule": "B8",
+   "ceiling": 0.7359907412594352,
+   "ceiling_survival": 1.0,
+   "headroom": 0.016856400426564916,
+   "headroom_high": 0.02298688429987751,
+   "headroom_low": 0.011653053934987405,
+   "perfect_reading_gain": 0.011122337925837146,
+   "perfect_reading_high": 0.016646789643056662,
+   "perfect_reading_low": 0.006438843097619006,
+   "random_share_above_b0": 0.0,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.32488497262275856,
+     "report_survival": 0.02
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.4627511261600356,
+     "report_survival": 0.52
+    },
+    "B5": {
+     "param": "tau=3",
+     "report_fitness": 0.6966220016643305,
+     "report_survival": 1.0
+    },
+    "B6": {
+     "param": "cycle=50,run=18",
+     "report_fitness": 0.7082482264692218,
+     "report_survival": 1.0
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7302566787587073,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.2514659405298083,
+     "report_survival": 0.0
+    },
+    "B8": {
+     "param": "tau=3",
+     "report_fitness": 0.7191343408328702,
+     "report_survival": 1.0
+    }
+   }
+  },
+  "spot_day": {
+   "best_random_genome": 0.330267625411883,
+   "best_simple_rule": "B8",
+   "ceiling": 0.7359907412594352,
+   "ceiling_survival": 1.0,
+   "headroom": 0.01880190395532694,
+   "headroom_high": 0.021006620315539366,
+   "headroom_low": 0.01663535185437054,
+   "perfect_reading_gain": 0.010360284705018163,
+   "perfect_reading_high": 0.011914613467733936,
+   "perfect_reading_low": 0.008823041446291218,
+   "random_share_above_b0": 0.0,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.3547196468107155,
+     "report_survival": 0.28
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.488709931326149,
+     "report_survival": 0.7
+    },
+    "B5": {
+     "param": "tau=10",
+     "report_fitness": 0.7095635506856922,
+     "report_survival": 1.0
+    },
+    "B6": {
+     "param": "cycle=50,run=18",
+     "report_fitness": 0.6725982489858537,
+     "report_survival": 0.98
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7275491220091262,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.28705280957319657,
+     "report_survival": 0.08
+    },
+    "B8": {
+     "param": "tau=10",
+     "report_fitness": 0.7171888373041082,
+     "report_survival": 1.0
+    }
+   }
+  },
+  "sweep": {
+   "best_random_genome": 0.2568873536664823,
+   "best_simple_rule": "B5",
+   "ceiling": 0.7359907053969882,
+   "ceiling_survival": 1.0,
+   "headroom": 0.04949488319794046,
+   "headroom_high": 0.0558679083313613,
+   "headroom_low": 0.04374950197034739,
+   "perfect_reading_gain": 0.031103005159820344,
+   "perfect_reading_high": 0.03630979393648276,
+   "perfect_reading_low": 0.02651084585694582,
+   "random_share_above_b0": 0.025,
+   "rules": {
+    "B0": {
+     "param": "-",
+     "report_fitness": 0.2532803099785627,
+     "report_survival": 0.1
+    },
+    "B2r": {
+     "param": "k=100",
+     "report_fitness": 0.2644310607728864,
+     "report_survival": 0.16
+    },
+    "B5": {
+     "param": "tau=10",
+     "report_fitness": 0.6864958221990478,
+     "report_survival": 1.0
+    },
+    "B6": {
+     "param": "cycle=50,run=18",
+     "report_fitness": 0.4828121993913539,
+     "report_survival": 0.62
+    },
+    "B6 perfect": {
+     "param": "cycle=20,run=10",
+     "report_fitness": 0.7175988273588682,
+     "report_survival": 1.0
+    },
+    "B7": {
+     "param": "-",
+     "report_fitness": 0.20353171923823163,
+     "report_survival": 0.04
+    },
+    "B8": {
+     "param": "tau=10",
+     "report_fitness": 0.6794390168910388,
+     "report_survival": 0.98
+    }
+   }
+  }
+ }
+}
