@@ -234,6 +234,9 @@ None of these changes stage 3b's measured numbers, only what they were taken to 
 3. **The lesions L1–L3** (recommended).
 4. **Where it runs:** this machine, about 10 minutes (recommended). No cloud.
 
+**The owner's answers (2026-11-03, before the build).** "agree, go": the goggles and the flat pool; the controls
+B6 and B7 as in §5; the lesions L1–L3; the run on this machine.
+
 ## 11. Compute
 
 About 10 minutes on this machine:
