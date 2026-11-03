@@ -269,3 +269,66 @@ About 10 minutes on this machine:
 ## 13. What would change this document
 
 The owner's answers, as dated notes before the build. After the run, nothing but the record that it ran.
+
+## 14. The run ran (2026-11-03; read in D14)
+
+The data are in `docs/data/stage3c/test/`. The run used code `a3539fc`, on this machine, from a clean tree with
+warnings as errors, and took 6.6 minutes.
+
+**Fitness on starts 1–100 at seed 14** (survival in brackets); B0, still, scores 0.240 (10%):
+
+| cell | G1, as it is | G0, frosted | G−1, mirrored | G10, magnified | Gq, quiet |
+|---|---|---|---|---|---|
+| the champion, uniform 2203 | 0.364 (43%) | 0.233 (14%) | 0.155 (0%) | 0.596 (88%) | 0.651 (98%) |
+| B6, read and run | 0.547 (74%) | 0.226 (11%) | 0.156 (0%) | 0.703 (99%) | 0.718 (100%) |
+| B5, run and wait | 0.711 (100%) | 0.711 | 0.711 | 0.711 | 0.675 (95%) |
+| B7, run anywhere | 0.214 (8%) | 0.214 | 0.214 | 0.214 | 0.214 |
+| fourier1 3202 | 0.459 (59%) | 0.450 | 0.444 | 0.480 | 0.462 |
+
+**The onset bias** (runs beginning in light 0.3–3, mean cosine to the mouth, 95% interval):
+
+| cell | G1 | G0 | G−1 | G10 |
+|---|---|---|---|---|
+| the champion | +0.657 (0.641, 0.673) | +0.006 | −0.435 (−0.563, −0.319) | +0.810 |
+| B6 | +0.639 | −0.008 | −0.696 | +0.665 |
+| B5 | +0.262 in every world | | | |
+| B7 | −0.005 in every world | | | |
+
+**The lesions** (fitness less the intact champion's, 95% interval; turning during runs):
+
+| lesion | fitness change | turning during runs |
+|---|---|---|
+| L1, no spin | −0.021 (−0.065, +0.021) | +0.024 rad/s |
+| L2, no creep | −0.054 (−0.099, −0.010) | −0.037 rad/s |
+| L3, both | −0.003 (−0.040, +0.034) | 0.000 rad/s |
+| (intact) | — | −0.013 rad/s |
+
+**The flat pool** (T, R/s): B5 4.80–4.86 in all four cases. The champion −0.08 to +0.01. B6 and B7 +0.06 (their cycle).
+Fourier1 3202 −0.08 and −0.05 at light 0.3; at light 1, +0.79 after the step up and +0.17 after the step down.
+
+**The criteria:**
+
+| criterion | the champion | B6 | verdict |
+|---|---|---|---|
+| C1, it reads the direction | holds | holds | — |
+| C2, it follows what it reads | holds | holds | — |
+| C3, the worlds separate the mechanisms | — | — | holds: B6 reads and follows; B5 and B7 unchanged |
+| C4, the creep holds the course | — | — | **fails**: L1's drop has an interval through 0 |
+| C5, comparing over time | no | no | only B5 compares over time; fourier1 3202 does not |
+
+**The predictions:**
+1. G0 ✓.
+2. G−1 ✓.
+3. G10 ✗: the onset bias is +0.810, not above 0.85; the fitness rise of 0.233 is as predicted.
+4. Gq ✓.
+5. B6 ✓.
+6. B5 and B7 unchanged ✓.
+7. Fourier1 3202 within 0.05 ✓, though it gains 0.021 in G10 and loses 0.015 in G−1, both intervals clear of 0.
+8. B7 within 0.02 of B0 ✗: it is 0.027 below the still cell.
+9. ✗ by the rule fixed before the run: L3's mean change, −0.003, counts as lower. All three turning rates are as
+   predicted.
+10. B5 ✓.
+11. ✗: fourier1 3202's T after the step up at light 1 is 0.79.
+12. B6 above the champion, below B5 ✓.
+
+This document is not changed after the run.

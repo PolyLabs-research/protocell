@@ -707,6 +707,20 @@ outcome, §14); `protocell/evolve.py` (a world per generation, the champion's fi
 (the time removals); `experiments/stage3b.py`, `experiments/stage1.py` (seeds as options); `cloud/` (any stage);
 `tools/replay.py` (the translucent world, B5); `docs/data/stage3b/`; `tests/`.
 
+**Correction (2026-11-03, read in D14).**
+- **Reading B.1 said comparing over time evolved, only sometimes and partly. That is wrong.** Stage 3c tested it
+  (`docs/prereg/stage3c.md`, C5) and found that neither working champion compares over time as B5 does.
+  - The uniform champion's lead over the reflex comes from reading the light's direction across its body with its
+    ring (stage 3c's C1–C3).
+  - The fourier1 champion's pull follows the light's level. It has a brief transient of about a minute after a step:
+    when the light rises it slows more than the new level dictates. That transient is below C5's threshold and
+    opposite in sign to B5's.
+- **So stage 3b found no evolved comparison over time.** The numbers in B.1 stand, but the share of "what memory is
+  worth" was not memory for comparing.
+- **B.3 stands as measured.** Its slow parts and loops are needed, but in the uniform champion they serve the ring's
+  timing and its reading, not a comparison.
+- **B.4's open question is answered in D14.**
+
 ## D12 — The owner's decisions on D11: stage 3b stands; the next world is built to expose how a cell with no front navigates; merged
 
 **Date:** 2026-11-03  
@@ -825,3 +839,92 @@ the lesions, and running here.
 - `docs/prereg/stage3.md` §12 (the correction) and `docs/prereg/stage3c.md` (the draft);
 - `experiments/stage3c_probe.py` and its tests;
 - `docs/data/stage3c/probe/`.
+
+## D14 — Stage 3c: the cell with no front reads the light's direction with its ring; neither stage 3b champion compares over time
+
+**Date:** 2026-11-03  
+**Why:** the owner's "agree, go" on stage 3c's draft (D13 D).  
+**Ran:**
+- Built at `a3539fc`, with three pre-run clarifications in `docs/prereg/stage3c.md`.
+- The run took 6.6 minutes here, from a clean tree with warnings as errors.
+- The data are at `d4cdb78`; the tables are in `docs/prereg/stage3c.md` §14.
+
+### A. Measured
+1. **The champion with what it senses changed** (starts 1–100 at seed 14):
+
+| world | fitness | survival | onset bias toward the mouth |
+|---|---|---|---|
+| the pool as it is | 0.364 | 43% | +0.657 |
+| the direction removed | 0.233 | 14% | +0.006 |
+| the direction mirrored | 0.155 | 0% | −0.435 |
+| the direction ten times stronger | 0.596 | 88% | +0.810 |
+| the sensor noise off | 0.651 | 98% | +0.723 |
+
+2. **The controls behaved as designed.**
+   - B6, which reads the wall before each run, moved as the champion did: 0.547, 0.226, 0.156 and 0.703 in those
+     worlds.
+   - B5 and B7 were unchanged to the last digit.
+   - B7, which runs anywhere, scored 0.214, below the still cell's 0.240.
+3. **The lesions:**
+   - No spin: −0.021, interval through 0.
+   - No creep: −0.054, interval below 0.
+   - Both: −0.003.
+4. **The flat pool:**
+   - Only B5 compares over time, with T near 4.8 R/s at every level and step.
+   - The champion's T lies between −0.08 and +0.01.
+   - The fourier1 champion follows the level. After a rise at light 1 its pull falls from 8.13 to 5.31 R/s in the
+     first minute, then settles at 6.77 (T = 0.79, below C5's 1).
+5. **The verdicts:**
+   - C1, C2 and C3 hold.
+   - C4 fails.
+   - C5 holds only for B5.
+   - 8 of 12 predictions hold.
+
+### B. Reading
+1. **How the cell with no front manages: it reads the light's direction across its body.** H's reading is
+   confirmed.
+   - Without the direction it scores at the still cell's level.
+   - With the direction mirrored it flees the light, and none survive.
+   - With the direction magnified or its noise off, it comes within 0.06–0.12 of B5.
+   - Its front is made by its ring at each run, where the light is brightest (D13).
+2. **The course part of H is only partly supported, and C4 fails as preregistered.**
+   - The creep does cancel part of the spin: a run turns at −0.013 rad/s against −0.037 without it.
+   - Without the creep, the spin's bend costs 0.054.
+   - The creep's bend alone costs too little to measure, and straight runs change nothing. The peek's gain for straight
+     runs did not replicate.
+3. **Neither champion compares over time.** D11's reading B.1 is corrected by a dated note there. In stage 3b's world,
+   evolution found two other ways past the reflex:
+   - the uniform champion reads the direction with a ring;
+   - the fourier1 champion swims in tight circles while the light is dim and stops once it is bright. It has a brief
+     transient and uses the direction weakly: magnified, it gains 0.021; mirrored, it loses 0.015.
+4. **The translucent world rewards reading the direction too.**
+   - B6, the simple rule that reads the wall before each run, scores 0.547 in the pool as it is, 0.164 below B5.
+   - With the noise off it scores 0.718. That is above B5 with the noise off (0.675), and about B5's score in the
+     pool as it is (0.711).
+   - Stage 3a's premise, that the direction cannot be read, was wrong (D13 C2). Stage 3c shows how much a reader gains.
+5. **For the owner's hypothesis.** The champion is emergence in the plain sense: a front that no part has, made at
+   each run by the parts together. But the simple rule built on the same principle beats it by 0.183. Again the weak
+   sense holds and the strong sense does not.
+6. **My failed predictions and errors:**
+   - Prediction 3: the onset bias with the direction magnified is 0.81, not above 0.85.
+   - Prediction 8: running anywhere is worse than sitting still, not level with it.
+   - Prediction 9: it failed on my own scoring rule, for a difference of 0.003. The three turning rates were as
+     predicted.
+   - Prediction 11: I did not expect the fourier1 champion's brief transient.
+   - In D13 I called the fourier1 champion direction-blind on the strength of the peek. It uses the direction weakly.
+
+### C. Decisions this surfaces (the owner's)
+1. **Whether stage 3c stands as it ran.** Recommended: yes.
+2. **Merging `stage3c` to main.** Recommended: yes.
+3. **What comes next.**
+   - Recommended: return to D11 D2. Design a world where every simple rule leaves real room below the ceiling, and
+     probe the baselines' headroom before any evolution. Stage 3c adds B6 to the simple rules such a world must leave
+     room for: reading the direction across the body is cheap and strong.
+   - The alternative: explain how the fourier1 champion approaches, with a probe like D13's.
+
+**Impact:**
+- this entry, and a dated correction in D11;
+- `docs/prereg/stage3c.md`: the owner's answers, the pre-run clarifications and §14;
+- `protocell/config.py` (the senses), `protocell/sim.py` (the senses, B6 and B7) and `protocell/rng.py`;
+- `experiments/stage3c.py`; `tools/replay.py` (`b6`, `b7`, `@K`); `tests/`;
+- `docs/data/stage3c/test/`.

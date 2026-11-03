@@ -26,8 +26,9 @@ its average also breaks every champion, so each part's moment-to-moment signal m
 world passes every check; without shading the reflex survives a third of its starts, while a cell that compares
 its light over time (B5) survives all of them. Stage 3b (D11): comparing over time
 evolved only sometimes and partly (the best champion recovers 39% of what memory is worth over the reflex), and its
-best form scores far below B5. Stage 3c's probe (D13): the uniform cell reads the light's
-direction with its ring at each run's start. Stage 3c's draft, the goggles, awaits the owner (`docs/prereg/stage3c.md`).
+best form scores far below B5. Stage 3c (D14): the uniform cell reads the light's direction with
+its ring, confirmed by changing what it senses; neither stage 3b champion compares over time (D11 corrected). Awaiting
+the owner on D14.
 
 ## Running
 
