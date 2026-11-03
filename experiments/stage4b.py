@@ -186,7 +186,9 @@ def read_q3(run_name: str, fitness: Mapping[str, np.ndarray], onset: Mapping[str
             "onset_bias": {"G1": plain, "G0": frosted, "G-1": mirrored}, "compares_over_time": compares["any_level"], "flat_pool": compares}
 
 
-def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
+def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] = None) -> Dict[str, Any]:
+    """§6's test of every champion under ``out_root``; ``score`` scores the predictions (stage 4b's by default; stage 4c
+    passes its own)."""
     cfg = stage4a.world(quick)
     ga = ga_for(quick)
     n = 4 if quick else TEST_STARTS
@@ -271,7 +273,7 @@ def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
                           "Q3_read_direction": sum(q3[r]["reads_direction"] for r in runs), "Q3_compare_over_time": sum(q3[r]["compares_over_time"] for r in runs)}
     rows_summary = {label: summarise(r) for label, r in results.items()}
     rows_summary["ceiling"] = {"fitness": float(ceiling["fitness"].mean()), "survival": float(ceiling["survived"].mean())}
-    predictions = score_predictions(out_root, champions, verdicts, comparisons, q3, rows_summary)
+    predictions = (score or score_predictions)(out_root, champions, verdicts, comparisons, q3, rows_summary)
     summary = {"delta": DELTA, "n_starts": n, "choices": choices, "headroom": headroom, "verdicts": verdicts, "q3": q3, "rows": rows_summary,
                "champions": [{k: v for k, v in c.items() if k != "genome"} for c in champions],
                "means": {r_: {"living_ticks": m["living_ticks"], **m["means"]} for r_, m in means.items()}, "predictions": predictions, "quick": quick}
