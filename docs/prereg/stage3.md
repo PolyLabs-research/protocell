@@ -138,3 +138,22 @@ as errors, and took 27 minutes. **Every check passes.**
 **B5's headroom** below the still cell at the best point is 0.021, against the 0.05 predicted.
 
 Stage 3b's preregistration follows (§6). This document is not changed after the run.
+
+## 12. A correction (2026-11-03; read in D13)
+
+T2 judged the light's direction readable at once where its spread over the wall reaches three times one node's noise.
+On that criterion the direction was readable on 1% of starts. The criterion compares two nodes in one tick. A cell can
+do more:
+- **All sixteen nodes together.** The light's first Fourier mode over the wall carries √8 times less noise than one
+  node.
+- **More than one tick.** A cell that waits can add readings, and a reading need not be reliable to be useful: many
+  runs each aimed a little better than chance add up to an approach.
+
+Stage 3c's design probe found uniform champion 2203 doing both. Held in place and fed light slightly brighter on one
+side, its runs start toward that side as if it summed its wall's first mode over 7–21 ticks. Its runs' mean cosine
+toward the brighter side is +0.37 when the per-tick signal is 0.13 of that mode's noise. At noon that signal reaches
+0.13 on 27% of the probe's starts, against 2% by T2's criterion.
+
+So the translucent world hides the direction from a cell that compares two nodes at once, but not from one that reads
+its whole wall over several seconds. §11's T2 stands as what was measured. This note corrects what it was taken to
+mean: the world does not leave comparing over time as the only way to find the light.

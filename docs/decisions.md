@@ -725,3 +725,103 @@ expose how its managing this. agree with your points, proceed".
 4. **`stage3b-build` (with `stage1b`, `stage3-prereg`, `stage3-build` and `stage3b-prereg`) is merged to main.**
 
 **Impact:** this entry; main; next, stage 3c's design probe and draft.
+
+## D13 — Stage 3c's design probe: the cell with no front reads the light's direction with its ring
+
+**Date:** 2026-11-03  
+**Why:** D12, the owner's "lets have our next world try and expose how its managing this".  
+**Ran:**
+- The probe (`experiments/stage3c_probe.py`) at `fcc8f4c`, from a clean tree with warnings as errors, in 63 s on this
+  machine. The data are at `c4cc055`.
+- Stage 3's translucent world, fresh starts 1–100 at seed 13, and the champion's network held in place.
+
+### A. Measured
+1. **Movement in the pool:**
+
+| cell | fitness | survival | parked | running | runs |
+|---|---|---|---|---|---|
+| uniform 2203 | 0.420 | 56% | 18% | 25% | 57,154 |
+| fourier1 3202 | 0.456 | 59% | 27% | 8% | 2,217 |
+| B5, run and wait | 0.708 | 100% | 0% | 4% | 19,526 |
+| B2r, the spatial reflex | 0.349 | 39% | 0% | 10% | 107,199 |
+
+2. **The champion's runs start toward the mouth, more so in brighter light.**
+
+| light where the run began | mean cosine to the mouth |
+|---|---|
+| night | −0.004 |
+| 0.1–0.3 | +0.206 |
+| 0.3–1 | +0.483 |
+| 1–3 | +0.708 |
+
+3. **Held in place, the champion's network is a relaxation oscillator.**
+   - In even light below 3, three or four neighbouring nodes beat together for 35–49 s, 27–37 times an hour.
+   - At 3–4 they beat without a break.
+   - From 5 every node beats, and the cell parks.
+4. **Fed light slightly brighter on one side, its runs start toward that side.**
+   - The mean cosine is +0.37 when the per-tick signal is 0.13 of the noise of the wall's first Fourier mode, at light
+     0.3.
+   - It is +0.94 at a signal of 0.89, at light 2.
+   - With even light it is 0.
+   - These match a reader that sums the first mode over 7–21 ticks.
+5. **During runs the body spins and the beating creeps back.** The body spins at −0.037 rad/s from the cilium angle.
+   The beating creeps around the wall at +0.024 rad/s, from the ring's stronger link from the clockwise neighbour. So a
+   run turns at −0.013 rad/s.
+6. **Readability at noon at the probe's starts:**
+   - By stage 3a's T2 criterion, 2%.
+   - By the first mode in one tick, 3%; over 10 ticks, 7%.
+   - Where the per-tick signal is at least 0.13 of the noise, 27%.
+7. **Held in place, the fourier1 champion is a switch by the light's level.**
+   - It is idle below 0.03, swims without a break from 0.1 to 1, and parks from 2.
+   - It swims in tight circles, turning at −0.17 rad/s, whether the light is rising or falling.
+   - Its runs show no consistent aim toward the mouth.
+
+### B. An exploratory peek, disclosed
+Before writing the probe, I ran scratch code outside the repository on stage 3a's report starts 51–100 (seed 8). It
+changed what the cells sense through a monkeypatch, changed single parameters, and tried two candidate controls. These
+runs are not results. They shaped stage 3c's draft, so they are in `docs/prereg/stage3c.md` §1.
+- **The champion without the direction:** with every node sensing the wall's mean, it fell from 0.361 to 0.189.
+- **With the direction mirrored:** 0.141, and no survivor.
+- **With the direction ten times stronger:** 0.555. With the sensor noise off: 0.634.
+- **The other cells barely changed:** B5 and the fourier1 champion stayed within 0.03 of their score in every case.
+- **The candidate controls:** a simple rule that reads the wall before each run moved as the champion did, 0.463 in
+  the pool as it is. The same rule running in random directions scored 0.205, the still cell's level.
+
+### C. Reading
+1. **How the champion manages, as a hypothesis for stage 3c to test.**
+   - It reads the light's direction across its body at the start of each run.
+   - A slow loop through the core releases the wall every couple of minutes. The ring's strong links between
+     neighbours, with the core's even feedback, let one patch of neighbours win.
+   - The patch forms where the light is brightest and pulls the cell that way. Its creep cancels a third of the body's
+     spin.
+   - In bright light every node is driven and the cell parks.
+   - No part has a front: the front forms in the ring each time, and the light decides where.
+2. **Stage 3a's T2 understated how readable the direction is.** This is my design error. I built T2 around comparing
+   two nodes in one tick. A cell can read all sixteen and add ticks, and many weakly aimed runs add up.
+   - A dated correction is in `docs/prereg/stage3.md` §12.
+   - So the translucent world does not leave comparing over time as the only way to find the light.
+   - Any later world meant to hide the direction must be checked against a reader of the whole wall over several
+     seconds.
+3. **Why my stage 3b prediction was wrong.** I assumed a uniform cell has no front. It has none in its wiring, but
+   its ring makes one.
+4. **D11's reading B.1 is in doubt.** It said comparing over time evolved only sometimes and partly.
+   - The working uniform champion reads the direction instead.
+   - The fourier1 champion's turning does not follow the light's change, and held in place it follows the level.
+   - Stage 3c's flat pool tests whether either compares over time. If neither does, a dated correction to D11 follows.
+5. **The fourier1 champion's approach is not understood.** It circles tightly and, in the peek, does not use the
+   direction across its body. Yet in dim light it drifts toward the mouth at 0.87 R/s. The dish's edge is not how: in
+   a scratch recording of 20 starts it spent 6% of its life there, and none of its first parkings were there.
+6. **For the owner's hypothesis.** The champion is emergence in a plain sense: a front that no part has, made by the
+   parts together. The removals in D11 showed it needs the ring's links, the core, and the slow decay of both. In the
+   peek, the simple rule built on the same principle scored above the champion: 0.463 against 0.361. Stage 3c tests
+   that.
+
+### D. Decisions this surfaces (the owner's)
+Stage 3c's draft, `docs/prereg/stage3c.md` §10: the worlds (the goggles and the flat pool), the controls B6 and B7,
+the lesions, and running here.
+
+**Impact:**
+- this entry;
+- `docs/prereg/stage3.md` §12 (the correction) and `docs/prereg/stage3c.md` (the draft);
+- `experiments/stage3c_probe.py` and its tests;
+- `docs/data/stage3c/probe/`.
