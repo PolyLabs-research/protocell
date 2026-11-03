@@ -379,9 +379,11 @@ footer code { font-family: var(--font-data); font-size: 12px; color: var(--ink-2
         pctx.strokeStyle = COL.rock; pctx.lineWidth = 4 * dpr; pctx.beginPath(); pctx.arc(X, Y, 5 * dpr, 0, 2 * Math.PI); pctx.stroke();
         pctx.strokeStyle = c.color; pctx.lineWidth = 2 * dpr; pctx.beginPath(); pctx.arc(X, Y, 5 * dpr, 0, 2 * Math.PI); pctx.stroke();
       }
-      // labels stagger by cell, so cells on the same spot (every start) stay legible
+      // labels stagger by cell, so cells on the same spot (every start) stay legible; near the pool's lower edge (the
+      // mouth, where cells park) the whole stack moves up so its last label stays inside the view
       pctx.font = `${i === sel ? 600 : 500} ${12 * dpr}px ${UI}`; pctx.textAlign = "left"; pctx.textBaseline = "middle";
-      const text = alive ? c.short : `${c.short} · ${c.summary.death_cause}`, LY = Y + (i * 15 - 12) * dpr;
+      const lift = Math.max(0, Y + ((cells.length - 1) * 15 - 12) * dpr - (S - 10 * dpr));
+      const text = alive ? c.short : `${c.short} · ${c.summary.death_cause}`, LY = Y + (i * 15 - 12) * dpr - lift;
       pctx.lineWidth = 3 * dpr; pctx.strokeStyle = COL.rock; pctx.strokeText(text, X + 12 * dpr, LY);
       pctx.fillStyle = COL.ink; pctx.fillText(text, X + 12 * dpr, LY);
     });
