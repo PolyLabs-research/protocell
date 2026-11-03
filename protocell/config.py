@@ -65,6 +65,11 @@ class Config:
     rest_below: float = 0.01  # B2r rests when the wall's mean sensed light is below this
     retreat_on: str = "max"  # B2rr backs out when its brightest node's sensed light is above I_d: amendment A1 to cave.md ("mean" as preregistered)
 
+    # the senses (docs/prereg/stage3c.md §3.1): node i senses the wall's mean light plus k times its own departure from
+    # it, before its noise; the energy and damage use the true light. 1 is the light itself (and is never computed),
+    # 0 removes the direction across the body, -1 reverses it, 10 magnifies it.
+    sense_contrast: float = 1.0
+
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
 

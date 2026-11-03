@@ -10,10 +10,14 @@ Cells:
   b1                 random beating
   b2:K               the plain reflex at gain K
   b5[:TAU]           run and wait (stage 3a's bar), its memory's time constant TAU s (default: stage 3a's choice)
+  b6, b7             read and run, and run anywhere (stage 3c's controls, docs/prereg/stage3c.md §5)
   b2r[:K], b2rr[:K]  the reflex that rests in the dark, and the one that also retreats above the damage threshold;
                      without K, the gain the checks chose for the configuration (docs/data/cave/<config>/summary.json)
   genome:MODE:G      random genome G (1-based) of the cave's B3 at its seed, MODE uniform or fourier1
   file:MODE:PATH[:ROW]  a genome from a .npy file (one genome per row): stage 1's evolved cells
+  CELL@K             any of these with its senses changed (stage 3c's goggles): each node senses the wall's mean light
+                     plus K times its own departure from it; @0 removes the direction across the body, @-1 mirrors it,
+                     @10 magnifies it
 
 A replay reruns the cells with the code, seed and noise keys the checks use, so a cell's outcome is its row in the
 checks' tables. It is a record to look at, not a result, and is written to ``replays/`` (untracked). Open the page in
@@ -27,7 +31,7 @@ import base64
 import json
 import math
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
@@ -61,6 +65,7 @@ class CellSpec:
     spec: Dict[str, Any] = field(hash=False)
     cell_id: int
     kind: str
+    senses: float = 1.0  # the sense contrast k this cell runs with (docs/prereg/stage3c.md §3.1)
 
 
 TRANSLUCENT = "translucent"  # stage 3's world (docs/prereg/stage3.md): the cave's day with the cell translucent
@@ -98,8 +103,19 @@ def _checks_gain(config: str, which: str, data_dir: Path) -> float:
     return float(checks["K7"]["b2rr"]["k"])
 
 
+SENSES_WORDS = {0.0: "direction removed", -1.0: "direction mirrored"}
+
+
 def parse_cell(text: str, cfg: Config, config: str, *, seed: int = SEED, data_dir: Path = DATA_DIR) -> CellSpec:
-    """A cell from its command-line form (see the module's docstring)."""
+    """A cell from its command-line form (see the module's docstring), with its senses when it ends in @K."""
+    if "@" in text:
+        body, _, k_text = text.rpartition("@")
+        k = float(k_text)
+        cell = parse_cell(body, cfg, config, seed=seed, data_dir=data_dir)
+        if k == 1.0:
+            return cell
+        words = SENSES_WORDS.get(k, f"direction x{k:g}")
+        return replace(cell, label=f"{cell.label}, {words}", short=f"{cell.short}k{k:g}", senses=k)
     parts = text.split(":")
     head = parts[0]
     if head == "b0" and len(parts) == 1:
@@ -122,6 +138,12 @@ def parse_cell(text: str, cfg: Config, config: str, *, seed: int = SEED, data_di
     if head == "b5" and len(parts) <= 2:
         tau = float(parts[1]) if len(parts) == 2 else _checks_gain(config, "b5", data_dir)
         return CellSpec(f"B5 run and wait, memory {tau:g} s", "B5", {"controller": "runwait", "tau": tau, "rest_below": cfg.rest_below}, 0, "runwait")
+    if head in ("b6", "b7") and len(parts) == 1:
+        from experiments.stage3c import readrun
+
+        if head == "b6":
+            return CellSpec("B6 read and run", "B6", readrun(cfg, "read"), 0, "readrun")
+        return CellSpec("B7 run anywhere", "B7", readrun(cfg, "random"), 0, "walk")
     if head == "genome" and len(parts) == 3:
         mode, g = parts[1], int(parts[2])
         if g < 1:
@@ -192,7 +214,8 @@ def record(cfg: Config, config: str, starts: Starts, cells: Sequence[CellSpec], 
     tick = None
     for c in cells:
         frames = Frames(cfg, stride, lifetime - 1)
-        result = simulate(cfg, starts, c.spec, seed=seed, cell_ids=[c.cell_id], ticks=ticks, observe=frames)
+        cell_cfg = cfg if c.senses == 1.0 else cfg.but(sense_contrast=c.senses)
+        result = simulate(cell_cfg, starts, c.spec, seed=seed, cell_ids=[c.cell_id], ticks=ticks, observe=frames)
         r = frames.rows
         if tick is None:
             tick = np.array(r["tick"], dtype=np.int64)
@@ -201,7 +224,7 @@ def record(cfg: Config, config: str, starts: Starts, cells: Sequence[CellSpec], 
         core = None if r["core"][0] is None else _b64(np.clip(np.rint(np.array(r["core"]) * 255.0), 0, 255), "u1")
         cause = {0: None, STARVED: "starved", BURNT: "burnt"}[int(result.death_cause[0])]
         out_cells.append({
-            "label": c.label, "short": c.short, "kind": c.kind, "cell_id": c.cell_id,
+            "label": c.label, "short": c.short, "kind": c.kind, "cell_id": c.cell_id, "senses": c.senses,
             "alpha": _alpha_of(cfg, c),
             "x": _b64(r["x"], "<f4"), "y": _b64(r["y"], "<f4"), "heading": _b64(r["heading"], "<f4"),
             "energy": _b64(r["energy"], "<f4"), "damage": _b64(r["damage"], "<f4"), "alive": _b64(r["alive"], "u1"),

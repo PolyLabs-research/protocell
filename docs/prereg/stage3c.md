@@ -237,6 +237,18 @@ None of these changes stage 3b's measured numbers, only what they were taken to 
 **The owner's answers (2026-11-03, before the build).** "agree, go": the goggles and the flat pool; the controls
 B6 and B7 as in §5; the lesions L1–L3; the run on this machine.
 
+**Pre-run clarifications (2026-11-03, during the build, before any run).** The draft left three points open; they are
+fixed here.
+1. **How T is averaged (§3.2, §7).** D_early and D_late are each cell's mean over its 16 replicates, and T is computed
+   from those means: T = |mean D_early| − |mean D_late|. Its interval resamples replicates. Computing T per replicate
+   and averaging would bias it upward for every cell. A two-minute window is noisier than a ten-minute one, and the
+   absolute value of noise is positive. B6 and B7 would then appear to compare over time when they do not: their
+   pull switches every 100 s.
+2. **How prediction 9's turning rates are scored.** "About +0.024" holds if L1 turns above +0.015 rad/s. "About
+   −0.037" holds if L2 turns below −0.025. "About 0" holds if L3 turns within ±0.010.
+3. **Point estimates and intervals.** The predictions of §8 are scored on means. The criteria of §7 use intervals,
+   as they state. Prediction 7's goggles worlds are G0, G−1, G10 and Gq.
+
 ## 11. Compute
 
 About 10 minutes on this machine:

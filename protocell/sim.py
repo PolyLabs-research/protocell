@@ -12,8 +12,11 @@ ticks, so a cell's draws are the same bits whether it runs alone or in a batch (
 0 switches it off (no generator is made), which leaves every other stream's draws as they were.
 
 Controllers: B0 still, B1 random beating, B2 the reflex (and B2r, which rests in the dark, and B2rr, which also
-retreats above the damage threshold), and the network cell, built from a plain spec so a job can cross a process
-boundary.
+retreats above the damage threshold), B5 run and wait, B6 read and run and B7 run anywhere, and the network cell, built
+from a plain spec so a job can cross a process boundary.
+
+The senses (docs/prereg/stage3c.md §3.1): with ``sense_contrast`` other than 1, the nodes sense a transform of the
+light that keeps the wall's mean; the energy and damage use the light itself.
 """
 
 from __future__ import annotations
@@ -36,6 +39,7 @@ NOISE_CHUNK = 250  # ticks of draws made at once; chunking does not change a gen
 STREAM_SENSORS = "sensors"
 STREAM_MOTION = "motion"
 STREAM_BEATS = "beats"
+STREAM_WALK = "walk"  # B7's run directions (docs/prereg/stage3c.md §5)
 BASELINE_CELL_ID = 0  # B0–B2 share this id, so every baseline (and every reflex gain) sees the same noise on a start
 STARVED, BURNT = 1, 2  # a death's cause
 Observer = Callable[[int, Mapping[str, Any]], None]
@@ -180,6 +184,60 @@ class RunAndWait(Controller):
         return np.where(mean < self.rest_below, 0.0, g)
 
 
+class ReadAndRun(Controller):
+    """B6 and B7 (docs/prereg/stage3c.md §5): the stage 3c champion's timing with one rule each; alpha = 0.
+
+    It cycles every ``cycle`` ticks from its first: idle, then a run of ``run`` ticks in which the half of the wall
+    facing a direction psi in the body's frame (the nodes with cos(theta_i - psi) > 0) beats fully and the rest not at
+    all. B6 (``aim="read"``) takes psi at each run's first tick from its sensed light: the direction of the wall's
+    first Fourier mode, sum_i s_i e^(i theta_i), summed over the idle phase just ended. B7 (``aim="random"``) draws psi
+    uniformly from stream ``walk`` instead. In the dark (the wall's mean sensed light below ``rest_below``) it rests,
+    as B2r and B5 do, and in bright light (at least ``still_above``) it keeps still; the cycle runs on regardless."""
+
+    HALF_TOLERANCE = 1e-9  # a node exactly at right angles to psi is not on the half that beats
+
+    def __init__(self, cfg: Config, population: int, aim: str, cycle: int, run: int, rest_below: float, still_above: float,
+                 noise: Optional[CellNoise] = None) -> None:
+        if aim not in ("read", "random"):
+            raise ValueError(f"aim is 'read' or 'random', not {aim!r}")
+        if not 0 < run < cycle:
+            raise ValueError("a run is at least one tick and shorter than the cycle")
+        if (aim == "random") != (noise is not None):
+            raise ValueError("B7 draws its directions from stream walk, and only B7 does")
+        self.alpha = np.zeros(population)
+        self.aim, self.cycle, self.run = aim, int(cycle), int(run)
+        self.rest_below, self.still_above = float(rest_below), float(still_above)
+        self.noise = noise
+        theta = 2.0 * math.pi * np.arange(cfg.n_wall) / cfg.n_wall
+        self.theta, self.cos, self.sin = theta, np.cos(theta), np.sin(theta)
+        self.re, self.im = np.zeros(population), np.zeros(population)
+        self.psi = np.zeros(population)
+
+    def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
+        phase = tick % self.cycle
+        idle_ticks = self.cycle - self.run
+        if phase == 0:
+            self.re[:], self.im[:] = 0.0, 0.0
+        if phase < idle_ticks:
+            for i in range(sensed.shape[1]):  # node by node, in a fixed order
+                self.re = self.re + sensed[:, i] * self.cos[i]
+                self.im = self.im + sensed[:, i] * self.sin[i]
+            g = np.zeros_like(sensed)
+        else:
+            if phase == idle_ticks:
+                if self.aim == "read":
+                    self.psi = np.arctan2(self.im, self.re)
+                else:
+                    assert self.noise is not None
+                    self.psi = 2.0 * math.pi * self.noise.at(tick) - math.pi
+            g = (np.cos(self.theta[None, :] - self.psi[:, None]) > self.HALF_TOLERANCE).astype(np.float64)
+        mean = sensed.mean(axis=1, keepdims=True)
+        return np.where((mean < self.rest_below) | (mean >= self.still_above), 0.0, g)
+
+    def noise_digests(self) -> Dict[str, str]:
+        return {} if self.noise is None else {STREAM_WALK: self.noise.digest}
+
+
 class Network(Controller):
     """The cell of §3: the CTRNN's wall outputs are the beats. The state starts at y = 0; the output sigma(y + bias)
     is computed after each update and serves both as this tick's beats and as the next update's input (§11 C1)."""
@@ -206,7 +264,9 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
                      keys: Sequence[Tuple[int, int]]) -> Controller:
     """A controller from a plain spec: ``{"controller": "still"}``, ``{"controller": "random"}``,
     ``{"controller": "reflex", "k": 10}`` (with optional ``rest_below``, ``retreat_above`` and ``retreat_on``),
-    ``{"controller": "runwait", "tau": 30, "rest_below": 0.01}`` (B5) or
+    ``{"controller": "runwait", "tau": 30, "rest_below": 0.01}`` (B5),
+    ``{"controller": "readrun", "aim": "read" or "random", "cycle": 100, "run": 36, "rest_below": 0.01,
+    "still_above": 4.5}`` (B6 and B7, stage 3c's §5) or
     ``{"controller": "network", "mode": ..., "genomes": (P, G)}`` (with an optional ``removal``, stage 1's §7, or
     ``hold``: ``{"pathway": ..., "means": (M,)}``, stage 1b's §1).
     """
@@ -219,6 +279,9 @@ def build_controller(cfg: Config, spec: Mapping[str, Any], population: int, seed
         return Reflex(cfg, population, spec["k"], spec.get("rest_below"), spec.get("retreat_above"), spec.get("retreat_on", "mean"))
     if kind == "runwait":
         return RunAndWait(cfg, population, spec["tau"], spec["rest_below"])
+    if kind == "readrun":
+        noise = CellNoise(seed, STREAM_WALK, keys, (), "uniform") if spec["aim"] == "random" else None
+        return ReadAndRun(cfg, population, spec["aim"], spec["cycle"], spec["run"], spec["rest_below"], spec["still_above"], noise)
     if kind == "network":
         genomes = np.asarray(spec["genomes"], dtype=np.float64)
         if genomes.shape[0] != population:
@@ -306,6 +369,15 @@ class RunResult:
         return out
 
 
+def sense(cfg: Config, light: np.ndarray) -> np.ndarray:
+    """What the wall's nodes sense before their noise, ``(P, N)`` (docs/prereg/stage3c.md §3.1): the wall's mean light
+    plus ``sense_contrast`` (k) times each node's departure from it. The mean is kept, so a cell that reads only the
+    level or its change over time senses the same at any k; k = 0 removes the direction across the body, -1 reverses
+    it, 10 magnifies it. ``simulate`` never calls it at k = 1, so the light itself is passed on, the same bits."""
+    mean = light.mean(axis=1, keepdims=True)
+    return mean + cfg.sense_contrast * (light - mean)
+
+
 def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *, seed: int,
              cell_ids: Optional[Sequence[int]] = None, ticks: Optional[int] = None, record: bool = False,
              observe: Optional[Observer] = None) -> RunResult:
@@ -313,7 +385,8 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
     every cell). ``cell_ids`` (default: the baselines' 0) key the noise with the start's number.
 
     ``observe(t, state)``, when given, is called at the end of every tick t with the batch's state: ``time`` (each
-    cell's time at the tick's start), ``light`` and ``sensed`` (at the pose the tick began with), ``beats``, then
+    cell's time at the tick's start), ``light`` (the true light) and ``sensed`` (what the nodes sensed, transformed by
+    the senses and with their noise), both at the pose the tick began with, ``beats``, then
     ``pos``, ``heading``, ``energy``, ``damage``, ``alive`` and ``active`` after the tick, and the ``controller``. It
     only reads: the arrays may be reused, so it copies what it keeps, and a run's results are the same bits with or
     without it (tested). The replays use it (``tools/replay.py``)."""
@@ -350,7 +423,8 @@ def simulate(cfg: Config, starts: Starts, controller_spec: Mapping[str, Any], *,
         time = starts.phase + t
         active = alive & (t < ends)
         light = node_light(cfg, kind, source, pos, heading, time)
-        sensed = light + sensors.at(t) if sensors is not None else light
+        seen = light if cfg.sense_contrast == 1.0 else sense(cfg, light)
+        sensed = seen + sensors.at(t) if sensors is not None else seen
         beats = controller.beats(sensed, t)
         v, omega = cilia_motion(cfg, beats, heading, controller.alpha)
         new_pos, new_heading = move(cfg, pos, heading, v, omega, motion.at(t) if motion is not None else None)

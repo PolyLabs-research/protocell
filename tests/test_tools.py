@@ -91,7 +91,7 @@ def test_cells_are_read_from_their_command_line_form(tmp_path) -> None:
     f = parse_cell(f"file:fourier1:{tmp_path / 'evolved.npy'}:1", cfg, "day")
     assert f.kind == "network" and f.spec["genomes"].shape == (1, 135)
     with pytest.raises(SystemExit):
-        parse_cell("b7", cfg, "day")
+        parse_cell("b8", cfg, "day")  # no such cell (b6 and b7 are stage 3c's controls)
 
 
 def test_the_network_page_describes_the_code(tmp_path) -> None:
@@ -135,3 +135,17 @@ def test_replays_run_in_the_translucent_world_with_b5() -> None:
     starts = sample_starts(cfg, "cave", 2, seed).numbered([2])
     rep = record(cfg, TRANSLUCENT, starts, [b5], seed=seed, stride=50)
     assert rep["configuration"] == TRANSLUCENT and rep["cells"][0]["summary"]["fitness"] > 0
+
+
+def test_a_replay_cell_can_wear_the_goggles(tmp_path) -> None:
+    from tools.replay import TRANSLUCENT, world
+
+    cfg, seed = world(TRANSLUCENT, True)
+    mirrored = parse_cell("b6@-1", cfg, TRANSLUCENT, seed=seed)
+    assert mirrored.senses == -1.0 and "mirrored" in mirrored.label and mirrored.short == "B6k-1"
+    assert parse_cell("b7", cfg, TRANSLUCENT, seed=seed).kind == "walk" and parse_cell("b6@1", cfg, TRANSLUCENT, seed=seed).senses == 1.0
+    starts = sample_starts(cfg, "cave", 2, seed).numbered([2])
+    rep = record(cfg, TRANSLUCENT, starts, [parse_cell("b6", cfg, TRANSLUCENT, seed=seed), mirrored], seed=seed, stride=50, ticks=600)
+    alone = simulate(cfg.but(sense_contrast=-1.0), starts, mirrored.spec, seed=seed, ticks=600)
+    assert rep["cells"][1]["senses"] == -1.0 and rep["cells"][1]["summary"]["fitness"] == float(alone.fitness[0])
+    assert write_page(rep, tmp_path / "goggles.html").exists()
