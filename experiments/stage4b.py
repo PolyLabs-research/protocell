@@ -5,11 +5,11 @@
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage4b --phase test --workers 16
     .venv/bin/python -m experiments.stage4b --phase pilot --mode uniform --quick --out /tmp/s4b   # the smoke test: not a result
 
-A run uses stage 1's algorithm unchanged (protocell/evolve.py) for 150 generations. Over generations 1-50 the
-training world eases into stage 4a's (§3): the shading fades from the cave's 0.3 to none and the photosynthetic gain
-falls from the cave's to 0.55 of it, both in straight lines. Generations 51-150 train in stage 4a's world, and the
-champion is chosen from generation 51 by validation there (24 starts at seed 20). A run writes
-``docs/data/stage4b/<phase>/<mode>-<seed>/``.
+A run uses stage 1's algorithm unchanged (protocell/evolve.py) for 200 generations, on amendment A1's path (§13):
+over generations 1-50 the shading fades from the cave's 0.3 to none in the cave's economy (stage 3b's A1); over
+51-100 the cell is translucent and the photosynthetic gain falls from the cave's to 0.55 of it; 101-200 train in
+stage 4a's world, and the champion is chosen from generation 101 by validation there (24 starts at seed 20). Each
+part is a straight line. A run writes ``docs/data/stage4b/<phase>/<mode>-<seed>/``.
 
 The test (§6) scores every champion found there on 100 starts at seed 21 with shared noise: against the bar (B8) and
 B5, B6, the ceiling and B0, as stage 4a chose them; with each removal and each hold; with the direction across the body
@@ -43,10 +43,14 @@ from protocell.sim import simulate
 from protocell.tables import write_csv
 from protocell.world import Starts, sample_starts
 
-SEEDS = {"pilot": {"uniform": (1301,), "fourier1": (1302,)},
-         "confirm": {"uniform": (2301, 2302, 2303), "fourier1": (3301, 3302, 3303)}}
-GENERATIONS = 150
-PATH_GENERATIONS = 50  # §3: the training world eases into stage 4a's over generations 1-50
+# amendment A1's run seeds (stage4b.md §13); the preregistered pilot's (1301, 1302) are in pilot-as-preregistered/
+SEEDS = {"pilot": {"uniform": (1401,), "fourier1": (1402,)},
+         "confirm": {"uniform": (2401, 2402, 2403), "fourier1": (3401, 3402, 3403)}}
+SEEDS_AS_PREREGISTERED = {"pilot": {"uniform": (1301,), "fourier1": (1302,)},
+                          "confirm": {"uniform": (2301, 2302, 2303), "fourier1": (3301, 3302, 3303)}}
+GENERATIONS = 200  # A1: 150 as preregistered
+FADE_GENERATIONS = 50  # A1: the shading fades over generations 1-50, the gain at the cave's
+TIGHTEN_GENERATIONS = 50  # A1: then the gain falls over generations 51-100, the cell translucent
 SHADE_START = 0.3  # the cave's shaded cell
 GAIN_START = 1.0  # the cave's photosynthetic gain, as a share of itself
 VALIDATION_SEED = 20
@@ -66,22 +70,25 @@ def ga_for(quick: bool) -> GA:
     return GA.quick().but(validation_seed=VALIDATION_SEED) if quick else GA().but(validation_seed=VALIDATION_SEED, generations=GENERATIONS)
 
 
-def path_generations(quick: bool) -> int:
-    return 2 if quick else PATH_GENERATIONS
+def path_generations(quick: bool) -> Tuple[int, int]:
+    """A1's two easing parts, in generations: the shading's fade, then the gain's fall."""
+    return (1, 1) if quick else (FADE_GENERATIONS, TIGHTEN_GENERATIONS)
 
 
-def path_for(generation: int, path: int) -> Tuple[float, float]:
-    """§3: the training world's shading floor and photosynthetic gain (as a share of the cave's) in a generation
-    (1-based): from the cave's (0.3, 1) at generation 1 in straight lines to stage 4a's (1, 0.55) after ``path``
-    generations, and stage 4a's from then on."""
-    if generation <= path:
-        f = (generation - 1) / path
-        return SHADE_START + (1.0 - SHADE_START) * f, GAIN_START + (stage4a.GAIN_SCALE - GAIN_START) * f
+def path_for(generation: int, fade: int, tighten: int) -> Tuple[float, float]:
+    """Amendment A1 (§13): the training world's shading floor and photosynthetic gain (as a share of the cave's) in a
+    generation (1-based). Over the first ``fade`` generations the floor rises in a straight line from the cave's 0.3
+    toward 1, the gain at the cave's; over the next ``tighten`` the cell is translucent and the gain falls in a straight
+    line from the cave's toward 0.55; after them, stage 4a's (1, 0.55)."""
+    if generation <= fade:
+        return SHADE_START + (1.0 - SHADE_START) * (generation - 1) / fade, GAIN_START
+    if generation <= fade + tighten:
+        return 1.0, GAIN_START + (stage4a.GAIN_SCALE - GAIN_START) * (generation - fade - 1) / tighten
     return 1.0, stage4a.GAIN_SCALE
 
 
-def training_world(cfg: Config, generation: int, path: int) -> Config:
-    shade, gain = path_for(generation, path)
+def training_world(cfg: Config, generation: int, fade: int, tighten: int) -> Config:
+    shade, gain = path_for(generation, fade, tighten)
     return cfg.but(shade_floor=shade, eta=CAVE.eta * gain)
 
 
@@ -97,11 +104,13 @@ def run_phase(phase: str, mode: str, replicate: int, out_root: Path, workers: in
     ga = ga_for(quick)
     seed = seed_for(phase, mode, replicate)
     out = out_root / phase / f"{mode}-{seed}"
-    path = path_generations(quick)
+    fade, tighten = path_generations(quick)
+    champion_from = fade + tighten + 1
     manifest = build_manifest(protocol=f"stage4b/{phase}", settings={**cfg.as_dict(), "world": "stage 4a", "mode": mode,
                                                                      "genome_length": genome_length(cfg, mode), "ga": ga.as_dict(), "quick": quick,
-                                                                     "path_generations": path, "shade_start": SHADE_START, "gain_start": GAIN_START,
-                                                                     "gain_end": stage4a.GAIN_SCALE, "champion_from": path + 1},
+                                                                     "amendment": "A1: one change at a time", "fade_generations": fade,
+                                                                     "tighten_generations": tighten, "shade_start": SHADE_START, "gain_start": GAIN_START,
+                                                                     "gain_end": stage4a.GAIN_SCALE, "champion_from": champion_from},
                               seeds=[seed], extra={"out": str(out)})
     t0 = time.time()
 
@@ -110,7 +119,7 @@ def run_phase(phase: str, mode: str, replicate: int, out_root: Path, workers: in
 
     with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
         state = run(cfg, mode, ga, seed, out, pool.map, log=log, stop_after=stop_after,
-                    world_for=lambda g: training_world(cfg, g, path), champion_from=path + 1)
+                    world_for=lambda g: training_world(cfg, g, fade, tighten), champion_from=champion_from)
     if state["next_generation"] >= ga.generations:
         finish_manifest(manifest, wall_seconds=time.time() - t0, generations=ga.generations, workers=workers)
         write_manifest(out / "manifest.json", manifest)
