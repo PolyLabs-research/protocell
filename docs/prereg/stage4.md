@@ -117,6 +117,10 @@ About 20 minutes on this machine. No cloud.
 3. **The thresholds:** U2 at 0.10 and a fifth of the room; U3 at half (recommended).
 4. **Where it runs:** this machine, about 20 minutes (recommended).
 
+**The owner's answers (2026-11-03, before the build).** "agree on all, proceed": the sweep at 0.55 of the cave's gain;
+the bar the best of B2r, B5, B6 and B8, each tuned; U2 at 0.10 and a fifth of the room, U3 at half; the checks on this
+machine.
+
 ## 11. What would change this document
 
 The owner's answers, as dated notes before the build. After the checks have run, nothing but dated amendments before
