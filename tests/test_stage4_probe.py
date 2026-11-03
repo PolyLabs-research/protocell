@@ -101,3 +101,14 @@ def test_the_quick_run_writes_its_tables(tmp_path) -> None:
     for w in summary["worlds"].values():
         assert w["best_simple_rule"] in probe.SIMPLE and w["ceiling"] >= w["rules"]["B0"]["report_fitness"]
     assert json.loads((tmp_path / "manifest.json").read_text())["settings"]["seed"] == 16
+
+
+def test_the_economy_probe_scales_the_gain_and_writes_its_tables(tmp_path) -> None:
+    from experiments import stage4_economy as economy
+    from protocell.config import CAVE
+
+    assert economy.variant_cfg("spot_2h", 0.4, True).eta == pytest.approx(0.4 * CAVE.eta)
+    assert economy.variant_cfg("spot_2h", 0.4, True).path_period == 7_200
+    summary = economy.main(["--quick", "--workers", "2", "--out", str(tmp_path), "--worlds", "flicker"])
+    assert set(summary["variants"]) == {f"flicker eta x{s:g}" for s in economy.SCALES}
+    assert {"grid.csv", "per_start.csv", "headroom.csv", "summary.json", "manifest.json"} <= {p.name for p in tmp_path.iterdir()}
