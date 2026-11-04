@@ -118,6 +118,9 @@ first 25 generations of the path, with seeds 1599 (uniform) and 1598 (fourier1).
 2. **Keeping amendment A1's path,** so the search is the only change (recommended).
 3. **The local check first** (§5), then the pilot on RunPod at the cost in §8.
 
+**After the checks (2026-11-04):** item 1 now reads with revision R1's first step, 0.05 of each range; the rest of
+§3 stands.
+
 **The local check's outcome (2026-11-04, before the owner's answers and before any pilot).**
 
 The data are in `docs/data/stage4c/check-sigma0.3/`. The run used code `058ff1c`, on this machine, from a clean tree with
