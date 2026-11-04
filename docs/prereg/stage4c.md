@@ -140,6 +140,24 @@ warnings as errors, and took 35 minutes for both runs side by side.
   `docs/data/stage4c/check/`.
 - **Its prediction:** the mean best over generations 1–25 is above the first check's in both modes.
 
+**The second check's outcome (2026-11-04, before the owner's answers and before any pilot).**
+
+The data are in `docs/data/stage4c/check/`. The run used code `84212de`, on this machine, from a clean tree with
+warnings as errors.
+
+| mode | second check (first step 0.05): mean best, generations 1–25 | the first check | the GA's amended pilot | the second check, generations 16–25 | the GA, generations 16–25 |
+|---|---|---|---|---|---|
+| uniform | 0.507 | 0.315 | 0.477 | 0.575 | 0.543 |
+| fourier1 | 0.324 | 0.335 | 0.407 | 0.405 | 0.431 |
+
+- **The step size now adapts.** It grew from 0.05 to about 0.08 in both modes, the sign of a search finding a
+  consistent way up.
+- **CMA-ES now climbs about as fast as the GA:** a little faster in the uniform mode, a little slower in the fourier1.
+- **R1's prediction fails narrowly in the fourier1 mode:** 0.324 against the first check's 0.335, though its medians are
+  higher (0.211 against 0.170).
+- **What the checks cannot show** is the later part, where the GA failed: carrying a working cell through the shading's
+  end and the economy's tightening. Only the pilot shows that.
+
 ## 11. What would change this document
 
 The owner's answers, and the local check's outcome, as dated notes before the pilot. The pilot's outcome and any
