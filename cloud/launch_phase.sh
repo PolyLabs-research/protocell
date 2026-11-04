@@ -20,6 +20,7 @@ PULL_WAIT=${PULL_WAIT:-3600}
 EXPERIMENT=${EXPERIMENT:-stage1}  # the stage's module: stage1, stage3b
 WORKERS=${WORKERS:-16}
 VCPU=${VCPU:-32}  # 16 for one run alone on a smaller pod, at half the rate
+FLAVOR=${FLAVOR:-cpu5c}  # cpu3c when no cpu5c is free (older, slower CPUs, cheaper)
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 cd "$REPO" || exit 1
 CHESS=$HOME/Documents/dev/chess
@@ -32,7 +33,7 @@ for run in "${RUNS[@]}"; do
     names+=("$("$PY" -c "from experiments.$EXPERIMENT import seed_for; m, r = '$run'.split(':'); print(f'{m}-{seed_for(\"$PHASE\", m, int(r))}')")")
 done
 say "launch $TAG: $EXPERIMENT $PHASE ${RUNS[*]} -> ${names[*]}; ${HOURS} h cap at most \$${MAX_RATE}/h"
-out=$("$PY" cloud/cpu_pod.py launch --tag "$TAG" --flavor cpu5c --vcpu "$VCPU" --hours "$HOURS" --max-rate "$MAX_RATE" --yes 2>&1)
+out=$("$PY" cloud/cpu_pod.py launch --tag "$TAG" --flavor "$FLAVOR" --vcpu "$VCPU" --hours "$HOURS" --max-rate "$MAX_RATE" --yes 2>&1)
 echo "$out"
 POD=$(echo "$out" | sed -n 's/^launched \([a-z0-9]*\) .*/\1/p')
 if [ -z "$POD" ]; then

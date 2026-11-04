@@ -128,6 +128,10 @@ first 25 generations of the path, with seeds 1599 (uniform) and 1598 (fourier1).
 
 The account reloads itself, so the balance is no bar to a launch.
 
+**The pilot's pod (2026-11-04, before the pilot).** There was no cpu5c instance, at 32 or at 16 vCPUs, for two and a half
+hours (about 19 attempts, nothing launched). The owner chose a cpu3c pod ("go with 1"): 32 vCPUs at $0.96 an hour,
+older and likely slower CPUs, with a 6-hour cap, at most $5.76. Nothing else changes.
+
 **The local check's outcome (2026-11-04, before the owner's answers and before any pilot).**
 
 The data are in `docs/data/stage4c/check-sigma0.3/`. The run used code `058ff1c`, on this machine, from a clean tree with
