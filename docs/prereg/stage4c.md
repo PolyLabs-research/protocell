@@ -132,6 +132,12 @@ The account reloads itself, so the balance is no bar to a launch.
 hours (about 19 attempts, nothing launched). The owner chose a cpu3c pod ("go with 1"): 32 vCPUs at $0.96 an hour,
 older and likely slower CPUs, with a 6-hour cap, at most $5.76. Nothing else changes.
 
+**Where the pilot runs (2026-11-04, before the pilot).** RunPod refused every CPU pod, of either type and at 32 or 16
+vCPUs, from 12:53 to 18:32 UTC. The owner: "If pods aren't available by midnight let's run it on this machine".
+- Until midnight (London, GMT) both approved pod shapes are tried every 30 minutes.
+- If none launches, the pilot runs here from midnight: the two runs side by side with 12 workers each, from a clean tree
+  with warnings as errors. Only where it runs changes.
+
 **The local check's outcome (2026-11-04, before the owner's answers and before any pilot).**
 
 The data are in `docs/data/stage4c/check-sigma0.3/`. The run used code `058ff1c`, on this machine, from a clean tree with
