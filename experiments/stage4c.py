@@ -29,17 +29,18 @@ from protocell.cell import MODES, genome_length
 from protocell.cmaes import CMA, run
 from protocell.manifest import build_manifest, finish_manifest, write_manifest
 
-SEEDS = {"check": {"uniform": (1599,), "fourier1": (1598,)},
+SEEDS = {"check": {"uniform": (1597,), "fourier1": (1596,)},  # revision R1's second check; the first (1599, 1598) is in check-sigma0.3/
          "pilot": {"uniform": (1501,), "fourier1": (1502,)},
          "confirm": {"uniform": (2501, 2502, 2503), "fourier1": (3501, 3502, 3503)}}
 CHECK_GENERATIONS = 25  # §5: the first 25 generations of the path
+SIGMA0 = 0.05  # revision R1: the first step as a share of each range (0.3 as drafted, in check-sigma0.3/)
 GA_PILOT = {"uniform": 0.155, "fourier1": 0.241}  # stage 4b's amended pilot: its champions' validation fitness (D19)
 DEFAULT_OUT = Path("docs/data/stage4c")
 
 
 def cma_for(phase: str, quick: bool) -> CMA:
     base = CMA.quick() if quick else CMA()
-    base = base.but(validation_seed=stage4b.VALIDATION_SEED)
+    base = base.but(validation_seed=stage4b.VALIDATION_SEED, sigma0=SIGMA0)
     return base.but(generations=min(CHECK_GENERATIONS, base.generations)) if phase == "check" and not quick else base
 
 

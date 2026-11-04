@@ -118,6 +118,28 @@ first 25 generations of the path, with seeds 1599 (uniform) and 1598 (fourier1).
 2. **Keeping amendment A1's path,** so the search is the only change (recommended).
 3. **The local check first** (§5), then the pilot on RunPod at the cost in §8.
 
+**The local check's outcome (2026-11-04, before the owner's answers and before any pilot).**
+
+The data are in `docs/data/stage4c/check-sigma0.3/`. The run used code `058ff1c`, on this machine, from a clean tree with
+warnings as errors, and took 35 minutes for both runs side by side.
+
+| mode | CMA-ES: mean of each generation's best, generations 1–25 | the GA's amended pilot, the same generations | CMA-ES's step at generation 25 |
+|---|---|---|---|
+| uniform | 0.315 | 0.477 | 0.309 |
+| fourier1 | 0.335 | 0.407 | 0.303 |
+
+- **Prediction 1 fails:** as drafted, CMA-ES climbs slower than the GA.
+- **Why:** the step size never left its first 0.3, so for 25 generations CMA-ES sampled near-random genomes around a mean
+  that drifted. Each generation's ranking rests on 8 fresh training starts, which makes it noisy. The step size's
+  adaptation then has no consistent direction to follow.
+
+**Revision R1 (2026-11-04, before the second check).**
+- **The first step is 0.05 of each range,** instead of 0.3. CMA-ES then starts as a local search on the GA's scale,
+  whose mutations are 0.02, and its adaptation can widen or narrow the step from there.
+- **A second local check** runs as §5 on fresh check seeds, 1597 (uniform) and 1596 (fourier1), writing
+  `docs/data/stage4c/check/`.
+- **Its prediction:** the mean best over generations 1–25 is above the first check's in both modes.
+
 ## 11. What would change this document
 
 The owner's answers, and the local check's outcome, as dated notes before the pilot. The pilot's outcome and any

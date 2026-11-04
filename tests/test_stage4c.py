@@ -13,9 +13,9 @@ from experiments import stage4c
 
 def test_the_seeds_and_the_search() -> None:
     assert stage4c.seed_for("pilot", "uniform", 1) == 1501 and stage4c.seed_for("confirm", "fourier1", 3) == 3503
-    assert stage4c.seed_for("check", "fourier1", 1) == 1598
+    assert stage4c.seed_for("check", "fourier1", 1) == 1596
     cma = stage4c.cma_for("pilot", False)
-    assert cma.population == 96 and cma.sigma0 == 0.3 and cma.generations == 200 and cma.validation_seed == 20
+    assert cma.population == 96 and cma.sigma0 == 0.05 and cma.generations == 200 and cma.validation_seed == 20  # revision R1
     assert stage4c.cma_for("check", False).generations == 25
     with pytest.raises(SystemExit):
         stage4c.seed_for("pilot", "uniform", 2)
