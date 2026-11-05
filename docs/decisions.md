@@ -1224,3 +1224,55 @@ The balance is $18.22. A pod not of this project (`lattice-lab-census-4d`) is dr
 left alone.
 
 **Impact:** this entry; `docs/prereg/stage4c.md` ("The pilot's outcome"); `docs/data/stage4c/pilot/`.
+
+## D21 — The owner's decision on D20: the thrift probe first; its plan and predictions, before it runs
+
+**Date:** 2026-11-05  
+**Why:** the owner on D20 C: "Agree, go", the recommended option 1.
+
+### Decided
+1. **The thrift probe runs here,** before any further search. It asks why the working cells die in stage 4a's world:
+   by spending, beating more than the light they find repays, or by finding too little light.
+2. **Nothing on RunPod.**
+
+### The probe (`experiments/stage4_thrift.py`), written before it runs
+- **The cells:**
+  - stage 3b's two working champions, uniform 2203 and fourier1 3202, as they are;
+  - beside them B0, B5 (τ 3 s) and B8 (τ 10 s), stage 4a's choices.
+- **The worlds:** stage 3's translucent pool, with the mouth fixed and sweeping, at 1, 0.8, 0.65 and 0.55 of the cave's
+  photosynthetic gain.
+  - The fixed mouth at 1 is the champions' home, the world stage 3b tested them in.
+  - The sweeping mouth at 0.8 and 0.65 is the gain's fall along stage 4b's path.
+  - The sweeping mouth at 0.55 is stage 4a's world.
+- **Free beating, the probe's lever.** Each cell runs twice in each world: as the world is, and with beating free
+  (c1 = 0).
+  - No cell senses its reserve, so free beating leaves every move the same while the cell lives (tested); only what
+    beating costs is gone.
+  - A cell that still starves with beating free found too little light.
+- **Starts:** fresh starts 1–100 at seed 23, the same in every world, with shared noise.
+- **Measured per start,** over the ticks the cell lived:
+  - the light it soaked per daylight tick;
+  - its beat by day and by night;
+  - survival and fitness;
+  - when it died, and whether by night.
+- **Context:** the light a still cell must soak on average over the daylight to pay a day's resting cost. It is 0.33 at
+  the cave's gain and 0.61 at 0.55.
+
+### The verdict, per champion in stage 4a's world
+| survival with beating free | the verdict | what it would mean |
+|---|---|---|
+| at least 80% | **spending** | it finds enough light; thrift is the missing part, a change a search might make |
+| below 50% | **finding** | even beating for nothing it starves; it needs to find more light, a different behaviour |
+| between | **both** | |
+
+### Predictions (written before the run)
+1. **At home, each champion survives within 15 points of stage 3b's test:** U2203 50%, F3202 63%.
+2. **In stage 4a's world, with beating free, both champions survive fewer than half the starts.** Both verdicts are
+   "finding". In stage 4a's checks they beat 2.7 and 3.7 times as much as B8, but soaked about a third of its light.
+3. **In stage 4a's world each champion soaks less than half B8's light per daylight tick lived.**
+4. **For each champion, the gain's fall to 0.55 costs more survival than the sweep does at the cave's gain.**
+
+**Cost:** about 10 minutes here with 16 workers, from a clean tree with warnings as errors.
+
+**Impact:** this entry; `experiments/stage4_thrift.py`, `tests/test_stage4_thrift.py`; next, `docs/data/stage4/thrift/`
+and the probe's outcome.
