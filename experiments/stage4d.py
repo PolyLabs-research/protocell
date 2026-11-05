@@ -69,7 +69,7 @@ class Sizes:
     scored: int = 300
     population: int = 96
     sigma0: float = 0.1
-    generations: int = 3000
+    generations: int = 8000  # §8's timing note
     validate_every: int = 250
     validation_starts: int = 24
     judge_starts: int = 100

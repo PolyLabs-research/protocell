@@ -92,6 +92,8 @@ Everything runs on this machine: the two modes side by side, 12 workers each, fr
 errors. Before the run, a timing check at full size (not a result) sets the generations so that each run takes about
 an hour at most. It is recorded below as a dated note before the run.
 
+**The timing note (2026-11-05, before the run).** A timing check at full size, scratch code and not a result, recorded B8 in 24 seconds (254 of the 256 training windows whole). It ran a fourier1 generation in 0.20 seconds with 12 workers, and a closed-loop validation of the two candidates in 28 seconds. So each run has 8,000 generations, validated every 250: about 50 minutes with the two modes side by side. Nothing else changes.
+
 ## 9. What would change this document
 
 The timing note before the run. The outcome as a dated note after it. Nothing else.
