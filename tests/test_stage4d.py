@@ -4,6 +4,7 @@ judge's share and verdict, the runner."""
 from __future__ import annotations
 
 import json
+from concurrent.futures import ProcessPoolExecutor
 
 import protocell  # noqa: F401
 import numpy as np
@@ -71,6 +72,36 @@ def test_the_fit_leaves_out_the_cilium_angle_and_fixes_it_at_zero() -> None:
         samples = stream(7, "test").normal(0.5, 0.3, size=(5, n - 1))
         genomes = to_genomes(cfg, mode, stage4d.with_alpha_zero(cfg, mode, samples))
         assert genomes.shape == (5, n) and np.all(genomes[:, layout(cfg, mode).alpha.start] == 0.0)
+
+
+def test_a_fit_stopped_and_resumed_is_the_same_bits_whatever_the_workers(tmp_path) -> None:
+    cfg, sizes, mode = stage4d.world(quick=True), stage4d.Sizes.quick(), "uniform"
+    with ProcessPoolExecutor(2) as pool:
+        data = stage4d.record(cfg, sizes, pool)
+    sensed, target = data["train"]
+
+    def fitted(workers, path, stop_after=None):
+        with ProcessPoolExecutor(workers, initializer=stage4d._load_data, initargs=(cfg, mode, sensed, target, sizes.warmup)) as pool:
+            return stage4d.fit(cfg, mode, sizes, data, pool, workers, lambda m: None, path, stop_after=stop_after)
+
+    def rows(result):
+        return [{k: v for k, v in row.items() if k != "seconds"} for row in result["history"]]
+
+    straight = fitted(2, tmp_path / "straight.npz")
+    stopped = fitted(1, tmp_path / "stopped.npz", stop_after=3)  # after one validation, on another number of workers
+    assert len(stopped["history"]) == 3
+    resumed = fitted(2, tmp_path / "stopped.npz")
+    assert rows(resumed) == rows(straight) and resumed["validation"] == straight["validation"]
+    assert np.array_equal(resumed["strategy"].mean, straight["strategy"].mean) and resumed["strategy"].sigma == straight["strategy"].sigma
+    assert np.array_equal(resumed["fitted"]["genome"], straight["fitted"]["genome"])
+    other = {**data, "digest": "another record"}
+    with ProcessPoolExecutor(1, initializer=stage4d._load_data, initargs=(cfg, mode, sensed, target, sizes.warmup)) as pool:
+        try:
+            stage4d.fit(cfg, mode, sizes, other, pool, 1, lambda m: None, tmp_path / "stopped.npz")
+        except ValueError as e:
+            assert "another record" in str(e)
+        else:
+            raise AssertionError("a checkpoint from another record must not resume")
 
 
 def test_the_gap_share_and_its_verdict() -> None:

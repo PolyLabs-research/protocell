@@ -12,7 +12,8 @@ Starts 1-32 train, 33-40 are held out. The fit (§3): stage 4c's CMA-ES on the m
 beats and B8's over each window's last 300 ticks, the cell run open loop on what B8 sensed, its cilium angle fixed at 0.
 Every 250 generations the best sample and the mean run closed loop on stage 4b's 24 validation starts; the fitted cell
 is the best there. The judge (§4): the fitted cell, B8 and B0 on fresh starts 1-100 at seed 25, the share of the gap
-from B0 to B8 the cell closes, with a bootstrap interval (seed 26). Writes docs/data/stage4d/<mode>/.
+from B0 to B8 the cell closes, with a bootstrap interval (seed 26). A fit checkpoints every 50 generations and resumes
+from the checkpoint, the same bits for any number of workers (tested). Writes docs/data/stage4d/<mode>/.
 """
 
 from __future__ import annotations
@@ -21,6 +22,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
@@ -71,6 +73,7 @@ class Sizes:
     sigma0: float = 0.1
     generations: int = 8000  # §8's timing note
     validate_every: int = 250
+    checkpoint_every: int = 50
     validation_starts: int = 24
     judge_starts: int = 100
     chunk: int = 50
@@ -84,7 +87,7 @@ class Sizes:
     def quick() -> "Sizes":
         """The smoke test's sizes: not a result."""
         return Sizes(record_starts=4, train_starts=3, day_windows=2, any_windows=1, warmup=20, scored=30, population=8, generations=4,
-                     validate_every=2, validation_starts=2, judge_starts=4, chunk=2, resamples=200)
+                     validate_every=2, checkpoint_every=1, validation_starts=2, judge_starts=4, chunk=2, resamples=200)
 
 
 def world(quick: bool = False) -> Config:
@@ -215,18 +218,45 @@ def with_alpha_zero(cfg: Config, mode: str, samples: np.ndarray) -> np.ndarray:
     return np.insert(samples, a, 0.5, axis=1)
 
 
+def _save_fit(path: Path, strategy: Strategy, state: Mapping[str, Any]) -> None:
+    """The fit's state, on disk whole or not at all: the host has stopped dead under long runs."""
+    tmp = path.with_suffix(".tmp.npz")
+    with open(tmp, "wb") as f:
+        np.savez(f, genome=state["genome"], **strategy.state(),
+                 meta=np.array(json.dumps({k: state[k] for k in ("next_generation", "digest", "history", "validation", "fitted")})))
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
+def _load_fit(path: Path, n: int, population: int) -> Tuple[Strategy, Dict[str, Any]]:
+    with np.load(path, allow_pickle=False) as z:
+        meta = json.loads(str(z["meta"]))
+        strategy = Strategy.restore(n, population, {k: z[k] for k in ("mean", "sigma", "C", "ps", "pc", "updates")})
+        return strategy, {"genome": z["genome"].copy(), **meta}
+
+
 def fit(cfg: Config, mode: str, sizes: Sizes, data: Mapping[str, Any], pool: ProcessPoolExecutor, workers: int,
-        log) -> Dict[str, Any]:
+        log, ckpt: Path, stop_after: Optional[int] = None) -> Dict[str, Any]:
     """§3's fit: CMA-ES on the training windows' error; every ``validate_every`` generations, and at the last, the best
-    sample and the mean closed loop on the validation starts. The fitted cell is the best there (ties: the earlier)."""
+    sample and the mean closed loop on the validation starts. The fitted cell is the best there (ties: the earlier).
+    Checkpoints to ``ckpt`` every ``checkpoint_every`` generations and resumes from it."""
     seed = FIT_SEEDS[mode]
     n = layout(cfg, mode).length - 1
     sensed, target = data["train"]
-    strategy = Strategy(n, sizes.population, stream(seed, STREAM_CMAES).random(n), sizes.sigma0)
+    if ckpt.exists():
+        strategy, state = _load_fit(ckpt, n, sizes.population)
+        if state["digest"] != data["digest"]:
+            raise ValueError("the checkpoint was fitted to another record")
+        log(f"[{mode}] resumed at generation {state['next_generation']}")
+    else:
+        strategy = Strategy(n, sizes.population, stream(seed, STREAM_CMAES).random(n), sizes.sigma0)
+        state = {"genome": np.full(n + 1, math.nan), "next_generation": 0, "digest": data["digest"], "history": [], "validation": [], "fitted": None}
     vstarts = sample_starts(cfg, "cave", sizes.validation_starts, VALIDATION_SEED)
     per = max(1, math.ceil(sizes.population / workers))
-    history, validation, fitted = [], [], None
-    for g in range(sizes.generations):
+    done = 0
+    while state["next_generation"] < sizes.generations and (stop_after is None or done < stop_after):
+        g = state["next_generation"]
         t0 = time.time()
         samples = strategy.ask(stream(seed, STREAM_CMAES, (g + 1,)))
         genomes = to_genomes(cfg, mode, with_alpha_zero(cfg, mode, samples))
@@ -241,20 +271,25 @@ def fit(cfg: Config, mode: str, sizes: Sizes, data: Mapping[str, Any], pool: Pro
             candidates = [("best sample", genomes[best], row["best_match"]), ("mean", mean_genome, match(mean_err, target, sizes.warmup))]
             jobs = [{"cfg": cfg, "mode": mode, "seed": VALIDATION_SEED, "starts": vstarts, "genome": c[1]} for c in candidates]
             for (name, genome, m), v in zip(candidates, pool.map(validation_job, jobs)):
-                better = fitted is None or v["fitness"] > fitted["validation_fitness"]
+                better = state["fitted"] is None or v["fitness"] > state["fitted"]["validation_fitness"]
                 if better:
-                    fitted = {"generation": g + 1, "candidate": name, "train_match": m, "validation_fitness": v["fitness"],
-                              "validation_survival": v["survival"], "genome": np.asarray(genome).copy()}
-                validation.append({"generation": g + 1, "candidate": name, "train_match": m, "validation_fitness": v["fitness"],
-                                   "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "fitted": int(better)})
+                    state["genome"] = np.asarray(genome).copy()
+                    state["fitted"] = {"generation": g + 1, "candidate": name, "train_match": m, "validation_fitness": v["fitness"],
+                                       "validation_survival": v["survival"]}
+                state["validation"].append({"generation": g + 1, "candidate": name, "train_match": m, "validation_fitness": v["fitness"],
+                                            "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "fitted": int(better)})
                 log(f"[{mode}] validation at {g + 1}: {name} match {m:.3f}, fitness {v['fitness']:.3f}, survival {v['survival']:.0%}")
         strategy.tell(samples, -errs)
         row["seconds"] = round(time.time() - t0, 3)
-        history.append(row)
+        state["history"].append(row)
+        state["next_generation"] = g + 1
+        done += 1
+        if (g + 1) % sizes.checkpoint_every == 0 or g + 1 == sizes.generations:
+            _save_fit(ckpt, strategy, state)
         if (g + 1) % 50 == 0 or g == 0:
             log(f"[{mode}] generation {g + 1}: best match {row['best_match']:.3f}, sigma {strategy.sigma:.4f} [{row['seconds']:.2f} s]")
-    assert fitted is not None
-    return {"history": history, "validation": validation, "fitted": fitted, "final_sigma": strategy.sigma}
+    fitted = None if state["fitted"] is None else {**state["fitted"], "genome": state["genome"]}
+    return {"history": state["history"], "validation": state["validation"], "fitted": fitted, "final_sigma": strategy.sigma, "strategy": strategy}
 
 
 # --- the judge (§4) -----------------------------------------------------------------------------------------------------
@@ -325,7 +360,7 @@ def run_mode(mode: str, out_root: Path, workers: int, quick: bool) -> Dict[str, 
         f"sha256 {data['digest'][:12]}")
     sensed, target = data["train"]
     with ProcessPoolExecutor(max_workers=max(1, workers), initializer=_load_data, initargs=(cfg, mode, sensed, target, sizes.warmup)) as pool:
-        result = fit(cfg, mode, sizes, data, pool, workers, log)
+        result = fit(cfg, mode, sizes, data, pool, workers, log, out / "checkpoint.npz")
         fitted = result["fitted"]
         held_sensed, held_target = data["held"]
         held = match(error(cfg, mode, fitted["genome"], held_sensed, held_target, sizes.warmup), held_target, sizes.warmup)

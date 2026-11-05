@@ -94,6 +94,24 @@ an hour at most. It is recorded below as a dated note before the run.
 
 **The timing note (2026-11-05, before the run).** A timing check at full size, scratch code and not a result, recorded B8 in 24 seconds (254 of the 256 training windows whole). It ran a fourier1 generation in 0.20 seconds with 12 workers, and a closed-loop validation of the two candidates in 28 seconds. So each run has 8,000 generations, validated every 250: about 50 minutes with the two modes side by side. Nothing else changes.
 
+**The host crash, and how the run goes on (2026-11-05, before the rerun).**
+- **What happened:** the first run, at `758c8e5` with 12 workers per mode, died with the host at 11:59 UTC, 26 minutes in, at
+  about generation 2,950 of 8,000. It wrote nothing, since this code had no checkpoint. Its logs are kept outside the
+  repository.
+- **Why:** the host's reset register reads "internal CPU thermal limit was tripped". In 23 logged boots, that bit is set
+  only after this crash and the freeze of 10-27. So 24 workers is not a safe load on this machine.
+- **What changes, none of it in the method:**
+  - 4 workers per mode instead of 12.
+  - A fit checkpoints every 50 generations and resumes. A test shows a stopped and resumed fit is the same bits as one
+    run straight through, on a different number of workers.
+  - A heat logger samples the CPU's temperature every 5 seconds, and stops the run if the heat stays high. It lives
+    outside the repository.
+- **What stays:** the record, the fit, the seeds, the 8,000 generations, the judge, the verdict and the predictions.
+- **What I have seen:** the dead run's log, which is not a result. At generation 2,750, the last validated, the match was
+  about 0.25 in both modes and the closed-loop validation fitness about 0.145 (uniform) and 0.13 (fourier1), with no
+  survivors. The predictions stand as written; none is changed.
+- **A check the rerun gets for free:** it should repeat the dead run's logged numbers, generation for generation.
+
 ## 9. What would change this document
 
-The timing note before the run. The outcome as a dated note after it. Nothing else.
+The timing note and the crash note before the rerun. The outcome as a dated note after it. Nothing else.
