@@ -104,6 +104,17 @@ def test_a_fit_stopped_and_resumed_is_the_same_bits_whatever_the_workers(tmp_pat
             raise AssertionError("a checkpoint from another record must not resume")
 
 
+def test_the_pod_scripts_can_name_and_find_the_runs(tmp_path) -> None:
+    assert stage4d.seed_for("fit", "uniform", 1) == 2701 and stage4d.seed_for("fit", "fourier1", 1) == 2702
+    assert stage4d.run_dir(tmp_path, "uniform") == tmp_path / "fit" / "uniform-2701"  # cloud/campaign.sh looks there
+    for bad in (("pilot", "uniform", 1), ("fit", "uniform", 2)):
+        try:
+            stage4d.seed_for(*bad)
+        except SystemExit:
+            continue
+        raise AssertionError(f"{bad} is not a stage 4d run")
+
+
 def test_the_gap_share_and_its_verdict() -> None:
     b0, b8 = np.full(4, 0.2), np.full(4, 0.6)
     point, lo, hi = stage4d.gap_share(np.full(4, 0.56), b8, b0, 100, 1)
@@ -124,14 +135,16 @@ def test_the_predictions_read_both_modes() -> None:
 def test_the_quick_runs_write_their_tables_and_the_predictions_are_scored(tmp_path) -> None:
     for mode in MODES:
         summary = stage4d.main(["--mode", mode, "--quick", "--workers", "2", "--out", str(tmp_path)])
-        assert {"generations.csv", "validation.csv", "windows.csv", "judge.csv", "fitted.npy", "fitted.json", "summary.json",
-                "manifest.json"} <= {p.name for p in (tmp_path / mode).iterdir()}
+        out = stage4d.run_dir(tmp_path, mode)
+        assert {"generations.csv", "validation.csv", "windows.csv", "judge.csv", "champion.npy", "champion.json", "summary.json",
+                "manifest.json", "checkpoint.npz"} <= {p.name for p in out.iterdir()}
         assert summary["judge"]["verdict"] in ("carries B8", "partly", "does not")
-        assert json.loads((tmp_path / mode / "manifest.json").read_text())["settings"]["seed"] == 24
-        fitted = np.load(tmp_path / mode / "fitted.npy")
+        assert json.loads((out / "manifest.json").read_text())["settings"]["seed"] == 24
+        fitted = np.load(out / "champion.npy")
         assert fitted[0, layout(stage4d.world(True), mode).alpha.start] == 0.0
     scored = stage4d.main(["--score", "--out", str(tmp_path)])
     assert [p["number"] for p in scored["predictions"]] == [1, 2, 3, 4]
-    a = json.loads((tmp_path / "uniform" / "summary.json").read_text())["record"]["digest"]
-    b = json.loads((tmp_path / "fourier1" / "summary.json").read_text())["record"]["digest"]
+    assert (tmp_path / stage4d.PHASE / "summary.json").exists()
+    a = json.loads((stage4d.run_dir(tmp_path, "uniform") / "summary.json").read_text())["record"]["digest"]
+    b = json.loads((stage4d.run_dir(tmp_path, "fourier1") / "summary.json").read_text())["record"]["digest"]
     assert a == b  # both modes fit the same record

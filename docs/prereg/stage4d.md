@@ -121,6 +121,18 @@ an hour at most. It is recorded below as a dated note before the run.
 - **What next:** how the run goes on is the owner's choice. The method, the seeds and the predictions do not change.
 - **Also:** `systemd-inhibit` now refuses this session the sleep block, so these attempts used the idle block alone.
 
+**Where the rerun runs (2026-11-05, before it).** The owner chose RunPod: "go with the runpod", at about an hour and
+about $1, at most $1.92.
+- **The pod:** cpu3c, 32 vCPUs, $0.96 an hour, a 2-hour cap, at most $1.92. If no cpu3c is free, cpu5c at $1.12 an hour with
+  a 1.7-hour cap, at most $1.90, inside the same maximum. There is no fallback to this machine.
+- **The runs:** both modes side by side, 16 workers each, from a clean tree with warnings as errors. §8's "on this
+  machine", and the crash note's workers and heat logger, no longer apply.
+- **For the pod's scripts:** the runs write `docs/data/stage4d/fit/<mode>-<seed>/`, and the fitted cell is `champion.json`
+  and `champion.npy`. `--phase fit` and `--replicate 1` name the runs. None of this touches the method.
+- **The crash note's free check weakens:** bits are the same only on the same platform. The pod has another CPU, so the
+  rerun may leave the dead run's numbers after its first generations. A difference there says nothing about the code.
+- **What stays:** the record, the fit, the seeds, the 8,000 generations, the judge, the verdict and the predictions.
+
 ## 9. What would change this document
 
 The timing note, the crash note and any note on how the rerun goes, before it. The outcome as a dated note after it. Nothing else.

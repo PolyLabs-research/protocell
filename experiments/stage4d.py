@@ -1,8 +1,7 @@
 """Stage 4d (docs/prereg/stage4d.md): can the cell carry B8? A cell is fitted to B8's beats on B8's own record, then
 judged closed loop in stage 4a's world.
 
-    .venv/bin/python -W error::RuntimeWarning -m experiments.stage4d --mode uniform --workers 12
-    .venv/bin/python -W error::RuntimeWarning -m experiments.stage4d --mode fourier1 --workers 12
+    EXPERIMENT=stage4d bash cloud/launch_phase.sh TAG HOURS MAX_RATE fit uniform:1 fourier1:1   # both modes, on a pod
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage4d --score   # after both: §6's predictions
     .venv/bin/python -m experiments.stage4d --mode uniform --quick --out /tmp/s4d --workers 2   # the smoke test: not a result
 
@@ -13,7 +12,7 @@ beats and B8's over each window's last 300 ticks, the cell run open loop on what
 Every 250 generations the best sample and the mean run closed loop on stage 4b's 24 validation starts; the fitted cell
 is the best there. The judge (§4): the fitted cell, B8 and B0 on fresh starts 1-100 at seed 25, the share of the gap
 from B0 to B8 the cell closes, with a bootstrap interval (seed 26). A fit checkpoints every 50 generations and resumes
-from the checkpoint, the same bits for any number of workers (tested). Writes docs/data/stage4d/<mode>/.
+from the checkpoint, the same bits for any number of workers (tested). Writes docs/data/stage4d/fit/<mode>-<seed>/.
 """
 
 from __future__ import annotations
@@ -49,6 +48,7 @@ from protocell.world import Starts, daylight, lifetimes, sample_starts
 
 SEED, JUDGE_SEED, BOOTSTRAP_SEED = 24, 25, 26  # fresh: the record's starts and noise, the judge's, the bootstrap
 VALIDATION_SEED = 20  # stage 4b's validation starts
+PHASE = "fit"  # the pod scripts name a stage's runs by phase, mode and replicate; this stage has one of each
 FIT_SEEDS = {"uniform": 2701, "fourier1": 2702}
 STREAM_WINDOWS = "windows"
 CARRIES, PARTLY = 0.9, 0.5  # §5: the share of the gap from B0 to B8 closed
@@ -92,6 +92,16 @@ class Sizes:
 
 def world(quick: bool = False) -> Config:
     return stage4a.world(quick)
+
+
+def seed_for(phase: str, mode: str, replicate: int) -> int:
+    if phase != PHASE or replicate != 1:
+        raise SystemExit(f"stage 4d has one phase, {PHASE!r}, and one run per mode")
+    return FIT_SEEDS[mode]
+
+
+def run_dir(out_root: Path, mode: str) -> Path:
+    return out_root / PHASE / f"{mode}-{FIT_SEEDS[mode]}"
 
 
 # --- the record (§2) ----------------------------------------------------------------------------------------------------
@@ -343,7 +353,7 @@ def judge(cfg: Config, mode: str, genome: np.ndarray, sizes: Sizes, pool: Proces
 def run_mode(mode: str, out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
     cfg = world(quick)
     sizes = Sizes.quick() if quick else Sizes()
-    out = out_root / mode
+    out = run_dir(out_root, mode)
     out.mkdir(parents=True, exist_ok=True)
     settings = {"world": cfg.as_dict(), "mode": mode, "sizes": asdict(sizes), "seed": SEED, "judge_seed": JUDGE_SEED, "bootstrap_seed": BOOTSTRAP_SEED,
                 "validation_seed": VALIDATION_SEED, "fit_seed": FIT_SEEDS[mode], "b8": {"tau": thrift.B8_TAU, "aim_tau": probe.B8_AIM_TAU},
@@ -374,12 +384,12 @@ def run_mode(mode: str, out_root: Path, workers: int, quick: bool) -> Dict[str, 
     write_csv(out / "validation.csv", VALIDATION_COLUMNS, result["validation"])
     write_csv(out / "windows.csv", ("start", "first_tick", "whole", "set"), data["rows"])
     write_csv(out / "judge.csv", JUDGE_COLUMNS, judged["rows"])
-    np.save(out / "fitted.npy", np.asarray(fitted["genome"])[None])
+    np.save(out / "champion.npy", np.asarray(fitted["genome"])[None])
     info = {k: v for k, v in fitted.items() if k != "genome"}
     summary = {"mode": mode, "fitted": {**info, "held_out_match": held}, "record": {k: data[k] for k in ("windows", "whole", "train_windows", "held_windows", "digest")},
                "final_sigma": result["final_sigma"], "judge": {k: v for k, v in judged.items() if k != "rows"}, "quick": quick}
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True, default=probe._json) + "\n")
-    (out / "fitted.json").write_text(json.dumps({"mode": mode, **info, "held_out_match": held, "genome": np.asarray(fitted["genome"]).tolist()}, indent=1) + "\n")
+    (out / "champion.json").write_text(json.dumps({"mode": mode, **info, "held_out_match": held, "genome": np.asarray(fitted["genome"]).tolist()}, indent=1) + "\n")
     finish_manifest(manifest, wall_seconds=time.time() - t0, workers=workers, generations=sizes.generations)
     write_manifest(out / "manifest.json", manifest)
     log(f"[{mode}] done, written to {out}")
@@ -402,19 +412,21 @@ def score_predictions(summaries: Mapping[str, Mapping[str, Any]]) -> List[Dict[s
 
 
 def score(out_root: Path) -> Dict[str, Any]:
-    summaries = {m: json.loads((out_root / m / "summary.json").read_text()) for m in MODES}
+    summaries = {m: json.loads((run_dir(out_root, m) / "summary.json").read_text()) for m in MODES}
     predictions = score_predictions(summaries)
     for p in predictions:
         print(f"prediction {p['number']}: {'✓' if p['holds'] else '✗'} {p['text']}", flush=True)
     summary = {"verdicts": {m: summaries[m]["judge"]["verdict"] for m in MODES}, "gap_share": {m: summaries[m]["judge"]["gap_share"] for m in MODES},
                "predictions": predictions}
-    (out_root / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True, default=probe._json) + "\n")
+    (out_root / PHASE / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True, default=probe._json) + "\n")
     return summary
 
 
 def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--phase", choices=[PHASE], default=PHASE)
     parser.add_argument("--mode", choices=MODES)
+    parser.add_argument("--replicate", type=int, choices=[1], default=1)
     parser.add_argument("--score", action="store_true", help="read both modes' results and score §6's predictions")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--workers", type=int, default=12)
