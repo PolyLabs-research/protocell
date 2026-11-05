@@ -133,6 +133,21 @@ about $1, at most $1.92.
   rerun may leave the dead run's numbers after its first generations. A difference there says nothing about the code.
 - **What stays:** the record, the fit, the seeds, the 8,000 generations, the judge, the verdict and the predictions.
 
+**The first pod (2026-11-05, before any outcome).** Code `e4df26b`, cpu3c, launched at 17:15 UTC, $1.92 for its 2 hours.
+- **What happened:** RunPod gave it an older CPU (AMD EPYC 7713), about 1.75 times slower than the cpu3c of stage 4c's pilot.
+  The pod reached its deadline at 19:15 and deleted itself, with uniform at generation 6,450 and fourier1 at 5,700 of
+  8,000. No judge ran, so there is no verdict.
+- **What came home:** both runs' checkpoints, also kept outside the repository.
+- **What the checkpoints show, not a result:**
+  - The match has stalled at 0.31 in both modes, gaining 0.001 and 0.003 over the last 1,000 generations.
+  - The step size has collapsed, to 0.00003 (uniform) and 0.0002 (fourier1).
+  - No candidate survived a single start at any of the 94 closed-loop validations; their fitness was 0.11 to 0.145.
+  - In the uniform mode a better match went with a worse closed-loop cell (correlation -0.89 over the validations).
+- **The record** has the same hash on this machine and on the pod.
+- **What next:** finishing means a second pod, resumed from these checkpoints with `RESUME=1`. That is the owner's call.
+  The fit would then span two CPUs, which the outcome note would say. The method, the seeds and the predictions do not
+  change.
+
 ## 9. What would change this document
 
 The timing note, the crash note and any note on how the rerun goes, before it. The outcome as a dated note after it. Nothing else.

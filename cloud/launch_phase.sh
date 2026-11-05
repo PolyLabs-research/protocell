@@ -48,6 +48,15 @@ fail() {
 }
 "${RP[@]}" wait-ssh "$POD" --timeout 900 || fail "no SSH"
 bash cloud/stage_pod.sh "$POD" || fail "staging"
+# RESUME=1: carry each run's checkpoint from this box, so its runs go on from where an earlier pod stopped.
+if [ "${RESUME:-0}" = 1 ]; then
+    for name in "${names[@]}"; do
+        ckpt=docs/data/$EXPERIMENT/$PHASE/$name/checkpoint.npz
+        [ -s "$ckpt" ] || fail "no checkpoint at $ckpt"
+        "${RP[@]}" ssh "$POD" -- mkdir -p "/root/protocell/$(dirname "$ckpt")" || fail "making the folder for $ckpt"
+        "${RP[@]}" push "$POD" "$ckpt" "/root/protocell/$ckpt" || fail "pushing $ckpt"
+    done
+fi
 # Start the job detached on the pod; the local ssh is cut after 30 s (the job is setsid and nohup there, so it lives on).
 timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && EXPERIMENT=$EXPERIMENT nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_phase.sh $PHASE $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
 sleep 20
