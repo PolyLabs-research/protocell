@@ -178,6 +178,61 @@ warnings as errors.
 - **What the checks cannot show** is the later part, where the GA failed: carrying a working cell through the shading's
   end and the economy's tightening. Only the pilot shows that.
 
+**The pilot's outcome (2026-11-05, before any confirmatory run).**
+
+The data are in `docs/data/stage4c/pilot/`.
+- **Where it ran:** a cpu3c pod launched at 20:26 UTC on 2026-11-04 (AMD EPYC 9965, 32 vCPUs, $0.96 an hour), so the
+  fallback to this machine was not needed.
+- **Code and conditions:** code `e53a4f6`, from a clean tree with warnings as errors. The pod's test suite passed first.
+- **Time and cost:** both runs side by side, 16 workers each, 3.8 hours a run. The pod was up about 4.0 hours and cost
+  about $3.90, within the $5.76 cap.
+- **Return:** the campaign pulled every run, and the pod deleted itself at 00:27 UTC.
+
+**Neither mode meets the pilot's rule.**
+
+| run | champion's validation fitness | validation survival | the champion's generation | its mean beat on validation |
+|---|---|---|---|---|
+| uniform, seed 1501 | 0.149 | 0% of 24 | 200 | 0.001 |
+| fourier1, seed 1502 | 0.160 | 0% of 24 | 160 | 0.020 |
+
+**The runs' records, against stage 4b's amended pilot (the GA) over the same path:**
+
+| generations | the training world | uniform: CMA-ES | uniform: the GA | fourier1: CMA-ES | fourier1: the GA |
+|---|---|---|---|---|---|
+| 1–50 | the shading fades, the cave's economy | 0.266 (peak 0.494) | 0.533 (peak 0.651) | 0.333 (peak 0.565) | 0.414 (peak 0.555) |
+| 51–100 | translucent, the gain falling | 0.210 | 0.245 | 0.238 | 0.310 |
+| 101–200 | stage 4a's world | 0.154 | 0.165 | 0.188 | 0.246 |
+
+The table gives the mean of each generation's best training fitness.
+
+- **The uniform run built little while shaded.**
+  - Its first mean was a cell that barely beats. Through generation 23, each generation's best sample had a mean beat
+    of at most 0.03.
+  - The second check's uniform run, on another seed, reached 0.575 over generations 16–25. One run per mode cannot say
+    how much of this is the seed.
+- **In generations 51–100 the uniform population went still.**
+  - The median equalled the best, and the best cell's mean beat fell to 0.002.
+  - The step size meanwhile grew to about 0.3, so CMA-ES was sampling widely on a flat plateau.
+  - In stage 4a's world it stayed there. Its champion barely beats, at the still cell's level (0.162 in stage 4a's check,
+    on other starts).
+- **The fourier1 run built working cells while shaded and lost most of them, as the GA's did.**
+  - It peaked at 0.565 in generation 15.
+  - Its step size stayed near 0.12–0.15 throughout.
+  - In stage 4a's world it held about 0.19, below the GA's 0.246, and its champion survives no validation start.
+- **Validation never moved.**
+  - Over all 20 validations the best candidate in each run stayed between 0.135 and 0.160.
+  - The distribution's mean validated within 0.011 of the best sample every time.
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 2. both champions validate above the GA's amended pilot | ✗: 0.149 against 0.155, and 0.160 against 0.241 |
+| 3. the pilot's rule is met in at most one mode | ✓: in neither |
+| 4. no champion beats B8 | not reached: no test runs |
+
+**Next:** the confirmatory runs do not go ahead. §7's third row applies: what follows is the owner's call.
+
 ## 11. What would change this document
 
 The owner's answers, and the local check's outcome, as dated notes before the pilot. The pilot's outcome and any

@@ -1149,3 +1149,78 @@ The balance is $52.56; it has been topped up.
 
 **Impact:** this entry; `docs/prereg/stage4b.md` §13; `experiments/stage4b.py`, `tests/test_stage4b.py`;
 `docs/data/stage4b/`.
+
+## D20 — Stage 4c's pilot: CMA-ES does no better; neither search makes a working cell thrifty
+
+**Date:** 2026-11-05  
+**Why:** the owner's "happy with all" on stage 4c's draft with revision R1, and "go with 1" for the cpu3c pod.  
+**Ran:**
+- One RunPod pod (cpu3c, AMD EPYC 9965, 32 vCPUs, $0.96 an hour) at `e53a4f6`, 3.8 hours a run. It cost about $3.90,
+  within the $5.76 cap.
+- It launched at 20:26 UTC on the third night try, so the fallback to this machine was not used. The campaign pulled
+  every run and the pod deleted itself.
+- The data are at `4b5b4d8`. The outcome is in `docs/prereg/stage4c.md`, "The pilot's outcome".
+
+### A. Measured
+1. **Neither mode meets the pilot's rule.**
+   - Uniform validates at 0.149 and fourier1 at 0.160.
+   - Neither survives any of the 24 validation starts.
+   - Both are below the GA's amended pilot (0.155 and 0.241), so prediction 2 fails. Prediction 3 holds.
+2. **The fourier1 run built working cells while shaded,** peaking at 0.565, and lost most of them as the shading went and
+   the gain fell, as the GA's runs did.
+3. **The uniform run built little while shaded** (peak 0.494, mean 0.266, against the GA's 0.533). The second check's
+   uniform run, on another seed, climbed to 0.575 over generations 16–25, so the seed matters and one run cannot say
+   how much.
+4. **While the gain fell, the uniform population went still and stayed still.**
+   - The median equalled the best.
+   - The step size grew to about 0.3 on that plateau.
+   - Its champion barely beats (mean beat 0.001).
+5. **Validation never moved in either run:** between 0.135 and 0.160 at all 20 validations.
+
+### B. Reading
+1. **A stronger search did not help.** Six pilot runs, two per pilot, now share one shape:
+   - stage 4b's pilot and its amended pilot, with the GA;
+   - this pilot, with CMA-ES.
+
+   Every run builds or half-builds a working cell where the world is generous. It loses that cell as the economy
+   tightens, and ends at or near the still cell's level in stage 4a's world. The one exception is the GA's fourier1
+   amended run, at 0.241.
+2. **The obstacle is the step from a working cell to a thrifty one.** The cells both searches build find the light but
+   beat too much for stage 4a's economy. As the economy tightens, a cell that does less ranks better, so selection runs
+   toward stillness. Neither search crossed from spending to thrift.
+3. **A flat landscape defeats CMA-ES's adaptation.** On the uniform plateau, with each ranking resting on 8 noisy
+   training starts, its step size widened instead of narrowing. It ended sampling near-random genomes, as in the first
+   local check.
+4. **Q1 stays unanswered.** There is still no cell to test against B8, so the strong sense is neither shown nor refuted.
+   The weak sense stands from stages 1b and 3b (D9, D11).
+
+### C. Decisions this surfaces (the owner's)
+1. **A probe of thrift first (recommended).** It asks why the working cells fail before buying another search.
+   - **The cells:** stage 3b's two working champions (uniform 2203, fourier1 3202).
+   - **The worlds:** the translucent world, at gain 1.0, 0.8, 0.65 and 0.55 of the cave's, the last being stage 4a's world.
+   - **Measured** beside B5 and B8 on the same starts:
+     - where they die;
+     - how much of the day they beat;
+     - the light earned per unit of effort.
+   - **What it shows:** whether they fail by spending (a small change, within a search's reach) or by finding too little
+     (a different behaviour).
+   - **Cost:** about an hour on this machine, nothing on RunPod. It needs a small probe script, with its own tests.
+2. **Seed from working cells.**
+   - **The run:** CMA-ES with its first mean at a stage 3b champion and a small first step, in the translucent world
+     while only the gain falls (50 generations), then 100 generations in stage 4a's world.
+   - **What it asks:** the narrow question every pilot has stalled on.
+   - **The trade-off:** it no longer evolves from random wiring, so a cell it finds would answer Q1 only for staged
+     evolution.
+   - **Cost:** one pod, about 3 hours, about $3, at most about $4.50. It needs a small build: a run that starts from
+     given genomes.
+3. **Run the GA's fourier1 line on** from its checkpoint (D19 C3).
+   - It is the only evolved cell above the still cell in this world.
+   - Its champion stopped improving after generation 160.
+   - About $3.20.
+4. **Stop stage 4 here and record:** two searches and three paths do not reach a working cell in stage 4a's world from
+   random wiring.
+
+The balance is $18.22. A pod not of this project (`lattice-lab-census-4d`) is drawing $0.96 an hour from it, and was
+left alone.
+
+**Impact:** this entry; `docs/prereg/stage4c.md` ("The pilot's outcome"); `docs/data/stage4c/pilot/`.

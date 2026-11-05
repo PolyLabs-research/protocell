@@ -30,7 +30,8 @@ best form scores far below B5. Stage 3c (D14): the uniform cell reads the light'
 its ring, confirmed by changing what it senses; neither stage 3b champion compares over time (D11 corrected). Stage 4's
 probes (D16): changing light alone leaves no room above the simple rules, a tighter economy does. Stage 4a (D17):
 that world passes its checks. Stage 4b's pilots (D18, D19): this search does not
-reach a working cell there, even one change at a time; the next step awaits the owner.
+reach a working cell there, even one change at a time. Stage 4c's pilot (D20): CMA-ES, a stronger search, does no
+better; neither search makes a working cell thrifty. The next step awaits the owner.
 
 ## Running
 
