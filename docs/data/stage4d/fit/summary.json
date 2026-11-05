@@ -1,0 +1,53 @@
+{
+ "gap_share": {
+  "fourier1": -0.02193698359568143,
+  "uniform": -0.003110426247299627
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 1,
+   "text": "the fourier1 cell closes at least half the gap",
+   "values": {
+    "fourier1": -0.02193698359568143,
+    "uniform": -0.003110426247299627
+   }
+  },
+  {
+   "holds": false,
+   "number": 2,
+   "text": "the uniform cell closes less of the gap than the fourier1 cell",
+   "values": {
+    "fourier1": -0.02193698359568143,
+    "uniform": -0.003110426247299627
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "neither fitted cell beats B8 on mean fitness",
+   "values": {
+    "B8": {
+     "fourier1": 0.5552983255766796,
+     "uniform": 0.5552983255766796
+    },
+    "fitted": {
+     "fourier1": 0.13468832537830974,
+     "uniform": 0.1424369815255565
+    }
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "the held-out match is at least 0.5 in the fourier1 mode",
+   "values": {
+    "fourier1": 0.17139113387832727
+   }
+  }
+ ],
+ "verdicts": {
+  "fourier1": "does not",
+  "uniform": "does not"
+ }
+}

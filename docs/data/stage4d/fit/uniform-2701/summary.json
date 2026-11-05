@@ -1,0 +1,46 @@
+{
+ "final_sigma": 2.294484814027991e-06,
+ "fitted": {
+  "candidate": "mean",
+  "generation": 1000,
+  "held_out_match": 0.14976986290887617,
+  "train_match": 0.1579007019009696,
+  "validation_fitness": 0.1450299070080945,
+  "validation_survival": 0.0
+ },
+ "judge": {
+  "cells": {
+   "B0": {
+    "day_beat": 0.0,
+    "day_light": 0.0910727979729595,
+    "fitness": 0.14371717434125297,
+    "survival": 0.0
+   },
+   "B8": {
+    "day_beat": 0.09825826932704684,
+    "day_light": 0.590236197466103,
+    "fitness": 0.5552983255766796,
+    "survival": 0.89
+   },
+   "fitted": {
+    "day_beat": 0.013192193427294743,
+    "day_light": 0.09003520900385441,
+    "fitness": 0.1424369815255565,
+    "survival": 0.0
+   }
+  },
+  "gap_high": 0.002048292318396004,
+  "gap_low": -0.0065494650642683935,
+  "gap_share": -0.003110426247299627,
+  "verdict": "does not"
+ },
+ "mode": "uniform",
+ "quick": false,
+ "record": {
+  "digest": "01a6de38bc23cd4886d723c51217ca51cef562999464c3852f02e7bd9fe245a9",
+  "held_windows": 64,
+  "train_windows": 254,
+  "whole": 318,
+  "windows": 320
+ }
+}
