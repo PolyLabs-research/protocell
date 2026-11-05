@@ -1276,3 +1276,78 @@ left alone.
 
 **Impact:** this entry; `experiments/stage4_thrift.py`, `tests/test_stage4_thrift.py`; next, `docs/data/stage4/thrift/`
 and the probe's outcome.
+
+## D22 — The thrift probe: the working cells die by finding too little light, not mainly by spending
+
+**Date:** 2026-11-05  
+**Why:** D21, the owner's choice of the thrift probe.  
+**Ran:**
+- `experiments/stage4_thrift.py` at `b085920`, from a clean tree with warnings as errors. It took 9 minutes here with
+  16 workers.
+- The data are at `2d97f91`, in `docs/data/stage4/thrift/`.
+
+### A. Measured
+Survival is shown as paid / free: with beating at the world's cost, and with beating free. The light is P(I) soaked
+per daylight tick lived; the beat is the mean by day.
+
+| world | cell | survival, paid / free | light per daylight tick | beat by day |
+|---|---|---|---|---|
+| home: the mouth fixed, the cave's gain (a still cell breaks even at 0.33) | B8 | 100% / 100% | 0.750 | 0.138 |
+| | B5 | 91% / 93% | 0.649 | 0.097 |
+| | U2203 | 50% / 54% | 0.345 | 0.348 |
+| | F3202 | 64% / 80% | 0.434 | 0.657 |
+| stage 4a's: the mouth sweeping, 0.55 of the gain (break-even 0.61) | B8 | 90% / 93% | 0.596 | 0.099 |
+| | B5 | 79% / 84% | 0.537 | 0.073 |
+| | U2203 | 12% / 43% | 0.314 | 0.271 |
+| | F3202 | 0% / 19% | 0.287 | 0.538 |
+
+1. **The verdict is "finding" for both champions.** With beating free, in stage 4a's world, U2203 survives 43% of the
+   starts and F3202 19%, both below D21's 50%.
+2. **The champions find about half of B8's light in every world:** between 0.40 and 0.58 of it per daylight tick
+   lived, across all eight worlds. Their light hardly changes with the gain, since no cell senses its reserve.
+3. **Spending is a real but smaller part.**
+   - Beating free adds 31 points of survival to U2203 and 19 to F3202 in stage 4a's world, but leaves both below half.
+   - By day they beat 2.7 and 5.4 times as much as B8, for half its light.
+   - U2203 also beats at night, 0.10, when there is nothing to find.
+4. **The gain's fall kills them, not the sweep.**
+   - At the cave's gain, the sweep costs U2203 2 points of survival and F3202 24.
+   - The fall to 0.55 with the mouth fixed costs them 42 and 63.
+5. **The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. at home within 15 points of stage 3b's test | ✓: 50% and 64% |
+| 2. with beating free, both below half in stage 4a's world | ✓: 43% and 19% |
+| 3. less than half of B8's light in stage 4a's world | ✗ narrowly: U2203 0.53 of B8's, F3202 0.48 |
+| 4. the gain's fall costs more than the sweep | ✓ |
+
+### B. Reading
+1. **The working cells fail mainly by finding too little.** Thrift alone would not save them: with beating free, most
+   still starve. To live in stage 4a's world a cell must find light nearly as well as B8; stage 3b's champions find
+   about half as much, even at home.
+2. **This is why every pilot had the same shape (D20 B1).** A still cell breaks even at 0.33 at the cave's gain, and
+   at 0.61 at 0.55. A cell finding half of B8's light lives on about half the starts in the generous world and dies as
+   the gain falls.
+   - Even at home, where half of them died, the champions' search did not find a better finder.
+   - No search here has made a cell that finds more than about half of B8's light, in any world.
+3. **Seeding from these cells (D20 C2) would need the search to double their light while the economy tightens.** That
+   is the step every pilot failed, so it is unlikely to work.
+4. **The open question is whether this cell can find light as well as B8 at all.** Either the cell is the limit, or the
+   searches are. Nothing so far tells them apart.
+
+### C. Decisions this surfaces (the owner's)
+1. **A representation check: teach a cell B8's behaviour directly (recommended).**
+   - **How:** fit a cell's genome so that its beats match B8's on B8's recorded senses, with CMA-ES on that match rather
+     than on survival. Then run the cell in stage 4a's world beside B8.
+   - **If it matches B8:** the cell can carry a good finder and the searches are what fail. Evolution can then start
+     from it, and the strong sense gets a fair test: can the interacting parts improve on the best simple rule?
+   - **If it cannot:** the cell's design is the limit, and that is the next thing to change.
+   - **The trade-off:** a cell started from B8 no longer evolves from random wiring.
+   - **The risk:** a match on recorded senses may drift once the cell's own moves change what it senses. The closed
+     run in the world is the judge.
+   - **Cost:** a short draft and a build, then a check here. Any RunPod pilot after it would be costed first.
+2. **Seed from the champions** (D20 C2): about $3, now expected to fail.
+3. **Stop stage 4 here and record** what it shows: the world has room, and the evolved cells find about half the light
+   it takes to use it.
+
+**Impact:** this entry; `docs/data/stage4/thrift/`.
