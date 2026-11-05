@@ -148,6 +148,55 @@ about $1, at most $1.92.
   The fit would then span two CPUs, which the outcome note would say. The method, the seeds and the predictions do not
   change.
 
+**The outcome (2026-11-05).**
+
+The data are in `docs/data/stage4d/fit/`.
+- **Where it ran:** two RunPod pods.
+  - The first (`e4df26b`, AMD EPYC 7713) carried uniform to generation 6,450 and fourier1 to 5,700.
+  - The second (`8688994`, AMD EPYC 7702P) resumed from their checkpoints, finished both, and ran the judge.
+  - The fit's code is the same in both commits, and both ran from clean trees with warnings as errors. The manifests name
+    the second pod.
+  - B8's record has the same hash on both pods and on this machine. The search itself spans two CPUs.
+- **Cost:** $1.92 and about $0.90, about $2.82 in all. The second pod came in under its $1.12 maximum, but above the
+  $0.60 quoted, because no cpu5c was free.
+
+**The cell does not carry B8, in either mode.** On the judge's 100 fresh starts:
+
+| | uniform cell | fourier1 cell | B8 | B0 |
+|---|---|---|---|---|
+| fitness | 0.142 | 0.135 | 0.555 | 0.144 |
+| survival | 0% | 0% | 89% | 0% |
+| light per daylight tick lived | 0.090 | 0.095 | 0.590 | 0.091 |
+| beat by day | 0.013 | 0.057 | 0.098 | 0 |
+| share of the gap closed (95% interval) | -0.003 (-0.007, 0.002) | -0.022 (-0.031, -0.014) | | |
+| verdict | does not | does not | | |
+
+**What was judged.** §3's rule picks the candidate that did best closed loop on the validation starts. In both modes that
+was an early, nearly idle cell, the distribution's mean at generation 1,000 (uniform) and 750 (fourier1). So the table
+above is not the fit's closest copy of B8. The closest copies were not judged on the 100 starts, but the validations
+cover them:
+
+| | uniform | fourier1 |
+|---|---|---|
+| the judged cell: training match / held-out match | 0.158 / 0.150 | 0.173 / 0.171 |
+| generation 8,000: training match | 0.307 | 0.314 |
+| generation 8,000: validation fitness | 0.109 | 0.132 |
+| validations in which any start survived | 0 of 64 | 0 of 64 |
+| correlation of match and validation fitness | -0.91 | -0.11 |
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. the fourier1 cell closes at least half the gap | ✗: -0.02 |
+| 2. the uniform cell closes less than the fourier1 cell | ✗: -0.003 against -0.022 |
+| 3. neither fitted cell beats B8 | ✓ |
+| 4. the held-out match is at least 0.5 in the fourier1 mode | ✗: 0.171 |
+
+**By §5:** a "does not" with a low match. The fit failed in open loop, before the world had a say. Held-out and training
+matches agree, so this is not overfitting. Stage 4d therefore does not settle whether the cell can hold B8: it shows that
+this fit could not put B8 there.
+
 ## 9. What would change this document
 
 The timing note, the crash note and any note on how the rerun goes, before it. The outcome as a dated note after it. Nothing else.

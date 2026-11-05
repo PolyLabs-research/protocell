@@ -1351,3 +1351,61 @@ per daylight tick lived; the beat is the mean by day.
    it takes to use it.
 
 **Impact:** this entry; `docs/data/stage4/thrift/`.
+
+## D23 — Stage 4d: this fit did not put B8 in the cell; whether the cell can hold it stays open
+
+**Date:** 2026-11-05  
+**Why:** the owner's "Agree with 1, proceed" on D22, then "go with the runpod" and "Ok switch to the new Pod now".  
+**Ran:**
+- **The first run, here** at `758c8e5`, 12 workers per mode: it crashed the host at 11:59 UTC, 26 minutes in, and left
+  nothing (see A1).
+- **Two RunPod pods:** `e4df26b` on an EPYC 7713, then `8688994` on an EPYC 7702P resuming from the first's checkpoints.
+  About $2.82 in all. The fit's code is the same in both.
+- The data are at `af5a563`. The plan, every note on the run and the outcome are in `docs/prereg/stage4d.md`.
+
+### A. Measured
+1. **This work crashed the host.** The two runs tripped the CPU's thermal limit.
+   - In 23 logged boots, the reset register's thermal bit is set only after this crash and after the freeze of 10-27. It
+     is not set after the freeze of 10-23.
+   - The CPU holds 98°C under sustained load whatever the number of workers (4 and 8 in all were tried), as October's traces
+     show too. Fewer workers do not cool it. So the standing limit of 24 workers is not safe on this machine.
+   - The run moved to RunPod. Fits now checkpoint and resume, and a stopped and resumed fit is the same bits (tested).
+2. **The verdict is "does not" in both modes.** The judged cells close -0.003 and -0.022 of the gap from B0 to B8.
+   They score 0.142 and 0.135 against B8's 0.555, and survive no start.
+3. **The match stalled at about 0.31 in both modes,** with the step size collapsed long before generation 8,000.
+4. **No candidate survived a single start in any of the 128 validations.** The fit's rule judged early, nearly idle cells,
+   since nothing beat them in the world.
+5. **In the uniform mode a closer copy did worse in the world** (correlation -0.91 over the validations): 0.145 at a match
+   of 0.16, 0.109 at 0.31. Fourier1 shows no such link (-0.11).
+6. **Held-out and training matches agree** (0.150 and 0.158, 0.171 and 0.173), so this is not overfitting.
+7. **Predictions 1, 2 and 4 fail; 3 holds.** I expected at least half the gap in the fourier1 mode. It closed none.
+
+### B. Reading
+1. **This does not answer D22's question.** Under `stage4d.md` §5, a low match means the fit failed before the world had
+   a say. Stage 4d shows that CMA-ES on the beats could not put B8 in the cell. It does not show that the cell cannot
+   hold B8.
+2. **Copying a third of B8 is no use.** Running at the wrong moments costs energy and finds nothing, which fits D22: this
+   world pays only for finding light nearly as well as B8.
+3. **One explanation worth testing, not yet tested: the cell cannot read light relative to its level.**
+   - B8 compares the light with its own recent average, and takes a direction from a ratio. Both work at any brightness.
+   - The cell takes in its gain times the light, through sigmoids that saturate, with no gain control. The light runs over
+     three orders of magnitude here (0.01 to 10), and the changes B8 acts on are about 2% a tick.
+   - It would also account for the evolved cells' half measure of the light. That is a hypothesis, not a finding.
+
+### C. Decisions this surfaces (the owner's)
+1. **A stronger fit: gradient descent through the network (recommended).** The same record, the same cell and the same
+   judge, with the fit changed.
+   - **Why:** matching a known signal is what gradients do well, and CMA-ES has no gradient. It is the direct test D22 asked
+     for: if the cell can hold B8, this should show it.
+   - **If the match climbs and the gap closes:** the cell can hold B8 and the searches are what fail. Evolution can then
+     start from that cell, as D22 C1 planned.
+   - **If it stalls too:** the cell is the likely limit, and option 2 follows.
+   - **Cost:** a short draft and a build, then one process on one core here, or a small pod if it needs more.
+2. **Give the cell relative sensing,** a compressed or adapting input, then refit. It tests B3 directly and it is what
+   real cells do, but it changes the organism, so it needs its own draft and new checks.
+3. **Stop stage 4 here and record** what it shows: the world has room, and neither evolution nor fitting has put a good
+   finder in this cell.
+
+**Impact:** this entry; `docs/prereg/stage4d.md`; `experiments/stage4d.py`, `tests/test_stage4d.py`; `cloud/launch_phase.sh`
+(`RESUME=1`); `docs/data/stage4d/fit/`.
+
