@@ -1,0 +1,968 @@
+{
+ "break_even_day_light": {
+  "fixed x0.55": 0.606060606060606,
+  "fixed x0.65": 0.5128205128205128,
+  "fixed x0.8": 0.41666666666666663,
+  "fixed x1": 0.3333333333333333,
+  "sweep x0.55": 0.606060606060606,
+  "sweep x0.65": 0.5128205128205128,
+  "sweep x0.8": 0.41666666666666663,
+  "sweep x1": 0.3333333333333333
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "at home each champion survives within 15 points of stage 3b's test (U2203 50%, F3202 63%)",
+   "values": {
+    "F3202": 0.64,
+    "U2203": 0.5
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "in stage 4a's world, with beating free, both champions survive fewer than half the starts",
+   "values": {
+    "F3202": 0.19,
+    "U2203": 0.43
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "in stage 4a's world each champion soaks less than half B8's light per daylight tick lived",
+   "values": {
+    "B8": 0.5959762317080355,
+    "F3202": 0.2871731410623456,
+    "U2203": 0.3136050689228759
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "for each champion the gain's fall to 0.55 costs more survival than the sweep does",
+   "values": {
+    "F3202": {
+     "gain_costs": 0.63,
+     "sweep_costs": 0.24
+    },
+    "U2203": {
+     "gain_costs": 0.42,
+     "sweep_costs": 0.020000000000000018
+    }
+   }
+  }
+ ],
+ "quick": false,
+ "verdicts": {
+  "F3202": {
+   "free_survival": 0.19,
+   "paid_survival": 0.0,
+   "verdict": "finding"
+  },
+  "U2203": {
+   "free_survival": 0.43,
+   "paid_survival": 0.12,
+   "verdict": "finding"
+  }
+ },
+ "worlds": {
+  "fixed x0.55": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.10087956984561076,
+     "died_at_night_share": 0.30303030303030304,
+     "fitness": 0.14177354846514448,
+     "median_death_hour": 13.658888888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.01
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.10087956984561076,
+     "died_at_night_share": 0.30303030303030304,
+     "fitness": 0.14177354846514448,
+     "median_death_hour": 13.658888888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.01
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.09742118844101588,
+     "day_light": 0.6482887156182541,
+     "died_at_night_share": 0.4,
+     "fitness": 0.5807948566000856,
+     "median_death_hour": 16.168194444444445,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.9
+    },
+    "paid": {
+     "day_beat": 0.10162829702846711,
+     "day_light": 0.6169310283000269,
+     "died_at_night_share": 0.25,
+     "fitness": 0.5472636869963974,
+     "median_death_hour": 15.099583333333333,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.84
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.654075974289894,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.6320102774874451,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.6695899504760418,
+     "day_light": 0.4376829225602023,
+     "died_at_night_share": 0.5849056603773585,
+     "fitness": 0.398472268273781,
+     "median_death_hour": 19.79361111111111,
+     "n": 100,
+     "night_beat": 0.037994159484830516,
+     "survival": 0.47
+    },
+    "paid": {
+     "day_beat": 0.6048186070332866,
+     "day_light": 0.3689695187125041,
+     "died_at_night_share": 0.6363636363636364,
+     "fitness": 0.18257489216422623,
+     "median_death_hour": 16.124166666666667,
+     "n": 100,
+     "night_beat": 0.02932834189643541,
+     "survival": 0.01
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.3367315406796071,
+     "day_light": 0.33402947936061284,
+     "died_at_night_share": 0.38095238095238093,
+     "fitness": 0.31744565440052236,
+     "median_death_hour": 13.423055555555555,
+     "n": 100,
+     "night_beat": 0.09721544913112068,
+     "survival": 0.37
+    },
+    "paid": {
+     "day_beat": 0.3067567849396909,
+     "day_light": 0.2973125209220148,
+     "died_at_night_share": 0.45652173913043476,
+     "fitness": 0.20665234526443324,
+     "median_death_hour": 14.401666666666667,
+     "n": 100,
+     "night_beat": 0.09648515247550353,
+     "survival": 0.08
+    }
+   }
+  },
+  "fixed x0.65": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.10149130996865668,
+     "died_at_night_share": 0.30526315789473685,
+     "fitness": 0.16165599720681265,
+     "median_death_hour": 14.651111111111112,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.05
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.10149130996865668,
+     "died_at_night_share": 0.30526315789473685,
+     "fitness": 0.16165599720681265,
+     "median_death_hour": 14.651111111111112,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.05
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.09674346678698424,
+     "day_light": 0.6524013102218595,
+     "died_at_night_share": 0.2222222222222222,
+     "fitness": 0.6138337039928976,
+     "median_death_hour": 16.93138888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.91
+    },
+    "paid": {
+     "day_beat": 0.09924221496391673,
+     "day_light": 0.6325741241292212,
+     "died_at_night_share": 0.23076923076923078,
+     "fitness": 0.5886303973138275,
+     "median_death_hour": 15.89,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.87
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.6759894099618645,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.662106919049783,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.6767342288153598,
+     "day_light": 0.444126471345635,
+     "died_at_night_share": 0.48717948717948717,
+     "fitness": 0.45457151891023195,
+     "median_death_hour": 17.2275,
+     "n": 100,
+     "night_beat": 0.03899678126757579,
+     "survival": 0.61
+    },
+    "paid": {
+     "day_beat": 0.6221222660712362,
+     "day_light": 0.3954641655414875,
+     "died_at_night_share": 0.5633802816901409,
+     "fitness": 0.27891055667587494,
+     "median_death_hour": 16.799722222222222,
+     "n": 100,
+     "night_beat": 0.033094525711330466,
+     "survival": 0.29
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.3490314241860697,
+     "day_light": 0.3472060244063869,
+     "died_at_night_share": 0.3269230769230769,
+     "fitness": 0.3611197217032167,
+     "median_death_hour": 13.571111111111112,
+     "n": 100,
+     "night_beat": 0.09788501480053766,
+     "survival": 0.48
+    },
+    "paid": {
+     "day_beat": 0.31890482705555906,
+     "day_light": 0.3111509023729308,
+     "died_at_night_share": 0.3472222222222222,
+     "fitness": 0.27295524548590294,
+     "median_death_hour": 13.14861111111111,
+     "n": 100,
+     "night_beat": 0.09702893815045896,
+     "survival": 0.28
+    }
+   }
+  },
+  "fixed x0.8": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.10205482322684153,
+     "died_at_night_share": 0.2903225806451613,
+     "fitness": 0.18742656646039346,
+     "median_death_hour": 15.813333333333333,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.07
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.10205482322684153,
+     "died_at_night_share": 0.2903225806451613,
+     "fitness": 0.18742656646039346,
+     "median_death_hour": 15.813333333333333,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.07
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.09647678281276799,
+     "day_light": 0.6548735465317431,
+     "died_at_night_share": 0.125,
+     "fitness": 0.6378131785992817,
+     "median_death_hour": 14.080972222222222,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.92
+    },
+    "paid": {
+     "day_beat": 0.09767279935744239,
+     "day_light": 0.6420298356618471,
+     "died_at_night_share": 0.18181818181818182,
+     "fitness": 0.6199798537413083,
+     "median_death_hour": 16.386666666666667,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.89
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.6945871965592151,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.6852547264519997,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.6842563658667534,
+     "day_light": 0.4513049824376823,
+     "died_at_night_share": 0.32142857142857145,
+     "fitness": 0.5106987620368636,
+     "median_death_hour": 15.370694444444444,
+     "n": 100,
+     "night_beat": 0.03981831967159455,
+     "survival": 0.72
+    },
+    "paid": {
+     "day_beat": 0.6419569525773308,
+     "day_light": 0.42015146407312043,
+     "died_at_night_share": 0.48148148148148145,
+     "fitness": 0.38840221835799743,
+     "median_death_hour": 16.84347222222222,
+     "n": 100,
+     "night_beat": 0.035973905691255345,
+     "survival": 0.46
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.34893392628048453,
+     "day_light": 0.34729542482719666,
+     "died_at_night_share": 0.24489795918367346,
+     "fitness": 0.3924765241034732,
+     "median_death_hour": 13.7475,
+     "n": 100,
+     "night_beat": 0.09790876455190077,
+     "survival": 0.51
+    },
+    "paid": {
+     "day_beat": 0.3331666391954052,
+     "day_light": 0.3254054788184901,
+     "died_at_night_share": 0.2982456140350877,
+     "fitness": 0.332516656377518,
+     "median_death_hour": 12.260277777777778,
+     "n": 100,
+     "night_beat": 0.09722472019373657,
+     "survival": 0.43
+    }
+   }
+  },
+  "fixed x1": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.10243169420811327,
+     "died_at_night_share": 0.3225806451612903,
+     "fitness": 0.208950432987291,
+     "median_death_hour": 17.515,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.07
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.10243169420811327,
+     "died_at_night_share": 0.3225806451612903,
+     "fitness": 0.208950432987291,
+     "median_death_hour": 17.515,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.07
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.09581915736750306,
+     "day_light": 0.6590585818623838,
+     "died_at_night_share": 0.0,
+     "fitness": 0.6581403677240688,
+     "median_death_hour": 17.567222222222224,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.93
+    },
+    "paid": {
+     "day_beat": 0.09668621284842313,
+     "day_light": 0.6494111016214699,
+     "died_at_night_share": 0.2222222222222222,
+     "fitness": 0.6446237739188442,
+     "median_death_hour": 16.11277777777778,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.91
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.7087359928165755,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.13822718714337184,
+     "day_light": 0.7496555134136823,
+     "died_at_night_share": null,
+     "fitness": 0.7024534320293141,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.698265754782389,
+     "day_light": 0.4611643232004347,
+     "died_at_night_share": 0.2,
+     "fitness": 0.5530527472228628,
+     "median_death_hour": 12.246944444444445,
+     "n": 100,
+     "night_beat": 0.04053646831029978,
+     "survival": 0.8
+    },
+    "paid": {
+     "day_beat": 0.6568961996261521,
+     "day_light": 0.4338012907678737,
+     "died_at_night_share": 0.3055555555555556,
+     "fitness": 0.4692987710477445,
+     "median_death_hour": 13.554305555555555,
+     "n": 100,
+     "night_beat": 0.03753677602208524,
+     "survival": 0.64
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.3512088389155034,
+     "day_light": 0.35192932632716856,
+     "died_at_night_share": 0.21739130434782608,
+     "fitness": 0.4175044889691765,
+     "median_death_hour": 15.171944444444444,
+     "n": 100,
+     "night_beat": 0.09809279056359017,
+     "survival": 0.54
+    },
+    "paid": {
+     "day_beat": 0.3478869738837286,
+     "day_light": 0.3453686500301833,
+     "died_at_night_share": 0.32,
+     "fitness": 0.3781393831682006,
+     "median_death_hour": 13.351527777777777,
+     "n": 100,
+     "night_beat": 0.09791170307332231,
+     "survival": 0.5
+    }
+   }
+  },
+  "sweep x0.55": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.09702723986591488,
+     "died_at_night_share": 0.34,
+     "fitness": 0.1330666660209306,
+     "median_death_hour": 13.515972222222222,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.0
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.09702723986591488,
+     "died_at_night_share": 0.34,
+     "fitness": 0.1330666660209306,
+     "median_death_hour": 13.515972222222222,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.0
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.06851938492848865,
+     "day_light": 0.5577380566350065,
+     "died_at_night_share": 0.5,
+     "fitness": 0.5317803912861018,
+     "median_death_hour": 17.61888888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.84
+    },
+    "paid": {
+     "day_beat": 0.07301918159181112,
+     "day_light": 0.5367243651955471,
+     "died_at_night_share": 0.2857142857142857,
+     "fitness": 0.5006445373187087,
+     "median_death_hour": 16.278055555555557,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.79
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.09810574107430625,
+     "day_light": 0.60122199332671,
+     "died_at_night_share": 0.7142857142857143,
+     "fitness": 0.5845136111523512,
+     "median_death_hour": 25.377777777777776,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.93
+    },
+    "paid": {
+     "day_beat": 0.099312519071288,
+     "day_light": 0.5959762317080355,
+     "died_at_night_share": 0.6,
+     "fitness": 0.5457205760412358,
+     "median_death_hour": 23.83888888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.9
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.5897970304678625,
+     "day_light": 0.3233081267595371,
+     "died_at_night_share": 0.6172839506172839,
+     "fitness": 0.27665853393306755,
+     "median_death_hour": 21.358888888888888,
+     "n": 100,
+     "night_beat": 0.03799665039609564,
+     "survival": 0.19
+    },
+    "paid": {
+     "day_beat": 0.5379021576562798,
+     "day_light": 0.2871731410623456,
+     "died_at_night_share": 0.55,
+     "fitness": 0.13773651902289794,
+     "median_death_hour": 15.27138888888889,
+     "n": 100,
+     "night_beat": 0.027796684485510908,
+     "survival": 0.0
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.2829848156747714,
+     "day_light": 0.3309408141081903,
+     "died_at_night_share": 0.2807017543859649,
+     "fitness": 0.3339289394571459,
+     "median_death_hour": 13.170277777777779,
+     "n": 100,
+     "night_beat": 0.0975423949438728,
+     "survival": 0.43
+    },
+    "paid": {
+     "day_beat": 0.27119264965247075,
+     "day_light": 0.3136050689228759,
+     "died_at_night_share": 0.5113636363636364,
+     "fitness": 0.22577184226036312,
+     "median_death_hour": 15.311111111111112,
+     "n": 100,
+     "night_beat": 0.09740846796480503,
+     "survival": 0.12
+    }
+   }
+  },
+  "sweep x0.65": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.0978759054011895,
+     "died_at_night_share": 0.35,
+     "fitness": 0.1501208886084287,
+     "median_death_hour": 14.690972222222221,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.0
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.0978759054011895,
+     "died_at_night_share": 0.35,
+     "fitness": 0.1501208886084287,
+     "median_death_hour": 14.690972222222221,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.0
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.06691515184403724,
+     "day_light": 0.564462408030685,
+     "died_at_night_share": 0.2222222222222222,
+     "fitness": 0.589970458904549,
+     "median_death_hour": 16.815277777777776,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.91
+    },
+    "paid": {
+     "day_beat": 0.06996903152410816,
+     "day_light": 0.5484170002910781,
+     "died_at_night_share": 0.16666666666666666,
+     "fitness": 0.5687420475903547,
+     "median_death_hour": 11.987638888888888,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.88
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.09806735696017371,
+     "day_light": 0.6028495691200059,
+     "died_at_night_share": null,
+     "fitness": 0.6455817265606077,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.09941389275075602,
+     "day_light": 0.5976837468084895,
+     "died_at_night_share": 0.0,
+     "fitness": 0.6234815903394797,
+     "median_death_hour": 18.616805555555555,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.98
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.5970686693410368,
+     "day_light": 0.32992714326628886,
+     "died_at_night_share": 0.5967741935483871,
+     "fitness": 0.35982375272756395,
+     "median_death_hour": 23.066944444444445,
+     "n": 100,
+     "night_beat": 0.0392626724548622,
+     "survival": 0.38
+    },
+    "paid": {
+     "day_beat": 0.5481280064091286,
+     "day_light": 0.29479172561521133,
+     "died_at_night_share": 0.6,
+     "fitness": 0.17889729581422895,
+     "median_death_hour": 18.30902777777778,
+     "n": 100,
+     "night_beat": 0.03177267528752435,
+     "survival": 0.0
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.28682775951400635,
+     "day_light": 0.33664595532219216,
+     "died_at_night_share": 0.19230769230769232,
+     "fitness": 0.3689297856242792,
+     "median_death_hour": 14.276111111111112,
+     "n": 100,
+     "night_beat": 0.09776816194298117,
+     "survival": 0.48
+    },
+    "paid": {
+     "day_beat": 0.27913621410881784,
+     "day_light": 0.32316552145217675,
+     "died_at_night_share": 0.38235294117647056,
+     "fitness": 0.2986863875353373,
+     "median_death_hour": 13.393194444444445,
+     "n": 100,
+     "night_beat": 0.0975020737466085,
+     "survival": 0.32
+    }
+   }
+  },
+  "sweep x0.8": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.09787900400650223,
+     "died_at_night_share": 0.32989690721649484,
+     "fitness": 0.1762551815589906,
+     "median_death_hour": 16.33138888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.03
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.09787900400650223,
+     "died_at_night_share": 0.32989690721649484,
+     "fitness": 0.1762551815589906,
+     "median_death_hour": 16.33138888888889,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.03
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.06588330125695392,
+     "day_light": 0.5689840286094486,
+     "died_at_night_share": 0.14285714285714285,
+     "fitness": 0.6250363377504534,
+     "median_death_hour": 16.971944444444443,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.93
+    },
+    "paid": {
+     "day_beat": 0.07012218864680322,
+     "day_light": 0.5484457732139977,
+     "died_at_night_share": 0.16666666666666666,
+     "fitness": 0.5974219261055705,
+     "median_death_hour": 12.073888888888888,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.88
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.09806735696017371,
+     "day_light": 0.6028495691200059,
+     "died_at_night_share": null,
+     "fitness": 0.6746374023383352,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.09806735696017371,
+     "day_light": 0.6028495691200059,
+     "died_at_night_share": null,
+     "fitness": 0.6647834511830955,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.6059137824130518,
+     "day_light": 0.33709583708169516,
+     "died_at_night_share": 0.5609756097560976,
+     "fitness": 0.43891336777737505,
+     "median_death_hour": 20.59,
+     "n": 100,
+     "night_beat": 0.040462827086591616,
+     "survival": 0.59
+    },
+    "paid": {
+     "day_beat": 0.5507646687327955,
+     "day_light": 0.29795095220793455,
+     "died_at_night_share": 0.5164835164835165,
+     "fitness": 0.26136646943153546,
+     "median_death_hour": 22.17388888888889,
+     "n": 100,
+     "night_beat": 0.03540546863169699,
+     "survival": 0.09
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.2912784890587597,
+     "day_light": 0.34625331112580704,
+     "died_at_night_share": 0.24489795918367346,
+     "fitness": 0.3981544073966194,
+     "median_death_hour": 15.49638888888889,
+     "n": 100,
+     "night_beat": 0.09801757938438904,
+     "survival": 0.51
+    },
+    "paid": {
+     "day_beat": 0.28048532056103614,
+     "day_light": 0.3248901305650729,
+     "died_at_night_share": 0.24074074074074073,
+     "fitness": 0.34574126848382924,
+     "median_death_hour": 11.735138888888889,
+     "n": 100,
+     "night_beat": 0.0974852297752273,
+     "survival": 0.46
+    }
+   }
+  },
+  "sweep x1": {
+   "B0": {
+    "free": {
+     "day_beat": 0.0,
+     "day_light": 0.09963786436088283,
+     "died_at_night_share": 0.3626373626373626,
+     "fitness": 0.20911564857625198,
+     "median_death_hour": 17.42222222222222,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.09
+    },
+    "paid": {
+     "day_beat": 0.0,
+     "day_light": 0.09963786436088283,
+     "died_at_night_share": 0.3626373626373626,
+     "fitness": 0.20911564857625198,
+     "median_death_hour": 17.42222222222222,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.09
+    }
+   },
+   "B5": {
+    "free": {
+     "day_beat": 0.06390628390961295,
+     "day_light": 0.5765423173311217,
+     "died_at_night_share": 0.0,
+     "fitness": 0.6552332160523973,
+     "median_death_hour": 17.451527777777777,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.96
+    },
+    "paid": {
+     "day_beat": 0.0676873376848442,
+     "day_light": 0.558205995821843,
+     "died_at_night_share": 0.1111111111111111,
+     "fitness": 0.6292353168268234,
+     "median_death_hour": 8.386388888888888,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 0.91
+    }
+   },
+   "B8": {
+    "free": {
+     "day_beat": 0.09806735696017371,
+     "day_light": 0.6028495691200059,
+     "died_at_night_share": null,
+     "fitness": 0.6921518780477632,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    },
+    "paid": {
+     "day_beat": 0.09806735696017371,
+     "day_light": 0.6028495691200059,
+     "died_at_night_share": null,
+     "fitness": 0.68551131824554,
+     "median_death_hour": null,
+     "n": 100,
+     "night_beat": 0.0,
+     "survival": 1.0
+    }
+   },
+   "F3202": {
+    "free": {
+     "day_beat": 0.6117307826606564,
+     "day_light": 0.34102855887890315,
+     "died_at_night_share": 0.4074074074074074,
+     "fitness": 0.4986198155137284,
+     "median_death_hour": 17.410833333333333,
+     "n": 100,
+     "night_beat": 0.04116884468664642,
+     "survival": 0.73
+    },
+    "paid": {
+     "day_beat": 0.5606687109041745,
+     "day_light": 0.3046544956607215,
+     "died_at_night_share": 0.3333333333333333,
+     "fitness": 0.36901742546411337,
+     "median_death_hour": 20.17125,
+     "n": 100,
+     "night_beat": 0.03746626955324172,
+     "survival": 0.4
+    }
+   },
+   "U2203": {
+    "free": {
+     "day_beat": 0.29791892580349044,
+     "day_light": 0.3593640911641955,
+     "died_at_night_share": 0.20454545454545456,
+     "fitness": 0.4301622405127345,
+     "median_death_hour": 16.015833333333333,
+     "n": 100,
+     "night_beat": 0.09823988267422785,
+     "survival": 0.56
+    },
+    "paid": {
+     "day_beat": 0.2873384946311896,
+     "day_light": 0.33856355087403933,
+     "died_at_night_share": 0.28846153846153844,
+     "fitness": 0.37748979466530563,
+     "median_death_hour": 13.847083333333334,
+     "n": 100,
+     "night_beat": 0.09800008015668409,
+     "survival": 0.48
+    }
+   }
+  }
+ }
+}
