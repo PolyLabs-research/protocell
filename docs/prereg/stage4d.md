@@ -112,6 +112,15 @@ an hour at most. It is recorded below as a dated note before the run.
   survivors. The predictions stand as written; none is changed.
 - **A check the rerun gets for free:** it should repeat the dead run's logged numbers, generation for generation.
 
+**The rerun's first attempts (2026-11-05, after the crash note).** The rerun has not happened yet.
+- **What happened:** the heat guard, set at 95°C held for 60 seconds, stopped the run at 4 workers per mode and again at
+  2 per mode, each within a minute and before the first checkpoint. So the crash note's 4 workers do not stand.
+- **Why:** the CPU holds 98°C under sustained load here however few workers run: at about 56 W with 4 workers per mode,
+  and 37 W with 2. October's traces show the same: about 19 hours at 30–69 W, at a median of 97–98°C, never above 99°C.
+  So a limit of 95°C cannot pass a run on this machine, and fewer workers do not lower the temperature.
+- **What next:** how the run goes on is the owner's choice. The method, the seeds and the predictions do not change.
+- **Also:** `systemd-inhibit` now refuses this session the sleep block, so these attempts used the idle block alone.
+
 ## 9. What would change this document
 
-The timing note and the crash note before the rerun. The outcome as a dated note after it. Nothing else.
+The timing note, the crash note and any note on how the rerun goes, before it. The outcome as a dated note after it. Nothing else.
