@@ -87,8 +87,11 @@ def test_the_world_checks_are_counted_written_down_and_capped(tmp_path) -> None:
     with pytest.raises(SystemExit, match="all 2 world checks"):
         stage4e.check(path, out, None, quick=True, budget=2, require_clean=False)
     notebook = (out / "fourier1" / "notebook.md").read_text()
-    assert notebook.count("**Why, written before it ran:** a test") == 2 and "Check 2 of 2" in notebook
+    assert notebook.count("**Why, written before it ran:** a test") == 2 and "Check 2 of 2" in notebook  # before the third
     assert len(list((out / "fourier1" / "checks").glob("*.json"))) == 2 and (out / "fourier1" / "reference.json").exists()
+    third = stage4e.check(path, out, [1], quick=True, budget=3, require_clean=False, trace_every=50)
+    trace = np.load(out / "fourier1" / "checks" / "03-trace.npz")
+    assert third["check"] == 3 and trace["pos"].shape[1:] == (1, 2) and trace["core"].shape[2] == 8 and int(trace["every"]) == 50
     stage4e.note(out, "fourier1", "the lesson")
     assert "**Learnt" in (out / "fourier1" / "notebook.md").read_text()
 

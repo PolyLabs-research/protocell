@@ -239,15 +239,47 @@ def _rows(path: Path) -> List[Dict[str, str]]:
         return list(csv.DictReader(f))
 
 
-def run_cells(cfg: Config, starts, specs: Mapping[str, Mapping[str, Any]], seed: int) -> Dict[str, Dict[str, np.ndarray]]:
-    """Each named controller on the starts, as one batch each, with shared noise and the thrift probe's ledger."""
+class Tracer:
+    """An observer that keeps, every ``every`` ticks, each cell's place, the mean light on its wall, its mean beat, its
+    core's outputs and whether it lives: the trace a check may record (stage4e.md §4)."""
+
+    def __init__(self, every: int) -> None:
+        self.every = every
+        self.rows: Dict[str, List[np.ndarray]] = {k: [] for k in ("tick", "pos", "light", "beat", "core", "alive")}
+
+    def __call__(self, t: int, state: Mapping[str, Any]) -> None:
+        if t % self.every:
+            return
+        n = state["beats"].shape[1]
+        self.rows["tick"].append(np.array(t))
+        self.rows["pos"].append(state["pos"].copy())
+        self.rows["light"].append(state["light"].mean(axis=1))
+        self.rows["beat"].append(state["beats"].mean(axis=1))
+        self.rows["core"].append(state["controller"].output[:, n:].copy())
+        self.rows["alive"].append(state["alive"].copy())
+
+    def arrays(self) -> Dict[str, np.ndarray]:
+        return {k: np.stack(v) for k, v in self.rows.items()}
+
+
+def run_cells(cfg: Config, starts, specs: Mapping[str, Mapping[str, Any]], seed: int, trace_every: int = 0) -> Dict[str, Dict[str, np.ndarray]]:
+    """Each named controller on the starts, as one batch each, with shared noise and the thrift probe's ledger (and, with
+    ``trace_every``, the trace)."""
     out = {}
     for name, s in specs.items():
         ledger = thrift.Ledger(cfg, len(starts))
-        r = simulate(cfg, starts, s, seed=seed, cell_ids=[NOISE_CELL_ID] * len(starts), observe=ledger)
+        tracer = Tracer(trace_every) if trace_every else None
+
+        def observe(t: int, state: Mapping[str, Any], ledger=ledger, tracer=tracer) -> None:
+            ledger(t, state)
+            if tracer is not None:
+                tracer(t, state)
+        r = simulate(cfg, starts, s, seed=seed, cell_ids=[NOISE_CELL_ID] * len(starts), observe=observe)
         out[name] = {"fitness": r.fitness, "survived": r.survived.astype(float), "day_light": thrift._per(ledger.day_soak, ledger.day_ticks),
                      "day_beat": thrift._per(ledger.day_beat, ledger.day_ticks), "night_beat": thrift._per(ledger.night_beat, ledger.night_ticks),
                      "reached": (r.reach_tick >= 0).astype(float), "start": starts.index.copy()}
+        if tracer is not None:
+            out[name]["trace"] = tracer.arrays()
     return out
 
 
@@ -269,7 +301,7 @@ def reference(cfg: Config, out: Path, quick: bool) -> Dict[str, Any]:
 
 
 def check(design_path: Path, out_root: Path, starts_wanted: Optional[Sequence[int]], quick: bool, budget: int = BUDGET,
-          require_clean: bool = True) -> Dict[str, Any]:
+          require_clean: bool = True, trace_every: int = 0) -> Dict[str, Any]:
     design = load(design_path)
     mode = design["mode"]
     cfg = world(quick)
@@ -294,7 +326,9 @@ def check(design_path: Path, out_root: Path, starts_wanted: Optional[Sequence[in
             f"**Why, written before it ran:** {design['why'].strip()}\n\n")
     t0, before = time.time(), tctl()
     starts = sample_starts(cfg, "cave", n_all, VALIDATION_SEED).numbered(wanted)
-    r = run_cells(cfg, starts, {"cell": spec(cfg, design, len(starts))}, VALIDATION_SEED)["cell"]
+    r = run_cells(cfg, starts, {"cell": spec(cfg, design, len(starts))}, VALIDATION_SEED, trace_every)["cell"]
+    if "trace" in r:
+        np.savez_compressed(out / "checks" / f"{number:02d}-trace.npz", start=np.array(wanted), every=trace_every, **r.pop("trace"))
     idx = [s - 1 for s in wanted]
     b8 = {k: np.array(v)[idx] for k, v in ref["B8"]["per_start"].items()}
     b0 = {k: np.array(v)[idx] for k, v in ref["B0"]["per_start"].items()}
@@ -409,6 +443,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     p = sub.add_parser("check")
     p.add_argument("design", type=Path)
     p.add_argument("--starts", type=int, nargs="+")
+    p.add_argument("--trace", type=int, default=0, help="record the trace every this many ticks (the same check)")
     p = sub.add_parser("note")
     p.add_argument("--mode", choices=MODES, required=True)
     p.add_argument("text")
@@ -443,7 +478,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
                 f"noise {args.noise}: final beat {result['mean_beat'][-1]:.4f} forward {result['forward'][-1]:.4f} left {result['left'][-1]:.4f}\n")
         return result
     if args.command == "check":
-        r = check(args.design, args.out, args.starts, args.quick)
+        r = check(args.design, args.out, args.starts, args.quick, trace_every=args.trace)
         print(f"check {r['check']} ({r['remaining']} left): fitness {r['fitness']:.3f} (B8 {r['b8_fitness']:.3f}, B0 {r['b0_fitness']:.3f}), "
               f"survival {r['survival']:.0%}, gap share {r['gap']:.2f}, day light {r['day_light']:.3f}, day beat {r['day_beat']:.3f}, "
               f"night beat {r['night_beat']:.3f}, reached {r['reached']:.0%} [{r['seconds']:.0f} s]")
