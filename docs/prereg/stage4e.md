@@ -112,6 +112,15 @@ hypothesis.
 3. **Unlimited logged open-loop probes, with no automated search** (recommended). They are how a writer checks that a
    part does what it should before spending a world check on the whole.
 
+**The owner's answers (2026-11-07, before any weight):** "1. ok 50, 2. agree 3. agree. 4. go".
+- **Budget:** 50 world checks per mode.
+- **Order:** fourier1 first, then uniform, whatever fourier1's verdict.
+- **Probes:** unlimited and logged, with no automated search.
+
+The tool is `experiments/stage4e.py`. Its commands are `genome`, `probe`, `check`, `note` and `judge`. It enforces the
+budget, writes each design's reason to the notebook before its check runs, and refuses a check from a tree with tracked
+changes. The judge runs once per mode.
+
 ## 10. What would change this document
 
 The owner's answers, as dated notes before the first weight. The outcome as a dated note after the judge. Nothing else.
