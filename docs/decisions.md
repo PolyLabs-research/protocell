@@ -1409,3 +1409,30 @@ per daylight tick lived; the beat is the mean by day.
 **Impact:** this entry; `docs/prereg/stage4d.md`; `experiments/stage4d.py`, `tests/test_stage4d.py`; `cloud/launch_phase.sh`
 (`RESUME=1`); `docs/data/stage4d/fit/`.
 
+## D24 — The owner's decision on D23: write the cell by hand
+
+**Date:** 2026-11-07  
+**Why:** the owner asked whether a new approach, frontier language models reading and writing a network's weights
+directly, could help with a model this small, then: "Yes draft away".
+
+### Decided
+1. **Stage 4e: a cell written by hand, weight by weight, to do B8's job in stage 4a's world.** It replaces D23's options
+   for now. It tests the same open question more directly: can this cell do what B8 does?
+2. **The draft** is `docs/prereg/stage4e.md`. Its open points (the budget of world checks, the order of the modes,
+   open-loop probes) are the owner's, before any weight is written.
+
+### The reasons, from the draft
+1. **The precedent:** MIT CSAIL's "Weight-Space Programming" (about 2 November 2026; a blog post, not peer-reviewed). A
+   language model wrote a 17,000-weight game policy by reasoning that far outscored the policy-gradient search, and
+   repaired others, within a budget of about 50 test runs. That is this project's situation: a good policy exists, B8,
+   and the searches do not find it.
+2. **The cell is small enough to reason about whole:** 103 or 135 numbers.
+3. **Writing it exposes three constraints of the wiring** that may block B8, each checked in the code:
+   - the core learns of the light only through the beats;
+   - the wall shares one time constant;
+   - there is no gain control.
+
+   A failed attempt would say which one blocked it, where a stalled fit says nothing.
+
+**Impact:** this entry; `docs/prereg/stage4e.md`; next, the owner's answers, then the build.
+
