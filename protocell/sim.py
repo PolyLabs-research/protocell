@@ -278,9 +278,18 @@ class AimAndRun(Controller):
 
 class Network(Controller):
     """The cell of §3: the CTRNN's wall outputs are the beats. The state starts at y = 0; the output sigma(y + bias)
-    is computed after each update and serves both as this tick's beats and as the next update's input (§11 C1)."""
+    is computed after each update and serves both as this tick's beats and as the next update's input (§11 C1).
+    With ``cfg.sensing == "relative"`` (stage 5) the wall takes in each node's light relative to the cell's recent mean
+    light (``protocell.config.Config``), the level kept by the cell and starting at its first reading."""
 
     def __init__(self, cfg: Config, params: Params) -> None:
+        if cfg.sensing not in ("absolute", "relative"):
+            raise ValueError(f"sensing is 'absolute' or 'relative', not {cfg.sensing!r}")
+        if cfg.sensing == "relative" and not (cfg.adapt_tau >= 1.0 and cfg.sense_floor > 0.0):
+            raise ValueError("relative sensing needs adapt_tau >= 1 tick and a positive sense_floor")
+        self.relative = cfg.sensing == "relative"
+        self.adapt_tau, self.sense_floor = float(cfg.adapt_tau), float(cfg.sense_floor)
+        self.level: Optional[np.ndarray] = None
         self.n_wall = cfg.n_wall
         self.params = params
         self.alpha = params.alpha
@@ -290,8 +299,19 @@ class Network(Controller):
         self.sensory = np.zeros_like(params.bias)
         self.extra = params.extra  # a constant input, when a pathway is held at its average (stage 1b)
 
+    def relative_input(self, sensed: np.ndarray) -> np.ndarray:
+        """log((x_i + k) / (A + k)) with A from the ticks before, then A updated (stage5.md §2)."""
+        x = np.maximum(sensed, 0.0)
+        mean = x.mean(axis=1)
+        if self.level is None:
+            self.level = mean.copy()
+        out = np.log((x + self.sense_floor) / (self.level[:, None] + self.sense_floor))
+        self.level = self.level + (mean - self.level) / self.adapt_tau
+        return out
+
     def beats(self, sensed: np.ndarray, tick: int) -> np.ndarray:
-        self.sensory[:, :self.n_wall] = self.params.gain[:, None] * sensed
+        drive = self.relative_input(sensed) if self.relative else sensed
+        self.sensory[:, :self.n_wall] = self.params.gain[:, None] * drive
         inputs = self.sensory if self.extra is None else self.sensory + self.extra
         self.y = ctrnn_step(self.y, self.output, self.Wt, self.params.tau, inputs)
         self.output = sigmoid(self.y + self.params.bias)

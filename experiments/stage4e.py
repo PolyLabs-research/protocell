@@ -24,13 +24,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+from dataclasses import dataclass
 import json
 import math
 import os
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import protocell  # noqa: F401  # pins the BLAS thread counts before numpy loads
 
@@ -63,6 +64,20 @@ JUDGE_COLUMNS = ("cell", "start", "survived", "fitness", "day_light", "day_beat"
 
 def world(quick: bool = False) -> Config:
     return stage4a.world(quick)
+
+
+@dataclass(frozen=True)
+class Stage:
+    """Which test this is: stage 4e's, or a later stage running the same test on a changed cell (stage 5b)."""
+
+    name: str
+    world: Callable[[bool], Config]
+    judge_seed: int
+    bootstrap_seed: int
+    out: Path
+
+
+STAGE4E = Stage("stage4e", world, JUDGE_SEED, BOOTSTRAP_SEED, DEFAULT_OUT)
 
 
 # --- designs ------------------------------------------------------------------------------------------------------------
@@ -301,10 +316,10 @@ def reference(cfg: Config, out: Path, quick: bool) -> Dict[str, Any]:
 
 
 def check(design_path: Path, out_root: Path, starts_wanted: Optional[Sequence[int]], quick: bool, budget: int = BUDGET,
-          require_clean: bool = True, trace_every: int = 0) -> Dict[str, Any]:
+          require_clean: bool = True, trace_every: int = 0, stage: Stage = STAGE4E) -> Dict[str, Any]:
     design = load(design_path)
     mode = design["mode"]
-    cfg = world(quick)
+    cfg = stage.world(quick)
     genome(cfg, design)  # refuses a design out of range before it costs a check
     out = out_root / mode
     git = git_state()
@@ -365,10 +380,10 @@ def note(out_root: Path, mode: str, text: str) -> None:
 
 # --- the judge (§5) -------------------------------------------------------------------------------------------------------
 
-def judge(design_path: Path, out_root: Path, quick: bool, require_clean: bool = True) -> Dict[str, Any]:
+def judge(design_path: Path, out_root: Path, quick: bool, require_clean: bool = True, stage: Stage = STAGE4E) -> Dict[str, Any]:
     design = load(design_path)
     mode = design["mode"]
-    cfg = world(quick)
+    cfg = stage.world(quick)
     out = out_root / mode
     if (out / "summary.json").exists():
         raise SystemExit(f"refusing: {mode} has been judged; one submission a mode")
@@ -378,17 +393,17 @@ def judge(design_path: Path, out_root: Path, quick: bool, require_clean: bool = 
     n = 8 if quick else JUDGE_STARTS
     chunk = 4 if quick else CHUNK
     settings = {"world": cfg.as_dict(), "mode": mode, "design": design, "design_sha": sha(design), "genome": genome(cfg, design).tolist(),
-                "judge_seed": JUDGE_SEED, "bootstrap_seed": BOOTSTRAP_SEED, "n_starts": n, "b8": {"tau": thrift.B8_TAU, "aim_tau": probe_rules.B8_AIM_TAU},
+                "judge_seed": stage.judge_seed, "bootstrap_seed": stage.bootstrap_seed, "n_starts": n, "b8": {"tau": thrift.B8_TAU, "aim_tau": probe_rules.B8_AIM_TAU},
                 "checks_used": len(_rows(out / "checks.csv")), "quick": quick}
-    manifest = build_manifest(protocol="stage4e", settings=settings, seeds=[JUDGE_SEED, BOOTSTRAP_SEED], extra={"out": str(out)})
+    manifest = build_manifest(protocol=stage.name, settings=settings, seeds=[stage.judge_seed, stage.bootstrap_seed], extra={"out": str(out)})
     t0 = time.time()
-    starts = sample_starts(cfg, "cave", n, JUDGE_SEED)
+    starts = sample_starts(cfg, "cave", n, stage.judge_seed)
     rows: List[Dict[str, Any]] = []
     cols: Dict[str, Dict[str, List[np.ndarray]]] = {}
     for lo in range(0, n, chunk):
         part = starts.take(range(lo, min(lo + chunk, n)))
         specs = {"written": spec(cfg, design, len(part)), "B8": thrift.cell_spec(cfg, "B8", len(part)), "B0": thrift.cell_spec(cfg, "B0", len(part))}
-        for name, r in run_cells(cfg, part, specs, JUDGE_SEED).items():
+        for name, r in run_cells(cfg, part, specs, stage.judge_seed).items():
             for k, v in r.items():
                 cols.setdefault(name, {}).setdefault(k, []).append(v)
     col = {name: {k: np.concatenate(v) for k, v in c.items()} for name, c in cols.items()}
@@ -396,7 +411,8 @@ def judge(design_path: Path, out_root: Path, quick: bool, require_clean: bool = 
         rows += [{"cell": name, "start": int(c["start"][i]), "survived": int(c["survived"][i]), "fitness": float(c["fitness"][i]),
                   "day_light": float(c["day_light"][i]), "day_beat": float(c["day_beat"][i]), "night_beat": float(c["night_beat"][i])}
                  for i in range(n)]
-    share, lo_, hi_ = _gap_share(col["written"]["fitness"], col["B8"]["fitness"], col["B0"]["fitness"], 200 if quick else RESAMPLES, MODES.index(mode) + 1)
+    share, lo_, hi_ = _gap_share(col["written"]["fitness"], col["B8"]["fitness"], col["B0"]["fitness"], 200 if quick else RESAMPLES, MODES.index(mode) + 1,
+                                 stage.bootstrap_seed)
     cells = {name: {"fitness": float(c["fitness"].mean()), "survival": float(c["survived"].mean()), "day_light": _mean(c["day_light"]),
                     "day_beat": _mean(c["day_beat"]), "night_beat": _mean(c["night_beat"])} for name, c in col.items()}
     beats_b8 = share > 1.0 and lo_ > 1.0
@@ -410,21 +426,22 @@ def judge(design_path: Path, out_root: Path, quick: bool, require_clean: bool = 
     return summary
 
 
-def _gap_share(cell: np.ndarray, b8: np.ndarray, b0: np.ndarray, resamples: int, key: int) -> Tuple[float, float, float]:
-    """Stage 4d's measure (``experiments.stage4d.gap_share``) with stage 4e's bootstrap seed."""
+def _gap_share(cell: np.ndarray, b8: np.ndarray, b0: np.ndarray, resamples: int, key: int,
+               seed: int = BOOTSTRAP_SEED) -> Tuple[float, float, float]:
+    """Stage 4d's measure (``experiments.stage4d.gap_share``) with the stage's own bootstrap seed."""
     def share(idx: np.ndarray) -> np.ndarray:
         return (cell[idx].mean(axis=-1) - b0[idx].mean(axis=-1)) / (b8[idx].mean(axis=-1) - b0[idx].mean(axis=-1))
     point = float(share(np.arange(cell.shape[0])))
-    idx = stream(BOOTSTRAP_SEED, "bootstrap", (key,)).integers(0, cell.shape[0], size=(resamples, cell.shape[0]))
+    idx = stream(seed, "bootstrap", (key,)).integers(0, cell.shape[0], size=(resamples, cell.shape[0]))
     boot = share(idx)
     return point, float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))
 
 
 # --- the command line -----------------------------------------------------------------------------------------------------
 
-def main(argv: Optional[Sequence[str]] = None) -> Any:
+def main(argv: Optional[Sequence[str]] = None, stage: Stage = STAGE4E) -> Any:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--out", type=Path, default=stage.out)
     parser.add_argument("--quick", action="store_true", help="the smoke test's 2,000-tick day: not a result")
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("genome")
@@ -450,7 +467,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     p = sub.add_parser("judge")
     p.add_argument("design", type=Path)
     args = parser.parse_args(argv)
-    cfg = world(args.quick)
+    cfg = stage.world(args.quick)
     if args.command == "genome":
         design = load(args.design)
         g = genome(cfg, design)
@@ -478,7 +495,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
                 f"noise {args.noise}: final beat {result['mean_beat'][-1]:.4f} forward {result['forward'][-1]:.4f} left {result['left'][-1]:.4f}\n")
         return result
     if args.command == "check":
-        r = check(args.design, args.out, args.starts, args.quick, trace_every=args.trace)
+        r = check(args.design, args.out, args.starts, args.quick, trace_every=args.trace, stage=stage)
         print(f"check {r['check']} ({r['remaining']} left): fitness {r['fitness']:.3f} (B8 {r['b8_fitness']:.3f}, B0 {r['b0_fitness']:.3f}), "
               f"survival {r['survival']:.0%}, gap share {r['gap']:.2f}, day light {r['day_light']:.3f}, day beat {r['day_beat']:.3f}, "
               f"night beat {r['night_beat']:.3f}, reached {r['reached']:.0%} [{r['seconds']:.0f} s]")
@@ -486,7 +503,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     if args.command == "note":
         note(args.out, args.mode, args.text)
         return None
-    s = judge(args.design, args.out, args.quick)
+    s = judge(args.design, args.out, args.quick, stage=stage)
     c = s["cells"]
     print(f"judge {s['mode']}: written {c['written']['fitness']:.3f} ({c['written']['survival']:.0%}), B8 {c['B8']['fitness']:.3f}, "
           f"B0 {c['B0']['fitness']:.3f}; closes {s['gap_share']:.3f} [{s['gap_low']:.3f}, {s['gap_high']:.3f}]: {s['verdict']}"

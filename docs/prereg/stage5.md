@@ -77,6 +77,22 @@ The owner said "proceed", so these defaults stand unless changed:
 - tau_A = 10 s and k = 0.1, as fixed constants;
 - stage 5b's budget of 50 checks per mode.
 
+**Stage 5a's outcome (2026-11-07, before stage 5b).**
+- **The build:** `sensing`, `adapt_tau` and `sense_floor` in `protocell/config.py`, and the transduction in
+  `protocell/sim.py`'s Network.
+- **The tool:** stage 5b reuses stage 4e's (`experiments/stage5b.py` over `experiments/stage4e.py`). Stage 4e's test,
+  seeds and folder are unchanged.
+
+| check | outcome |
+|---|---|
+| C1 | ✓ the full suite passes with sensing absolute (175 tests), the pinned hash among them |
+| C2 | ✓ a 1% step after adapting gives the same input at light 2 and 20, within 5% (`tests/test_stage5.py`) |
+| C3 | ✓ a steady rise of 0.004 a tick gives a mean input within 5% of log(1 + 10 x 0.004); a fall gives a negative one |
+| C4 | ✓ a relative run is the same bits twice, and each cell alone matches the batch |
+| C5 | ✓ in the quick world, B8's and B0's per-start numbers are the same with the relative cell as without (`tests/test_stage5b.py`); the full-size reference is compared at stage 5b's first check |
+
+The light across the body also reads as a direction: the brightest node gets the most input (tested).
+
 ## 8. What would change this document
 
 The owner's changes to §7, and the 5a checks' outcome, as dated notes before stage 5b. 5b's outcome after its judge.
