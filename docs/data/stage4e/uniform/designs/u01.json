@@ -1,0 +1,17 @@
+{
+ "mode": "uniform",
+ "why": "The uniform core cannot see or drive a direction, so the wall must carry it: a winner-take-all bump on the ring, released in bursts (B6's read-then-run, done by the ring). Between bursts the wall is held quiet and each node's state (tau 3) integrates its own light, a picture of the light around the body. R (clean switch, self 7) and its timer Q make a pacemaker gated by the dark detector D; each burst drives every wall node up (+6 from R), the brightest nodes cross first, their self- and neighbour-excitation (self 2, neighbours 1.5 each) recruits a small bump, and G (fast global inhibition on the uniform sum, -8) silences the rest. The bump's beats pull the cell toward its own side (alpha 0), toward the light. When R ends the burst, the bump decays (wall tau 3) before the next reading. S1-S3 adapt the wall as in fourier1 (uniform spokes, self 3.5, tau 100). D (near-critical on the uniform sum) keeps the cell quiet at night. Expected: bursts that pull toward brighter light in the mid field, nearly random in the far field, where the light across the body is ~30x below the sensors' noise.",
+ "wall": {"bias": -3.0, "tau": 3.0, "gain": 2.5, "self": 2.0, "from_cw": 1.5, "from_ccw": 1.5},
+ "alpha": 0.0,
+ "core": [
+  {"name": "S1", "bias": -8.0, "tau": 100.0, "in": 8.0, "out": -8.0},
+  {"name": "S2", "bias": -8.0, "tau": 100.0, "in": 8.0, "out": -8.0},
+  {"name": "S3", "bias": -8.0, "tau": 100.0, "in": 8.0, "out": -8.0},
+  {"name": "G", "bias": -4.0, "tau": 1.0, "in": 2.0, "out": -8.0},
+  {"name": "R", "bias": -6.0, "tau": 1.0, "out": 6.0},
+  {"name": "Q", "bias": -4.0, "tau": 20.0},
+  {"name": "D", "bias": -5.6, "tau": 10.0, "in": 4.0}
+ ],
+ "links": [["S1", "S1", 3.5], ["S2", "S2", 3.5], ["S3", "S3", 3.5],
+           ["R", "R", 7.0], ["Q", "R", -8.0], ["R", "Q", 7.5], ["D", "R", 3.43], ["D", "D", 4.3]]
+}

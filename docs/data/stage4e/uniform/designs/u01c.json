@@ -1,0 +1,102 @@
+{
+ "mode": "uniform",
+ "why": "Uniform design 1, recalibrated again. D reads the uniform sum with weight 8 (night ~3.92, light 0.14 ~4.44: a gap of ~0.5, where weight 4 left 0.06 and noise latched D on at night); D turns on above ~4.15 (bias -6.27, self 4.3). D drives R by 3.8 (3.43 left R short of firing). The rest as design 1: bursts release a winner-take-all bump at the brightest nodes, which pulls the cell toward the light.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 3.0,
+  "gain": 2.5,
+  "self": 2.0,
+  "from_cw": 1.5,
+  "from_ccw": 1.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "G",
+   "bias": -4.0,
+   "tau": 1.0,
+   "in": 2.0,
+   "out": -8.0
+  },
+  {
+   "name": "R",
+   "bias": -6.0,
+   "tau": 1.0,
+   "out": 6.0
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 20.0
+  },
+  {
+   "name": "D",
+   "bias": -6.27,
+   "tau": 10.0,
+   "in": 8.0
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ],
+  [
+   "R",
+   "R",
+   7.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "Q",
+   7.5
+  ],
+  [
+   "D",
+   "R",
+   3.8
+  ],
+  [
+   "D",
+   "D",
+   4.3
+  ]
+ ]
+}

@@ -1,0 +1,102 @@
+{
+ "mode": "uniform",
+ "why": "Uniform design 2: design 1 (recalibrated) with a real winner-take-all bump. The burst drive rises slowly (R tau 3, drive +5), so during each burst's rise the nodes whose integrated light is highest cross first. Their self- and neighbour-excitation (self 3, neighbours 2) holds a bump of ~3 nodes, and G (4 x sum, bias -8, tau 1, -8 to all) switches on once ~2-3 nodes are active and silences the rest. The bump's beats pull the cell toward the brightest side. Expected: a clear pull toward brighter light in the mid field; little in the far field, where the light across the body is far below the sensors' noise.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 3.0,
+  "gain": 2.5,
+  "self": 3.0,
+  "from_cw": 2.0,
+  "from_ccw": 2.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": 8.0,
+   "out": -8.0
+  },
+  {
+   "name": "G",
+   "bias": -8.0,
+   "tau": 1.0,
+   "in": 4.0,
+   "out": -8.0
+  },
+  {
+   "name": "R",
+   "bias": -6.0,
+   "tau": 3.0,
+   "out": 5.0
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 20.0
+  },
+  {
+   "name": "D",
+   "bias": -6.27,
+   "tau": 10.0,
+   "in": 8.0
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ],
+  [
+   "R",
+   "R",
+   7.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "Q",
+   7.5
+  ],
+  [
+   "D",
+   "R",
+   3.8
+  ],
+  [
+   "D",
+   "D",
+   4.3
+  ]
+ ]
+}
