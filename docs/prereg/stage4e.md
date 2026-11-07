@@ -121,6 +121,83 @@ The tool is `experiments/stage4e.py`. Its commands are `genome`, `probe`, `check
 budget, writes each design's reason to the notebook before its check runs, and refuses a check from a tree with tracked
 changes. The judge runs once per mode.
 
+**The outcome (2026-11-07).**
+
+The data are in `docs/data/stage4e/`: each mode's notebook, designs, logged probes, checks with their traces, and judge.
+- **How:** everything ran on this machine as one process, from clean trees with warnings as errors. The tool was committed
+  before each check.
+- **What was used:**
+  - **Fourier1:** 11 designs written (17 files with calibration variants), 170 probes, 5 world checks of 50.
+  - **Uniform:** 2 designs (4 files), 34 probes, 1 check of 50.
+
+**Neither written cell does B8's job.** On the judge's 100 fresh starts (seed 27):
+
+| | fourier1 cell (design 4) | uniform cell (design 2) | B8 | B0 |
+|---|---|---|---|---|
+| fitness | 0.152 | 0.149 | 0.554 | 0.156 |
+| survival | 0% | 0% | 93% | 0% |
+| light per daylight tick lived | 0.103 | 0.100 | 0.589 | 0.101 |
+| beat by day / by night | 0.048 / 0.041 | 0.038 / 0.036 | 0.096 / 0 | 0 / 0 |
+| share of the gap closed (95% interval) | -0.010 (-0.020, 0.001) | -0.018 (-0.021, -0.015) | | |
+| verdict | does not | does not | | |
+
+**The world checks** (24 validation starts, all 2,400–9,300 R from the mouth, where B8 survives 23 of 24):
+
+| check | design | what it tested | fitness | reached the soak region |
+|---|---|---|---|---|
+| fourier1 1 | 4 | B5 in the cell: adaptation, a fast/slow comparator, a run switch, a creep | 0.144 | 21% |
+| fourier1 2 | 8 | a symmetric dither whose phases weigh the light (lock-in) | 0.139 | 12% |
+| fourier1 3, 4 | 9, 10 | design 4 at gain 8 and 20, not recentred (confounded) | 0.137, 0.137 | 12%, 8% |
+| fourier1 5 | 11 | design 4 at gain 8, recentred on the far field | 0.136 | 12% |
+| uniform 1 | u2 | a winner-take-all ring bump released in bursts | 0.140 | 12% |
+
+Every check sat at B0's level (0.148 on these starts).
+
+**What blocked it, from the notebooks:**
+1. **The cell senses only through its beats** (constraint 1).
+   - Any motor act changes the sum the core reads by about 1–5 units. A far-field move gains about 0.05 of light signal,
+     so the move swamps it 20–100 times over.
+   - A CTRNN neuron forgets exponentially, so no neuron holds the light across a move.
+   - Run switches that read their own effects oscillate (designs 1, 5).
+   - In the world, a design that showed B5's behaviour in probes moved a lot without direction (check 5: median net
+     displacement 1,560 R, reached 3 of 24).
+   - First-harmonic spokes cannot isolate the side nodes a front-back drive leaves alone.
+2. **The cell has no gain control** (constraint 3).
+   - To use the bright light this economy demands (light 3–10), three adaptation neurons cap the gain near 2.5.
+   - At that gain, far-field light (0.04–0.14) moves the wall's input by under a tenth of a sigmoid's width: nearly the
+     same as night (measured sums 3.25 at night, 3.4–3.9 in the far field).
+   - Gain 8 separates night from far field (3.25 against 3.92–4.75) but saturates the wall above light ~3.4 (beat 1.0 at
+     light 5).
+3. **Eight core neurons are too few** for B6's read-then-run with memory kept clean. It needs readers, drivers, a timer,
+   adaptation and a dark gate: about 10.
+4. **The symmetric dither (design 8).** It gets round constraint 1 (the run's leak is the same in both phases) and the
+   information is there (far-field signal to noise ~2 per cycle). But the gain from light to motion is about 100 times
+   short; in the world the net displacement was 7–310 R over whole lives. My estimate of its mid-field drift was
+   optimistic.
+5. **Uniform.** Direction can come only from the ring. In the mid field the light across the body is about 16 times below
+   the sensors' noise per node per tick, so a ring winner-take-all picks noise winners. The pull in probes pointed the
+   right way but was ~0.0005 v_max at ten times the real contrast.
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. the fourier1 cell closes at least half the gap | ✗: -0.010 |
+| 2. it does not beat B8 | ✓ |
+| 3. it beats more by day than B8 (0.096) | ✗: 0.048. It beats at night instead (0.041 against B8's 0), the sensing cost constraint 1 predicts, but it runs far less by day |
+| 4. the uniform cell closes less of the gap than the fourier1 cell | ✓ narrowly: -0.018 against -0.010, both at B0's level |
+
+**By §6:** "does not" in both modes. The notebooks name what blocked each attempt.
+
+**Caveats:**
+- A failure is weaker evidence than a success would have been: the limit may be the writer.
+- Six of the hundred checks were used. The notebooks argue that further variants of these mechanisms meet the same walls,
+  but that is an argument, not a test.
+- Several of my calibrations missed and were redone in probes. One test (checks 3–4) was confounded, and one estimate (the
+  dither's drift) was optimistic.
+- The evolved cells did better than these written ones. Stage 3b's uniform champion scored 0.216 in stage 4a's checks and
+  reached the soak region on 42% of starts, against B0's level here.
+
 ## 10. What would change this document
 
 The owner's answers, as dated notes before the first weight. The outcome as a dated note after the judge. Nothing else.

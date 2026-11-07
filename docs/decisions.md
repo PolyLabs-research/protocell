@@ -1436,3 +1436,59 @@ directly, could help with a model this small, then: "Yes draft away".
 
 **Impact:** this entry; `docs/prereg/stage4e.md`; next, the owner's answers, then the build.
 
+## D25 — Stage 4e: neither hand-written cell does B8's job; the notebooks point at the cell's wiring
+
+**Date:** 2026-11-07  
+**Why:** D24, the owner's answers ("1. ok 50, 2. agree 3. agree. 4. go").  
+**Ran:**
+- The tool: `experiments/stage4e.py`, committed before each check.
+- The data:
+  - fourier1 at `30470ef`: 11 designs, 170 probes, 5 checks;
+  - uniform at `f0c9e2f`: 2 designs, 34 probes, 1 check.
+- The outcome is in `docs/prereg/stage4e.md`.
+- One process on this machine; nothing on RunPod.
+
+### A. Measured
+1. **Both verdicts are "does not".** The written cells score 0.152 (fourier1) and 0.149 (uniform) against B0's 0.156 and
+   B8's 0.554, on 100 fresh starts.
+2. **All six world checks sat at B0's level** (0.136–0.144 against 0.148), whatever the mechanism:
+   - B5's comparator;
+   - a lock-in dither;
+   - higher gain;
+   - a ring bump.
+3. **Three blockers, each quantified in the notebooks:**
+   - **The cell senses only through its beats.** Any move floods the sum the core reads 20–100 times beyond the far-field
+     light it gained, so nothing remembers light across a move. Seen in the world: B5's behaviour in probes became
+     undirected motion (check 5).
+   - **It has no gain control.** Covering the bright light the economy demands caps the gain near 2.5, where far-field
+     light reads almost like night. Raising the gain saturates the wall in bright light.
+   - **Eight core neurons** are too few for a read-then-run design that keeps its memory clean.
+4. **Predictions 1 and 3 fail; 2 and 4 hold.**
+5. **The evolved cells did better than mine:** stage 3b's uniform champion reached 42% of starts in stage 4a's checks;
+   my best reached 21%, and the judged cells sit at B0's level.
+
+### B. Reading
+1. **This is the strongest evidence yet that the cell is the limit, not only the searches.**
+   - Two searches (D18–D20) and a fit (D23) stalled.
+   - Writing by hand stalled on the same three parts of the wiring, at every attempt.
+   - It remains weaker evidence than a success: my design skill is in the result too.
+2. **The far field decides this world.** Every validation start begins far from the mouth, where B8 relies on comparing
+   light across its own moves and on exact relative sensing. This cell can do neither, for reasons in its wiring.
+3. **The strong sense cannot be tested with this cell in this world.** The cell cannot reach the bar, by evolution, by
+   fitting or by hand, so whether interacting parts beat every simple rule is not reached.
+
+### C. Decisions this surfaces (the owner's)
+1. **Change the cell, aimed at the blockers (recommended).** Two changes, each with a clear test:
+   - **Relative sensing.** The wall senses light relative to its own recent level, an adapting input, as real
+     photoreceptors do. This answers constraint 3.
+   - **Sensing apart from beating.** For example, the core reads the wall neurons' states rather than their beats, or a
+     sensor layer sits between the light and the wall. This answers constraint 1.
+
+   Either changes the organism, so each needs a draft, new checks, and then the hand-writing test again, cheaply, before
+   any evolution. Relative sensing first: it is one change at the input, and the dither notes say the information is
+   there.
+2. **Stop stage 4 here and write it up:** the world has room, and this cell, as wired, cannot use it, by search or by hand.
+3. **More hand-writing on this cell,** with 94 checks left. Not recommended: the blockers are structural.
+
+**Impact:** this entry; `docs/prereg/stage4e.md`; `experiments/stage4e.py`, `tests/test_stage4e.py`; `docs/data/stage4e/`.
+

@@ -33,8 +33,9 @@ that world passes its checks. Stage 4b's pilots (D18, D19): this search does not
 reach a working cell there, even one change at a time. Stage 4c's pilot (D20): CMA-ES, a stronger search, does no
 better; neither search makes a working cell thrifty. The thrift probe (D22): the working cells die mainly by finding
 too little light, about half of B8's, not by spending. Stage 4d (D23): a cell fitted to B8's beats by CMA-ES stalls at a
-match of 0.31 and does not carry B8, which leaves open whether the cell could. Stage 4e (D24, drafted): writing the
-cell by hand to do B8's job.
+match of 0.31 and does not carry B8, which leaves open whether the cell could. Stage 4e (D25): cells written by hand in both modes
+do not carry B8 either; the notebooks point at the cell's wiring (it senses only through its beats and has no gain
+control). The next step awaits the owner.
 
 ## Running
 
