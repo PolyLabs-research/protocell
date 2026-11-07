@@ -46,6 +46,14 @@ def test_steady_even_light_gives_no_input_at_any_level() -> None:
         assert np.allclose(u, 0.0, atol=1e-12)
 
 
+def test_r1_steady_darkness_reads_as_dark_and_steady_light_does_not() -> None:
+    cfg = _relative(sense_floor=0.01, level_floor=0.015)
+    dark = _inputs(cfg, np.zeros((50, cfg.n_wall)))
+    assert np.allclose(dark, math.log(0.01 / 0.015), atol=1e-12)
+    bright = _inputs(cfg, np.full((50, cfg.n_wall), 5.0))
+    assert np.allclose(bright, math.log(5.01 / 5.015), atol=1e-12) and abs(bright[-1, 0]) < 0.002
+
+
 def test_c2_the_input_is_relative_to_the_level() -> None:
     cfg = _relative()
     out = {}

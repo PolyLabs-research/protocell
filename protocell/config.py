@@ -82,12 +82,14 @@ class Config:
     cloud_sun_mean: float = 600.0
     cloud_shade_mean: float = 300.0
 
-    # stage 5's cell (docs/prereg/stage5.md §2): "absolute", the wall takes in its sensed light (every earlier stage), or
-    # "relative", each node takes in log((x_i + sense_floor) / (A + sense_floor)), x_i its sensed light floored at 0 and
-    # A an exponential average (time constant adapt_tau) of the wall's mean x, from the ticks before.
+    # stage 5's cell (docs/prereg/stage5.md §2, amendment R1): "absolute", the wall takes in its sensed light (every earlier
+    # stage), or "relative", each node takes in log((x_i + sense_floor) / (A + level_floor)), x_i its sensed light floored
+    # at 0 and A an exponential average (time constant adapt_tau) of the wall's mean x, from the ticks before. A level floor
+    # above the reading's makes steady darkness read as dark (log(sense_floor / level_floor) < 0).
     sensing: str = "absolute"
     adapt_tau: float = 10.0
     sense_floor: float = 0.1
+    level_floor: float = 0.1
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)

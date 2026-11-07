@@ -19,14 +19,14 @@ import protocell  # noqa: F401  # pins the BLAS thread counts before numpy loads
 from experiments import stage4a, stage4e
 from protocell.config import Config
 
-ADAPT_TAU, SENSE_FLOOR = 10.0, 0.1  # stage5.md §2
+ADAPT_TAU, SENSE_FLOOR, LEVEL_FLOOR = 10.0, 0.01, 0.015  # stage5.md §2, amendment R1
 JUDGE_SEED, BOOTSTRAP_SEED = 29, 30  # fresh
 DEFAULT_OUT = Path("docs/data/stage5b")
 
 
 def world(quick: bool = False) -> Config:
     """Stage 4a's world with stage 5's cell."""
-    return stage4a.world(quick).but(sensing="relative", adapt_tau=ADAPT_TAU, sense_floor=SENSE_FLOOR)
+    return stage4a.world(quick).but(sensing="relative", adapt_tau=ADAPT_TAU, sense_floor=SENSE_FLOOR, level_floor=LEVEL_FLOOR)
 
 
 STAGE5B = stage4e.Stage("stage5b", world, JUDGE_SEED, BOOTSTRAP_SEED, DEFAULT_OUT)

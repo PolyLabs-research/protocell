@@ -93,6 +93,19 @@ The owner said "proceed", so these defaults stand unless changed:
 
 The light across the body also reads as a direction: the brightest node gets the most input (tested).
 
+**Amendment R1 (2026-11-07, before stage 5b and any weight): darkness must read as dark.**
+- **The flaw:** with one floor on the reading and the level, steady darkness reads exactly as steady light, an input of
+  zero. No cell could then rest at night, as B5 and B8 do below light 0.01, or tell night from far-field light.
+- **The change:** the floors differ. Each node takes in log((x_i + k_r) / (A + k_a)), with the reading's floor
+  k_r = 0.01 just below the level's k_a = 0.015.
+- **Its effect:**
+  - steady darkness reads log(0.01 / 0.015) ≈ -0.41;
+  - above light ~0.3 the sensor is relative as before (steady light 1 reads -0.005);
+  - between, the input dips a little in dim light (steady light 0.14 reads -0.03);
+  - both floors sit above the sensors' noise (0.003), so night noise stays small.
+- **The code:** a `level_floor` beside `sense_floor`; the default keeps them equal (0.1), as the draft had.
+- **Nothing else changes:** C2-C4 hold above the floors (tested), and a test checks that darkness reads as dark.
+
 ## 8. What would change this document
 
 The owner's changes to §7, and the 5a checks' outcome, as dated notes before stage 5b. 5b's outcome after its judge.

@@ -285,10 +285,10 @@ class Network(Controller):
     def __init__(self, cfg: Config, params: Params) -> None:
         if cfg.sensing not in ("absolute", "relative"):
             raise ValueError(f"sensing is 'absolute' or 'relative', not {cfg.sensing!r}")
-        if cfg.sensing == "relative" and not (cfg.adapt_tau >= 1.0 and cfg.sense_floor > 0.0):
-            raise ValueError("relative sensing needs adapt_tau >= 1 tick and a positive sense_floor")
+        if cfg.sensing == "relative" and not (cfg.adapt_tau >= 1.0 and cfg.sense_floor > 0.0 and cfg.level_floor > 0.0):
+            raise ValueError("relative sensing needs adapt_tau >= 1 tick and positive sense_floor and level_floor")
         self.relative = cfg.sensing == "relative"
-        self.adapt_tau, self.sense_floor = float(cfg.adapt_tau), float(cfg.sense_floor)
+        self.adapt_tau, self.sense_floor, self.level_floor = float(cfg.adapt_tau), float(cfg.sense_floor), float(cfg.level_floor)
         self.level: Optional[np.ndarray] = None
         self.n_wall = cfg.n_wall
         self.params = params
@@ -300,12 +300,12 @@ class Network(Controller):
         self.extra = params.extra  # a constant input, when a pathway is held at its average (stage 1b)
 
     def relative_input(self, sensed: np.ndarray) -> np.ndarray:
-        """log((x_i + k) / (A + k)) with A from the ticks before, then A updated (stage5.md §2)."""
+        """log((x_i + k_r) / (A + k_a)) with A from the ticks before, then A updated (stage5.md §2, R1)."""
         x = np.maximum(sensed, 0.0)
         mean = x.mean(axis=1)
         if self.level is None:
             self.level = mean.copy()
-        out = np.log((x + self.sense_floor) / (self.level[:, None] + self.sense_floor))
+        out = np.log((x + self.sense_floor) / (self.level[:, None] + self.level_floor))
         self.level = self.level + (mean - self.level) / self.adapt_tau
         return out
 

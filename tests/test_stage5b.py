@@ -14,8 +14,8 @@ from tests.test_stage4e import _design, _write
 
 def test_the_world_is_stage_4as_with_the_relative_cell() -> None:
     cfg = stage5b.world()
-    assert cfg.sensing == "relative" and cfg.adapt_tau == 10.0 and cfg.sense_floor == 0.1
-    assert cfg.but(sensing="absolute", adapt_tau=10.0, sense_floor=0.1) == stage4e.world()
+    assert cfg.sensing == "relative" and cfg.adapt_tau == 10.0 and cfg.sense_floor == 0.01 and cfg.level_floor == 0.015
+    assert cfg.but(sensing="absolute", adapt_tau=10.0, sense_floor=0.1, level_floor=0.1) == stage4e.world()
     assert stage5b.STAGE5B.judge_seed == 29 and stage5b.STAGE5B.bootstrap_seed == 30
 
 
