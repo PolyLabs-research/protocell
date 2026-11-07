@@ -35,7 +35,7 @@ better; neither search makes a working cell thrifty. The thrift probe (D22): the
 too little light, about half of B8's, not by spending. Stage 4d (D23): a cell fitted to B8's beats by CMA-ES stalls at a
 match of 0.31 and does not carry B8, which leaves open whether the cell could. Stage 4e (D25): cells written by hand in both modes
 do not carry B8 either; the notebooks point at the cell's wiring (it senses only through its beats and has no gain
-control). The next step awaits the owner.
+control). Stage 5 (D26, drafted): a cell that senses light relative to its recent level.
 
 ## Running
 

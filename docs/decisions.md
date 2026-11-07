@@ -1492,3 +1492,23 @@ directly, could help with a model this small, then: "Yes draft away".
 
 **Impact:** this entry; `docs/prereg/stage4e.md`; `experiments/stage4e.py`, `tests/test_stage4e.py`; `docs/data/stage4e/`.
 
+## D26 — The owner's decision on D25: change the cell, relative sensing first
+
+**Date:** 2026-11-07  
+**Why:** the owner on D25 C: "Agree, 1, proceed".
+
+### Decided
+1. **Stage 5: the cell senses light relative to its recent level.** One adaptation level for the whole wall, an average
+   of the light it senses; each node's input is the log of its light over that level, with a floor.
+   - **What it answers:** no gain control, and no memory across motion. B5's comparison then happens in the sensor, which
+     the cell's own runs cannot flood.
+   - **What it leaves:** eight core neurons.
+   - Sensing apart from beating waits for this change's result.
+2. **The plan** is the draft `docs/prereg/stage5.md`:
+   - 5a, checks before any writing;
+   - 5b, stage 4e's hand-writing test on the new cell;
+   - then evolution, as the owner's call.
+3. **It proceeds on the draft's defaults** (its §7), open to the owner's change.
+
+**Impact:** this entry; `docs/prereg/stage5.md`; next, the build and the 5a checks.
+
