@@ -430,7 +430,13 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
         light = light_scenario(cfg, args.scenario, args.level, args.rise, args.contrast, math.radians(args.angle), args.ticks, args.before)
         result = run_probe(cfg, design, light, args.noise)
         names = [c.get("name", f"c{j}") for j, c in enumerate(design.get("core", []))]
-        lines = probe_table(result, light, names, args.every)
+        lines = probe_table(result, light, names, args.every) if args.every > 0 else []
+        cut = min(args.before, args.ticks)
+        for label, sl in (("before", slice(0, cut)), ("after", slice(cut, args.ticks))):
+            if sl.stop > sl.start:
+                lines.append(f"{label:6s}: mean beat {result['mean_beat'][sl].mean():.4f}, forward {result['forward'][sl].mean():+.4f}, "
+                             f"running (forward > 0.25) {np.mean(result['forward'][sl] > 0.25):.0%}, core " +
+                             " ".join(f"{n}={v:.3f}" for n, v in zip(names, result["core"][sl].mean(axis=0))))
         print("\n".join(lines))
         _append(args.out / design["mode"] / "probes.log", f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} {args.design.name} ({sha(design)}) "
                 f"{args.scenario} level {args.level} rise {args.rise} contrast {args.contrast} angle {args.angle} ticks {args.ticks} before {args.before} "
