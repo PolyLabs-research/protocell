@@ -18,3 +18,5 @@
 Share of the gap from B0 to B8 on these starts: -0.02. Check 1 of 50; 28 s; code 30470ef.
 
 **Learnt (2026-11-07 19:23 UTC):** Check 1 (uniform design 2): 0.140, reached 12%, none survived; B0's level as predicted. Submission: uniform design 2, the only design checked. Its probes and the physics (light across the body ~16x below sensor noise per node per tick in the mid field) say further bump tuning tests the tuning, not the cell.
+
+**Learnt (2026-11-07 20:52 UTC):** Correction (after the outcome): the '~16x below sensor noise' figure in the notes above mixed units. At 2,500 R each node's light deviates by ~0.0004 against noise of 0.0032 per tick: ~8x below. The conclusion stands.

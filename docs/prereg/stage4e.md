@@ -198,6 +198,11 @@ Every check sat at B0's level (0.148 on these starts).
 - The evolved cells did better than these written ones. Stage 3b's uniform champion scored 0.216 in stage 4a's checks and
   reached the soak region on 42% of starts, against B0's level here.
 
+**Correction (2026-11-07, after the outcome note).** Item 5 of "What blocked it" says the light across the body in the mid
+field is "about 16 times below the sensors' noise per node per tick". That mixed units: light in one, wall input in the
+other. At 2,500 R each node's light deviates by about 0.0004 against noise of 0.0032 per tick: about 8 times below. The
+conclusion stands: a ring winner-take-all pooling a few nodes still picks noise winners.
+
 ## 10. What would change this document
 
 The owner's answers, as dated notes before the first weight. The outcome as a dated note after the judge. Nothing else.
