@@ -1,0 +1,15 @@
+{
+ "mode": "fourier1",
+ "why": "Stage A of design 2, probes only: the resting cell. Wall gain 3, bias -3, fast. K is tonic (bias +8) and tilts the wall forward (out 1.5 cos theta), so at rest the cell creeps ahead at about 1.6 R/tick, the motion its comparison will read. S1-S3 adapt slowly (tau 100, so the loop stays stable while staying steep: spokes in 8 - 8 cos theta, bias -8), pressing the wall down (-8 each) as the light grows. F (tau 3) and SL (tau 30) read the same front-blind sum with the same bias, to show where they sit across light levels.",
+ "wall": {"bias": -3.0, "tau": 1.0, "gain": 3.0},
+ "alpha": 0.0,
+ "core": [
+  {"name": "K", "bias": 8.0, "tau": 1.0, "out": [0.0, 1.5, 0.0]},
+  {"name": "S1", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S2", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S3", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "F", "bias": -8.0, "tau": 3.0, "in": [8.0, -8.0, 0.0]},
+  {"name": "SL", "bias": -8.0, "tau": 30.0, "in": [8.0, -8.0, 0.0]}
+ ],
+ "links": []
+}

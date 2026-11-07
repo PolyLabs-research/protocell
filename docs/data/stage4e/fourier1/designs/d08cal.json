@@ -1,0 +1,144 @@
+{
+ "mode": "fourier1",
+ "why": "Design 8 calibration, probes only: design 7's dither with drive +-4 (K -4 cos theta, P +8 cos theta) and slower phases (Q tau 20), with the readers A and B cut off from Q, to measure the wall's uniform sum in each phase (mean beat = sum / 16) across light levels, and check that the two phases' sums match in steady light.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "K",
+   "bias": 8.0,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    -4.0,
+    0.0
+   ]
+  },
+  {
+   "name": "P",
+   "bias": 3.0,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -2.0,
+   "tau": 20.0
+  },
+  {
+   "name": "A",
+   "bias": -7.6,
+   "tau": 1.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "B",
+   "bias": -3.6,
+   "tau": 1.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ],
+  [
+   "P",
+   "P",
+   7.0
+  ],
+  [
+   "Q",
+   "P",
+   -8.0
+  ],
+  [
+   "P",
+   "Q",
+   7.14
+  ],
+  [
+   "P",
+   "A",
+   4.0
+  ],
+  [
+   "P",
+   "B",
+   -4.0
+  ]
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "mode": "fourier1",
+ "why": "A pacemaker steered by rising light, gated by a dark detector. Wall, adaptation (S1-S3) and comparator (F, SL at bias -5.2) as design 4. D is a near-critical switch (self 4.3, bias -5.54) on the wall's front-blind sum: off at night (sum ~3.25), on from light ~0.045 (sum ~3.43), so the cell rests at night as B8 does. With D on, R (self 5, bias -4) and its timer Q (tau 30, driven 4.5 by R, bias -4) form a pacemaker: R fires a burst (front half beats), Q rises and ends it after ~8 ticks, Q decays and R fires again after ~56 ticks (duty ~12%, B5's exploring runs built in). F - SL shifts R's input: after a burst that raised the light, R fires again sooner (in the far field about twice as soon); after one that lowered it, R stays quiet until SL forgets. B5's run-while-rising, as a pace that speeds up going uphill and stops going downhill. No bright-light gate: near the mouth the cell hops and stays, since hops away lower the light.",
+ "wall": {"bias": -3.0, "tau": 1.0, "gain": 2.5},
+ "alpha": 0.0,
+ "core": [
+  {"name": "S1", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S2", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S3", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "F", "bias": -5.2, "tau": 3.0, "in": [8.0, -8.0, 0.0]},
+  {"name": "SL", "bias": -5.2, "tau": 30.0, "in": [8.0, -8.0, 0.0]},
+  {"name": "R", "bias": -4.0, "tau": 1.0, "out": [-1.0, 8.0, 0.0]},
+  {"name": "Q", "bias": -4.0, "tau": 30.0},
+  {"name": "D", "bias": -5.54, "tau": 10.0, "in": [8.0, -8.0, 0.0]}
+ ],
+ "links": [["S1", "S1", 3.5], ["S2", "S2", 3.5], ["S3", "S3", 3.5],
+           ["F", "R", 8.0], ["SL", "R", -8.0], ["R", "R", 5.0], ["D", "R", 1.9], ["Q", "R", -8.0], ["R", "Q", 4.5], ["D", "D", 4.3]]
+}

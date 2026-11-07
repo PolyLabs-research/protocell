@@ -1,0 +1,159 @@
+{
+ "mode": "fourier1",
+ "why": "Design 7's dither made symmetric and given gain, aimed at the mid field. P is the phase switch (self 7, bias +3: on while Q < ~0.72, off once Q > ~0.90) and Pb its clean complement (sigmoid(4 - 8 P)). They push the wall +3 cos theta and -3 cos theta (P's and Pb's spokes), so the two phases sag alike as P's output does, mirror images. A and B read the uniform sum with negative spokes (-4), so their bias fits (-1.6), each lifted into range only in its own phase (A by +8 P, B by +8 Pb); a brighter phase makes its reader lower. Q (tau 12, bias 1.04) is driven by P (+1.06), A (+4) and B (-4). Phase lengths depend on how near Q's targets sit to P's thresholds (~0.5 in steady light), so a brighter forward phase (A lower) lasts longer and a darker backward phase (B higher) ends sooner: drift up the gradient. Q's drive from P equals the sum of P's thresholds in Q's units (-0.1 + 1.16), which keeps the phases equal in steady light; the readers' common level sets the phase length. S1-S3 adapt as before. Expected: steering in the mid field (~0.5 R/tick by calculation at 2,500 R), little in the far field.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    0.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "P",
+   "bias": 3.0,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    3.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Pb",
+   "bias": 4.0,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    -3.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": 1.04,
+   "tau": 12.0
+  },
+  {
+   "name": "A",
+   "bias": -1.6,
+   "tau": 1.0,
+   "in": [
+    -4.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "B",
+   "bias": -1.6,
+   "tau": 1.0,
+   "in": [
+    -4.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ],
+  [
+   "P",
+   "P",
+   7.0
+  ],
+  [
+   "Q",
+   "P",
+   -8.0
+  ],
+  [
+   "P",
+   "Pb",
+   -8.0
+  ],
+  [
+   "P",
+   "Q",
+   1.06
+  ],
+  [
+   "A",
+   "Q",
+   4.0
+  ],
+  [
+   "B",
+   "Q",
+   -4.0
+  ],
+  [
+   "P",
+   "A",
+   8.0
+  ],
+  [
+   "Pb",
+   "B",
+   8.0
+  ]
+ ]
+}

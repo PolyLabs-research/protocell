@@ -1,0 +1,159 @@
+{
+ "mode": "fourier1",
+ "why": "Design 2 with two repairs. (1) The adaptation neurons S1-S3 excite themselves (3.5), so they pin the wall's resting sum within ~5.7-7.1 from light 1.4 to 9 (it rides from 3.3 to 4.8 below light 1, where they are not engaged). (2) F and SL read the wall with half the weight (4 - 4 cos theta) and bias -2.6, so the whole range (half-sum 1.65-3.6) lies on the sensitive part of their curve, at half the slope. The rest as design 2: creep from R's leaky resting output, bursts when the light has been rising, Q times the bursts, H parks the cell in bright light. Expected: bursts that follow rising light in mid and far field, parking near the mouth.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -2.6,
+   "tau": 3.0,
+   "in": [
+    4.0,
+    -4.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.6,
+   "tau": 30.0,
+   "in": [
+    4.0,
+    -4.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -2.2,
+   "tau": 1.0,
+   "out": [
+    -1.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 10.0
+  },
+  {
+   "name": "H",
+   "bias": -5.0,
+   "tau": 10.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   4.3
+  ],
+  [
+   "R",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "H",
+   4.0
+  ],
+  [
+   "S2",
+   "H",
+   4.0
+  ],
+  [
+   "S3",
+   "H",
+   4.0
+  ],
+  [
+   "H",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ]
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "mode": "fourier1",
+ "why": "Creep, compare, burst. The wall (gain 2.5, bias -3) senses; S1-S3 adapt it slowly and stably (tau 100, steep spokes 8 - 8 cos theta, bias -8, out -8 each, enough for light up to about 10). F (tau 3) and SL (tau 30) read the same front-blind sum with the same bias (-4, centred for far-field light), so F - SL is zero in steady light and positive when the light grew over the last ~30 ticks. R is a near-critical switch on 8 (F - SL) (self 4.3, bias -2.2: on above +0.08, off below +0.02). Its leaky resting output (~0.23) tilts the wall forward through R's spokes (-1.0 + 8 cos theta), so at rest the cell creeps ahead at ~2 R/tick, supplying the motion the comparison reads, and creeps faster as the comparison nears its threshold. When the light has been rising, R fires and the front half beats: a burst at ~8 R/tick. Q times the burst (tau 10, driven by R, cuts R off after ~8 ticks) and holds a short refractory while F and SL recover from the burst's own beats. H silences R in bright light (driven by the S's, the light level), so near the mouth the cell parks instead of creeping. Expected: B5-like runs toward light from far away, parking near the mouth, low cost at rest.",
+ "wall": {"bias": -3.0, "tau": 1.0, "gain": 2.5},
+ "alpha": 0.0,
+ "core": [
+  {"name": "S1", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S2", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S3", "bias": -8.0, "tau": 100.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "F", "bias": -4.0, "tau": 3.0, "in": [8.0, -8.0, 0.0]},
+  {"name": "SL", "bias": -4.0, "tau": 30.0, "in": [8.0, -8.0, 0.0]},
+  {"name": "R", "bias": -2.2, "tau": 1.0, "out": [-1.0, 8.0, 0.0]},
+  {"name": "Q", "bias": -4.0, "tau": 10.0},
+  {"name": "H", "bias": -5.0, "tau": 10.0}
+ ],
+ "links": [["F", "R", 8.0], ["SL", "R", -8.0], ["R", "R", 4.3], ["R", "Q", 8.0], ["Q", "R", -8.0],
+           ["S1", "H", 4.0], ["S2", "H", 4.0], ["S3", "H", 4.0], ["H", "R", -8.0]]
+}

@@ -1,0 +1,17 @@
+{
+ "mode": "fourier1",
+ "why": "B5 in the cell. The wall (gain 4, bias -3, fast) senses; four slow adaptation neurons S1-S4 (tau 20) read the wall through front-blind spokes (8 - 8 cos theta, so a run's front beats barely register) and press it back down (-8 each), holding it at a low resting beat (about 0.06) across light up to about 8. F and SL read the same sum with the same bias, F fast (tau 1) and SL slow (tau 3): F - SL is zero in steady light at any level and positive while the light rises, B5's comparison. R1 is a near-critical switch (self link 4.8, bias -2.6) on 8 (F - SL): on above about 0.31, off below about 0.09, so it holds through a run while the light keeps rising. R2 cleans R1's leaky off-state into a real off, and drives the front half of the wall (out -1.4 + 8 cos theta: front nodes beat, back nodes stop; the -1.4 makes the front-blind sum see almost no change from the run itself). No aim: the run goes straight ahead and the rotational noise turns the cell while it waits, as B5.",
+ "wall": {"bias": -3.0, "tau": 1.0, "gain": 4.0, "self": 0.0, "from_cw": 0.0, "from_ccw": 0.0},
+ "alpha": 0.0,
+ "core": [
+  {"name": "S1", "bias": -8.0, "tau": 20.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S2", "bias": -8.0, "tau": 20.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S3", "bias": -8.0, "tau": 20.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S4", "bias": -8.0, "tau": 20.0, "in": [8.0, -8.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "F", "bias": -8.0, "tau": 1.0, "in": [8.0, -8.0, 0.0], "out": [0.0, 0.0, 0.0]},
+  {"name": "SL", "bias": -8.0, "tau": 3.0, "in": [8.0, -8.0, 0.0], "out": [0.0, 0.0, 0.0]},
+  {"name": "R1", "bias": -2.6, "tau": 1.0, "in": [0.0, 0.0, 0.0], "out": [0.0, 0.0, 0.0]},
+  {"name": "R2", "bias": -6.0, "tau": 1.0, "in": [0.0, 0.0, 0.0], "out": [-1.4, 8.0, 0.0]}
+ ],
+ "links": [["F", "R1", 8.0], ["SL", "R1", -8.0], ["R1", "R1", 4.8], ["R1", "R2", 8.0]]
+}

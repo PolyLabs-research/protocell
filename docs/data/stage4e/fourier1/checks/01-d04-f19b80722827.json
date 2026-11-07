@@ -1,0 +1,159 @@
+{
+ "mode": "fourier1",
+ "why": "Design 2's full-weight comparator (F and SL read 8 - 8 cos theta), with design 3's self-pinned adaptation (S1-S3 self 3.5) holding the front-blind sum between ~3.3 (dark) and ~7.1 (light 9). F and SL's bias -5.2 centres that whole span on their curve, so the comparator keeps its full slope from far field to bright light. Expected: noise near R's threshold fires exploring bursts at rest (as B5's runs), a burst that raised the light leaves F above SL and fires the next, and falling light quiets it; parking in bright light (H).",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -5.2,
+   "tau": 3.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -5.2,
+   "tau": 30.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -2.2,
+   "tau": 1.0,
+   "out": [
+    -1.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 10.0
+  },
+  {
+   "name": "H",
+   "bias": -5.0,
+   "tau": 10.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   4.3
+  ],
+  [
+   "R",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "H",
+   4.0
+  ],
+  [
+   "S2",
+   "H",
+   4.0
+  ],
+  [
+   "S3",
+   "H",
+   4.0
+  ],
+  [
+   "H",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ]
+ ]
+}

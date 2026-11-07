@@ -1,0 +1,104 @@
+{
+ "mode": "fourier1",
+ "why": "Stage A of design 3, probes only: design 2's adaptation with each slow neuron exciting itself (2.0), so it is steeper and pins the wall's resting level more tightly across light. F and SL at bias -8 report where the sum sits: u = 8 + logit(F). The creep neuron K is kept at 1.5.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "K",
+   "bias": 8.0,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    1.5,
+    0.0
+   ]
+  },
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -8.0,
+   "tau": 3.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   2.0
+  ],
+  [
+   "S2",
+   "S2",
+   2.0
+  ],
+  [
+   "S3",
+   "S3",
+   2.0
+  ]
+ ]
+}

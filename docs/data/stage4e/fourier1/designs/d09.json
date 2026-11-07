@@ -1,0 +1,159 @@
+{
+ "mode": "fourier1",
+ "why": "A test of the range trade-off, not a candidate: design 4 with the wall's gain raised from 2.5 to 8. The adaptation (24 units) then covers light only up to ~3.4; above that the walls saturate and beat flat out. Prediction: at gain 8 the far field moves the wall 3.2x as much, so the cell finds the soak region more often than design 4's 21%, but it starves in bright light (cost ~2x resting) and survival stays ~0. If so, the gain the far field needs is the gain bright light forbids.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 8.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -5.2,
+   "tau": 3.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -5.2,
+   "tau": 30.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -2.2,
+   "tau": 1.0,
+   "out": [
+    -1.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 10.0
+  },
+  {
+   "name": "H",
+   "bias": -5.0,
+   "tau": 10.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   4.3
+  ],
+  [
+   "R",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "H",
+   4.0
+  ],
+  [
+   "S2",
+   "H",
+   4.0
+  ],
+  [
+   "S3",
+   "H",
+   4.0
+  ],
+  [
+   "H",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ]
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "beats_b8": false,
+ "cells": {
+  "B0": {
+   "day_beat": 0.0,
+   "day_light": 0.10063479523648379,
+   "fitness": 0.15594805925106991,
+   "night_beat": 0.0,
+   "survival": 0.0
+  },
+  "B8": {
+   "day_beat": 0.0955386522670512,
+   "day_light": 0.5890029857201453,
+   "fitness": 0.5541890475105545,
+   "night_beat": 0.0,
+   "survival": 0.93
+  },
+  "written": {
+   "day_beat": 0.048319428216055484,
+   "day_light": 0.10345239396069811,
+   "fitness": 0.15207338183549848,
+   "night_beat": 0.040977415871839666,
+   "survival": 0.0
+  }
+ },
+ "checks_used": 5,
+ "design": "d04.json",
+ "design_sha": "f19b80722827",
+ "gap_high": 0.0012444952172165893,
+ "gap_low": -0.02022748949758847,
+ "gap_share": -0.009729479209324333,
+ "mode": "fourier1",
+ "quick": false,
+ "verdict": "does not"
+}

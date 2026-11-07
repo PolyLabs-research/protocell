@@ -1,0 +1,154 @@
+{
+ "mode": "fourier1",
+ "why": "Design 5's light-gated pacemaker with R as a clean switch: self 7 and bias -6 (on above an input of 3.22, off below 1.78, resting output ~0.025), so R's resting state no longer tilts the wall into an F-R oscillation. With D on, D drives R by 3.43; Q (tau 20, driven 7.5 by R, bias -4) ends a burst after ~8 ticks and lets R fire again only when Q has decayed near its floor (~50 ticks), where a small push from F - SL moves the timing a lot: about 33 ticks after a burst that raised far-field light by B5's margin, never while F < SL. No resting creep: motion comes only from bursts, as B5's from its runs.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -5.2,
+   "tau": 3.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -5.2,
+   "tau": 30.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -6.0,
+   "tau": 1.0,
+   "out": [
+    -1.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 20.0
+  },
+  {
+   "name": "D",
+   "bias": -5.62,
+   "tau": 10.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ],
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   7.0
+  ],
+  [
+   "D",
+   "R",
+   3.43
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "Q",
+   7.5
+  ],
+  [
+   "D",
+   "D",
+   4.3
+  ]
+ ]
+}

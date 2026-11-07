@@ -1,0 +1,19 @@
+{
+ "mode": "fourier1",
+ "why": "A symmetric dither whose phases weigh the light: B5's comparison without memory across a move. P is a clean switch (self 7, bias +3: on while Q < ~0.72, off once Q > ~0.90). With K (tonic, out -2 cos theta), P's spokes (+4 cos theta) push the wall +2 cos theta in P's phase (forward, ~2.6 R/tick) and -2 cos theta out of it (backward). Q (tau 12, bias -2) rises in the forward phase (driven 7.14 by P) and falls in the backward one, so each phase lasts ~10 ticks. A reads the wall's uniform sum (spokes 2), lifted into its sensitive range only in the forward phase (+4 from P, bias -7.6). B reads the same sum only in the backward phase (-4 from P, bias -3.6). The dither's leak into the uniform sum is identical in both phases (front and back pushes mirror each other), so A - B is the light difference between the two positions. A slows Q's rise (-4) and B slows its fall (+4): a brighter forward phase lasts longer and a brighter backward one shorter, so the dither drifts up the gradient. Q's drive 7.14 equals the sum of its thresholds in y (2.94 + 4.20), which keeps the two phases equal in steady light at any level. S1-S3 adapt the wall as before (uniform spokes, self 3.5, tau 100). Expected: no net motion in steady light, drift toward brighter light in a gradient, costing ~0.1 beat.",
+ "wall": {"bias": -3.0, "tau": 1.0, "gain": 2.5},
+ "alpha": 0.0,
+ "core": [
+  {"name": "S1", "bias": -8.0, "tau": 100.0, "in": [8.0, 0.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S2", "bias": -8.0, "tau": 100.0, "in": [8.0, 0.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "S3", "bias": -8.0, "tau": 100.0, "in": [8.0, 0.0, 0.0], "out": [-8.0, 0.0, 0.0]},
+  {"name": "K", "bias": 8.0, "tau": 1.0, "out": [0.0, -2.0, 0.0]},
+  {"name": "P", "bias": 3.0, "tau": 1.0, "out": [0.0, 4.0, 0.0]},
+  {"name": "Q", "bias": -2.0, "tau": 12.0},
+  {"name": "A", "bias": -7.6, "tau": 1.0, "in": [2.0, 0.0, 0.0]},
+  {"name": "B", "bias": -3.6, "tau": 1.0, "in": [2.0, 0.0, 0.0]}
+ ],
+ "links": [["S1", "S1", 3.5], ["S2", "S2", 3.5], ["S3", "S3", 3.5],
+           ["P", "P", 7.0], ["Q", "P", -8.0], ["P", "Q", 7.14],
+           ["P", "A", 4.0], ["P", "B", -4.0], ["A", "Q", -4.0], ["B", "Q", 4.0]]
+}

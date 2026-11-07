@@ -1,0 +1,159 @@
+{
+ "mode": "fourier1",
+ "why": "The fair test of gain: design 4 at gain 8, recalibrated. Measured sums at gain 8: night 3.25, light 0.05 3.92, 0.14 4.75, 0.3 5.36, 0.5 5.68, 1.4 6.23, 3 8.68 (adaptation maxed), saturated by 5. F and SL now centre on the far-field band (bias -4.8), so B5's comparison has its full slope at light 0.05-0.5, and night sits well below it. H still parks the cell from about light 1.4 (driven by the adaptation), before the walls saturate above ~3.4. Prediction: noise-triggered exploring bursts and rising-light retriggering now work in the far field, so the cell finds the soak region more often than design 4's 21%; it can feed only where light is 1.4-3, parked, so survival stays low.",
+ "wall": {
+  "bias": -3.0,
+  "tau": 1.0,
+  "gain": 8.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "S1",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S2",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "S3",
+   "bias": -8.0,
+   "tau": 100.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ],
+   "out": [
+    -8.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "F",
+   "bias": -4.8,
+   "tau": 3.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -4.8,
+   "tau": 30.0,
+   "in": [
+    8.0,
+    -8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -2.2,
+   "tau": 1.0,
+   "out": [
+    -1.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "Q",
+   "bias": -4.0,
+   "tau": 10.0
+  },
+  {
+   "name": "H",
+   "bias": -5.0,
+   "tau": 10.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   4.3
+  ],
+  [
+   "R",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "H",
+   4.0
+  ],
+  [
+   "S2",
+   "H",
+   4.0
+  ],
+  [
+   "S3",
+   "H",
+   4.0
+  ],
+  [
+   "H",
+   "R",
+   -8.0
+  ],
+  [
+   "S1",
+   "S1",
+   3.5
+  ],
+  [
+   "S2",
+   "S2",
+   3.5
+  ],
+  [
+   "S3",
+   "S3",
+   3.5
+  ]
+ ]
+}
