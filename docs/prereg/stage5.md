@@ -85,7 +85,7 @@ The owner said "proceed", so these defaults stand unless changed:
 
 | check | outcome |
 |---|---|
-| C1 | ✓ the full suite passes with sensing absolute (175 tests), the pinned hash among them |
+| C1 | ✓ the full suite passes with sensing absolute (178 tests), the pinned hash among them |
 | C2 | ✓ a 1% step after adapting gives the same input at light 2 and 20, within 5% (`tests/test_stage5.py`) |
 | C3 | ✓ a steady rise of 0.004 a tick gives a mean input within 5% of log(1 + 10 x 0.004); a fall gives a negative one |
 | C4 | ✓ a relative run is the same bits twice, and each cell alone matches the batch |
