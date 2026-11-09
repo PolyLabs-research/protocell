@@ -484,15 +484,19 @@ def main(argv: Optional[Sequence[str]] = None, stage: Stage = STAGE4E) -> Any:
         names = [c.get("name", f"c{j}") for j, c in enumerate(design.get("core", []))]
         lines = probe_table(result, light, names, args.every) if args.every > 0 else []
         cut = min(args.before, args.ticks)
+        spans = []  # the log keeps each part's means, not only the last tick, which can catch a pause in a run
         for label, sl in (("before", slice(0, cut)), ("after", slice(cut, args.ticks))):
             if sl.stop > sl.start:
                 lines.append(f"{label:6s}: mean beat {result['mean_beat'][sl].mean():.4f}, forward {result['forward'][sl].mean():+.4f}, "
                              f"running (forward > 0.25) {np.mean(result['forward'][sl] > 0.25):.0%}, core " +
                              " ".join(f"{n}={v:.3f}" for n, v in zip(names, result["core"][sl].mean(axis=0))))
+                spans.append(f"; {label} mean beat {result['mean_beat'][sl].mean():.4f} forward {result['forward'][sl].mean():+.4f} "
+                             f"running {np.mean(result['forward'][sl] > 0.25):.0%}")
         print("\n".join(lines))
         _append(args.out / design["mode"] / "probes.log", f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} {args.design.name} ({sha(design)}) "
                 f"{args.scenario} level {args.level} rise {args.rise} contrast {args.contrast} angle {args.angle} ticks {args.ticks} before {args.before} "
-                f"noise {args.noise}: final beat {result['mean_beat'][-1]:.4f} forward {result['forward'][-1]:.4f} left {result['left'][-1]:.4f}\n")
+                f"noise {args.noise}: final beat {result['mean_beat'][-1]:.4f} forward {result['forward'][-1]:.4f} left {result['left'][-1]:.4f}"
+                + "".join(spans) + "\n")
         return result
     if args.command == "check":
         r = check(args.design, args.out, args.starts, args.quick, trace_every=args.trace, stage=stage)
