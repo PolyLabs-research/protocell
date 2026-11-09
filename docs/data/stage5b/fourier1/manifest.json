@@ -1,0 +1,409 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage5b.py judge docs/data/stage5b/fourier1/designs/s16.json",
+ "created_at": "2026-11-09T21:55:41+00:00",
+ "git": {
+  "branch": "stage4",
+  "dirty": false,
+  "sha": "35e00efb435161d5602e5b5dce72946f2cdda3f1"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage5b/fourier1",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage5b",
+ "seeds": [
+  29,
+  30
+ ],
+ "settings": {
+  "b8": {
+   "aim_tau": 10.0,
+   "tau": 10.0
+  },
+  "bootstrap_seed": 30,
+  "checks_used": 5,
+  "design": {
+   "alpha": 0.0,
+   "core": [
+    {
+     "bias": -0.94,
+     "in": [
+      2.0,
+      0.0,
+      0.0
+     ],
+     "name": "F",
+     "tau": 2.0
+    },
+    {
+     "bias": -0.94,
+     "in": [
+      2.0,
+      0.0,
+      0.0
+     ],
+     "name": "SL",
+     "tau": 300.0
+    },
+    {
+     "bias": -1.81,
+     "name": "R1",
+     "tau": 1.0
+    },
+    {
+     "bias": -3.09,
+     "name": "R2",
+     "out": [
+      0.0,
+      8.0,
+      0.0
+     ],
+     "tau": 1.0
+    },
+    {
+     "bias": -2.67,
+     "name": "E",
+     "tau": 2.0
+    },
+    {
+     "bias": -1.7,
+     "name": "Q",
+     "tau": 100.0
+    },
+    {
+     "bias": 2.0,
+     "name": "Dm",
+     "tau": 1.0
+    },
+    {
+     "bias": -2.67,
+     "name": "E2",
+     "tau": 2.0
+    }
+   ],
+   "links": [
+    [
+     "F",
+     "R1",
+     8.0
+    ],
+    [
+     "SL",
+     "R1",
+     -8.0
+    ],
+    [
+     "R1",
+     "R2",
+     8.0
+    ],
+    [
+     "R2",
+     "E",
+     6.0
+    ],
+    [
+     "R2",
+     "E2",
+     6.0
+    ],
+    [
+     "E",
+     "F",
+     -5.7
+    ],
+    [
+     "E2",
+     "F",
+     -5.7
+    ],
+    [
+     "E",
+     "SL",
+     -5.7
+    ],
+    [
+     "E2",
+     "SL",
+     -5.7
+    ],
+    [
+     "R2",
+     "R2",
+     8.0
+    ],
+    [
+     "R2",
+     "Q",
+     8.0
+    ],
+    [
+     "Q",
+     "R2",
+     -8.0
+    ],
+    [
+     "R1",
+     "R1",
+     3.0
+    ],
+    [
+     "SL",
+     "Dm",
+     -8.0
+    ],
+    [
+     "Dm",
+     "E",
+     -5.13
+    ],
+    [
+     "Dm",
+     "E2",
+     -5.13
+    ],
+    [
+     "Dm",
+     "Q",
+     -5.0
+    ]
+   ],
+   "mode": "fourier1",
+   "wall": {
+    "bias": -2.4,
+    "gain": 20.0,
+    "tau": 2.0
+   },
+   "why": "Design 15 with Dm's pull on Q weakened (-8 -> -5), so the rhythm cannot latch on at night. In design 15's probes R2 stayed on all night: in darkness Dm reaches ~0.83, so Q's target while running was 8 - 6.6 = 1.4 (Q_out ~0.43), never past the 0.516 that ends a run (night beat 0.036). At -5 a night run drives Q toward 8 - 4.1 = 3.9 (Q_out ~0.9), so it ends; at rest Q's target at night is ~-3.8, so night rests stay short, as in design 14 (night beat ~0.01). In the far field (Dm ~0.26-0.38) the rest target is ~-0.9 to -1.5, so rests take ~0.5 tau (~50 ticks), about design 14's, and in bright light (Dm ~0.03) ~1.6 tau (~160 ticks, against design 14's ~90), so bright exploring stays low. Everything else is design 15's (Q bias -1.7). Expected in probes: darkness running < 50% with beat ~0.01; steady light 2-8 running < 10% (beat ~0.10); light 0.03-0.05 running ~30-40%; falls at 0.05 < 15%. In the walk calculator: crossing from 6,000 R near design 14's 1.09 h."
+  },
+  "design_sha": "05ee77f9014a",
+  "genome": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -5.7,
+   0.0,
+   0.0,
+   -5.7,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -5.7,
+   0.0,
+   0.0,
+   -5.7,
+   8.0,
+   -8.0,
+   3.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   8.0,
+   0.0,
+   -8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   6.0,
+   0.0,
+   0.0,
+   -5.13,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   0.0,
+   0.0,
+   -5.0,
+   0.0,
+   0.0,
+   -8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   6.0,
+   0.0,
+   0.0,
+   -5.13,
+   0.0,
+   -0.94,
+   -0.94,
+   -1.81,
+   -3.09,
+   -2.67,
+   -1.7,
+   2.0,
+   -2.67,
+   0.6931471805599453,
+   5.703782474656201,
+   0.0,
+   0.0,
+   0.6931471805599453,
+   4.605170185988092,
+   0.0,
+   0.6931471805599453,
+   0.0,
+   0.0,
+   0.0,
+   -2.4,
+   0.6931471805599453,
+   20.0,
+   0.0,
+   2.0,
+   0.0,
+   0.0,
+   2.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "judge_seed": 29,
+  "mode": "fourier1",
+  "n_starts": 100,
+  "quick": false,
+  "world": {
+   "adapt_tau": 10.0,
+   "alpha_range": [
+    -3.141592653589793,
+    3.141592653589793
+   ],
+   "background": 0.0,
+   "c0": 1.6666666666666667e-05,
+   "c1": 1.6666666666666667e-05,
+   "cave_cycle": true,
+   "cave_falloff": 600.0,
+   "cave_path": "mouth",
+   "cave_sweep": true,
+   "cave_sweep_deg": 60.0,
+   "clamp_radius": 4999.0,
+   "cloud_shade": 1.0,
+   "cloud_shade_mean": 300.0,
+   "cloud_sun_mean": 600.0,
+   "damage_rate": 0.00015765288372808237,
+   "damage_repair": 0.0001388888888888889,
+   "damage_threshold": Infinity,
+   "day_ticks": 86400,
+   "dish_radius": 5000.0,
+   "energy_start": 0.5,
+   "eta": 5.500000000000001e-05,
+   "fill_light": 4.0,
+   "gain_range": [
+    0.0,
+    20.0
+   ],
+   "lamp_peak": 4.0,
+   "lamp_scale": 20.0,
+   "lamp_start_min": 60.0,
+   "level_floor": 0.015,
+   "lifetime": 172800,
+   "log_tau_range": [
+    0.0,
+    8.1886891244442
+   ],
+   "mouth_light": 10.0,
+   "n_core": 8,
+   "n_wall": 16,
+   "omega_max": 1.0,
+   "path_period": 21600,
+   "path_radius": 2500.0,
+   "rest_below": 0.01,
+   "retreat_on": "max",
+   "rotation_noise_sd": 0.158113883008419,
+   "sense_contrast": 1.0,
+   "sense_floor": 0.01,
+   "sensing": "relative",
+   "sensor_noise_sd": 0.0031622776601683794,
+   "shade_floor": 1.0,
+   "soak_threshold": 1.0,
+   "spot_centre_within": 10.0,
+   "spot_peak": 4.0,
+   "spot_sigma": 16.0,
+   "spot_start_min": 38.0,
+   "v_max": 10.0,
+   "weight_range": [
+    -8.0,
+    8.0
+   ]
+  }
+ },
+ "timing": {
+  "wall_seconds": 180.00694847106934
+ }
+}
