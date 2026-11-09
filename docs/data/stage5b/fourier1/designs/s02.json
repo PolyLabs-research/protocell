@@ -1,0 +1,69 @@
+{
+ "mode": "fourier1",
+ "why": "Design 1 with exploration: R's bias -2.48 (on above ~0.14, off below ~-0.18 on 8 (F - SL)), so noise fires exploring runs where the light is dim and noisy (as B5's noise does), while bright, nearly noiseless light stays quiet and the cell parks. Runs continue while the light keeps rising (the efference copy keeps F - SL reading the light during a run) and stop when it does not. Expected: the far-field starts find the light, B5-like, and park near the mouth.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R",
+   "bias": -2.48,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R",
+   8.0
+  ],
+  [
+   "SL",
+   "R",
+   -8.0
+  ],
+  [
+   "R",
+   "R",
+   5.0
+  ],
+  [
+   "R",
+   "F",
+   -7.2
+  ],
+  [
+   "R",
+   "SL",
+   -7.2
+  ]
+ ]
+}

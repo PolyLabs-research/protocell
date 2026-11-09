@@ -1,0 +1,109 @@
+{
+ "mode": "fourier1",
+ "why": "Design 4 with an exploring rhythm built as a relaxation oscillator, R2 its fast bistable half and Q its slow half. Design 5's timer settled into a graded half-run because R1 and R2 were nearly linear; here R2 has self-excitation 8, so it is bistable while its other input c lies between -5.06 and -2.94, and Q (tau 80, bias -3, no self link) is charged by R2 (+8) and switches it off (-8). R2's bias is -3.74, so with R1 at its resting 0.2 (+1.6) c = -2.14 - 8 Q_out. A run (R2 on) drives y_Q toward 8; R2 drops when Q_out passes 0.365 (y_Q 2.45). A rest drives y_Q toward 0; R2 flips back on when Q_out falls to 0.1 (y_Q 0.8). Calculated: runs 0.26 tau ~ 21 ticks, rests 1.12 tau ~ 90 ticks, a fifth of the time running in steady light, each run in whatever direction rotational noise left the cell facing (B7's rhythm: cycle 100, run 36). R1 is B5's comparison on top. A rise lifts R1 toward 1 (+6.4 on R2), which starts a run at any point of the rest and holds a climbing run on even when Q is full (c ~ -3.9, inside the window). A fall drops R1 toward 0 (-1.4), which ends a run within ~7 ticks and delays the next. So the cell walks at random and keeps going while it climbs: B5's biased walk with crisp runs. R1, F, SL and E are design 4's, and design 5's Q -> R1 kick is gone. Expected in probes: steady light at every level, 0.03 included, running ~15-25% in runs of ~15-25 ticks every ~110; ramps > 90%; falls < 10%; darkness beat < 0.01. Watch-points: at night the rhythm runs on with the wall clamped, and E's over-cancel may lift R1 and lengthen runs; in dim light the over-cancel cuts runs short.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -2.26,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.74,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.8,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 80.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   4.4
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ]
+ ]
+}

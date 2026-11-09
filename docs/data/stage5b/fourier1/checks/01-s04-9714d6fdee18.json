@@ -1,0 +1,94 @@
+{
+ "mode": "fourier1",
+ "why": "Design 3 with the efference copy sent through the wall's own delay. Design 3's probes showed a relaxation oscillation, not a latch: R2's copy reached F at once while the wall's run response reached it through one more tau-2 stage, so 8 (F - SL) swung to -3 at every onset and +2 to +5 at every offset, 30-40x R1's thresholds, and each stop restarted the run within 3-4 ticks. Here a new core neuron E (tau 2 like the wall, bias -3.8, driven 7 by R2, no output to the wall) carries the copy instead: its state low-passes R2 exactly as each wall node's state low-passes R2's spoke, and sigma(7r - 3.8) follows the wall's summed run response (calculated: 0 to 3.55 over r = 0 to 1, half at r ~0.54) to within ~5%, erring high at every r, so the copy over-cancels slightly and can never restart a run. E sends -7.5 to F and to SL (2 x 3.55 / 0.94). R2's direct copy is removed. So in steady light F - SL should sit at 0 through a run's edges, R1 should rest, and runs should come only from a rise (or, in dim light, sensor noise: sd ~0.7 in 8 (F - SL) at light 0.04, ~0.02 at light 1.4). Expected in probes: steady light >= 0.5 quiet (running < 10% after the first 1,500 ticks), dim light 0.04 exploring, ramps running > 90%, falls < 10%, darkness still. Watch-point: in dim light the wall's run response is smaller (2.9 at light 0.04), so E over-cancels there by ~20% and dim-light runs may end early.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -2.26,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -6.0,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.8,
+   "tau": 2.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   4.4
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   4.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ]
+ ]
+}

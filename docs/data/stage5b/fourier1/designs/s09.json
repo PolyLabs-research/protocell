@@ -1,0 +1,124 @@
+{
+ "mode": "fourier1",
+ "why": "Design 8 with the efference copy matched at every light level. Design 8's extra gain turned E's dim-light mismatch into a fast oscillation: in dim light the wall's run response is smaller (2.5 at light 0.03 vs 3.55) and comes later in r, while E's was fixed to the bright response, so E over-cancelled each run and led its onset. Calculated: E's best bias follows the light (-3.9 bright, -4.76 at 0.07, -6.05 at 0.03), roughly the log of the wall's resting sum. A new neuron Dm, the dimness (tau 1, bias +2, from SL -8, so Dm = 1 - sigma(8 SL - 2)), gives E (bias now -3.79, from Dm -6.04) a bias within 0.28 of the best from light 0.03 to 10 (0.33 at 0.02): SL is F's slow resting level, a sigmoid of the wall's sum, and Dm's second sigmoid bends it toward the log the wall's response needs. In bright light Dm ~0.01, so E's bias is -3.85 as before; at 0.03 Dm ~0.4 and E's bias ~-6.2, so E's response is smaller and later, as the wall's is. SL changes on SL's time scale (tau 300), so Dm only tracks the light level, not the runs. Everything else is design 8's (F and SL centred at -0.94; R1 self 3, bias -1.81). Expected: in probes at light 0.03-0.07, 8 (F - SL) near 0 through a run's onset and body (design 8: -0.9 at onset) and near 0 at rest (design 8: +1.1); dim runs set by Q (~20-30 ticks), not ~10; in the walk calculator, runs toward the light clearly longer than runs away and crossing from 6,000 R near B5's 0.7 h. Watch-point: at night the wall is silent while Dm still gives E a bias of ~-6.8, so night runs over-cancel and may cycle fast (cheap with the wall clamped).",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.79,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -6.04
+  ]
+ ]
+}

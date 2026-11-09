@@ -1,0 +1,12 @@
+{
+ "mode": "fourier1",
+ "why": "B5 in the relative cell, with an efference copy. The sensor (gain 20) holds the wall near one resting level in all daylight (sum ~0.7-1.3) and silences it in the dark. F (fast, tau 2) and SL (slow, tau 300) read the wall's uniform sum with the same weight and bias, so F - SL is the light's elevation above its level over the last ~5 minutes, at any brightness. R (self 5, bias -2.6: on above ~0.26, off below ~-0.06 on its input 8 (F - SL)) runs the front half (spokes -2 + 8 cos theta, ~0.75 v_max). The run adds a constant ~3.6 to the wall's sum at every daylight level (calculated: 3.54-3.60), so R subtracts its own effect from F and SL (-7.2 each = 2 x 3.6): F - SL keeps reading the light during the run. So R runs while the light keeps rising and stops when it does not (B5). Noise near R's threshold fires exploring runs in dim light; bright steady light is quiet, so the cell parks. Darkness reads as dark, so nights are still. No aim yet.",
+ "wall": {"bias": -2.4, "tau": 2.0, "gain": 20.0},
+ "alpha": 0.0,
+ "core": [
+  {"name": "F", "bias": -2.0, "tau": 2.0, "in": [2.0, 0.0, 0.0]},
+  {"name": "SL", "bias": -2.0, "tau": 300.0, "in": [2.0, 0.0, 0.0]},
+  {"name": "R", "bias": -2.6, "tau": 1.0, "out": [-2.0, 8.0, 0.0]}
+ ],
+ "links": [["F", "R", 8.0], ["SL", "R", -8.0], ["R", "R", 5.0], ["R", "F", -7.2], ["R", "SL", -7.2]]
+}

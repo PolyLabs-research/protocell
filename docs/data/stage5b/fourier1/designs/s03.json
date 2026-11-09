@@ -1,0 +1,84 @@
+{
+ "mode": "fourier1",
+ "why": "Design 1 with R split, so rest is truly quiet and detection stays sensitive. R1 is a near-critical detector on 8 (F - SL) (self 4.4, bias -2.26: on above ~0.10, off below ~0.02), with no output to the wall, so its leaky resting state cannot drive the wall or the comparator. R2 is a clean driver (self 4, bias -6, driven 8 by R1): off at rest (~0.01), on (~0.98) while R1 is on. It runs the front half (-2 + 8 cos theta) and sends the efference copy (-7.2 to F and SL). Runs start when the light's elevation above its slow level crosses ~0.1 (sensor noise in dim light fires exploring runs), continue while the light keeps rising, and stop when the elevation falls to ~0.02. Darkness is still.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -2.26,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -6.0,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   4.4
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   4.0
+  ],
+  [
+   "R2",
+   "F",
+   -7.2
+  ],
+  [
+   "R2",
+   "SL",
+   -7.2
+  ]
+ ]
+}

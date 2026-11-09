@@ -1,0 +1,109 @@
+{
+ "mode": "fourier1",
+ "why": "Design 4 with a boredom timer, so the cell explores at every light level as B5 does. Check 1 found the whole gap in finding the light: design 4 is quiet in steady light, so in mid light it moved only when the sun moved the light, and in the dark far field it never moved. Q (tau 60, bias -3, no self link) relaxes toward y = 0 while the cell rests and is pulled toward -8 by R2 while it runs; it kicks R1 with 5.5 sigma(y_Q - 3). At rest the kick climbs to 0.26, above R1's on-threshold (0.10, reached at y_Q ~ -1), so about a minute after a run ends a new one starts in whatever direction rotational noise has left the cell facing. During a run Q falls, and the kick drops below R1's off-threshold (0.02, at y_Q ~ -2.6). Calculated (tau 60): kicked runs ~16 ticks plus R1's lag, rests ~57 ticks, so about a fifth of the time running in steady light. R1's comparison still rules once the cell moves: 8 (F - SL) on a climb is +0.5 to +2, which holds the run past the kick, and on a fall it is negative, which ends it at once. That is a biased random walk, as B5's is. At night the wall is clamped by darkness (front nodes at -4.6 even when driven), so kicked night runs barely beat. Expected in probes: steady light at every level, 0.03 included, running ~20-30% in runs of ~15-30 ticks; ramps still > 90%; falls still < 10%; darkness beat < 0.01. Watch-points: in dim light E over-cancels, which may cut kicked runs short there; parking at the mouth now relies on falls ending runs, as B5's does.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -2.26,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -6.0,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.8,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 60.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   4.4
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   4.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "Q",
+   -8.0
+  ],
+  [
+   "Q",
+   "R1",
+   5.5
+  ]
+ ]
+}

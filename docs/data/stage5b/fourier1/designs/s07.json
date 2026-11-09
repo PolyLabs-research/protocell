@@ -1,0 +1,104 @@
+{
+ "mode": "fourier1",
+ "why": "Design 6 with R1 graded and the trigger clear of Q's floor. R1 = sigma(8 (F - SL) - 1), no self link: 0.27 in steady light, ~0.77 on a far-field climb (8 (F - SL) ~ +2), ~0.05 on a fall, so a ~1% error in E's cancel (+0.16) moves it by only 0.03 (0.25 on R2), where design 6's near-critical R1 latched. R2 keeps self 8 (bistable while c is between -5.06 and -2.94) and takes 8 R1 - 8 Q_out with bias -3.09, so in steady light c = -0.94 - 8 Q_out. Q (tau 100, bias -3) is charged by R2 (+8) and switches it off (-8). A run ends when Q_out passes 0.515 (y_Q 3.06); a rest ends when Q_out falls to 0.25 (y_Q 1.9), well above Q's floor (R2's low branch leaks <= 0.075 there, so Q's rest target is <= 0.6, y_Q's trigger 1.9). Calculated: runs 0.215 tau ~ 21 ticks, rests 0.545 tau ~ 55 ticks, ~28% running in steady light at every level. A climb lifts R1 by 0.5 (+4 on c): it starts a run at any time and holds one against a full Q (c ~ -4.9, just inside the window). A fall drops R1 by ~0.22 (-1.8 on c), ending a run once Q_out passes ~0.29 (a few ticks in) and delaying the next. Expected in probes: steady light at every level running ~20-35% in runs of ~15-30 ticks; ramps > 90%; falls < 10%; darkness beat < 0.01. Watch-points: night runs from E's over-cancel loop (cheap with the wall clamped); dim light's over-cancel lowers R1 during runs.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -2.0,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -2.0,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.0,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.8,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ]
+ ]
+}

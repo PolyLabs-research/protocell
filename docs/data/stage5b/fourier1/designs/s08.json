@@ -1,0 +1,109 @@
+{
+ "mode": "fourier1",
+ "why": "Design 7 with more gain where the far field is, so the walk becomes B5's. In a calculator of the radial walk (see the note before this check) design 7's R1 moved only +-0.05 between runs toward and away from the light at 6,000 R (+-0.4 on R2's c), so runs toward lasted 32 ticks and runs away 19, where B5 runs on while the light rises and stops the tick it does not. Two changes, both to the gain from F - SL to R2. (1) F and SL bias -2 -> -0.94: F's input spans ~-0.9 in a dim run to ~2.8 in a bright one, and -0.94 centres that span, so F's slope in a dim run doubles (0.05 -> 0.12) and in a bright one halves (0.21 -> 0.12), where signals are ~10x larger (a run's relative rise falls as 1/d). F and SL keep equal biases, so F - SL is unchanged in steady light. (2) R1 self link 3 with bias -1.81: still monostable (self < 4), still resting at 0.27 in steady light, but its loop gain (3 x 0.2) amplifies its swing ~2.5x: 8 (F - SL) = +0.5 gives R1 ~0.65, +1 gives ~0.85, -0.5 gives ~0.13, i.e. ~+3 / -1.1 on R2's c (design 7: +0.8 / -1.1 for +-0.5). So a run that climbs holds against Q to Q_out ~0.77 (~48 ticks; heading decorrelates in ~80), and one that falls ends as soon as Q_out passes ~0.27, i.e. at once. R2, Q and E are design 7's. Expected: in the calculator, crossing from 6,000 R near B5's 0.7 h; in probes, steady light still ~20-35% running, ramps higher than design 7's 55-75%, falls < 10%. Watch-points: noise in R1 is amplified too, so more noise-driven runs in dim light; E's ~1% under-cancel in mid light (+0.3 in 8 (F - SL) through a run) is amplified, so bright exploring runs may last longer.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.8,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ]
+ ]
+}
