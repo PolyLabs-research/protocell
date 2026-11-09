@@ -1,0 +1,154 @@
+{
+ "mode": "fourier1",
+ "why": "Design 14 exploring less in bright light, where its rhythm costs beat (check 4: day beat 0.156 vs B8's 0.100; ~25% running at the mouth), and as much or more in the far field. Q's bias -3 -> -1.7: R2 flips on when Q_out falls to 0.25 (y_Q 0.6) and off when it passes 0.516 (y_Q 1.76), and at rest y_Q settles near 8 x R2's leak (~0.3-0.5), so the rest's end now lies close to where Q settles and rests stretch: ~1.4-1.9 tau in bright light, while runs shorten slightly (~0.17 tau). Dm -> Q -8: in dim light (Dm ~0.2-0.3) Q's rest target falls to ~-1.2 to -2, so rests there take ~0.4-0.5 tau, and runs ~0.27 tau. With tau 100: bright, runs ~17 ticks, rests ~144 (~11% running); far field, runs ~27, rests ~37 (~42%); between (light 0.1-0.15, Dm 0.12-0.2) rests ~50-70. A climb still holds a run (R1 -> R2 +8 against Q, which saturates as before); a fall still ends one. Everything else is design 14's. Expected in probes: steady-light running share ~10-15% from light 0.3 up and ~35-45% at 0.03-0.05; ramps > 90%, falls < 10%. In the walk calculator: crossing from 6,000 R no slower than design 14's 1.09 h. Watch-points: at night Dm is ~0.45, so the rhythm runs more at night (front nodes beat ~0.07 when it runs), adding a little night beat; the rest's end now sits near Q's resting level, so R2's leak (which sets that level) matters more in bright light.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -2.67,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -1.7,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  },
+  {
+   "name": "E2",
+   "bias": -2.67,
+   "tau": 2.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   6.0
+  ],
+  [
+   "R2",
+   "E2",
+   6.0
+  ],
+  [
+   "E",
+   "F",
+   -5.7
+  ],
+  [
+   "E2",
+   "F",
+   -5.7
+  ],
+  [
+   "E",
+   "SL",
+   -5.7
+  ],
+  [
+   "E2",
+   "SL",
+   -5.7
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -5.13
+  ],
+  [
+   "Dm",
+   "E2",
+   -5.13
+  ],
+  [
+   "Dm",
+   "Q",
+   -8.0
+  ]
+ ]
+}

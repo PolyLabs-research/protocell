@@ -1,0 +1,154 @@
+{
+ "mode": "fourier1",
+ "why": "Design 15 with Dm's pull on Q weakened (-8 -> -5), so the rhythm cannot latch on at night. In design 15's probes R2 stayed on all night: in darkness Dm reaches ~0.83, so Q's target while running was 8 - 6.6 = 1.4 (Q_out ~0.43), never past the 0.516 that ends a run (night beat 0.036). At -5 a night run drives Q toward 8 - 4.1 = 3.9 (Q_out ~0.9), so it ends; at rest Q's target at night is ~-3.8, so night rests stay short, as in design 14 (night beat ~0.01). In the far field (Dm ~0.26-0.38) the rest target is ~-0.9 to -1.5, so rests take ~0.5 tau (~50 ticks), about design 14's, and in bright light (Dm ~0.03) ~1.6 tau (~160 ticks, against design 14's ~90), so bright exploring stays low. Everything else is design 15's (Q bias -1.7). Expected in probes: darkness running < 50% with beat ~0.01; steady light 2-8 running < 10% (beat ~0.10); light 0.03-0.05 running ~30-40%; falls at 0.05 < 15%. In the walk calculator: crossing from 6,000 R near design 14's 1.09 h.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -2.67,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -1.7,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  },
+  {
+   "name": "E2",
+   "bias": -2.67,
+   "tau": 2.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   6.0
+  ],
+  [
+   "R2",
+   "E2",
+   6.0
+  ],
+  [
+   "E",
+   "F",
+   -5.7
+  ],
+  [
+   "E2",
+   "F",
+   -5.7
+  ],
+  [
+   "E",
+   "SL",
+   -5.7
+  ],
+  [
+   "E2",
+   "SL",
+   -5.7
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -5.13
+  ],
+  [
+   "Dm",
+   "E2",
+   -5.13
+  ],
+  [
+   "Dm",
+   "Q",
+   -5.0
+  ]
+ ]
+}
