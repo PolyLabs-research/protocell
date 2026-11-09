@@ -1,0 +1,129 @@
+{
+ "mode": "fourier1",
+ "why": "Design 9 with Q timing only the running that is not climbing. In the walk calculator, Q made every design since 6 run ~30% of the time whatever its heading: a long climb charged Q high, so a long rest followed and the climb's gain was paid back (at 3,000 R runs toward lasted 55 ticks and runs away 25, yet the share was 33% vs 30%). Now R1 also drives Q (-8), so Q's target is 8 R2 - 8 R1, and Q's bias goes -3 -> -2 to keep a steady rhythm. With R1 at its resting 0.27: at rest the target is ~-1.9 (Q_out ~0.02, under the rest's end at 0.251, y_Q 0.91), and running it is ~5.8 (Q_out ~0.98, past the run's end at 0.516, y_Q 2.06), so in steady light runs last ~0.27 tau ~27 ticks and rests ~0.34 tau ~34 (tau 100): more exploring than design 9's ~20 of ~75. While climbing, R1 at 0.6 lowers the run's target to 3.2 and raises its off-point (R2's c) to Q_out 0.846, y_Q 3.7, so the run never ends while it climbs; at R1 0.4 it ends after ~57 ticks; on a fall (R1 ~0.1) Q's target rises to 7.2 and the off-point falls to Q_out 0.35, so the run ends ~7 ticks after the evidence shows. After a climb Q sits near its off-point, not far above it, so the rest that follows is ordinary (~55 ticks at most). Everything else is design 9's (R1 tau 1). Expected in the calculator: running share toward the light well above away (design 9: 36% vs 30%); crossing from 6,000 R faster than design 9's 1.41 h; beat higher (~0.15-0.2, more exploring). Watch-points: in bright light the cell explores ~44% of the time, so at the mouth it may beat more and drift off the peak between falls; R1's rest level shifts with the light (+-0.05), moving Q's rest target by +-0.4.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.79,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -2.0,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -6.04
+  ],
+  [
+   "R1",
+   "Q",
+   -8.0
+  ]
+ ]
+}

@@ -1,0 +1,124 @@
+{
+ "mode": "fourier1",
+ "why": "Design 9 with R1 made a leaky accumulator of the run's evidence (tau 1 -> 4), so the decision to keep running rests on the run's average change, not one tick. In the walk calculator at 6,000 R (light 0.05), 8 (F - SL) on runs that start toward the light averages ~+0.1 over ticks 10-16 and on runs that start away ~-0.4, with sd ~0.7 per run per tick: a single look gives d' ~0.7, and design 9's R1 (tau 1) takes nearly single looks. B5 re-decides every tick, which amounts to averaging. With tau 4 and its self link 3 (loop gain ~0.6 at rest), R1 integrates over ~10 ticks, so by the time Q has reached its off-point (~11-15 ticks into a run) R1 holds the average since ~tick 5, and d' should rise ~1.5x. The onset's common dip (-0.3 at ticks 6-10 in dim light) is integrated too, equally for every heading. Nothing else changes. Expected in the calculator at 6,000 R: running toward vs away well apart (design 9: 36% vs 30%; B5: 57% vs 35%), runs toward longer than design 9's 18 ticks, runs away no longer than its 14; crossing from 6,000 R faster than design 9's 1.41 h. In probes: ramps and falls answered a few ticks later. Watch-point: R1 carries a run's start-up evidence (~+0.4 just before onset, for every heading) a few ticks into the run.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 4.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    -2.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -3.79,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   7.0
+  ],
+  [
+   "E",
+   "F",
+   -7.5
+  ],
+  [
+   "E",
+   "SL",
+   -7.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -6.04
+  ]
+ ]
+}

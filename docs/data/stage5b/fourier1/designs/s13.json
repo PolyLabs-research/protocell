@@ -1,0 +1,149 @@
+{
+ "mode": "fourier1",
+ "why": "Design 9 swimming faster in dim light. The walk calculator found design 9 decides nearly as well as B5 but swims at ~0.59 of v_max at light 0.05 (B5: 0.99), and B5 slowed to that pull crosses almost as slowly as design 9. R2's drive -2 + 8 cos theta -> 0 + 8 cos theta: calculated pull 0.81 at light 0.05, 0.73 at 0.03, 0.92 bright; running beat 0.32-0.40 (design 9: 0.21-0.30), so beat per distance stays about the same. The run response grows to ~5 in the wall's sum, so the copy needs ~11 into F and SL, past one neuron's range: E2, the last core neuron, is E's twin (same inputs, bias and outputs), and each sends -5.5 to F and to SL. Their shape is recalibrated by the same calculation as design 9's (noise-averaged wall response at each light): R2 -> E 6, best bias from -4.94 at light 0.02 to -2.49 in bright, rms 0.10-0.26; through Dm (unchanged: from SL -8, bias +2) each copy's bias is -2.07 - 6.44 Dm, within 0.3 of the best from light 0.03 up and 0.5 at 0.02. Everything else is design 9's. Expected in the calculator: crossing from 6,000 R near 1.0 h (design 9: 1.41 h); in probes, 8 (F - SL) through a steady-light run within ~+-0.5 at light 0.03-10, ramps > 90% running, falls < 10%, steady light ~25-35%. Watch-points: the copy's error grows with the run response (~40% larger), so onset transients may be larger; the map's +0.3 bias error at light 0.05-0.1 (the far field) is an over-strong copy there.",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -2.07,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  },
+  {
+   "name": "E2",
+   "bias": -2.07,
+   "tau": 2.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   6.0
+  ],
+  [
+   "R2",
+   "E2",
+   6.0
+  ],
+  [
+   "E",
+   "F",
+   -5.5
+  ],
+  [
+   "E2",
+   "F",
+   -5.5
+  ],
+  [
+   "E",
+   "SL",
+   -5.5
+  ],
+  [
+   "E2",
+   "SL",
+   -5.5
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -6.44
+  ],
+  [
+   "Dm",
+   "E2",
+   -6.44
+  ]
+ ]
+}
