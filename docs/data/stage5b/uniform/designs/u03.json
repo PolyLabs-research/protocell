@@ -1,0 +1,23 @@
+{
+ "mode": "uniform",
+ "why": "Design 16's strategy with a bump that forms in ~20-25 ticks. Wall: bias -3.5, tau 4, self 5, neighbours 2.5 each way, gain 20 (benched: pull > 0.4 by ticks 21-26 at light 0.03-2, 0.64-0.81 by tick 40, resting beat 0.003-0.035). G reads the wall's sum (x 1, bias -4, tau 1) and sends -6 to every node; R2's drive is +4 to every node; darkness keeps the wall near -7.7 even under the drive. F and SL read the wall at 1.25, bias -0.3 (centred: F ~0.43 at rest in dim light, ~0.66 bright). The copy E (tau 4, the wall's; from R2 +8; -8 to F and SL) has bias -2.3 - 8 Dm with Dm = sigma(4 - 8 SL): within ~0.4 of the bias whose steady increment matches the bump's measured run response at each light (-7.76 at light 0.02 ... -6.11 at 0.3; in bright light any bias in ~[-6, -2] matches, and the map gives ~-4.9). R1 and R2 as design 16 (R1 self 3, bias -1.81, from 8 (F - SL); R2 self 8, bias -3.09, from R1 +8 and Q -8; R2 tau 2 as benched). The rhythm is retuned for this Dm (~0.32 bright, ~0.63 dim and at night): Q bias +0.1, Dm -> Q -6, R2 -> Q +8, tau 250, so that R2 flips on at Q_out 0.25 (y_Q -1.2) and off at 0.516 (y_Q -0.04); calculated, bright runs ~0.17 tau (~42 ticks) and rests ~1.6 tau (~400), dim runs ~0.24 tau (~60) and rests ~0.4 tau (~105). Runs last long enough for the bump to form (~20-25 ticks) and move the cell ~250 R. A climb lifts R1 and holds the run against Q; a fall lowers it and ends the run. Expected in probes: steady light at 0.03-0.05 running ~30-40% as bumps (pull ~0.6 once formed); bright running ~10%; 8 (F - SL) through steady-light runs within ~+-0.5 after the onset; ramps mostly pulling, falls mostly not; darkness beat ~0.",
+ "wall": {"bias": -3.5, "tau": 4.0, "gain": 20.0, "self": 5.0, "from_cw": 2.5, "from_ccw": 2.5},
+ "alpha": 0.0,
+ "core": [
+  {"name": "F", "bias": -0.3, "tau": 2.0, "in": 1.25},
+  {"name": "SL", "bias": -0.3, "tau": 300.0, "in": 1.25},
+  {"name": "R1", "bias": -1.81, "tau": 1.0},
+  {"name": "R2", "bias": -3.09, "tau": 2.0, "out": 4.0},
+  {"name": "E", "bias": -2.3, "tau": 4.0},
+  {"name": "Q", "bias": 0.1, "tau": 250.0},
+  {"name": "Dm", "bias": 4.0, "tau": 1.0},
+  {"name": "G", "bias": -4.0, "tau": 1.0, "in": 1.0, "out": -6.0}
+ ],
+ "links": [
+  ["F", "R1", 8.0], ["SL", "R1", -8.0], ["R1", "R1", 3.0],
+  ["R1", "R2", 8.0], ["R2", "R2", 8.0], ["Q", "R2", -8.0],
+  ["R2", "Q", 8.0], ["Dm", "Q", -6.0],
+  ["R2", "E", 8.0], ["Dm", "E", -8.0], ["E", "F", -8.0], ["E", "SL", -8.0],
+  ["SL", "Dm", -8.0]
+ ]
+}

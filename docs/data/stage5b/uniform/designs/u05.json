@@ -1,0 +1,123 @@
+{
+ "mode": "uniform",
+ "why": "The bench that worked at every light level, as a cell: wall bias -3.7, tau 4, self 5, neighbours 2.5; G (sum x 1, bias -4, -6); R2's drive +7; E with a fixed bias -2 (from R2 +8, tau 4) ending each bump (-3 to every node). Benched with this E: pull 0.64-0.89 by tick 40-79 at light 0.03-8, gone 10-20 ticks after the drive stops, resting beat 0.002-0.019. Design 4's light-following E bias slowed E's rise and let the onset surge lock all 16 nodes on. E is also the copy, at a fixed weight: a run adds ~3.5 to the wall's sum at light 0.02, ~4.4 at 0.05, ~4.9 at 0.1 and ~5.6 bright (read at 1.25 into F); E's steady increment is ~0.85, so -6.5 to F and SL cancels ~5.5, about right in the far field (light 0.05-0.1), over by ~1.2 at 0.02 and under by ~1.4 in bright light. Dm no longer sets E; it sets only the rhythm (Q, as design 3). Everything else as design 4. Expected in probes: bumps in steady light at every level, pulling ~0.6-0.85 once formed and gone after each run; no all-on; 8 (F - SL) through runs near 0 at light 0.05-0.1, negative at 0.02-0.03 (dim runs cut short) and positive in bright light (bright runs held longer). To set next: the rhythm (Q's bias and Dm -> Q) for this cell's SL and Dm by light.",
+ "wall": {
+  "bias": -3.7,
+  "tau": 4.0,
+  "gain": 20.0,
+  "self": 5.0,
+  "from_cw": 2.5,
+  "from_ccw": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.3,
+   "tau": 2.0,
+   "in": 1.25
+  },
+  {
+   "name": "SL",
+   "bias": -0.3,
+   "tau": 300.0,
+   "in": 1.25
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 2.0,
+   "out": 7.0
+  },
+  {
+   "name": "E",
+   "bias": -2.0,
+   "tau": 4.0,
+   "out": -3.0
+  },
+  {
+   "name": "Q",
+   "bias": 0.1,
+   "tau": 250.0
+  },
+  {
+   "name": "Dm",
+   "bias": 4.0,
+   "tau": 1.0
+  },
+  {
+   "name": "G",
+   "bias": -4.0,
+   "tau": 1.0,
+   "in": 1.0,
+   "out": -6.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Dm",
+   "Q",
+   -6.0
+  ],
+  [
+   "R2",
+   "E",
+   8.0
+  ],
+  [
+   "E",
+   "F",
+   -6.5
+  ],
+  [
+   "E",
+   "SL",
+   -6.5
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ]
+ ]
+}

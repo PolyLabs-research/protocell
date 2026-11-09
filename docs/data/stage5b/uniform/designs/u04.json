@@ -1,0 +1,128 @@
+{
+ "mode": "uniform",
+ "why": "Design 3 with a bump that lives only while the drive is on. Design 3's bump sustained itself at rest in bright light (self 5, neighbours 2.5, bias -3.5), and lowering the bias enough to stop that also stopped bumps forming in bright light. Here the copy E ends each bump: E -> every wall node -3, and R2's drive +4 -> +7, so during a run the net push is ~+4 (R2 7 minus E ~3 x 0.7-1), and when R2 drops (tau 2) E lingers (tau 4) and pulls the wall down for a few ticks. Wall bias -3.5 -> -3.7. Benched with a fixed-bias E: pull 0.64-0.89 by tick 40-79 at light 0.03-8, the bump gone 10-20 ticks after the drive stops at every level, resting beat 0.002-0.019. E's bias still follows Dm (-2.3 - 8 Dm), so in dim light E is weaker during runs: more net drive where bumps form slowest, and a weaker kill where bumps die anyway. Everything else is design 3's. Expected in probes: steady light running ~30-40% in dim light and ~10% in bright, as bumps that pull ~0.6-0.85 once formed and stop when R2 does; no beating at rest beyond ~0.02; ramps mostly pulling, falls mostly not. To measure: the copy's steady mismatch through runs (E's input changed with its new role, so its match is not yet calibrated).",
+ "wall": {
+  "bias": -3.7,
+  "tau": 4.0,
+  "gain": 20.0,
+  "self": 5.0,
+  "from_cw": 2.5,
+  "from_ccw": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.3,
+   "tau": 2.0,
+   "in": 1.25
+  },
+  {
+   "name": "SL",
+   "bias": -0.3,
+   "tau": 300.0,
+   "in": 1.25
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 2.0,
+   "out": 7.0
+  },
+  {
+   "name": "E",
+   "bias": -2.3,
+   "tau": 4.0,
+   "out": -3.0
+  },
+  {
+   "name": "Q",
+   "bias": 0.1,
+   "tau": 250.0
+  },
+  {
+   "name": "Dm",
+   "bias": 4.0,
+   "tau": 1.0
+  },
+  {
+   "name": "G",
+   "bias": -4.0,
+   "tau": 1.0,
+   "in": 1.0,
+   "out": -6.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Dm",
+   "Q",
+   -6.0
+  ],
+  [
+   "R2",
+   "E",
+   8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -8.0
+  ],
+  [
+   "E",
+   "F",
+   -8.0
+  ],
+  [
+   "E",
+   "SL",
+   -8.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ]
+ ]
+}

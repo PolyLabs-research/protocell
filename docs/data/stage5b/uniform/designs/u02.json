@@ -1,0 +1,23 @@
+{
+ "mode": "uniform",
+ "why": "Design 16's strategy in the uniform cell, where no spoke can single out a front, so each run is a bump on the ring, placed by noise. Bump (bench-tested, u01 and scratch benches): wall bias -3, self 4, neighbours 2 each way, tau 6 (at tau 2 the wall and G rang, all 16 nodes igniting together then all knocked down every ~7 ticks; at tau 6 G acts within the wall's time, so the uniform mode is damped and a bump of ~4 nodes forms in ~10-20 ticks); G (reads the sum x 1, bias -4, -6 to every node) is the global inhibitor; R2's drive +4 to every node gives pull 0.45/0.58/0.66 at light 0.02/0.03/0.05 and ~0.8 from 0.3 up, direction held over the run. Comparator and rhythm as design 16 (F and SL tau 2 / 300, R1 self 3 bias -1.81 from 8 (F - SL), R2 self 8 bias -3.09 from R1 +8 and Q -8, Q tau 100 bias -1.7 from R2 +8), with R2 at tau 2 as on the bench. F and SL read the wall at 1.5 (not 2) so one copy can cancel the bump's run response (up to 6.8 into F); their bias -0.5 centres F on its smaller range. The copy E (tau 6, the wall's) is calibrated on the bench's measured step responses: per light level the bias whose 7.5 (E - E_rest) best matches 1.5 (sum - rest) over 300 ticks (rms 0.17-0.39) runs -5.65 at light 0.02 to -3.82 at 0.1, near the copy's capacity (~-2.8) from 0.15 up; through Dm = sigma(3 - 8 SL) the bias is -1.36 - 7.40 Dm, within ~0.2 of the targets at light 0.05-0.1. Dm -> Q -2 (design 16: -5; this Dm runs ~0.13 bright to ~0.48 dim). Expected in probes: steady light runs as bumps (2-6 nodes), more often in dim light than bright; 8 (F - SL) through steady-light runs within ~+-0.5 after the onset; ramps mostly running, falls mostly not; darkness silent (the wall at -7 even under the drive).",
+ "wall": {"bias": -3.0, "tau": 6.0, "gain": 20.0, "self": 4.0, "from_cw": 2.0, "from_ccw": 2.0},
+ "alpha": 0.0,
+ "core": [
+  {"name": "F", "bias": -0.5, "tau": 2.0, "in": 1.5},
+  {"name": "SL", "bias": -0.5, "tau": 300.0, "in": 1.5},
+  {"name": "R1", "bias": -1.81, "tau": 1.0},
+  {"name": "R2", "bias": -3.09, "tau": 2.0, "out": 4.0},
+  {"name": "E", "bias": -1.36, "tau": 6.0},
+  {"name": "Q", "bias": -1.7, "tau": 100.0},
+  {"name": "Dm", "bias": 3.0, "tau": 1.0},
+  {"name": "G", "bias": -4.0, "tau": 1.0, "in": 1.0, "out": -6.0}
+ ],
+ "links": [
+  ["F", "R1", 8.0], ["SL", "R1", -8.0], ["R1", "R1", 3.0],
+  ["R1", "R2", 8.0], ["R2", "R2", 8.0], ["Q", "R2", -8.0],
+  ["R2", "Q", 8.0], ["Dm", "Q", -2.0],
+  ["R2", "E", 6.0], ["Dm", "E", -7.40], ["E", "F", -7.5], ["E", "SL", -7.5],
+  ["SL", "Dm", -8.0]
+ ]
+}

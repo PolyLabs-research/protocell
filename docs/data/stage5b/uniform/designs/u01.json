@@ -1,0 +1,11 @@
+{
+ "mode": "uniform",
+ "why": "Bench test of the bump alone (not for a check): the wall with self 4 and neighbours 2, bias -3, and a run drive R held on (bias 8, +3 to every node), against a global inhibitor G (reads the wall's sum x 1, bias -4, -6 to every node). Calculated: the run drive lifts all nodes until noise ignites a few; neighbour excitation favours a contiguous group, and G grows with the sum and holds the rest down. To see at each light level whether a bump of 2-6 nodes forms, how hard it pulls, and whether its direction holds over 30 ticks.",
+ "wall": {"bias": -3.0, "tau": 2.0, "gain": 20.0, "self": 4.0, "from_cw": 2.0, "from_ccw": 2.0},
+ "alpha": 0.0,
+ "core": [
+  {"name": "R", "bias": 8.0, "tau": 1.0, "out": 3.0},
+  {"name": "G", "bias": -4.0, "tau": 1.0, "in": 1.0, "out": -6.0}
+ ],
+ "links": []
+}
