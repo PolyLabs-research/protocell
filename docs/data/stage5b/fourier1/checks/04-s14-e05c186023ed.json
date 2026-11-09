@@ -1,0 +1,149 @@
+{
+ "mode": "fourier1",
+ "why": "Design 13 with the twin copy calibrated for a run's steady state. Design 13 swam faster and matched better in dim light, but from light 0.2 up its copy fell short through every run (8 (F - SL) ~+0.95, read as a climb), so exploring runs there lasted 100-113 ticks in any direction. A copy neuron's steady increment sigma(6 r + b) - sigma(b) peaks at ~0.905 near b = -3, and the bright wall needs 0.89 of it, so the copy must sit at its peak in bright light and the bias cannot be tuned there. Each copy's weight to F and to SL -5.5 -> -5.7; each copy's bias -2.07 -> -2.67 and Dm -> each copy -6.44 -> -5.13, so the bias is ~-3.0 from light 0.1 up (Dm <= 0.2) and falls in dim light (calculated targets for a matched steady increment: -4.78 at 0.03, -4.11 at 0.05, -3.54 at 0.077; the map is within ~0.2 of them at 0.05-0.077 and 0.46 low at 0.03). Everything else is design 13's. Expected in probes: through steady-light runs 8 (F - SL) within ~+-0.4 from light 0.05 up (design 13: +0.95 bright), so steady-light runs near design 9's length (~50 ticks), not 100+; at light 0.03 a positive offset (~+0.5) remains. In the walk calculator: crossing from 6,000 R faster than design 9's 1.41 h, toward B5 slowed to 0.8 pull (~0.9 h).",
+ "wall": {
+  "bias": -2.4,
+  "tau": 2.0,
+  "gain": 20.0
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": -0.94,
+   "tau": 2.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "SL",
+   "bias": -0.94,
+   "tau": 300.0,
+   "in": [
+    2.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 1.0,
+   "out": [
+    0.0,
+    8.0,
+    0.0
+   ]
+  },
+  {
+   "name": "E",
+   "bias": -2.67,
+   "tau": 2.0
+  },
+  {
+   "name": "Q",
+   "bias": -3.0,
+   "tau": 100.0
+  },
+  {
+   "name": "Dm",
+   "bias": 2.0,
+   "tau": 1.0
+  },
+  {
+   "name": "E2",
+   "bias": -2.67,
+   "tau": 2.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "E",
+   6.0
+  ],
+  [
+   "R2",
+   "E2",
+   6.0
+  ],
+  [
+   "E",
+   "F",
+   -5.7
+  ],
+  [
+   "E2",
+   "F",
+   -5.7
+  ],
+  [
+   "E",
+   "SL",
+   -5.7
+  ],
+  [
+   "E2",
+   "SL",
+   -5.7
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "Dm",
+   "E",
+   -5.13
+  ],
+  [
+   "Dm",
+   "E2",
+   -5.13
+  ]
+ ]
+}
