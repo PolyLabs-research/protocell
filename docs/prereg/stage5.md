@@ -109,3 +109,18 @@ The light across the body also reads as a direction: the brightest node gets the
 ## 8. What would change this document
 
 The owner's changes to §7, and the 5a checks' outcome, as dated notes before stage 5b. 5b's outcome after its judge.
+
+**Stage 5b's outcome (2026-11-10, after both judges; `docs/decisions.md` D27).**
+
+| mode | submitted | checks used | written (survival) | B8 | B0 | share of the gap [95%] | verdict |
+|---|---|---|---|---|---|---|---|
+| fourier1 | design 16 | 5 | 0.527 (84%) | 0.563 (91%) | 0.163 | 0.909 [0.850, 0.965] | carries B8 (narrowly) |
+| uniform | design 6 | 2 | 0.410 (36%) | 0.563 (91%) | 0.163 | 0.618 [0.565, 0.670] | partly |
+
+- **Predictions:** 1 ✓ (fourier1 at least partly), 2 ✓ (it does not beat B8), 3 ✓ (uniform at least a quarter, less
+  than fourier1), 4 ✓ (half the gap on the validation starts at check 2).
+- **The interval for fourier1 reaches below 0.9;** on the validation starts design 16 closed the whole gap, and the drop
+  on fresh starts is the cost of choosing among five checked designs.
+- **The notebooks** (`docs/data/stage5b/<mode>/notebook.md`) record each design's rationale before its check, what each
+  check taught, a dated correction (the walk calculator's falloff) and a disclosure (most probes bypassed `probes.log`).
+- **Next** is the owner's call (D27 C); stage 4e's §6 sets evolution from design 16 for "carries".

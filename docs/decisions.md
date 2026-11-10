@@ -1512,3 +1512,101 @@ directly, could help with a model this small, then: "Yes draft away".
 
 **Impact:** this entry; `docs/prereg/stage5.md`; next, the build and the 5a checks.
 
+
+## D27 — Stage 5b: with relative sensing, a hand-written cell carries B8 (fourier1, narrowly); the uniform cell partly
+
+**Date:** 2026-11-10  
+**Why:** D26; `docs/prereg/stage5.md` §4. The owner, along the way: "pick up from here"; "carry on with the analysis and
+s08"; "option 2" (a bounded push for 0.9, ~3 designs or checks) and "commit the data now"; "option 2, go ahead" (one more
+design and check before the judge); "start the uniform mode"; "option 1" (a bounded uniform push, then the judge).  
+**Ran:**
+- The tool: `experiments/stage5b.py` over `experiments/stage4e.py`; the probe log keeps each probe's means (`39a97ab`).
+- A calculator, not the world: `experiments/stage5b_walk.py` (`55b5600`), a radial walk in the cave's 1/d² field.
+- The data, committed during the mode at the owner's request, the judges at `fecfb65` (fourier1) and `2ebe244` (uniform):
+  - fourier1: 16 designs, 5 checks;
+  - uniform: 8 designs and benches, 2 checks.
+- One process on this machine; nothing on RunPod.
+
+### A. Measured
+1. **fourier1: "carries B8", narrowly.**
+   - Design 16 on 100 fresh starts (seed 29): 0.527 (survival 84%) against B8's 0.563 (91%) and B0's 0.163.
+   - Share of the gap closed: 0.909, 95% interval [0.850, 0.965]. The verdict reads the point share, and the interval
+     reaches below 0.9.
+   - It does not beat B8. It is above B8 on 50 of 100 starts; 9 starts die only for it, 2 only for B8, 7 for both.
+   - On the 24 validation starts it closed the whole gap (check 5): the drop is the cost of choosing among five checked
+     designs on the same starts.
+2. **uniform: "partly".** Design 6: 0.410 (36%); share 0.618 [0.565, 0.670]. Above B8 on 7 of 100 starts; 55 die only
+   for it.
+3. **All four predictions hold:**
+   - 1, fourier1 at least partly;
+   - 2, it does not beat B8;
+   - 3, uniform at least a quarter of the gap and less than fourier1;
+   - 4, half the gap on the validation starts within 15 checks (at check 2).
+4. **What the world asks.** Every failure in the checks was the same skill: crossing the dark pool.
+   - The mouth sweeps 120° along the edge in a day, so each dawn the light rises up to ~8,000 R away.
+   - Waiting for the sweep takes ~9 h, and a full reserve lasts ~5 h after a night.
+   - Running at the mouth from 6,000 R raises the light ~0.25% a tick, against ~10% sensor noise per node.
+5. **What carried B8's job in the fourier1 cell,** found one notebook entry at a time:
+   - **Relative sensing,** stage 5's change.
+   - **An efference copy matched to the wall's response:**
+     - in time: a core neuron with the wall's time constant;
+     - by light level: its bias set through a dimness neuron read from SL;
+     - in size: a twin copy once the drive grew.
+   - **An exploring rhythm:** a relaxation oscillator (R2 bistable, Q slow) that runs often in dim light and rarely in
+     bright.
+   - **A rise detector** (R1) that holds a climbing run and ends a falling one.
+   - **A drive strong enough** to swim at 0.6–0.9 of v_max in dim light. The calculator showed design 9 decided nearly
+     as well as B5 but swam at 0.34–0.45 of v_max.
+   - All 8 core neurons are used.
+6. **The uniform cell.**
+   - A run is a ring bump placed by noise, held by ring links and a global inhibitor (G).
+   - Each problem was found and fixed in turn:
+     - ringing: a slower wall;
+     - slow symmetry breaking: stronger ring links;
+     - bumps outliving the drive: the copy ending each bump;
+     - all-on locks: a fixed-bias copy;
+     - a copy that cannot follow a bump whose size triples with the light: G's share of the copy.
+   - Its best checked cell explores heavily and with little selectivity in dim light. It finds the light, then neither
+     follows the sweep nor keeps its reserve. A cleaner copy explored less and did worse (check 2: 0.31 of the gap).
+7. **Process, disclosed in the notebooks:**
+   - Most probes ran through scratch helpers calling the tool's probe function and bypassed `probes.log`.
+   - The scratch calculator used a falloff of 750 R where the world uses 600; a dated correction gives the committed
+     calculator's numbers, and the ranking held.
+   - The copies' calibrations were single least-squares calculations against computed or measured wall responses; no
+     automated search over behaviour.
+
+### B. Reading
+1. **With relative sensing, the cell can do B8's job.** D25 named the wiring as the limit: senses only through beats, no
+   gain control, eight neurons. Relative sensing removed the first two, and a hand-written fourier1 cell then closes ~0.9
+   of the gap on fresh starts. In fourier1 mode, the cell is no longer what stops the strong sense from being tested.
+2. **It took parts no search in stages 1–4 found:**
+   - a copy calibrated by light level;
+   - a relaxation-oscillator rhythm gated by dimness;
+   - a strong drive.
+
+   Whether a search can keep them, or improve on them from this start, is the question stage 4e's table sends next
+   (§6: "evolution starting from this cell, with the strong sense as its question").
+3. **Caveats:**
+   - The interval reaches below 0.9, so "carries" is narrow.
+   - My design skill is in the result.
+   - Five designs were compared on the same 24 validation starts.
+   - It still dies on 16 of 100 starts against B8's 9.
+4. **The uniform cell is harder, not impossible.** Its front must be made by its own ring, and that bump fights the copy
+   its comparator needs. It reaches "partly"; the next step does not need it.
+
+### C. Decisions this surfaces (the owner's)
+1. **Evolution starting from design 16 (recommended, as stage 4e's §6 sets for "carries").**
+   - A draft first.
+   - The question, the strong sense: can a search seeded at design 16 beat B8 in stage 4a's world?
+   - The method: stage 4c's CMA-ES (or the GA) seeded at design 16, with no curriculum (it starts at the bar).
+   - Its own checks:
+     - the seed reproduces design 16's score;
+     - removals and holds test whether the hand-written parts survive.
+   - The cost (local, one process, or RunPod) to be estimated in the draft.
+2. **Write up stages 4 and 5 and merge `stage4` into `main`.** The branch holds stages 4a–5b and has been unmerged since
+   D16.
+3. **More hand-writing for the uniform mode,** with 48 checks left. Not recommended: the fourier1 result answers stage
+   5's question, and the uniform cell's difficulty is in its bump, not its sensing.
+
+**Impact:** this entry; `docs/prereg/stage5.md` (5b's outcome); `experiments/stage5b.py`, `experiments/stage5b_walk.py`,
+`tests/test_stage5b_walk.py`; `docs/data/stage5b/`; `README.md` status.
