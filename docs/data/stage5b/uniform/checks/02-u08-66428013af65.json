@@ -1,0 +1,133 @@
+{
+ "mode": "uniform",
+ "why": "Design 7 with its copy topped up to its measured residual (the bounded push's third step). With G scaling the copy by the bump, design 7's residual through steady-light runs was nearly the same at every level, but short: 8 (F - SL) +1.5 (light 0.03-0.05) to +1.9 (light 2), which held R1 up and let every run last until Q capped it (~280 ticks). One unit of E's copy weight is ~0.99 in F's input, ~1.9 in 8 (F - SL) at F's slope (~0.24), so E -> F and SL -2.7 -> -3.6 should bring the residual to ~-0.2 dim and ~+0.2 bright. F and SL bias 0.3 -> 0.43 offsets E's larger resting pull (~0.15 x 0.9). Everything else is design 7's. Expected in probes: 8 (F - SL) through steady-light runs within ~+-0.5; runs in steady light set by Q (~40-60 ticks), not ~280; dim running ~20-30%, bright ~10-15%; ramps pulling well above falls at every level.",
+ "wall": {
+  "bias": -3.7,
+  "tau": 4.0,
+  "gain": 20.0,
+  "self": 5.0,
+  "from_cw": 2.5,
+  "from_ccw": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": 0.43,
+   "tau": 2.0,
+   "in": 1.25
+  },
+  {
+   "name": "SL",
+   "bias": 0.43,
+   "tau": 300.0,
+   "in": 1.25
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 2.0,
+   "out": 7.0
+  },
+  {
+   "name": "E",
+   "bias": -2.0,
+   "tau": 4.0,
+   "out": -3.0
+  },
+  {
+   "name": "Q",
+   "bias": 1.7,
+   "tau": 250.0
+  },
+  {
+   "name": "Dm",
+   "bias": 4.0,
+   "tau": 1.0
+  },
+  {
+   "name": "G",
+   "bias": -4.0,
+   "tau": 1.0,
+   "in": 1.0,
+   "out": -6.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Dm",
+   "Q",
+   -8.0
+  ],
+  [
+   "R2",
+   "E",
+   8.0
+  ],
+  [
+   "E",
+   "F",
+   -3.6
+  ],
+  [
+   "E",
+   "SL",
+   -3.6
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "G",
+   "F",
+   -4.0
+  ],
+  [
+   "G",
+   "SL",
+   -4.0
+  ]
+ ]
+}

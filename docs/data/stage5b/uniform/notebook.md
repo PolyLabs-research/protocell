@@ -30,3 +30,19 @@ Share of the gap from B0 to B8 on these starts: 0.55. Check 1 of 50; 30 s; code 
 **Learnt (2026-11-10 08:17 UTC):** Design 7, probes: the SL loop is gone: SL at rest 0.46 (light 0.02) to 0.58 (light 2), Dm 0.57 to 0.36, dim light running 24-25% (design 6: 75-78%). G's share of the copy scales with the bump, so the residual is now nearly the same at every level, but on the short side: through steady-light runs 8 (F - SL) sits at +1.5 (light 0.03-0.05) to +1.9 (light 2), so R1 is held up and every run lasts until Q caps it (~260-290 ticks). Ramps pull 26-55% of the time, falls 0-6%. Next (design 8, the push's third step): E's fixed copy -2.7 -> -3.6, from the measured residual (one unit of E's weight is ~1.9 in 8 (F - SL)), and F and SL bias 0.3 -> 0.43 for E's larger resting offset.
 
 **Learnt (2026-11-10 08:18 UTC):** Design 8, probes: the residual through steady-light runs is now small in the far field (8 (F - SL) +0.2 to +0.4 at light 0.05, +0.5 at 0.1; runs 116-146 ticks; running 21-29%), but G's scaling is not quite proportional to the bump: at light 0.03 the copy over-cancels (~-1) and runs flicker (59% running, median 11 ticks, a partial return of the SL loop), and from 0.3 up it is short (+0.75 to +1.0; runs 136-194 ticks; running 11-12%). Ramps pull 55% / 24% / 39% of the time at light 0.05 / 0.5 / 2, falls 0-4%. Check 2 (the push's last planned step) goes to design 8; then design 6 or 8, whichever checks better, goes to the judge.
+
+### Check 2: `u08.json` (66428013af65), starts 1-24
+
+**Why, written before it ran:** Design 7 with its copy topped up to its measured residual (the bounded push's third step). With G scaling the copy by the bump, design 7's residual through steady-light runs was nearly the same at every level, but short: 8 (F - SL) +1.5 (light 0.03-0.05) to +1.9 (light 2), which held R1 up and let every run last until Q capped it (~280 ticks). One unit of E's copy weight is ~0.99 in F's input, ~1.9 in 8 (F - SL) at F's slope (~0.24), so E -> F and SL -2.7 -> -3.6 should bring the residual to ~-0.2 dim and ~+0.2 bright. F and SL bias 0.3 -> 0.43 offsets E's larger resting pull (~0.15 x 0.9). Everything else is design 7's. Expected in probes: 8 (F - SL) through steady-light runs within ~+-0.5; runs in steady light set by Q (~40-60 ticks), not ~280; dim running ~20-30%, bright ~10-15%; ramps pulling well above falls at every level.
+
+| | this design | B8 | B0 |
+|---|---|---|---|
+| fitness | 0.277 | 0.567 | 0.148 |
+| survival | 8% | 96% | 0% |
+| light per daylight tick | 0.315 | 0.606 | 0.115 |
+| beat by day / night | 0.065 / 0.001 | 0.100 / 0 | 0 / 0 |
+| reached the soak region | 71% | 100% | 12% |
+
+Share of the gap from B0 to B8 on these starts: 0.31. Check 2 of 50; 29 s; code ce9fc06.
+
+**Learnt (2026-11-10 08:21 UTC):** Check 2 (design 8): fitness 0.277, 31% of the gap (check 1, design 6: 0.378, 55%); survival 8%, reached 71% (96%), day light 0.315 (0.454), day beat 0.065. The cleaner copy cost the cell its finding: design 8 explores ~29% of the time in the far field (design 6: ~75%), and design 6's heavy, nearly unselective exploring in dim light is what reached the light. So for this uniform cell, more exploring in the far field matters more than a better copy. Submission (stage4e.md section 4): design 6, chosen on its checks: 55% of the gap on the validation starts against design 8's 31%. Two of the 50 checks used, as the owner's bounded push (about three designs or checks) planned. The judge: 100 fresh starts at seed 29 with B8 and B0, bootstrap at seed 30.
