@@ -1,0 +1,133 @@
+{
+ "mode": "uniform",
+ "why": "Design 6 with the copy scaled by the bump itself (the bounded push's second step). A fixed copy cannot fit bumps whose sum triples from dim to bright light (1.7 at light 0.02, 3.9 at 0.05, 5.3-5.8 from 0.3 up): design 6 over-cancelled dim runs by ~4.8 and drove SL down, and fell short in bright light. G reads the wall's sum, so its output while running follows the bump (~0.09 at 0.02, ~0.48 at 0.05, ~0.86 bright) and its timing exactly; at rest G ~0.02. G -> F and SL -4: F's slope in the sum, 1.25 - 4 G', stays at or above 0.25, so a rise in light never reads as a fall (at -8 it would around a sum of 4), and while running F keeps ~25-50% of its light signal. E's fixed copy -7 -> -2.7 supplies the rest: by calculation the copy then totals ~2.4-2.9 at light 0.02 (bump 2.1 into F), ~4.6 at 0.05 (4.9), and ~6.1 bright (7.0), over by ~0.3-0.9 in dim light and short by ~0.9 bright. F and SL bias 0.75 -> 0.3 (E's resting offset is now ~0.4, G's ~0.08). Everything else is design 6's. Expected in probes: dim running well below design 6's 75-78% (no SL loop), SL near ~0.45-0.55 at every level, bright runs shorter; ramps pulling more than falls at every level.",
+ "wall": {
+  "bias": -3.7,
+  "tau": 4.0,
+  "gain": 20.0,
+  "self": 5.0,
+  "from_cw": 2.5,
+  "from_ccw": 2.5
+ },
+ "alpha": 0.0,
+ "core": [
+  {
+   "name": "F",
+   "bias": 0.3,
+   "tau": 2.0,
+   "in": 1.25
+  },
+  {
+   "name": "SL",
+   "bias": 0.3,
+   "tau": 300.0,
+   "in": 1.25
+  },
+  {
+   "name": "R1",
+   "bias": -1.81,
+   "tau": 1.0
+  },
+  {
+   "name": "R2",
+   "bias": -3.09,
+   "tau": 2.0,
+   "out": 7.0
+  },
+  {
+   "name": "E",
+   "bias": -2.0,
+   "tau": 4.0,
+   "out": -3.0
+  },
+  {
+   "name": "Q",
+   "bias": 1.7,
+   "tau": 250.0
+  },
+  {
+   "name": "Dm",
+   "bias": 4.0,
+   "tau": 1.0
+  },
+  {
+   "name": "G",
+   "bias": -4.0,
+   "tau": 1.0,
+   "in": 1.0,
+   "out": -6.0
+  }
+ ],
+ "links": [
+  [
+   "F",
+   "R1",
+   8.0
+  ],
+  [
+   "SL",
+   "R1",
+   -8.0
+  ],
+  [
+   "R1",
+   "R1",
+   3.0
+  ],
+  [
+   "R1",
+   "R2",
+   8.0
+  ],
+  [
+   "R2",
+   "R2",
+   8.0
+  ],
+  [
+   "Q",
+   "R2",
+   -8.0
+  ],
+  [
+   "R2",
+   "Q",
+   8.0
+  ],
+  [
+   "Dm",
+   "Q",
+   -8.0
+  ],
+  [
+   "R2",
+   "E",
+   8.0
+  ],
+  [
+   "E",
+   "F",
+   -2.7
+  ],
+  [
+   "E",
+   "SL",
+   -2.7
+  ],
+  [
+   "SL",
+   "Dm",
+   -8.0
+  ],
+  [
+   "G",
+   "F",
+   -4.0
+  ],
+  [
+   "G",
+   "SL",
+   -4.0
+  ]
+ ]
+}
