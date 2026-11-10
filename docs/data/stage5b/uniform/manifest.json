@@ -1,0 +1,346 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage5b.py judge docs/data/stage5b/uniform/designs/u06.json",
+ "created_at": "2026-11-10T08:21:15+00:00",
+ "git": {
+  "branch": "stage4",
+  "dirty": false,
+  "sha": "76773f6d703689553a8062fdf1e359cb4cc26f3a"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage5b/uniform",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage5b",
+ "seeds": [
+  29,
+  30
+ ],
+ "settings": {
+  "b8": {
+   "aim_tau": 10.0,
+   "tau": 10.0
+  },
+  "bootstrap_seed": 30,
+  "checks_used": 2,
+  "design": {
+   "alpha": 0.0,
+   "core": [
+    {
+     "bias": 0.75,
+     "in": 1.25,
+     "name": "F",
+     "tau": 2.0
+    },
+    {
+     "bias": 0.75,
+     "in": 1.25,
+     "name": "SL",
+     "tau": 300.0
+    },
+    {
+     "bias": -1.81,
+     "name": "R1",
+     "tau": 1.0
+    },
+    {
+     "bias": -3.09,
+     "name": "R2",
+     "out": 7.0,
+     "tau": 2.0
+    },
+    {
+     "bias": -2.0,
+     "name": "E",
+     "out": -3.0,
+     "tau": 4.0
+    },
+    {
+     "bias": 1.7,
+     "name": "Q",
+     "tau": 250.0
+    },
+    {
+     "bias": 4.0,
+     "name": "Dm",
+     "tau": 1.0
+    },
+    {
+     "bias": -4.0,
+     "in": 1.0,
+     "name": "G",
+     "out": -6.0,
+     "tau": 1.0
+    }
+   ],
+   "links": [
+    [
+     "F",
+     "R1",
+     8.0
+    ],
+    [
+     "SL",
+     "R1",
+     -8.0
+    ],
+    [
+     "R1",
+     "R1",
+     3.0
+    ],
+    [
+     "R1",
+     "R2",
+     8.0
+    ],
+    [
+     "R2",
+     "R2",
+     8.0
+    ],
+    [
+     "Q",
+     "R2",
+     -8.0
+    ],
+    [
+     "R2",
+     "Q",
+     8.0
+    ],
+    [
+     "Dm",
+     "Q",
+     -8.0
+    ],
+    [
+     "R2",
+     "E",
+     8.0
+    ],
+    [
+     "E",
+     "F",
+     -7.0
+    ],
+    [
+     "E",
+     "SL",
+     -7.0
+    ],
+    [
+     "SL",
+     "Dm",
+     -8.0
+    ]
+   ],
+   "mode": "uniform",
+   "wall": {
+    "bias": -3.7,
+    "from_ccw": 2.5,
+    "from_cw": 2.5,
+    "gain": 20.0,
+    "self": 5.0,
+    "tau": 4.0
+   },
+   "why": "Design 5 re-centred, with the rhythm retuned (the bounded push's first step; the owner: 'Agree, option 1'). E's resting output (~0.15) times its copy weight pushed F's and SL's input ~1 down, so SL sat near 0 in dim light and Dm saturated, and the cell ran 73-79% of the time there. F and SL bias -0.3 -> +0.75 puts F back mid-range (input + bias ~-0.2 in dim light, ~+0.15 bright). SL's span by light is now narrow (~0.46 at light 0.02 to ~0.54 bright: the wall's resting sum changes little at bias -3.7), so Dm = sigma(4 - 8 SL) spans only ~0.58 to ~0.42. Dm -> Q -6 -> -8 and Q bias 0.1 -> 1.7 then put R2's flip-on (Q_out 0.25, y_Q ~-2.8) just above Q's bright rest target (~-3.1) and well above its dim one (~-4.2): calculated with tau 250, bright runs ~43 ticks and rests ~395 (~10% running), dim runs ~52 and rests ~150 (~26%). The copy weight -6.5 -> -7.0, a small step toward cancelling bright runs (short by ~+3 in design 5); in the far field it now over-cancels slightly. Everything else is design 5's. Expected in probes: running ~20-30% in dim light, ~10% bright; bumps pulling 0.5-0.8; bright runs shorter than design 5's ~400 ticks. The rests in bright light hinge on Dm to within ~0.05, so the rhythm may land off its calculation."
+  },
+  "design_sha": "cc039a3688d0",
+  "genome": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -7.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -7.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   -8.0,
+   3.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   8.0,
+   0.0,
+   -8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   8.0,
+   0.0,
+   0.0,
+   -8.0,
+   0.0,
+   0.0,
+   -8.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.75,
+   0.75,
+   -1.81,
+   -3.09,
+   -2.0,
+   1.7,
+   4.0,
+   -4.0,
+   0.6931471805599453,
+   5.703782474656201,
+   0.0,
+   0.6931471805599453,
+   1.3862943611198906,
+   5.521460917862246,
+   0.0,
+   0.0,
+   5.0,
+   2.5,
+   2.5,
+   -3.7,
+   1.3862943611198906,
+   20.0,
+   0.0,
+   1.25,
+   1.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   7.0,
+   -3.0,
+   0.0,
+   0.0,
+   -6.0
+  ],
+  "judge_seed": 29,
+  "mode": "uniform",
+  "n_starts": 100,
+  "quick": false,
+  "world": {
+   "adapt_tau": 10.0,
+   "alpha_range": [
+    -3.141592653589793,
+    3.141592653589793
+   ],
+   "background": 0.0,
+   "c0": 1.6666666666666667e-05,
+   "c1": 1.6666666666666667e-05,
+   "cave_cycle": true,
+   "cave_falloff": 600.0,
+   "cave_path": "mouth",
+   "cave_sweep": true,
+   "cave_sweep_deg": 60.0,
+   "clamp_radius": 4999.0,
+   "cloud_shade": 1.0,
+   "cloud_shade_mean": 300.0,
+   "cloud_sun_mean": 600.0,
+   "damage_rate": 0.00015765288372808237,
+   "damage_repair": 0.0001388888888888889,
+   "damage_threshold": Infinity,
+   "day_ticks": 86400,
+   "dish_radius": 5000.0,
+   "energy_start": 0.5,
+   "eta": 5.500000000000001e-05,
+   "fill_light": 4.0,
+   "gain_range": [
+    0.0,
+    20.0
+   ],
+   "lamp_peak": 4.0,
+   "lamp_scale": 20.0,
+   "lamp_start_min": 60.0,
+   "level_floor": 0.015,
+   "lifetime": 172800,
+   "log_tau_range": [
+    0.0,
+    8.1886891244442
+   ],
+   "mouth_light": 10.0,
+   "n_core": 8,
+   "n_wall": 16,
+   "omega_max": 1.0,
+   "path_period": 21600,
+   "path_radius": 2500.0,
+   "rest_below": 0.01,
+   "retreat_on": "max",
+   "rotation_noise_sd": 0.158113883008419,
+   "sense_contrast": 1.0,
+   "sense_floor": 0.01,
+   "sensing": "relative",
+   "sensor_noise_sd": 0.0031622776601683794,
+   "shade_floor": 1.0,
+   "soak_threshold": 1.0,
+   "spot_centre_within": 10.0,
+   "spot_peak": 4.0,
+   "spot_sigma": 16.0,
+   "spot_start_min": 38.0,
+   "v_max": 10.0,
+   "weight_range": [
+    -8.0,
+    8.0
+   ]
+  }
+ },
+ "timing": {
+  "wall_seconds": 191.588387966156
+ }
+}
