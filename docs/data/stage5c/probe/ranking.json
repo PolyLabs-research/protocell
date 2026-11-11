@@ -1,0 +1,26 @@
+{
+ "by_sigma": {
+  "0.002": {
+   "all_on_second": 0.5053386282803394,
+   "correlation": 0.4197954820244867,
+   "mean_first": 0.560619000501875,
+   "mean_second": 0.5053386282803394,
+   "rank_correlation": 0.23979591836734696,
+   "sd_between_neighbours_first": 0.04201075132378352,
+   "sd_between_neighbours_second": 0.04720761801492417,
+   "top_half_by_first_on_second": 0.5163489813922036
+  },
+  "0.005": {
+   "all_on_second": 0.4064700483633124,
+   "correlation": 0.9206954344200655,
+   "mean_first": 0.4362047087176042,
+   "mean_second": 0.4064700483633124,
+   "rank_correlation": 0.8971993052540165,
+   "sd_between_neighbours_first": 0.13015003970664477,
+   "sd_between_neighbours_second": 0.11970909016506642,
+   "top_half_by_first_on_second": 0.4967086762025325
+  }
+ },
+ "design 16 on the second starts": 0.538065557617174,
+ "quick": false
+}
