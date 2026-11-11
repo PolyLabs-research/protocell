@@ -211,6 +211,14 @@ The data are in `docs/data/stage5c/pilot/`.
 **Next:** §9's second row: the confirmatory runs at first step 0.005 (seeds 3601–3603), with the owner's cost
 confirmed, and the test built before them.
 
+**The owner's answer on the confirmatory runs (2026-11-11, before they run).** "Go":
+- three runs at first step 0.005, seeds 3601–3603;
+- one 32-vCPU pod for two runs and one 16-vCPU pod for the third, about 3.7 hours;
+- cpu5c with 4.5-hour caps (at most $5.04 and $2.52), or cpu3c with 6-hour caps if no cpu5c is free (at most $5.76 and
+  $2.88): at most $8.64 in all.
+
+The test was built before these runs (`experiments/stage5c.py --phase test`).
+
 ## 13. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
