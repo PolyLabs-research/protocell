@@ -164,6 +164,16 @@ Stage 4b's test (`docs/prereg/stage4b.md` §6) on stage 5's cell, with design 16
 3. **The criteria** in §7 and the pilot's rule in §5.
 4. **The pilot's pod and cost** in §10: cpu5c at most $5.04, or cpu3c at most $5.76 if no cpu5c is free.
 
+**The owner's answers (2026-11-11, before the pilot).** "i approve all 4":
+- the search: CMA-ES from design 16, the pilot's two runs at first steps 0.002 and 0.005;
+- fourier1 only;
+- the criteria in §7 and the pilot's rule in §5;
+- the pilot's pod: cpu5c, 32 vCPUs at $1.12 an hour with a 4.5-hour cap, at most $5.04; if no cpu5c is free, cpu3c at
+  $0.96 an hour with a 6-hour cap, at most $5.76.
+
+The runner was built after the draft and before these answers (`experiments/stage5c.py`, the start in
+`protocell/cmaes.py`); the test (§6) is built before the confirmatory runs.
+
 ## 13. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
