@@ -37,3 +37,11 @@ def test_quick_probe_end_to_end(tmp_path):
     assert len(result["ladder"]) == 2
     for name in ("neighbours.csv", "summary.csv", "summary.json", "manifest.json"):
         assert (tmp_path / name).exists()
+
+
+def test_quick_ranking_reads_the_first_part(tmp_path):
+    stage5c_probe.main(["--quick", "--out", str(tmp_path)])
+    result = stage5c_probe.main(["--quick", "--out", str(tmp_path), "--part", "ranking"])
+    assert set(result["by_sigma"]) == {"0.005"}
+    assert -1.0 <= result["by_sigma"]["0.005"]["correlation"] <= 1.0
+    assert (tmp_path / "ranking.csv").exists() and (tmp_path / "ranking_manifest.json").exists()

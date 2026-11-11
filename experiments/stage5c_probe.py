@@ -14,6 +14,13 @@ with stage 5's cell on 8 fresh starts at seed 31 with shared noise, beside desig
 step size: the neighbours' fitness and survival, the share of the gap from B0 to B8 they keep, how many score at
 least design 16's, and the seconds a batch took (the draft's cost estimate). One process. Writes
 docs/data/stage5c/probe/.
+
+    .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c_probe --part ranking
+
+The second part asks how well a generation's 8 training starts rank neighbours this close. The same neighbours at the
+two smallest step sizes run on 8 more starts (9-16 at seed 31), and their mean fitness there is set against their mean
+on the first 8 (``neighbours.csv``): the correlation across neighbours is how much of an 8-start ranking is the genome
+and how much the starts. Writes ``ranking.csv`` and ``ranking.json`` beside the first part's files.
 """
 
 from __future__ import annotations
@@ -71,12 +78,63 @@ def run_batch(cfg: Config, starts, spec: Dict[str, Any], n: int) -> Dict[str, np
     return {k: np.stack(v, axis=1) for k, v in cols.items()}
 
 
+RANKING_SIGMAS = SIGMAS[:2]
+RANKING_COLUMNS = ("sigma", "neighbour", "fitness_first", "fitness_second", "survival_second")
+
+
+def _rank(x: np.ndarray) -> np.ndarray:
+    return np.argsort(np.argsort(x, kind="stable"), kind="stable").astype(float)
+
+
+def ranking(cfg: Config, out: Path, quick: bool) -> Dict[str, Any]:
+    """The second part: the first part's neighbours at the smallest step sizes on the next ``STARTS`` starts."""
+    import csv
+    n, n_starts, sigmas = (4, 2, SIGMAS[1:2]) if quick else (NEIGHBOURS, STARTS, RANKING_SIGMAS)
+    with (out / "neighbours.csv").open() as f:
+        first = {(float(r["sigma"]), int(r["neighbour"])): float(r["fitness"]) for r in csv.DictReader(f)}
+    design = stage4e.load(SEED_DESIGN)
+    mode = design["mode"]
+    g0 = stage4e.genome(cfg, design)
+    starts = sample_starts(cfg, "cave", 2 * n_starts, SEED).take(range(n_starts, 2 * n_starts))
+    manifest = build_manifest(protocol="stage5c/probe-ranking", settings={"world": cfg.as_dict(), "mode": mode, "design_sha": stage4e.sha(design),
+                                                                          "sigmas": list(sigmas), "neighbours": n, "starts": n_starts, "quick": quick},
+                              seeds=[SEED], extra={"out": str(out)})
+    t0 = time.time()
+    seed_fit = float(run_batch(cfg, starts, {"controller": "network", "mode": mode, "genomes": g0[None]}, 1)["fitness"].mean())
+    rows: List[Dict[str, Any]] = []
+    result: Dict[str, Any] = {"design 16 on the second starts": seed_fit, "by_sigma": {}, "quick": quick}
+    for sigma in sigmas:
+        genomes = neighbours(cfg, mode, g0, sigma, n, SIGMAS.index(sigma))
+        r = run_batch(cfg, starts, {"controller": "network", "mode": mode, "genomes": genomes}, n)
+        a = np.array([first[(sigma, i + 1)] for i in range(n)])
+        b = r["fitness"].mean(axis=1)
+        rows += [{"sigma": sigma, "neighbour": i + 1, "fitness_first": float(a[i]), "fitness_second": float(b[i]),
+                  "survival_second": float(r["survived"][i].mean())} for i in range(n)]
+        top = np.argsort(-a, kind="stable")[: max(1, n // 2)]
+        result["by_sigma"][str(sigma)] = {
+            "correlation": float(np.corrcoef(a, b)[0, 1]), "rank_correlation": float(np.corrcoef(_rank(a), _rank(b))[0, 1]),
+            "mean_first": float(a.mean()), "mean_second": float(b.mean()),
+            "top_half_by_first_on_second": float(b[top].mean()), "all_on_second": float(b.mean()),
+            "sd_between_neighbours_first": float(a.std(ddof=1)), "sd_between_neighbours_second": float(b.std(ddof=1))}
+        x = result["by_sigma"][str(sigma)]
+        print(f"{time.time() - t0:7.0f}s sigma {sigma}: correlation {x['correlation']:+.2f} (rank {x['rank_correlation']:+.2f}); the first starts' top half scores "
+              f"{x['top_half_by_first_on_second']:.3f} on the second against {x['all_on_second']:.3f} for all; design 16 {seed_fit:.3f}", flush=True)
+    write_csv(out / "ranking.csv", RANKING_COLUMNS, rows)
+    (out / "ranking.json").write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
+    finish_manifest(manifest, wall_seconds=time.time() - t0)
+    write_manifest(out / "ranking_manifest.json", manifest)
+    return result
+
+
 def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--quick", action="store_true", help="the smoke test's sizes and a 2,000-tick day: not a result")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--part", choices=("ladder", "ranking"), default="ladder")
     args = parser.parse_args(argv)
     cfg = stage5b.world(args.quick)
+    if args.part == "ranking":
+        return ranking(cfg, args.out, args.quick)
     n, n_starts, sigmas = (4, 2, SIGMAS[1::3]) if args.quick else (NEIGHBOURS, STARTS, SIGMAS)
     design = stage4e.load(SEED_DESIGN)
     mode = design["mode"]
