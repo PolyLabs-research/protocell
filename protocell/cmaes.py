@@ -147,6 +147,16 @@ def to_genomes(cfg: Config, mode: str, samples: np.ndarray) -> np.ndarray:
     return lo + mirrored * (hi - lo)
 
 
+def normalised(cfg: Config, mode: str, genome: np.ndarray) -> np.ndarray:
+    """A genome in the strategy's coordinates, 0 to 1 across each gene's range: ``to_genomes``'s inverse inside the
+    ranges."""
+    lo, hi = genome_ranges(cfg, mode)
+    g = np.asarray(genome, dtype=np.float64)
+    if g.shape != lo.shape or np.any(g < lo - 1e-12) or np.any(g > hi + 1e-12):
+        raise ValueError("the starting genome must lie within the genes' ranges")
+    return (g - lo) / (hi - lo)
+
+
 def _save(path: Path, strategy: Strategy, state: Mapping[str, Any]) -> None:
     tmp = path.with_suffix(".tmp.npz")
     np.savez(tmp, champion=state["champion"], samples=state["samples"], **strategy.state(),
@@ -162,14 +172,19 @@ def _load(path: Path, n: int, population: int) -> "tuple[Strategy, Dict[str, Any
 
 
 def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, *, log: Callable[[str], None] = print,
-        stop_after: Optional[int] = None, world_for: Optional[Callable[[int], Config]] = None, champion_from: int = 1) -> Dict[str, Any]:
+        stop_after: Optional[int] = None, world_for: Optional[Callable[[int], Config]] = None, champion_from: int = 1,
+        start: Optional[np.ndarray] = None) -> Dict[str, Any]:
     """One CMA-ES run, as ``protocell.evolve.run`` runs the GA: training starts drawn fresh each generation with shared
     noise; every ``validate_every`` generations the best samples and the distribution's mean are scored on the fixed
     validation starts, in ``cfg``; the champion is the best on validation from generation ``champion_from`` on;
     ``world_for(generation)`` is a generation's training world. Checkpoints after every generation to
     ``out/checkpoint.npz`` and resumes from it. When complete, writes ``generations.csv``, ``validation.csv``,
     ``mean.npy`` (the final mean's genome) and ``population.npy`` (the last samples' genomes), and, when the run has a
-    champion, ``champion.npy`` and ``champion.json``."""
+    champion, ``champion.npy`` and ``champion.json``.
+
+    ``start`` (stage 5c), a genome, is where the distribution's mean begins instead of a random draw; it is validated
+    before generation 1 and recorded as generation 0, rank 0, the run's reference, never its champion. Without it a run
+    is the same bits as before it existed."""
     out.mkdir(parents=True, exist_ok=True)
     ckpt = out / "checkpoint.npz"
     ga = cma.as_ga()
@@ -179,9 +194,16 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
         strategy, state = _load(ckpt, n, cma.population)
         log(f"resumed at generation {state['next_generation']}")
     else:
-        strategy = Strategy(n, cma.population, stream(seed, STREAM_CMAES).random(n), cma.sigma0)
+        mean0 = stream(seed, STREAM_CMAES).random(n) if start is None else normalised(cfg, mode, start)
+        strategy = Strategy(n, cma.population, mean0, cma.sigma0)
         state = {"champion": np.full(n, np.nan), "samples": np.zeros((cma.population, n)), "next_generation": 0, "history": [],
                  "validation": [], "champion_info": None}
+        if start is not None:
+            v = next(iter(mapper(validation_job, [{"cfg": cfg, "mode": mode, "seed": cma.validation_seed, "starts": vstarts, "genome": np.asarray(start)}])))
+            state["validation"].append({"generation": 0, "rank": 0, "train_fitness": math.nan, "validation_fitness": v["fitness"],
+                                        "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "champion": 0})
+            log(f"the start validates at {v['fitness']:.3f}, survival {v['survival']:.0%}")
+            _save(ckpt, strategy, state)
     done = 0
     while state["next_generation"] < cma.generations and (stop_after is None or done < stop_after):
         g = state["next_generation"]

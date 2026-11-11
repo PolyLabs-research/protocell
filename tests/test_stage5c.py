@@ -1,0 +1,67 @@
+"""Stage 5c (docs/prereg/stage5c.md): the seeds and steps, the start at design 16, a quick pilot and its rule."""
+
+from __future__ import annotations
+
+import csv
+import json
+
+import numpy as np
+import protocell  # noqa: F401
+import pytest
+
+from experiments import stage4e, stage5b, stage5c
+from protocell.cmaes import CMA, normalised, run, to_genomes
+
+
+def test_the_seeds_the_steps_and_the_search() -> None:
+    assert stage5c.seed_for("pilot", "fourier1", 1) == 1601 and stage5c.seed_for("pilot", "fourier1", 2) == 1602
+    assert stage5c.seed_for("confirm", "fourier1", 3) == 3603
+    cma = stage5c.cma_for("pilot", 1601, False)
+    assert cma.population == 96 and cma.generations == 200 and cma.train_starts == 8
+    assert cma.sigma0 == 0.002 and cma.validation_seed == 32 and cma.validation_starts == 48
+    assert stage5c.cma_for("pilot", 1602, False).sigma0 == 0.005
+    with pytest.raises(SystemExit):
+        stage5c.seed_for("pilot", "uniform", 1)
+    with pytest.raises(SystemExit):
+        stage5c.seed_for("pilot", "fourier1", 3)
+    with pytest.raises(SystemExit):  # the confirmatory step waits for the pilot's outcome
+        stage5c.cma_for("confirm", 3601, False)
+
+
+def test_a_genome_goes_to_the_strategys_coordinates_and_back() -> None:
+    cfg = stage5b.world(True)
+    g = stage4e.genome(cfg, stage4e.load(stage5c.SEED_DESIGN))
+    u = normalised(cfg, "fourier1", g)
+    assert u.min() >= 0.0 and u.max() <= 1.0
+    assert np.allclose(to_genomes(cfg, "fourier1", u[None])[0], g, atol=1e-12)
+    with pytest.raises(ValueError):
+        normalised(cfg, "fourier1", g + 100.0)
+
+
+def test_a_run_starts_at_design_16_and_resumes_to_the_same_bits(tmp_path) -> None:
+    cfg = stage5b.world(True)
+    g = stage4e.genome(cfg, stage4e.load(stage5c.SEED_DESIGN))
+    cma = CMA.quick().but(sigma0=0.002, validation_seed=32)
+    whole = run(cfg, "fourier1", cma, 7, tmp_path / "whole", map, log=lambda _: None, start=g)
+    run(cfg, "fourier1", cma, 7, tmp_path / "parts", map, log=lambda _: None, start=g, stop_after=1)
+    parts = run(cfg, "fourier1", cma, 7, tmp_path / "parts", map, log=lambda _: None, start=g)
+    assert whole["validation"][0]["generation"] == 0 and whole["validation"][0]["champion"] == 0
+    assert json.dumps(whole["validation"]) == json.dumps(parts["validation"])
+    assert np.array_equal(whole["strategy"].mean, parts["strategy"].mean)
+    first = to_genomes(cfg, "fourier1", np.load(tmp_path / "whole" / "checkpoint.npz")["samples"])
+    span = np.ptp(np.stack([first.min(axis=0), first.max(axis=0), g]), axis=0)
+    assert np.all(span <= 0.1 * (np.abs(g) + 20.0))  # the last samples sit around design 16, not around a random genome
+
+
+def test_a_quick_pilot_and_its_rule(tmp_path) -> None:
+    for replicate in ("1", "2"):
+        stage5c.main(["--phase", "pilot", "--replicate", replicate, "--quick", "--workers", "2", "--out", str(tmp_path)])
+    rows = list(csv.DictReader(open(tmp_path / "pilot" / "fourier1-1601" / "validation.csv")))
+    assert rows[0]["generation"] == "0" and rows[0]["rank"] == "0"
+    gens = list(csv.DictReader(open(tmp_path / "pilot" / "fourier1-1601" / "generations.csv")))
+    assert all(r["shade_floor"] == "1" for r in gens) and abs(float(gens[0]["sigma"]) - 0.002) < 1e-12
+    outcome = stage5c.main(["--phase", "outcome", "--quick", "--out", str(tmp_path)])
+    assert set(outcome["runs"]) == {1601, 1602}
+    assert outcome["confirm_step"] in (None, 0.002, 0.005)
+    for r in outcome["runs"].values():
+        assert r["holds"] == (r["mean_last"] >= r["start"] - stage5c.DELTA)
