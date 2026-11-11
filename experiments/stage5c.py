@@ -36,7 +36,7 @@ from protocell.manifest import build_manifest, finish_manifest, write_manifest
 MODE = "fourier1"  # §2: design 16's mode; the uniform mode is not part of this question
 SEEDS = {"pilot": {MODE: (1601, 1602)}, "confirm": {MODE: (3601, 3602, 3603)}}
 PILOT_STEPS = {1601: 0.002, 1602: 0.005}  # §3, §5: the first step as a share of each gene's range, from the probe (§4)
-CONFIRM_STEP: Optional[float] = None  # set from the pilot's outcome (§5), before any confirmatory run
+CONFIRM_STEP: Optional[float] = 0.005  # the pilot's outcome (§5, 2026-11-11): both runs held; 0.005's mean validated higher
 VALIDATION_SEED, VALIDATION_STARTS = 32, 48  # fresh: seed 20's starts chose design 16
 TEST_SEED, BOOTSTRAP_SEED = 33, 34  # fresh
 CHAMPION_FROM = 10  # the first validation

@@ -24,8 +24,7 @@ def test_the_seeds_the_steps_and_the_search() -> None:
         stage5c.seed_for("pilot", "uniform", 1)
     with pytest.raises(SystemExit):
         stage5c.seed_for("pilot", "fourier1", 3)
-    with pytest.raises(SystemExit):  # the confirmatory step waits for the pilot's outcome
-        stage5c.cma_for("confirm", 3601, False)
+    assert stage5c.cma_for("confirm", 3601, False).sigma0 == 0.005  # the pilot's outcome
 
 
 def test_a_genome_goes_to_the_strategys_coordinates_and_back() -> None:

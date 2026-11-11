@@ -174,6 +174,43 @@ Stage 4b's test (`docs/prereg/stage4b.md` §6) on stage 5's cell, with design 16
 The runner was built after the draft and before these answers (`experiments/stage5c.py`, the start in
 `protocell/cmaes.py`); the test (§6) is built before the confirmatory runs.
 
+**The pilot's outcome (2026-11-11, before any confirmatory run).**
+
+The data are in `docs/data/stage5c/pilot/`.
+- **Where it ran:** no cpu5c was free, so a cpu3c pod (AMD EPYC 9655P, 32 vCPUs, $0.96 an hour), at code `17d6766`, from
+  a clean tree with warnings as errors. The pod's test suite passed first.
+- **Time and cost:** both runs side by side, 16 workers each, 3.4 hours a run. The pod was up about 3.7 hours and cost
+  about $3.50, within the $5.76 cap. The campaign pulled every run and the pod deleted itself.
+
+**Both runs hold the start, and both climb above it.** On the 48 validation starts (seed 32) design 16 scores 0.527
+(survival 83%).
+
+| run | first step | the mean at generation 200 | its last five validations | best candidate (the champion) | step at the end |
+|---|---|---|---|---|---|
+| seed 1601 | 0.002 | 0.599 (98%) | 0.603 | 0.614, the mean at generation 90 | 0.0020 |
+| seed 1602 | 0.005 | 0.613 (100%) | 0.606 | 0.622, a sample at generation 80 | 0.0042 |
+
+- **The rule (§5):** both runs hold, so the step whose mean validates higher over generations 160–200 goes on:
+  **0.005**, by 0.606 against 0.603. The margin is small; the rule was fixed beforehand.
+- **Most of the gain came early.** The mean validated at 0.560 (step 0.002) and 0.587 (step 0.005) by generation 10,
+  reached about 0.60 by generation 40–50, and stayed between 0.58 and 0.61 after.
+- **Where the gain is:** survival. The means survive 96–100% of the validation starts from generation 30 on, against
+  design 16's 83%.
+- **The step sizes barely moved:** 0.002 stayed at 0.002 (at most 0.0023); 0.005 eased to 0.0042.
+- **For context, not a criterion:** B8 scores 0.557 (survival 98%) on the same validation starts, computed after the
+  pilot. Every validation of either run's mean from generation 20 on is above it. These starts chose the champions, so
+  only the test's fresh starts can say whether a champion beats B8.
+
+**The predictions so far:**
+
+| prediction | outcome |
+|---|---|
+| 1. the run at step 0.002 holds the start | ✓ 0.599 against 0.527 less δ |
+| 2. neither run's step ends above 0.005 | ✓ 0.0020 and 0.0042 |
+
+**Next:** §9's second row: the confirmatory runs at first step 0.005 (seeds 3601–3603), with the owner's cost
+confirmed, and the test built before them.
+
 ## 13. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
