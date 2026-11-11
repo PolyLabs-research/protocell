@@ -64,3 +64,23 @@ def test_a_quick_pilot_and_its_rule(tmp_path) -> None:
     assert outcome["confirm_step"] in (None, 0.002, 0.005)
     for r in outcome["runs"].values():
         assert r["holds"] == (r["mean_last"] >= r["start"] - stage5c.DELTA)
+
+
+def test_runs_then_the_test_reads_the_criteria(tmp_path) -> None:
+    stage5c.main(["--phase", "pilot", "--replicate", "1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    for replicate in ("1", "2", "3"):
+        stage5c.main(["--phase", "confirm", "--replicate", replicate, "--quick", "--workers", "2", "--out", str(tmp_path)])
+    summary = stage5c.main(["--phase", "test", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    mine = summary["stage5c"]
+    assert summary["verdicts"]["fourier1"]["champions"] == 3  # design 16 and the pilot's champion stay outside the verdict
+    assert "design16" in mine["fitness"] and "B8" in mine["fitness"]
+    assert len(mine["champion_minus_design16"]) == 4 and [p["number"] for p in mine["predictions"]] == [3, 4, 5]
+    assert set(mine["gene_movement"]["fourier1-3601"]) == {*stage5c.GENE_GROUPS, "all"}
+    assert all(0.0 <= v < 0.2 for v in mine["gene_movement"]["fourier1-3601"].values())  # a search this local stays near its start
+    assert "intact - (core)" in mine["parts"] and (tmp_path / "test" / "stage5c.json").exists()
+
+
+def test_design_16_has_not_moved_from_itself() -> None:
+    cfg = stage5b.world(True)
+    g = stage4e.genome(cfg, stage4e.load(stage5c.SEED_DESIGN))
+    assert all(v == 0.0 for v in stage5c.gene_movement(cfg, g, g).values())

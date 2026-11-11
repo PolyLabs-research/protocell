@@ -155,7 +155,7 @@ def goggles_job(job: Mapping[str, Any]) -> Dict[str, Any]:
     genomes = np.repeat(np.asarray(job["genome"])[None], n, axis=0)
     spec = {"controller": "network", "mode": job["mode"], "genomes": genomes}
     obs = stage3c_probe.Movement(cfg, starts, decode(cfg, job["mode"], genomes[:1]).alpha.repeat(n))
-    r = simulate(cfg, starts, spec, seed=TEST_SEED, cell_ids=[NOISE_CELL_ID] * n, observe=obs)
+    r = simulate(cfg, starts, spec, seed=job.get("seed", TEST_SEED), cell_ids=[NOISE_CELL_ID] * n, observe=obs)
     obs.runs.finish()
     bands = stage3c.onset_bands()
     s, k = np.zeros(n), np.zeros(n)
@@ -173,10 +173,10 @@ def flat_job(job: Mapping[str, Any]) -> Dict[str, Any]:
 
 
 def read_q3(run_name: str, fitness: Mapping[str, np.ndarray], onset: Mapping[str, Tuple[np.ndarray, np.ndarray]],
-            flat: Mapping[Tuple[str, float, str], Mapping[str, Any]], key: int, resamples: int) -> Dict[str, Any]:
+            flat: Mapping[Tuple[str, float, str], Mapping[str, Any]], key: int, resamples: int, bootstrap_seed: int = BOOTSTRAP_SEED) -> Dict[str, Any]:
     """§7 Q3 for one champion: it reads the direction if removing it drops its fitness by more than delta (interval) and
     its onset bias is below 0 with the direction mirrored (interval); it compares over time if stage 3c's C5 holds."""
-    drop = bootstrap_ci(fitness["G1"] - fitness["G0"], key, resamples, seed=BOOTSTRAP_SEED)
+    drop = bootstrap_ci(fitness["G1"] - fitness["G0"], key, resamples, seed=bootstrap_seed)
     mirrored = stage3c.ratio_ci([onset["G-1"][0]], [onset["G-1"][1]], key + 1, resamples)[0]
     plain = stage3c.ratio_ci([onset["G1"][0]], [onset["G1"][1]], key + 2, resamples)[0]
     frosted = stage3c.ratio_ci([onset["G0"][0]], [onset["G0"][1]], key + 3, resamples)[0]
@@ -186,36 +186,41 @@ def read_q3(run_name: str, fitness: Mapping[str, np.ndarray], onset: Mapping[str
             "onset_bias": {"G1": plain, "G0": frosted, "G-1": mirrored}, "compares_over_time": compares["any_level"], "flat_pool": compares}
 
 
-def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] = None) -> Dict[str, Any]:
+def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] = None, *, world: Any = stage4a.world,
+               test_seed: int = TEST_SEED, bootstrap_seed: int = BOOTSTRAP_SEED, validation: Optional[Tuple[int, int]] = None,
+               extra_cells: Sequence[Mapping[str, Any]] = (), protocol: str = "stage4b/test") -> Dict[str, Any]:
     """§6's test of every champion under ``out_root``; ``score`` scores the predictions (stage 4b's by default; stage 4c
-    passes its own)."""
-    cfg = stage4a.world(quick)
+    passes its own). A later stage running the same test (stage 5c) passes its own ``world``, its test and bootstrap
+    seeds, its ``validation`` (seed, starts) for the holds' averages, and ``extra_cells`` tested as the champions are
+    (phase, run, mode, genome) but outside the modes' verdicts; without them the test is the same bits as before."""
+    cfg = world(quick)
     ga = ga_for(quick)
     n = 4 if quick else TEST_STARTS
     resamples = 200 if quick else RESAMPLES
     reps, settle, hold = (4, 700, 1800) if quick else (stage3c.FLAT_REPLICATES, stage3c.FLAT_SETTLE, stage3c.FLAT_HOLD)
-    starts = sample_starts(cfg, "cave", n, TEST_SEED)
+    starts = sample_starts(cfg, "cave", n, test_seed)
     choices = stage4a_choices()
-    champions = find_champions(out_root)
+    champions = find_champions(out_root) + [dict(c) for c in extra_cells]
     if not champions:
         raise SystemExit(f"no champions under {out_root}")
-    vstarts = validation_starts(cfg, ga)
+    validation_seed = VALIDATION_SEED if validation is None else validation[0]
+    vstarts = validation_starts(cfg, ga) if validation is None else sample_starts(cfg, "cave", ga.validation_starts if quick else validation[1], validation[0])
     t0 = time.time()
-    common = {"cfg": cfg, "starts": starts, "seed": TEST_SEED}
+    common = {"cfg": cfg, "starts": starts, "seed": test_seed}
     jobs = [{**common, "label": rule, "spec": spec_of(cfg, rule, choices[rule])} for rule in ("B8", "B5", "B6")]
     jobs.append({**common, "label": "B0", "spec": {"controller": "still"}})
     flat_cases = [(lv, st) for lv in stage3c.FLAT_LEVELS for st in stage3c.FLAT_STEPS]
     with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
         ceiling_future = pool.submit(stage4a.ceiling_job, {"cfg": cfg, "starts": starts, "first": 0})
         means = {m["run"]: m for m in pool.map(means_job, [{"cfg": cfg, "mode": c["mode"], "genome": c["genome"], "starts": vstarts,
-                                                              "seed": VALIDATION_SEED, "run": c["run"]} for c in champions])}
+                                                              "seed": validation_seed, "run": c["run"]} for c in champions])}
         for c in champions:
             base = {"controller": "network", "mode": c["mode"]}
             jobs.append({**common, "label": c["run"], "spec": base, "genome": c["genome"]})
             jobs += [{**common, "label": f"{c['run']} -{rm}", "spec": {**base, "removal": rm}, "genome": c["genome"]} for rm in REMOVALS]
             jobs += [{**common, "label": f"{c['run']} hold {p}", "genome": c["genome"], "spec": {**base, "hold": {"pathway": p, "means": means[c["run"]]["means"][p]}}}
                      for p in PATHWAYS]
-        goggle_futures = [pool.submit(goggles_job, {"cfg": cfg, "starts": starts, "k": k, "world": w, "run": c["run"], "mode": c["mode"], "genome": c["genome"]})
+        goggle_futures = [pool.submit(goggles_job, {"cfg": cfg, "starts": starts, "seed": test_seed, "k": k, "world": w, "run": c["run"], "mode": c["mode"], "genome": c["genome"]})
                           for c in champions for w, k in GOGGLES.items()]
         flat_futures = [pool.submit(flat_job, {"cfg": cfg, "run": c["run"], "mode": c["mode"], "genome": c["genome"], "level": lv, "step": st,
                                                "replicates": reps, "settle": settle, "hold": hold, "stagger": stage3c.FLAT_STAGGER,
@@ -239,7 +244,7 @@ def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] =
     def ci(diff: np.ndarray) -> Tuple[float, float, float]:
         nonlocal key
         key += 1
-        return bootstrap_ci(diff, key, resamples, seed=BOOTSTRAP_SEED)
+        return bootstrap_ci(diff, key, resamples, seed=bootstrap_seed)
 
     comparisons: List[Dict[str, Any]] = []
     q3: Dict[str, Any] = {}
@@ -255,7 +260,7 @@ def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] =
                                 "low": lo, "high": hi, "criterion": DELTA, "verdict": lo > DELTA, "share_of_headroom": None})
         mine = {g["world"]: g for g in goggles if g["run"] == c["run"]}
         q3[c["run"]] = read_q3(c["run"], {w: mine[w]["fitness"] for w in GOGGLES}, {w: (mine[w]["cos_sum"], mine[w]["count"]) for w in GOGGLES},
-                               flat_by, 10_000 + 10 * index, resamples)  # Q3's bootstrap keys, apart from the comparisons'
+                               flat_by, 10_000 + 10 * index, resamples, bootstrap_seed)  # Q3's bootstrap keys, apart from the comparisons'
     write_csv(out / "comparisons.csv", ("run", "phase", "mode", "compared", "mean", "low", "high", "criterion", "verdict", "share_of_headroom"), comparisons)
     flat_rows = [{"run": r, "level": lv, "step": st, **reading} for (r, lv, st), reading in flat_by.items()]
     write_csv(out / "flat_pool.csv", ("run", "level", "step", "before", "early", "late", "d_early", "d_late", "T", "T_low", "T_high"), flat_rows)
@@ -278,9 +283,9 @@ def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] =
                "champions": [{k: v for k, v in c.items() if k != "genome"} for c in champions],
                "means": {r_: {"living_ticks": m["living_ticks"], **m["means"]} for r_, m in means.items()}, "predictions": predictions, "quick": quick}
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True, default=_jsonable) + "\n")
-    manifest = build_manifest(protocol="stage4b/test", settings={**cfg.as_dict(), "delta": DELTA, "n_starts": n, "resamples": resamples,
+    manifest = build_manifest(protocol=protocol, settings={**cfg.as_dict(), "delta": DELTA, "n_starts": n, "resamples": resamples,
                                                                  "choices": choices, "flat": {"replicates": reps, "settle": settle, "hold": hold}, "quick": quick},
-                              seeds=[TEST_SEED, VALIDATION_SEED, BOOTSTRAP_SEED])
+                              seeds=[test_seed, validation_seed, bootstrap_seed])
     finish_manifest(manifest, wall_seconds=time.time() - t0, jobs=len(jobs), workers=workers)
     write_manifest(out / "manifest.json", manifest)
     print(f"B8 {bar.mean():.3f}, the ceiling {ceiling['fitness'].mean():.3f}: the headroom {headroom:.3f}", flush=True)

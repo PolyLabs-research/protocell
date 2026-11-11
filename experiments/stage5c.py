@@ -3,6 +3,7 @@
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c --phase pilot --mode fourier1 --replicate 1 --workers 16
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c --phase pilot --mode fourier1 --replicate 2 --workers 16
     .venv/bin/python -m experiments.stage5c --phase outcome                                  # the pilot's rule, read
+    .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c --phase test --workers 1
     .venv/bin/python -m experiments.stage5c --phase pilot --mode fourier1 --quick --out /tmp/s5c   # the smoke test: not a result
 
 A run is stage 4c's CMA-ES (protocell/cmaes.py) with its mean started at design 16's genome, for 200 generations in
@@ -12,24 +13,33 @@ candidate from generation 10 on. The pilot's two runs differ only in the first s
 gene's range, replicate 2 takes 0.005 (§5). A run writes ``docs/data/stage5c/<phase>/<mode>-<seed>/``.
 
 The pilot's rule (§5): a run holds the start if its mean at the last generation validates no lower than design 16 less
-delta. The confirmatory runs' step is set from the pilot's outcome, as a dated note in the draft, before they run; the
-test (§6) is built before them.
+delta. The confirmatory runs' step is set from the pilot's outcome, as a dated note in the draft, before they run.
+
+The test (§6) is stage 4b's (``experiments.stage4b.test_phase``) on stage 5's cell, on 100 fresh starts at seed 33 with
+the bootstrap at seed 34 and the holds' averages from the validation starts: every champion, and design 16 as a cell of
+its own, against B8, with the removals, the holds, the goggles and the flat pool. Added here: each champion against
+design 16 (Q1b), which of design 16's needed parts the champions still need (Q2), how far each group of genes moved
+from design 16, and §8's predictions 3-5. Writes ``docs/data/stage5c/test/``.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
-from typing import Any, Dict, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence
 
 import protocell  # noqa: F401  # pins the BLAS thread counts before numpy loads
 
-from experiments import stage4e, stage5b
-from protocell.cell import genome_length
+import numpy as np
+
+from experiments import stage4b, stage4e, stage5b
+from experiments.stage1 import _jsonable, bootstrap_ci, find_champions
+from protocell.cell import genome_length, genome_ranges, layout
 from protocell.cmaes import CMA, run
 from protocell.manifest import build_manifest, finish_manifest, write_manifest
 
@@ -134,9 +144,93 @@ def pilot_outcome(out_root: Path, quick: bool = False) -> Dict[str, Any]:
     return {"runs": runs, "holding": holding, "confirm_step": PILOT_STEPS[chosen] if chosen else None}
 
 
+# --- the test (§6) --------------------------------------------------------------------------------------------------------
+
+START = "design16"  # design 16's label in the test, tested as the champions are
+GENE_GROUPS = ("ring", "alpha", "core_w", "core_bias", "core_log_tau", "spokes_in", "spokes_out")
+
+
+def gene_movement(cfg: Any, start: np.ndarray, genome: np.ndarray) -> Dict[str, float]:
+    """How far each group of genes sits from design 16's, as the mean absolute share of the gene's range (the cilium
+    angle around its circle), and over all genes."""
+    lay = layout(cfg, MODE)
+    lo, hi = genome_ranges(cfg, MODE)
+    d = np.abs(np.asarray(genome) - start) / (hi - lo)
+    a = lay.alpha.start
+    d[a] = min(d[a], 1.0 - d[a])
+    out = {g: float(d[getattr(lay, g)].mean()) for g in GENE_GROUPS}
+    out["all"] = float(d.mean())
+    return out
+
+
+def _no_score(*_: Any) -> List[Dict[str, Any]]:
+    return []  # stage 5c scores its own predictions below, from the test's files
+
+
+def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
+    cfg = stage5b.world(quick)
+    design = stage4e.load(SEED_DESIGN)
+    start = stage4e.genome(cfg, design)
+    extra = [{"phase": "start", "run": START, "mode": MODE, "seed": None, "genome": start, "generation": 0, "validation_fitness": None}]
+    summary = stage4b.test_phase(out_root, workers, quick, score=_no_score, world=stage5b.world, test_seed=TEST_SEED,
+                                 bootstrap_seed=BOOTSTRAP_SEED, validation=(VALIDATION_SEED, VALIDATION_STARTS), extra_cells=extra,
+                                 protocol="stage5c/test")
+    out = out_root / "test"
+    with (out / "per_start.csv").open() as f:
+        per: Dict[str, List[float]] = {}
+        for r in csv.DictReader(f):
+            per.setdefault(r["label"], []).append(float(r["fitness"]))
+    fit = {k: np.array(v) for k, v in per.items()}
+    with (out / "comparisons.csv").open() as f:
+        comparisons = list(csv.DictReader(f))
+    champions = find_champions(out_root)
+    confirm = [c for c in champions if c["phase"] == "confirm"]
+    resamples = 200 if quick else stage4b.RESAMPLES
+    q1b = []
+    for i, c in enumerate(champions):
+        d, lo, hi = bootstrap_ci(fit[c["run"]] - fit[START], 20_000 + i, resamples, seed=BOOTSTRAP_SEED)
+        q1b.append({"run": c["run"], "phase": c["phase"], "mean": d, "low": lo, "high": hi, "above_in_the_mean": d > 0.0, "verdict": lo > 0.0})
+    need = len(confirm) // 2 + 1 if confirm else 1
+    b8 = [x for x in comparisons if x["compared"] == "champion - B8" and x["phase"] == "confirm"]
+    beats = [x["run"] for x in b8 if x["verdict"] == "True"]
+    improves = [x["run"] for x in q1b if x["phase"] == "confirm" and x["verdict"]]
+    above = [x["run"] for x in q1b if x["phase"] == "confirm" and x["above_in_the_mean"]]
+    parts: Dict[str, Dict[str, Any]] = {}
+    for x in comparisons:
+        if x["compared"].startswith("intact") and x["phase"] in ("start", "confirm"):
+            e = parts.setdefault(x["compared"], {"design16_needs": False, "champions_needing": 0})
+            if x["phase"] == "start":
+                e["design16_needs"] = x["verdict"] == "True"
+            else:
+                e["champions_needing"] += x["verdict"] == "True"
+    for e in parts.values():
+        e["needed_by_champions"] = e["champions_needing"] >= need
+        e["survives"] = bool(e["design16_needs"] and e["needed_by_champions"])
+    hand = [k for k, e in parts.items() if e["design16_needs"]]
+    predictions = [
+        (3, "at least 2 of the 3 champions score above design 16, and at most 1 has its interval above 0",
+         len(above) >= need and len(improves) <= 1, {"above": above, "interval_above_0": improves}),
+        (4, "Q1 fails: no champion beats B8", not beats, {"beat": beats}),
+        (5, "every part design 16 needs, the champions still need", bool(confirm) and all(parts[k]["survives"] for k in hand),
+         {k: parts[k] for k in hand}),
+    ]
+    result = {"Q1": len(beats) >= need and bool(confirm), "champions_beating_B8": beats, "Q1b": len(improves) >= need and bool(confirm),
+              "champion_minus_design16": q1b, "parts": parts,
+              "gene_movement": {c["run"]: gene_movement(cfg, start, c["genome"]) for c in champions},
+              "fitness": {k: float(v.mean()) for k, v in fit.items() if " " not in k},
+              "predictions": [{"number": n, "text": t, "holds": bool(h), "values": v} for n, t, h, v in predictions], "quick": quick}
+    (out / "stage5c.json").write_text(json.dumps(result, indent=1, sort_keys=True, default=_jsonable) + "\n")
+    for x in q1b:
+        print(f"{x['phase']:8s} {x['run']:16s} less design 16: {x['mean']:+.3f} [{x['low']:+.3f}, {x['high']:+.3f}]", flush=True)
+    print(f"Q1 (beats B8): {result['Q1']} ({len(beats)}/{len(confirm)}); Q1b (improves on design 16): {result['Q1b']} ({len(improves)}/{len(confirm)})", flush=True)
+    for q in result["predictions"]:
+        print(f"prediction {q['number']}: {'✓' if q['holds'] else '✗'} {q['text']}", flush=True)
+    return {**summary, "stage5c": result}
+
+
 def main(argv: Optional[Sequence[str]] = None) -> Any:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "outcome"])
+    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "outcome", "test"])
     parser.add_argument("--mode", choices=[MODE], default=MODE)
     parser.add_argument("--replicate", type=int, default=1)
     parser.add_argument("--workers", type=int, default=16)
@@ -146,6 +240,8 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     args = parser.parse_args(argv)
     if args.phase == "outcome":
         return pilot_outcome(args.out, args.quick)
+    if args.phase == "test":
+        return test_phase(args.out, args.workers, args.quick)
     return run_phase(args.phase, args.mode, args.replicate, args.out, args.workers, args.quick, args.stop_after)
 
 
