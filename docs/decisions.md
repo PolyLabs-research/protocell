@@ -1610,3 +1610,44 @@ design and check before the judge); "start the uniform mode"; "option 1" (a boun
 
 **Impact:** this entry; `docs/prereg/stage5.md` (5b's outcome); `experiments/stage5b.py`, `experiments/stage5b_walk.py`,
 `tests/test_stage5b_walk.py`; `docs/data/stage5b/`; `README.md` status.
+
+## D28 — The owner's decision on D27: a search from design 16; the start is narrow, and the draft sets its step by a probe
+
+**Date:** 2026-11-11  
+**Why:** the owner on D27 C: "Go with 1" (evolution starting from design 16, a draft first).  
+**Ran:** `experiments/stage5c_probe.py` (code `e473dc3`, part 2 `7b5a0bf`), seed 31, one process on this machine, from a
+clean tree with warnings as errors; data in `docs/data/stage5c/probe/`. A design probe for the draft, not a result.
+
+### A. Measured
+1. **Design 16 stands only very small changes.** 48 neighbours a step size, every gene moved at once, on 8 fresh starts
+   (design 16 0.587, B8 0.589, B0 0.179):
+
+   | step (share of each range) | share of the gap kept | survival |
+   |---|---|---|
+   | 0.002 | 0.93 | 92% |
+   | 0.005 | 0.63 | 57% |
+   | 0.01 | 0.27 | 23% |
+   | 0.02, the GA's mutation | 0.10 | 7% |
+   | 0.05, stage 4c's first step | −0.04 | 1% |
+2. **8 training starts rank the closest neighbours weakly.** The same neighbours on 8 more starts: the two sets of starts
+   correlate +0.42 at step 0.002 and +0.92 at 0.005, where half the neighbours are broken.
+3. **The selected half does not beat design 16** on the second starts at either step (0.516 and 0.497 against 0.538).
+4. **Cost:** a batch of 48 cells takes 23 s on one core here, so a generation is about 6 core-minutes, as in stage 4c.
+
+### B. Reading
+1. **The start is a narrow peak.** The searches of stages 4b and 4c, at their own step sizes, would have made almost
+   only broken cells from it. This fits D27 B.2: the design rests on calibrated parts.
+2. **A search from here is a fine local one.** Its first step has to be about a tenth of the GA's, and at that size
+   the ranking is noisy. Whether it can climb is what the pilot shows.
+
+### C. Decided
+1. **Stage 5c is drafted:** `docs/prereg/stage5c.md`.
+   - Stage 4c's CMA-ES with its mean started at design 16, in stage 4a's world throughout, fourier1 only.
+   - The pilot runs the first steps 0.002 and 0.005 side by side; its rule is that a run holds the start.
+   - Validation and the test are on fresh starts (seeds 32 and 33); design 16 is tested as a cell beside the champions.
+   - Predictions: the search holds and polishes the design, and no champion beats B8.
+2. **Open for the owner** (the draft's §12): the search and the pilot's second run, fourier1 only, the criteria, and the
+   pilot pod's cost (at most $5.04 on cpu5c, or $5.76 on cpu3c).
+
+**Impact:** this entry; `docs/prereg/stage5c.md`; `experiments/stage5c_probe.py`, `tests/test_stage5c_probe.py`;
+`docs/data/stage5c/probe/`; `README.md` status.
