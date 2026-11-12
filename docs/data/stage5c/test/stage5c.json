@@ -1,0 +1,207 @@
+{
+ "Q1": false,
+ "Q1b": true,
+ "champion_minus_design16": [
+  {
+   "above_in_the_mean": true,
+   "high": 0.06711493028452593,
+   "low": 0.003673653969119252,
+   "mean": 0.036308697334245,
+   "phase": "confirm",
+   "run": "fourier1-3601",
+   "verdict": true
+  },
+  {
+   "above_in_the_mean": true,
+   "high": 0.08399583204422102,
+   "low": 0.027561486293484958,
+   "mean": 0.055326086362719004,
+   "phase": "confirm",
+   "run": "fourier1-3602",
+   "verdict": true
+  },
+  {
+   "above_in_the_mean": true,
+   "high": 0.0969651954263905,
+   "low": 0.050504608880866504,
+   "mean": 0.07273405885414902,
+   "phase": "confirm",
+   "run": "fourier1-3603",
+   "verdict": true
+  },
+  {
+   "above_in_the_mean": true,
+   "high": 0.08169822759534598,
+   "low": 0.0293925698783952,
+   "mean": 0.05520598964423899,
+   "phase": "pilot",
+   "run": "fourier1-1601",
+   "verdict": true
+  },
+  {
+   "above_in_the_mean": true,
+   "high": 0.08741361574686676,
+   "low": 0.03520435259601703,
+   "mean": 0.060876473630539,
+   "phase": "pilot",
+   "run": "fourier1-1602",
+   "verdict": true
+  }
+ ],
+ "champions_beating_B8": [],
+ "fitness": {
+  "B0": 0.16777905821360597,
+  "B5": 0.5172358515841381,
+  "B6": 0.416738439491568,
+  "B8": 0.55711856918556,
+  "ceiling": 0.6834944550693101,
+  "design16": 0.537225144538651,
+  "fourier1-1601": 0.59243113418289,
+  "fourier1-1602": 0.5981016181691899,
+  "fourier1-3601": 0.5735338418728959,
+  "fourier1-3602": 0.59255123090137,
+  "fourier1-3603": 0.6099592033928
+ },
+ "gene_movement": {
+  "fourier1-1601": {
+   "all": 0.003217122758717782,
+   "alpha": 0.002269285594428515,
+   "core_bias": 0.0027626680270455024,
+   "core_log_tau": 0.0032921083906354634,
+   "core_w": 0.003317942353641806,
+   "ring": 0.003573372734350655,
+   "spokes_in": 0.0027905435999180314,
+   "spokes_out": 0.0034517700855755027
+  },
+  "fourier1-1602": {
+   "all": 0.007507004972769254,
+   "alpha": 0.0018667540605040312,
+   "core_bias": 0.0076107172029178435,
+   "core_log_tau": 0.006982739019507352,
+   "core_w": 0.007781628575244358,
+   "ring": 0.007437611352902756,
+   "spokes_in": 0.0077591425179539195,
+   "spokes_out": 0.006915081254999765
+  },
+  "fourier1-3601": {
+   "all": 0.009614817848585769,
+   "alpha": 0.0007816373530105057,
+   "core_bias": 0.011579027095730379,
+   "core_log_tau": 0.010823216162773108,
+   "core_w": 0.010226023864719207,
+   "ring": 0.007445590498291399,
+   "spokes_in": 0.008898490852274885,
+   "spokes_out": 0.008554082306319398
+  },
+  "fourier1-3602": {
+   "all": 0.010079097800063188,
+   "alpha": 0.001953468307805743,
+   "core_bias": 0.007374659652787293,
+   "core_log_tau": 0.015551631644020219,
+   "core_w": 0.008607951750991744,
+   "ring": 0.011769966286945835,
+   "spokes_in": 0.011099236425555901,
+   "spokes_out": 0.011975167513657339
+  },
+  "fourier1-3603": {
+   "all": 0.008266365404015865,
+   "alpha": 0.0011097921130636093,
+   "core_bias": 0.005357471444983256,
+   "core_log_tau": 0.0071343943393444905,
+   "core_w": 0.00860214452769975,
+   "ring": 0.008344622997005625,
+   "spokes_in": 0.009426399151188883,
+   "spokes_out": 0.007836501823796062
+  }
+ },
+ "parts": {
+  "intact - (blind)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (core)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (core_fast)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (core_recurrence)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (hold core_drive)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (hold core_recurrence)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (hold ring_links)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (ring_links)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  },
+  "intact - (wall_fast)": {
+   "champions_needing": 0,
+   "design16_needs": false,
+   "needed_by_champions": false,
+   "survives": false
+  }
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 3,
+   "text": "at least 2 of the 3 champions score above design 16, and at most 1 has its interval above 0",
+   "values": {
+    "above": [
+     "fourier1-3601",
+     "fourier1-3602",
+     "fourier1-3603"
+    ],
+    "interval_above_0": [
+     "fourier1-3601",
+     "fourier1-3602",
+     "fourier1-3603"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "Q1 fails: no champion beats B8",
+   "values": {
+    "beat": []
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "every part design 16 needs, the champions still need",
+   "values": {}
+  }
+ ],
+ "quick": false
+}
