@@ -1719,3 +1719,37 @@ confirmatory runs).
 **Impact:** this entry; `docs/prereg/stage5c.md` (the answers, the pilot's and the test's outcomes);
 `experiments/stage5c.py`, `protocell/cmaes.py` (a run may start at a genome), `experiments/stage4b.py` (its test takes a
 world, seeds and extra cells), `tests/test_stage5c.py`; `docs/data/stage5c/`; `README.md` status.
+
+## D30 — The owner's decision on D29: explain the champions first; the probe's plan and predictions, before it runs
+
+**Date:** 2026-11-12  
+**Why:** the owner on D29 C: "agree, proceed with 1".
+
+### Decided
+1. **A probe of champion 3603 beside design 16** (`experiments/stage5c_explain.py`): 100 fresh starts at seed 35,
+   bootstrap at seed 36, stage 4a's world with stage 5's cell, one process here. A probe, as stage 3c's was: it
+   explains a result and sets no criterion of the stage.
+2. **Part A, the genes.**
+   - For each of the seven groups of genes, design 16 given the champion's group, and the champion with design 16's
+     group put back.
+   - The line through the two cells, at 0.25, 0.5, 0.75 and 1.5 of the way.
+   - The other two champions; the cosines between the three champions' moves away from design 16; a cell at their
+     mean move.
+3. **Part B, the movement** of design 16 and the champion, with stage 3c's observer: by light band, the time parked,
+   running and idle, the speed toward the mouth, and the runs. Each onset also keeps the idle ticks before its run:
+   fewer than 10 makes it a run **resumed**, otherwise **fresh**.
+4. **Part C, the network alone,** with noise: how much each cell runs in steady light at five levels, and while the
+   light rises and falls by 0.25% a tick.
+
+### Predictions (written before the probe runs)
+1. **The gain is spread:** at most one group, given to design 16 alone, carries half of the gain or more.
+2. **The line is smooth:** halfway along it the cell scores at least design 16 and at most the champion plus 0.01.
+3. **The champions moved the same way:** each pair's cosine is above 0.17 (two standard deviations for unrelated moves
+   in 135 genes), and the cell at their mean move scores at least the worst champion.
+4. **The aimed onsets are runs resumed, not runs aimed.** A climbing run that flickers and resumes is counted as a new
+   onset already pointing up the light. The champion's fresh onsets in light 0.3–3 have a bias within 0.15 of 0.
+5. **In dim light (0.01–0.1) the champion runs for more of the time than design 16:** the gain is a faster crossing of
+   the dark pool, where design 16's deaths were (D27 A.4).
+
+**Impact:** this entry; `experiments/stage5c_explain.py`, `tests/test_stage5c_explain.py`; `experiments/stage4e.py`
+(a probe may take a genome); next, the run and D31.

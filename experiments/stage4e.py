@@ -201,8 +201,13 @@ def run_probe(cfg: Config, design: Mapping[str, Any], light: np.ndarray, noise: 
     """The network on ``light`` ``(T, N)``, one cell, from rest, stepped as the simulation steps it, with the sensors'
     noise (stream ``probe``) or without. Returns per tick: the mean beat, the forward and leftward pull (the cell's own
     frame, in units of v_max), the beats and the core's outputs."""
+    return run_probe_genome(cfg, design["mode"], genome(cfg, design), light, noise, seed)
+
+
+def run_probe_genome(cfg: Config, mode: str, g: np.ndarray, light: np.ndarray, noise: bool, seed: int = 0) -> Dict[str, np.ndarray]:
+    """``run_probe`` for a genome that is not a design (an evolved cell)."""
     n = cfg.n_wall
-    p = decode(cfg, design["mode"], genome(cfg, design)[None])
+    p = decode(cfg, mode, np.asarray(g)[None])
     net = Network(cfg, p)
     rng = stream(seed, STREAM_PROBE)
     angle = node_angles(cfg) + float(p.alpha[0])
