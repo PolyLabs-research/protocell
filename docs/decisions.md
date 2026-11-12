@@ -1753,3 +1753,81 @@ world, seeds and extra cells), `tests/test_stage5c.py`; `docs/data/stage5c/`; `R
 
 **Impact:** this entry; `experiments/stage5c_explain.py`, `tests/test_stage5c_explain.py`; `experiments/stage4e.py`
 (a probe may take a genome); next, the run and D31.
+
+## D31 — The explaining probe: the search made the cell bolder in the dark and steadier on a rise, mostly through the core's links
+
+**Date:** 2026-11-12  
+**Why:** D30.  
+**Ran:** `experiments/stage5c_explain.py` (code `003da5e`), seed 35, 100 fresh starts, one process here, 18 minutes, from a
+clean tree with warnings as errors; data in `docs/data/stage5c/explain/`. A probe, not a criterion.
+
+### A. Measured
+1. **The result repeats on a third set of starts.** Design 16 0.528 (82% survive), B8 0.531 (85%); champions 3601
+   0.555, 3602 0.584, 3603 0.605 (100%). Champion 3603's gain over design 16 is +0.077 [+0.055, +0.101].
+2. **The genes: the core's links carry most of it, and the rest only works together.**
+
+   | group of genes | design 16 given the champion's group | the champion with design 16's group back |
+   |---|---|---|
+   | the core's links | +0.050 [+0.034, +0.068], 0.65 of the gain | keeps 0.28 of the gain |
+   | the core's biases | −0.012 | keeps 0.57 |
+   | the spokes in | −0.038 | keeps 0.86 |
+   | the spokes out | +0.008 | keeps 0.92 |
+   | the wall | +0.010 | keeps 0.90 |
+   | the core's time constants | +0.006 | keeps 0.92 |
+   | the cilium angle | −0.027 | keeps 0.99 |
+
+   - The biases and the spokes in hurt design 16 when given alone, yet the champion loses by having them taken back:
+     they fit the champion's links, not design 16's.
+3. **The line between the two cells is smooth:** +0.034 at a quarter of the way, +0.048 at half, +0.081 at three
+   quarters, +0.077 at the champion, +0.052 at half as far again. The search stopped near the top of its own slope.
+4. **The three champions moved the same way.** Their moves' cosines are 0.29, 0.20 and 0.19, where unrelated moves
+   would give 0 ± 0.09. A cell at their mean move scores 0.601, level with the best champion.
+5. **The movement, in the world:**
+
+   | | design 16 | champion 3603 |
+   |---|---|---|
+   | dim light (0.01–0.1): share of time running | 41% | 61% |
+   | dim light: speed toward the mouth (R a tick) | 0.44 | 0.83 |
+   | dim light: a run's mean length (ticks) | 16 | 36 |
+   | dim light: share of its life spent there | 5.7% | 3.7% |
+   | light 1–3: share of time running | 19% | 11% |
+   | light 5 and above: share of time running | 14% | 8% |
+   | light 5 and above: share of its life spent there | 18.7% | 22.0% |
+6. **The network alone** agrees:
+
+   | | design 16 | champion 3603 |
+   |---|---|---|
+   | steady light 0.03: time running | 38% | 60% |
+   | steady light 0.1 | 23% | 41% |
+   | steady light 1 | 7% | 0% |
+   | light rising 0.25% a tick, from 0.05 | 66% | 93% |
+   | the same, from 1 | 62% | 93% |
+   | light falling 0.25% a tick | 24%, 2% | 25%, 3% |
+7. **The aimed onsets are real, not runs resumed.** In light 0.3–3 the champion's fresh onsets (after 10 or more idle
+   ticks) have a bias of +0.57 (2,183 runs); its resumed ones +0.23 (660). Design 16's fresh onsets have none (0.00,
+   4,951 runs). In dim light the champion's onsets lean away from the mouth (−0.22).
+8. **Predictions:** 1, 2, 3 and 5 hold. 4 fails: I expected the aim to be an artefact of counting resumed runs.
+
+### B. Reading
+1. **What the search did, in behaviour:** three changes, all in the direction D27 A.4 named as the world's demand.
+   - It explores more in dim light, with longer runs, so the dark pool is crossed about twice as fast.
+   - It holds a rising run much more firmly.
+   - It wanders less once the light is bright, so it stays in the best light longer.
+2. **Where it did it:** mainly the core's links (the comparator, the rhythm and the copies are all there), with the
+   biases and the spokes in retuned to match. The change is a direction in gene space that three independent runs
+   share, and its slope is smooth. This is a retuning of the hand-written mechanism, not a new one.
+3. **How fresh runs begin aimed is not shown.** The stage's test found the bias unchanged with the direction across the
+   body removed or mirrored, so the body does not read it. A cell that follows a rise this firmly could turn a small
+   drift toward the mouth into a run, which would aim its onsets by time alone. That is a guess; the lean away from
+   the mouth in dim light is not explained by it.
+
+### C. Decisions this surfaces (the owner's)
+1. **Write up stages 4 and 5 and merge `stage4` into `main` (recommended now).** The result has held on two fresh sets
+   of starts and has a behavioural account.
+2. **Evolution from nothing on the relative-sensing cell (recommended next):** the test the result's main caveat asks
+   for. A draft first; RunPod, on cpu5c 16-vCPU pods, one run each.
+3. **A short probe of the aimed onsets:** the light's change in the ticks before each fresh onset, set against its
+   direction. Local, minutes. It would settle B.3.
+4. **A longer run from the champions,** or from the cell at their mean move.
+
+**Impact:** this entry; `docs/data/stage5c/explain/`.
