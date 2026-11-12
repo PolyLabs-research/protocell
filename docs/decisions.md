@@ -1651,3 +1651,71 @@ clean tree with warnings as errors; data in `docs/data/stage5c/probe/`. A design
 
 **Impact:** this entry; `docs/prereg/stage5c.md`; `experiments/stage5c_probe.py`, `tests/test_stage5c_probe.py`;
 `docs/data/stage5c/probe/`; `README.md` status.
+
+## D29 — Stage 5c: a search from the hand-written cell beats B8 (2 of 3 champions); the strong sense shown, from a designed start
+
+**Date:** 2026-11-12  
+**Why:** D28; `docs/prereg/stage5c.md`. The owner: "i approve all 4" (the draft and the pilot's pod), then "Go" (the
+confirmatory runs).  
+**Ran:**
+- The pilot (code `17d6766`): two runs on one cpu3c pod, first steps 0.002 and 0.005; about $3.50.
+- The confirmatory runs (code `055ed05`): seeds 3601–3603 at first step 0.005, one cpu5c 16-vCPU pod each; about $5.90
+  with a slow pod that was stopped (the draft's dated note).
+- The test (code `dbd83f0`): here, one process, 70 minutes, 100 fresh starts at seed 33.
+- Stage 5c on RunPod: about $9.40.
+
+### A. Measured
+1. **Q1 holds: 2 of the 3 champions beat B8 on fresh starts.**
+
+   | cell | fitness | survival | less B8 [95%] |
+   |---|---|---|---|
+   | champion 3603 | 0.610 | 100% | +0.053 [+0.039, +0.068] |
+   | champion 3602 | 0.593 | 96% | +0.035 [+0.016, +0.055] |
+   | champion 3601 | 0.574 | 93% | +0.016 [−0.009, +0.040] |
+   | B8 | 0.557 | 95% | |
+   | design 16 | 0.537 | 82% | −0.020 [−0.042, +0.001] |
+
+   The ceiling is 0.683; the champions claim 0.13, 0.28 and 0.42 of the headroom above B8.
+2. **Q1b holds: all 3 improve on design 16** (+0.036, +0.055, +0.073, each interval above 0).
+3. **The pilot:** both first steps held the start and climbed; most of the gain came within 40–50 generations; the step
+   sizes stayed where they began (0.0020, 0.0042).
+4. **Every part design 16 needs, the champions still need** (senses, core, core recurrence, slow core, the wall's time
+   constant, the core's signals); the ring's links are needed by neither.
+5. **The search moved every group of genes a little:** 0.8–1.0% of each range on average.
+6. **The gain is survival and light:** 93–100% survive against design 16's 82% and B8's 95%; light soaked 0.262–0.283
+   against 0.245 and 0.239. The champions beat more than B8 (0.055–0.066 against 0.039).
+7. **Mechanism, as far as the instruments read it:** no cell reads the direction across its body. The champions' runs
+   begin aimed at the mouth (onset bias about +0.5) with the direction intact, removed or mirrored; design 16's begin
+   unaimed.
+8. **Predictions:** 1, 2 and 5 hold. 3 and 4 fail: I predicted the search would polish the design without clearing
+   design 16 by the criterion or beating B8.
+9. **A scoring error of mine,** corrected before the outcome was written: the added summary misread the verdict column
+   and first printed "Q1 False (0/3)". The first file is in `a21764a`; no measured number changed.
+
+### B. Reading
+1. **The strong sense is shown here, once, with its caveats.** In stage 4a's world a cell of interacting parts does
+   better than every simple rule tried (B8, B5, B6), on fresh starts, in 2 of 3 runs.
+2. **The caveats:**
+   - The start was designed by hand. This shows the cell's parts can beat the best simple rule and that a search gets
+     there from a designed start. It does not show such a cell emerging from nothing.
+   - One spoke mode (fourier1), one world, one sensor (relative sensing, stage 5's change).
+   - The third champion does not clear the criterion.
+   - B8 is the best of the simple rules tried, tuned in stage 4a; another simple rule could sit higher.
+3. **The search polished; it did not rebuild.** The champions are design 16 with every gene nudged about 1%, and they
+   need the same parts. The peak the hand found was narrow (D28), and the improvement lay within reach of steps that
+   small.
+4. **What changed in behaviour is not explained yet.** Runs that begin aimed at the mouth without reading the direction
+   across the body point to the comparison over time doing the aiming, but that is a guess until it is probed.
+
+### C. Decisions this surfaces (the owner's)
+1. **Explain the champions (recommended first):** a short probe of champion 3603 against design 16, as stage 3c did for
+   stage 3b's: which nudged genes carry the gain, and how its runs come to start aimed. Local, one process.
+2. **Write up stages 4 and 5 and merge `stage4` into `main`.** The branch has been unmerged since D16 and now holds the
+   project's first positive result on the strong sense.
+3. **Evolution from nothing on the relative-sensing cell:** stage 4c's search with its path, unchanged but for the
+   sensor. This is the test the caveat asks for. A draft first; RunPod, about the pilot's cost to begin.
+4. **A longer run from the champions,** to see how much of the headroom (0.126) a search can claim.
+
+**Impact:** this entry; `docs/prereg/stage5c.md` (the answers, the pilot's and the test's outcomes);
+`experiments/stage5c.py`, `protocell/cmaes.py` (a run may start at a genome), `experiments/stage4b.py` (its test takes a
+world, seeds and extra cells), `tests/test_stage5c.py`; `docs/data/stage5c/`; `README.md` status.

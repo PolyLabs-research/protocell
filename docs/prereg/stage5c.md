@@ -219,6 +219,73 @@ confirmed, and the test built before them.
 
 The test was built before these runs (`experiments/stage5c.py --phase test`).
 
+**The confirmatory runs' pods (2026-11-12, a deviation in where they ran, not in what ran).**
+- The 32-vCPU pod came up as a cpu3c on an AMD EPYC 7713, at about 125 s a generation against 53 s elsewhere. Its two
+  runs could not have finished inside the 6-hour cap. It was terminated after about 40 minutes (about $0.60). Its
+  partial data is kept outside the repository (`~/protocell-runs/stage5c-confirm-slowpod/`) and is not a result.
+- Runs 1 and 2 were restarted from generation 1 on two 16-vCPU cpu5c pods, beside run 3's: the approved rate and caps,
+  one run a pod. The owner was told after the change, not asked before it.
+- All three ran at code `055ed05` on AMD EPYC 9575F, from clean trees with warnings as errors, 3.0 hours a run. The
+  campaigns pulled every run and the pods deleted themselves. Cost: about $5.90 with the stopped pod, within the $8.64
+  approved.
+
+**The test's outcome (2026-11-12; `docs/decisions.md` D29).**
+
+The data are in `docs/data/stage5c/confirm/` and `docs/data/stage5c/test/`. The test ran here as one process, 70 minutes,
+at code `dbd83f0`, from a clean tree with warnings as errors: 100 fresh starts at seed 33, bootstrap at seed 34.
+
+| cell | fitness | survival | less B8 [95%] | beats B8 | share of the headroom | less design 16 [95%] |
+|---|---|---|---|---|---|---|
+| the ceiling | 0.683 | 100% | | | | |
+| champion 3603 | 0.610 | 100% | +0.053 [+0.039, +0.068] | yes | 0.42 | +0.073 [+0.051, +0.097] |
+| champion 3602 | 0.593 | 96% | +0.035 [+0.016, +0.055] | yes | 0.28 | +0.055 [+0.028, +0.084] |
+| champion 3601 | 0.574 | 93% | +0.016 [−0.009, +0.040] | no | 0.13 | +0.036 [+0.004, +0.067] |
+| B8, the bar | 0.557 | 95% | | | | |
+| design 16 | 0.537 | 82% | −0.020 [−0.042, +0.001] | | | |
+| B5 | 0.517 | 77% | | | | |
+| B6 | 0.417 | 54% | | | | |
+| B0 | 0.168 | 0% | | | | |
+
+The pilot's two champions, outside the criteria, score 0.592 and 0.598, each with its interval against B8 above 0.
+
+- **Q1 holds: 2 of the 3 champions beat B8.** The third is above it in the mean, with its interval reaching below 0.
+- **Q1b holds: all 3 improve on design 16,** each interval above 0.
+- **Q2: every part design 16 needs, all 3 champions still need.**
+  - Needed by design 16 and by every champion: its senses, the core, the core's recurrence, the core's slow time
+    constants, the wall's time constant, and the core's drive and recurrence as signals (the holds).
+  - Needed by neither: the ring's links, which design 16 does not use.
+  - Each removal costs a champion what it costs design 16 or a little more (the core: 0.41–0.44 against 0.37).
+- **What the search changed:** little, everywhere. The champions' genes sit 0.8–1.0% of their ranges from design 16's
+  on average, spread over every group of genes; the cilium angle moved 0.1–0.2%.
+- **Q3:** no cell here reads the direction across its body by the criterion; removing the direction costs each 0.001 to
+  0.005.
+  - The champions' runs begin aimed toward the mouth (onset bias +0.46 to +0.56), and the same with the direction
+    removed or mirrored. Design 16's begin unaimed (−0.01).
+  - Design 16 meets the flat pool's criterion and no champion does. As §7 said, that criterion is not a finding on this
+    sensor; the difference is recorded, not explained.
+- **Where the gain is:** survival and light. The champions survive 93–100% of the starts against design 16's 82%, and
+  their light soaked is 0.262–0.283 against its 0.245 and B8's 0.239. They beat more than B8 does (0.055–0.066 against
+  0.039).
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. the run at step 0.002 holds the start | ✓ |
+| 2. neither pilot run's step ends above 0.005 | ✓ |
+| 3. at least 2 champions above design 16, at most 1 with its interval above 0 | ✗: all 3 intervals are above 0 |
+| 4. Q1 fails: no champion beats B8 | ✗: 2 of 3 do |
+| 5. every part design 16 needs, the champions still need | ✓ |
+
+**A scoring error, found and corrected before this note.** The test's added summary (`test/stage5c.json`) first read
+`comparisons.csv`'s verdict column as the words True and False; the tables write 1 and 0. It therefore printed "Q1
+False (0/3)" and prediction 4 as held, beside stage 4b's own reading of the same file, "beat the bar 2/3". The file as
+first written is in commit `a21764a`; the reader was fixed, a test now holds the two readings together, and the
+summary was read again from the test's files with no cell run again. No measured number changed.
+
+**Next:** §9's third row. The strong sense is shown in this world from a designed start; what follows is the owner's
+call (D29 C).
+
 ## 13. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the

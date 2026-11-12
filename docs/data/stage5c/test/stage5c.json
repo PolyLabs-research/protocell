@@ -1,5 +1,5 @@
 {
- "Q1": false,
+ "Q1": true,
  "Q1b": true,
  "champion_minus_design16": [
   {
@@ -48,7 +48,10 @@
    "verdict": true
   }
  ],
- "champions_beating_B8": [],
+ "champions_beating_B8": [
+  "fourier1-3602",
+  "fourier1-3603"
+ ],
  "fitness": {
   "B0": 0.16777905821360597,
   "B5": 0.5172358515841381,
@@ -116,40 +119,40 @@
  },
  "parts": {
   "intact - (blind)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (core)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (core_fast)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (core_recurrence)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (hold core_drive)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (hold core_recurrence)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   },
   "intact - (hold ring_links)": {
    "champions_needing": 0,
@@ -164,10 +167,10 @@
    "survives": false
   },
   "intact - (wall_fast)": {
-   "champions_needing": 0,
-   "design16_needs": false,
-   "needed_by_champions": false,
-   "survives": false
+   "champions_needing": 3,
+   "design16_needs": true,
+   "needed_by_champions": true,
+   "survives": true
   }
  },
  "predictions": [
@@ -189,18 +192,64 @@
    }
   },
   {
-   "holds": true,
+   "holds": false,
    "number": 4,
    "text": "Q1 fails: no champion beats B8",
    "values": {
-    "beat": []
+    "beat": [
+     "fourier1-3602",
+     "fourier1-3603"
+    ]
    }
   },
   {
    "holds": true,
    "number": 5,
    "text": "every part design 16 needs, the champions still need",
-   "values": {}
+   "values": {
+    "intact - (blind)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (core)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (core_fast)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (core_recurrence)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (hold core_drive)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (hold core_recurrence)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    },
+    "intact - (wall_fast)": {
+     "champions_needing": 3,
+     "design16_needs": true,
+     "needed_by_champions": true,
+     "survives": true
+    }
+   }
   }
  ],
  "quick": false
