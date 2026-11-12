@@ -78,6 +78,13 @@ def test_runs_then_the_test_reads_the_criteria(tmp_path) -> None:
     assert set(mine["gene_movement"]["fourier1-3601"]) == {*stage5c.GENE_GROUPS, "all"}
     assert all(0.0 <= v < 0.2 for v in mine["gene_movement"]["fourier1-3601"].values())  # a search this local stays near its start
     assert "intact - (core)" in mine["parts"] and (tmp_path / "test" / "stage5c.json").exists()
+    # stage 5c's readings agree with stage 4b's on the same files (a misread verdict column once made them differ)
+    v = summary["verdicts"]["fourier1"]
+    assert len(mine["champions_beating_B8"]) == v["beat_the_bar"] and mine["Q1"] == v["Q1"]
+    for part, needed in v["Q2_needed"].items():
+        assert mine["parts"][part]["needed_by_champions"] == needed
+    assert stage5c.main(["--phase", "read", "--quick", "--out", str(tmp_path)]) == mine
+    assert stage5c._yes("1") and stage5c._yes("True") and not stage5c._yes("0") and not stage5c._yes("False")
 
 
 def test_design_16_has_not_moved_from_itself() -> None:

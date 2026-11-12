@@ -4,6 +4,7 @@
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c --phase pilot --mode fourier1 --replicate 2 --workers 16
     .venv/bin/python -m experiments.stage5c --phase outcome                                  # the pilot's rule, read
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage5c --phase test --workers 1
+    .venv/bin/python -m experiments.stage5c --phase read      # stage 5c's readings again from the test's files
     .venv/bin/python -m experiments.stage5c --phase pilot --mode fourier1 --quick --out /tmp/s5c   # the smoke test: not a result
 
 A run is stage 4c's CMA-ES (protocell/cmaes.py) with its mean started at design 16's genome, for 200 generations in
@@ -175,6 +176,18 @@ def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
     summary = stage4b.test_phase(out_root, workers, quick, score=_no_score, world=stage5b.world, test_seed=TEST_SEED,
                                  bootstrap_seed=BOOTSTRAP_SEED, validation=(VALIDATION_SEED, VALIDATION_STARTS), extra_cells=extra,
                                  protocol="stage5c/test")
+    return {**summary, "stage5c": read_test(out_root, quick)}
+
+
+def _yes(verdict: str) -> bool:
+    return verdict in ("1", "True")  # the tables write a verdict as 1 or 0
+
+
+def read_test(out_root: Path, quick: bool) -> Dict[str, Any]:
+    """Stage 5c's own readings from the test's files (``--phase read`` does this alone, with no cell run again): Q1 and
+    Q1b, the parts that survive, the genes' movement and predictions 3-5. Writes ``test/stage5c.json``."""
+    cfg = stage5b.world(quick)
+    start = stage4e.genome(cfg, stage4e.load(SEED_DESIGN))
     out = out_root / "test"
     with (out / "per_start.csv").open() as f:
         per: Dict[str, List[float]] = {}
@@ -192,7 +205,7 @@ def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
         q1b.append({"run": c["run"], "phase": c["phase"], "mean": d, "low": lo, "high": hi, "above_in_the_mean": d > 0.0, "verdict": lo > 0.0})
     need = len(confirm) // 2 + 1 if confirm else 1
     b8 = [x for x in comparisons if x["compared"] == "champion - B8" and x["phase"] == "confirm"]
-    beats = [x["run"] for x in b8 if x["verdict"] == "True"]
+    beats = [x["run"] for x in b8 if _yes(x["verdict"])]
     improves = [x["run"] for x in q1b if x["phase"] == "confirm" and x["verdict"]]
     above = [x["run"] for x in q1b if x["phase"] == "confirm" and x["above_in_the_mean"]]
     parts: Dict[str, Dict[str, Any]] = {}
@@ -200,9 +213,9 @@ def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
         if x["compared"].startswith("intact") and x["phase"] in ("start", "confirm"):
             e = parts.setdefault(x["compared"], {"design16_needs": False, "champions_needing": 0})
             if x["phase"] == "start":
-                e["design16_needs"] = x["verdict"] == "True"
+                e["design16_needs"] = _yes(x["verdict"])
             else:
-                e["champions_needing"] += x["verdict"] == "True"
+                e["champions_needing"] += _yes(x["verdict"])
     for e in parts.values():
         e["needed_by_champions"] = e["champions_needing"] >= need
         e["survives"] = bool(e["design16_needs"] and e["needed_by_champions"])
@@ -225,12 +238,12 @@ def test_phase(out_root: Path, workers: int, quick: bool) -> Dict[str, Any]:
     print(f"Q1 (beats B8): {result['Q1']} ({len(beats)}/{len(confirm)}); Q1b (improves on design 16): {result['Q1b']} ({len(improves)}/{len(confirm)})", flush=True)
     for q in result["predictions"]:
         print(f"prediction {q['number']}: {'✓' if q['holds'] else '✗'} {q['text']}", flush=True)
-    return {**summary, "stage5c": result}
+    return result
 
 
 def main(argv: Optional[Sequence[str]] = None) -> Any:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "outcome", "test"])
+    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "outcome", "test", "read"])
     parser.add_argument("--mode", choices=[MODE], default=MODE)
     parser.add_argument("--replicate", type=int, default=1)
     parser.add_argument("--workers", type=int, default=16)
@@ -242,6 +255,8 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
         return pilot_outcome(args.out, args.quick)
     if args.phase == "test":
         return test_phase(args.out, args.workers, args.quick)
+    if args.phase == "read":
+        return read_test(args.out, args.quick)
     return run_phase(args.phase, args.mode, args.replicate, args.out, args.workers, args.quick, args.stop_after)
 
 
