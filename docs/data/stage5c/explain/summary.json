@@ -1,0 +1,419 @@
+{
+ "cells": {
+  "B0": {
+   "cell": "B0",
+   "fitness": 0.16316036729788252,
+   "high": -0.3345543409537115,
+   "less_design16": -0.3650885880170749,
+   "light_soaked": 0.027198495336629346,
+   "low": -0.39379484548914245,
+   "mean_beat": 0.0,
+   "share_of_gain": -4.731332903168589,
+   "survival": 0.0
+  },
+  "B8": {
+   "cell": "B8",
+   "fitness": 0.5307199193582198,
+   "high": 0.022847917859020635,
+   "less_design16": 0.00247096404326233,
+   "light_soaked": 0.23199480487097232,
+   "low": -0.01793565624820903,
+   "mean_beat": 0.038108659883579955,
+   "share_of_gain": 0.03202223751756047,
+   "survival": 0.85
+  },
+  "champion3601": {
+   "cell": "champion3601",
+   "fitness": 0.5546614190955454,
+   "high": 0.0559938706788374,
+   "less_design16": 0.026412463780588067,
+   "light_soaked": 0.2535213595531815,
+   "low": -0.0032035407758656646,
+   "mean_beat": 0.05561861942042598,
+   "share_of_gain": 0.3422899620543614,
+   "survival": 0.87
+  },
+  "champion3602": {
+   "cell": "champion3602",
+   "fitness": 0.5836850902285398,
+   "high": 0.08342964905698025,
+   "less_design16": 0.05543613491358222,
+   "light_soaked": 0.26896586298363834,
+   "low": 0.027147105850626296,
+   "mean_beat": 0.06595841972702318,
+   "share_of_gain": 0.7184196322478795,
+   "survival": 0.95
+  },
+  "champion3603": {
+   "cell": "champion3603",
+   "fitness": 0.6054129586706659,
+   "high": 0.10143123003846342,
+   "less_design16": 0.07716400335570847,
+   "light_soaked": 0.2803968355008408,
+   "low": 0.054689227894757664,
+   "mean_beat": 0.06420501479140403,
+   "share_of_gain": 1.0,
+   "survival": 1.0
+  },
+  "consensus": {
+   "cell": "consensus",
+   "fitness": 0.6014395248589562,
+   "high": 0.10144126318085932,
+   "less_design16": 0.07319056954399883,
+   "light_soaked": 0.27614875777955844,
+   "low": 0.04642468516040217,
+   "mean_beat": 0.06087467173046402,
+   "share_of_gain": 0.9485066398979713,
+   "survival": 0.97
+  },
+  "design16": {
+   "cell": "design16",
+   "fitness": 0.5282489553149575,
+   "high": 0.0,
+   "less_design16": 0.0,
+   "light_soaked": 0.24228246119404684,
+   "low": 0.0,
+   "mean_beat": 0.05725456837019391,
+   "share_of_gain": 0.0,
+   "survival": 0.82
+  },
+  "give alpha": {
+   "cell": "give alpha",
+   "fitness": 0.5009734839129787,
+   "high": 0.005332824112635845,
+   "less_design16": -0.02727547140197882,
+   "light_soaked": 0.2241846384451038,
+   "low": -0.060579309719977305,
+   "mean_beat": 0.05449835463176069,
+   "share_of_gain": -0.353474032137046,
+   "survival": 0.76
+  },
+  "give core_bias": {
+   "cell": "give core_bias",
+   "fitness": 0.5161080731072866,
+   "high": -0.0032926139152777306,
+   "less_design16": -0.012140882207670843,
+   "light_soaked": 0.23478886299667362,
+   "low": -0.020530853662506978,
+   "mean_beat": 0.06744947426084344,
+   "share_of_gain": -0.15733867709927052,
+   "survival": 0.75
+  },
+  "give core_log_tau": {
+   "cell": "give core_log_tau",
+   "fitness": 0.5343884978090739,
+   "high": 0.012402091106329548,
+   "less_design16": 0.006139542494116489,
+   "light_soaked": 0.2433135135643343,
+   "low": -0.0003989448122644875,
+   "mean_beat": 0.056782521569078995,
+   "share_of_gain": 0.07956485183660827,
+   "survival": 0.84
+  },
+  "give core_w": {
+   "cell": "give core_w",
+   "fitness": 0.5786297870505915,
+   "high": 0.0677716769074818,
+   "less_design16": 0.050380831735634006,
+   "light_soaked": 0.2673996100378464,
+   "low": 0.033762713103882014,
+   "mean_beat": 0.052300315361895756,
+   "share_of_gain": 0.6529058828556348,
+   "survival": 0.95
+  },
+  "give ring": {
+   "cell": "give ring",
+   "fitness": 0.5382757454510422,
+   "high": 0.02084777928599008,
+   "less_design16": 0.010026790136084686,
+   "light_soaked": 0.2468342712142767,
+   "low": -0.0013415693575369323,
+   "mean_beat": 0.05774478647170229,
+   "share_of_gain": 0.1299412899802965,
+   "survival": 0.85
+  },
+  "give spokes_in": {
+   "cell": "give spokes_in",
+   "fitness": 0.4906677563034084,
+   "high": -0.019651725693037286,
+   "less_design16": -0.03758119901154899,
+   "light_soaked": 0.21829820888933793,
+   "low": -0.058262502892304,
+   "mean_beat": 0.04464193743688873,
+   "share_of_gain": -0.4870301873570274,
+   "survival": 0.7
+  },
+  "give spokes_out": {
+   "cell": "give spokes_out",
+   "fitness": 0.5366025060833217,
+   "high": 0.020126735766611094,
+   "less_design16": 0.008353550768364299,
+   "light_soaked": 0.24476929413505652,
+   "low": -0.0037711082843357017,
+   "mean_beat": 0.06956445685748679,
+   "share_of_gain": 0.10825709404754874,
+   "survival": 0.83
+  },
+  "line 0.25": {
+   "cell": "line 0.25",
+   "fitness": 0.562366289189263,
+   "high": 0.057797374196368614,
+   "less_design16": 0.03411733387430557,
+   "light_soaked": 0.2592767922065771,
+   "low": 0.010516694862041024,
+   "mean_beat": 0.059416534196571294,
+   "share_of_gain": 0.4421405369163188,
+   "survival": 0.91
+  },
+  "line 0.5": {
+   "cell": "line 0.5",
+   "fitness": 0.5763148501785179,
+   "high": 0.07639531344274411,
+   "less_design16": 0.04806589486356054,
+   "light_soaked": 0.26402533522670557,
+   "low": 0.019846627766402086,
+   "mean_beat": 0.05965452331847135,
+   "share_of_gain": 0.6229056655081479,
+   "survival": 0.94
+  },
+  "line 0.75": {
+   "cell": "line 0.75",
+   "fitness": 0.6088289493456748,
+   "high": 0.1057174937656737,
+   "less_design16": 0.0805799940307173,
+   "light_soaked": 0.2813768731506256,
+   "low": 0.055750806293686644,
+   "mean_beat": 0.06235371323174865,
+   "share_of_gain": 1.044269225629234,
+   "survival": 1.0
+  },
+  "line 1.5": {
+   "cell": "line 1.5",
+   "fitness": 0.5802223089795104,
+   "high": 0.07836041197198933,
+   "less_design16": 0.05197335366455292,
+   "light_soaked": 0.26901573929269484,
+   "low": 0.025874310799939335,
+   "mean_beat": 0.0683748685264805,
+   "share_of_gain": 0.6735440283595396,
+   "survival": 0.96
+  },
+  "take alpha": {
+   "cell": "take alpha",
+   "fitness": 0.6050179845079,
+   "high": 0.09806037451838984,
+   "less_design16": 0.07676902919294253,
+   "light_soaked": 0.28037751219979334,
+   "low": 0.05811626183758646,
+   "mean_beat": 0.06379419696361548,
+   "share_of_gain": 0.994881367663816,
+   "survival": 0.99
+  },
+  "take core_bias": {
+   "cell": "take core_bias",
+   "fitness": 0.572285596440818,
+   "high": 0.07621515488117211,
+   "less_design16": 0.04403664112586052,
+   "light_soaked": 0.2632870979627164,
+   "low": 0.011090138187490368,
+   "mean_beat": 0.05928997239076399,
+   "share_of_gain": 0.5706889120677375,
+   "survival": 0.95
+  },
+  "take core_log_tau": {
+   "cell": "take core_log_tau",
+   "fitness": 0.5994690146342296,
+   "high": 0.09659628073452137,
+   "less_design16": 0.07122005931927218,
+   "light_soaked": 0.2772341949745732,
+   "low": 0.04693767036886084,
+   "mean_beat": 0.06364744645704777,
+   "share_of_gain": 0.9229699888815247,
+   "survival": 0.99
+  },
+  "take core_w": {
+   "cell": "take core_w",
+   "fitness": 0.5501951401850271,
+   "high": 0.051329765491236225,
+   "less_design16": 0.021946184870069708,
+   "light_soaked": 0.2543363961591268,
+   "low": -0.007896592332821008,
+   "mean_beat": 0.06777797833756069,
+   "share_of_gain": 0.2844096199740026,
+   "survival": 0.89
+  },
+  "take ring": {
+   "cell": "take ring",
+   "fitness": 0.5979455102193257,
+   "high": 0.09402606191939292,
+   "less_design16": 0.06969655490436832,
+   "light_soaked": 0.2764036506853168,
+   "low": 0.04687806058724319,
+   "mean_beat": 0.06325775766463752,
+   "share_of_gain": 0.9032262696776253,
+   "survival": 0.98
+  },
+  "take spokes_in": {
+   "cell": "take spokes_in",
+   "fitness": 0.5949305807176593,
+   "high": 0.09169046638535244,
+   "less_design16": 0.06668162540270181,
+   "light_soaked": 0.27487542742550347,
+   "low": 0.04356768429972393,
+   "mean_beat": 0.06950652966592821,
+   "share_of_gain": 0.8641545604537223,
+   "survival": 1.0
+  },
+  "take spokes_out": {
+   "cell": "take spokes_out",
+   "fitness": 0.5991696110119135,
+   "high": 0.09688046450897267,
+   "less_design16": 0.070920655696956,
+   "light_soaked": 0.27570889398150666,
+   "low": 0.04659152497560089,
+   "mean_beat": 0.05465050648601086,
+   "share_of_gain": 0.9190898944165448,
+   "survival": 0.99
+  }
+ },
+ "cosines": {
+  "3601-3602": 0.2885558156003146,
+  "3601-3603": 0.20399343865948313,
+  "3602-3603": 0.18568158430048032
+ },
+ "gain": 0.07716400335570847,
+ "move_size": {
+  "3601": 0.009614817848585769,
+  "3602": 0.010079097800063186,
+  "3603": 0.008266365404015867
+ },
+ "onsets": {
+  "champion3603": {
+   "all": {
+    "bias": 0.4875327574323598,
+    "runs": 2843,
+    "se": 0.008880797355934349
+   },
+   "fresh": {
+    "bias": 0.5654938549226122,
+    "runs": 2183,
+    "se": 0.009033856939474996
+   },
+   "resumed": {
+    "bias": 0.22967052133960092,
+    "runs": 660,
+    "se": 0.020975052985317384
+   }
+  },
+  "design16": {
+   "all": {
+    "bias": 0.0016663349949020514,
+    "runs": 5010,
+    "se": 0.009491599370967184
+   },
+   "fresh": {
+    "bias": -0.0013314696323710742,
+    "runs": 4951,
+    "se": 0.009571947169014982
+   },
+   "resumed": {
+    "bias": 0.2532278724462452,
+    "runs": 59,
+    "se": 0.05828282609562186
+   }
+  }
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "the gain is spread: at most one group, given to design 16 alone, carries half of it or more",
+   "values": {
+    "alpha": -0.353474032137046,
+    "core_bias": -0.15733867709927052,
+    "core_log_tau": 0.07956485183660827,
+    "core_w": 0.6529058828556348,
+    "ring": 0.1299412899802965,
+    "spokes_in": -0.4870301873570274,
+    "spokes_out": 0.10825709404754874
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "the line is smooth: halfway along it the cell scores at least design 16 and at most the champion plus 0.01",
+   "values": {
+    "champion3603": 0.6054129586706659,
+    "design16": 0.5282489553149575,
+    "line 0.25": 0.562366289189263,
+    "line 0.5": 0.5763148501785179,
+    "line 0.75": 0.6088289493456748,
+    "line 1.5": 0.5802223089795104
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "the champions moved the same way: each pair's cosine is above 0.17, and the cell at their mean move scores at least the worst champion",
+   "values": {
+    "consensus": 0.6014395248589562,
+    "cosines": {
+     "3601-3602": 0.2885558156003146,
+     "3601-3603": 0.20399343865948313,
+     "3602-3603": 0.18568158430048032
+    }
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "the aimed onsets are runs resumed: the champion's fresh onsets in light 0.3-3 have a bias within 0.15 of 0",
+   "values": {
+    "champion3603": {
+     "all": {
+      "bias": 0.4875327574323598,
+      "runs": 2843,
+      "se": 0.008880797355934349
+     },
+     "fresh": {
+      "bias": 0.5654938549226122,
+      "runs": 2183,
+      "se": 0.009033856939474996
+     },
+     "resumed": {
+      "bias": 0.22967052133960092,
+      "runs": 660,
+      "se": 0.020975052985317384
+     }
+    },
+    "design16": {
+     "all": {
+      "bias": 0.0016663349949020514,
+      "runs": 5010,
+      "se": 0.009491599370967184
+     },
+     "fresh": {
+      "bias": -0.0013314696323710742,
+      "runs": 4951,
+      "se": 0.009571947169014982
+     },
+     "resumed": {
+      "bias": 0.2532278724462452,
+      "runs": 59,
+      "se": 0.05828282609562186
+     }
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "in dim light (0.01-0.1) the champion runs for more of the time than design 16",
+   "values": {
+    "champion3603": 0.6061273749474123,
+    "design16": 0.4115762223133953
+   }
+  }
+ ],
+ "quick": false
+}
