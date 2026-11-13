@@ -106,6 +106,14 @@ I predicted stage 5c would fail and it did not (D29), so these carry less weight
 3. **The criteria and the pilot's rule** in §4 and §6.
 4. **The pilot's cost:** two cpu5c 16-vCPU pods, about $3.50, at most $5.04. The balance is $59.06 on 2026-11-13.
 
+**The owner's answers (2026-11-13, before the pilot).** "Continue as recommended":
+- the design in §2, stage 4c with only the sensor changed;
+- both modes in the pilot;
+- the criteria and the pilot's rule in §4 and §6;
+- the pilot's pods: two cpu5c pods of 16 vCPUs at $0.56 an hour with 4.5-hour caps, at most $5.04.
+
+The runner and the test were built after the draft and before these answers (`experiments/stage6.py`).
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
