@@ -162,6 +162,64 @@ confirmed. The uniform mode stops here unless the owner chooses otherwise.
    - Its champion is tested beside the others and stays outside every criterion and every prediction.
    - One cpu5c pod as above, about $1.75, at most $2.52.
 
+**The test's outcome (2026-11-13/14; `docs/decisions.md` D33).**
+
+- **The runs:** each on its own cpu5c pod of 16 vCPUs at code `aa73029`, from clean trees with warnings as errors; two
+  pods were AMD EPYC 4564P (62 s a generation) and two EPYC 9575F (50–53 s). All were pulled and deleted themselves.
+  About $7.50 for the four; stage 6 on RunPod about $11.40.
+- **The test:** here, one process, 100 fresh starts at seed 37, bootstrap at seed 38, at code `9615083`. Data in
+  `docs/data/stage6/confirm/`, `extend/` and `test/`.
+
+| cell | fitness | survival | less B8 [95%] | share of the gap closed [95%] | verdict |
+|---|---|---|---|---|---|
+| the ceiling | 0.685 | 100% | | | |
+| stage 5c's champion 3603 (reference) | 0.596 | 97% | +0.057 [+0.038, +0.078] | | |
+| champion 6301 | 0.588 | 99% | +0.050 [+0.032, +0.069] | 1.133 [1.082, 1.193] | carries B8, and beats it |
+| B8 | 0.538 | 87% | | | |
+| champion 6302 | 0.510 | 86% | −0.029 [−0.053, −0.004] | 0.924 [0.856, 0.987] | carries B8 |
+| design 16 (reference) | 0.509 | 79% | −0.029 [−0.053, −0.008] | | |
+| champion 6303 | 0.165 | 0% | −0.373 [−0.396, −0.350] | 0.001 | does not: the still cell |
+
+- **Q0 holds in fourier1: 2 of the 3 champions carry B8.** Evolution from random genomes finds B8's job.
+- **Q1 does not hold: 1 of 3 beats B8.** Champion 6301 does, level with the best cell from the hand-written start.
+- **The third run ended as the still cell,** as the uniform pilot did.
+- **Q2: the evolved cells are built differently from design 16.**
+  - Both working champions need their senses, core, core recurrence, slow core and the core's drive, as design 16 does.
+  - Both also need the ring's links (removing them costs 0.33 and 0.17), which design 16 does not use.
+- **Q3:** no champion reads the direction across its body by the criterion. The working champions' runs begin aimed at
+  the mouth (onset bias +0.39 and +0.60) with the direction intact, removed or mirrored, as stage 5c's champions' do.
+- **The pilot's champions,** outside the criteria: fourier1 6102 at generation 200 scores 0.489 (76%), closing 0.868 of
+  the gap, "partly"; uniform 6101 is the still cell.
+
+**The extension (descriptive, outside every criterion).** The pilot's fourier1 run carried on to 400 generations:
+
+| champion of seed 6102 | fitness | survival | less B8 [95%] | share of the gap closed |
+|---|---|---|---|---|
+| at generation 200 | 0.489 | 76% | −0.049 [−0.075, −0.025] | 0.868 |
+| at generation 400 | 0.573 | 97% | +0.035 [+0.016, +0.054] | 1.093 [1.041, 1.150] |
+
+With twice the generations the same run goes from "partly" to above B8. On validation it levelled off near 0.55–0.58
+from generation 320.
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. both pilot champions validate above stage 4c's | ✓ by the letter; hollow for uniform (the pilot's note) |
+| 2. the pilot's rule is met in at most one mode | ✓ |
+| 3. no confirmed mode carries B8 | ✗: fourier1 does, 2 of 3 |
+| 4. no confirmatory champion beats B8 | ✗: champion 6301 does |
+| 5. fourier1's pilot champion validates higher than uniform's | ✓ |
+
+**A labelling error, found and corrected before this note.** The extension writes a run of the pilot's name
+(`fourier1-6102`) in another folder, and the test keyed its results by the run's name alone. In the first test (data in
+commit `44855d9`) the pilot's results therefore stood in both rows and the extension's were lost. Runs that share a name
+now take their phase before it (`9615083`, with a test), and the whole test was run again. The confirmatory and
+reference rows are the same in both; only the two rows of seed 6102 changed.
+
+**Next:** §8's fifth row applies to the mode (Q0 holds, Q1 fails), with one champion beating B8; the owner's call
+(D33 C).
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the

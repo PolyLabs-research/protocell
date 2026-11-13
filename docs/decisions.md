@@ -1844,3 +1844,66 @@ clean tree with warnings as errors; data in `docs/data/stage5c/explain/`. A prob
    the aimed onsets (C3) and a longer run from the champions (C4) stay open.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D33 — Stage 6: evolution from nothing, on the cell with relative sensing, finds B8's job (2 of 3 runs) and beats B8 once
+
+**Date:** 2026-11-14  
+**Why:** D32; `docs/prereg/stage6.md`. The owner: "Continue as recommended" (the draft and the pilot), then "Go on both"
+(the fourier1 confirmatory runs and an extension of the pilot's run).  
+**Ran:**
+- The pilot (code `9e494e1`): one run per mode, a cpu5c 16-vCPU pod each; about $3.90.
+- The confirmatory runs, fourier1 seeds 6301–6303, and the extension of seed 6102 to 400 generations (code `aa73029`):
+  four such pods; about $7.50.
+- The test (code `9615083`): here, one process, 100 fresh starts at seed 37.
+- Stage 6 on RunPod: about $11.40.
+
+### A. Measured
+1. **fourier1, from random genomes** (the test; B8 0.538, design 16 0.509, stage 5c's champion 3603 0.596):
+
+   | champion | fitness | survival | less B8 [95%] | share of the gap closed |
+   |---|---|---|---|---|
+   | 6301 | 0.588 | 99% | +0.050 [+0.032, +0.069] | 1.13 |
+   | 6302 | 0.510 | 86% | −0.029 [−0.053, −0.004] | 0.92 |
+   | 6303 | 0.165 | 0% | −0.373 | 0.00 |
+
+   - **Q0 holds:** 2 of 3 carry B8.
+   - **Q1 does not hold:** 1 of 3 beats B8.
+2. **The uniform mode failed at the pilot,** as in stage 4c: its champion is the still cell.
+3. **The sensor is what changed.** Stage 4c was this search, path and world on the old cell; its pilots ended at the
+   still cell's level in both modes.
+4. **More generations help.** The pilot's fourier1 run scores 0.489 at generation 200 and 0.573 at 400 (+0.035
+   [+0.016, +0.054] over B8). This run was chosen for extending because it was climbing; it is descriptive.
+5. **The evolved cells differ from the hand-written one:** they need their ring's links (0.17–0.33 lost without them),
+   which design 16 does not use. Their fresh runs begin aimed at the mouth, as stage 5c's champions' do.
+6. **Predictions:** 1, 2 and 5 hold; 3 and 4 fail. I predicted that no mode would carry B8 and no champion would beat
+   it.
+7. **An error of mine,** corrected before the outcome was written: the extension's champion shared the pilot's run name
+   and was overwritten in the first test (`44855d9`); the test was run again with distinct names. The confirmatory rows
+   are the same in both.
+
+### B. Reading
+1. **The main caveat of D29 is largely answered.** A cell that does the best simple rule's job emerges from random
+   genomes in this world, in two runs of three, and one of those beats every simple rule tried. No part of it was
+   written by hand.
+2. **What remains of the caveat:**
+   - The strong sense by the preregistered criterion (2 of 3 beat B8) is not met from nothing: one of three does, and
+     the extended pilot run does, outside the criteria.
+   - The search is unreliable: one fourier1 run in four (with the pilot) and the uniform run ended as the still cell.
+   - One world, one spoke mode, one sensor; B8 is the best simple rule tried.
+   - The path that eases the world in was designed by hand (stage 4b's amendment), as was the sensor.
+3. **Stages 4b–4e read differently now.** The searches were not what failed there; the old cell's sensing was. With a
+   sensor that adapts to the light's level, the same search gets through the same path.
+4. **Evolution found another way to build it.** The evolved cells use the ring, which the hand design ignores. What
+   that way is has not been read.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage6` into `main` and add stage 6 to the write-up (recommended now).**
+2. **Read the evolved cell (recommended next, local, free):** champion 6301 beside design 16 with the explaining
+   probe's tools: what the ring does, and whether its runs are aimed the same way.
+3. **How reliable is it, and does time close the gap? A preregistered stage 6b:** fresh fourier1 runs at 400
+   generations, say five, asking how many carry and how many beat B8. About $3.50 a run on cpu5c 16-vCPU pods, about
+   $18 for five.
+4. **The uniform mode:** left as failed, or its own question later.
+
+**Impact:** this entry; `docs/prereg/stage6.md` (the answers and outcomes); `experiments/stage6.py`,
+`tests/test_stage6.py`; `experiments/stage4b.py` (runs that share a name); `docs/data/stage6/`; `README.md` status.
