@@ -1831,3 +1831,16 @@ clean tree with warnings as errors; data in `docs/data/stage5c/explain/`. A prob
 4. **A longer run from the champions,** or from the cell at their mean move.
 
 **Impact:** this entry; `docs/data/stage5c/explain/`.
+
+## D32 — The owner's decision on D31: the write-up and the merge now, then evolution from nothing
+
+**Date:** 2026-11-13  
+**Why:** the owner on D31 C: "Agree, continue as suggested".
+
+### Decided
+1. **Stages 4 and 5 are written up:** `docs/stages-4-5.md`, from this log and the data; it adds no result.
+2. **`stage4` is merged into `main`** (fast-forward; the branch held D16–D32).
+3. **Next, a draft for evolution from nothing on the relative-sensing cell** (D31 C2), on a new branch. The probe of
+   the aimed onsets (C3) and a longer run from the champions (C4) stay open.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `README.md`.

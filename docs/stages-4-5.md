@@ -1,0 +1,126 @@
+# Stages 4 and 5: a world with room, a cell that can use it, and the first cell to beat every simple rule
+
+**Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log (D16–D31) and the data under
+`docs/data/`. It adds no result; each number is from the entry named beside it.
+
+## The question
+
+The hypothesis is that behaviour emerges from the interaction of parts. Its strong sense: interacting parts do better
+than every simple mechanism. Through stage 3 the strong sense could not be tested, because in every world a simple rule
+sat within 2–3% of the best any cell could do (D11).
+
+Stages 4 and 5 asked three things in turn:
+1. Is there a world where the simple rules leave room?
+2. Can the cell do the best simple rule's job there at all?
+3. Can a cell of interacting parts beat it?
+
+## The short answer
+
+| question | answer | where |
+|---|---|---|
+| a world with room | Yes: with a tighter economy, the best simple rule (B8) sits 0.118 below the ceiling | D16, D17 |
+| does evolution reach a working cell there | No: two searches, three pilots, all end at the still cell's level | D18–D20 |
+| can the cell hold B8's job, as built | No: a fit to B8's beats and two hand-written cells all fail | D23, D25 |
+| with relative sensing | Yes: a hand-written cell closes 0.91 of the gap to B8 | D26, D27 |
+| does a search from that cell beat B8 | Yes, in 2 of 3 runs, on fresh starts | D28, D29 |
+| what the search changed | A retuning of the hand-written mechanism, mostly the core's links | D31 |
+
+## 1. A world with room (stage 4a; D16, D17)
+
+- **Changing light alone left no room.** Clouds, a sweeping mouth and a circling spot added 0.02–0.07 above the simple
+  rules. The reason was the economy: the reserve was full most of the day, so finding light faster earned nothing.
+- **A tighter economy does.** Stage 4a's world is stage 3's translucent pool with the mouth sweeping 120° through the
+  day and photosynthesis at 0.55 of the cave's gain.
+- **The bar is B8,** a rule that runs while its light rises over the last 10 s and aims each run by what it sensed
+  while resting. It scores 0.576 and survives 90% of its starts. Sitting still starves. The ceiling is 0.694.
+- **What the world asks** (D27 A.4): each dawn the light rises up to about 8,000 body radii away, a full reserve lasts
+  about 5 hours after a night, and waiting for the sweep takes about 9. The cell has to cross the dark pool.
+
+## 2. Evolution from nothing did not get there (stages 4b, 4c; D18–D20)
+
+- **Three pilots, two searches, the same shape.** The genetic algorithm, with the world eased in together and then one
+  change at a time, and CMA-ES on the second path. Each built working cells while the world was generous and lost them
+  as the economy tightened. Each ended at the still cell's level, 0.15–0.24 against the bar's 0.576.
+- **The cells died by finding too little light,** about half of B8's, not mainly by spending (the thrift probe, D22).
+
+## 3. The cell, as built, could not hold B8's job (stages 4d, 4e; D23, D25)
+
+- **A fit to B8's beats stalled** at a match of 0.31 and did not carry B8.
+- **Two cells written by hand did not either:** 13 designs, all at the still cell's level.
+- **The notebooks named the blockers in the wiring:**
+  - the core senses light only through the wall's beats, so the cell's own runs flood its memory;
+  - there is no gain control, across light that spans three decades;
+  - eight core neurons are few.
+
+## 4. One change to the cell: relative sensing (stage 5; D26, D27)
+
+- **The change:** each wall node takes in the log of its light over the wall's recent mean (a 10 s average), with
+  floors so that darkness reads as dark. Fixed constants, no new genes, off by default so earlier results keep their
+  bits.
+- **A hand-written fourier1 cell then carries B8, narrowly.** Design 16 scores 0.527 against B8's 0.563 on 100 fresh
+  starts: 0.909 of the gap from sitting still, interval [0.850, 0.965]. It used 5 of its 50 world checks.
+- **What it took:** a rise detector, an exploring rhythm that runs often in dim light and rarely in bright, a copy of
+  the cell's own drive matched to the wall's response in time and by light level, and a drive strong enough to swim
+  fast. All eight core neurons are used.
+- **A hand-written uniform cell reaches "partly"** (0.618 of the gap). Without a front it has to make one with its
+  ring, which fights the copy its comparison needs.
+
+## 5. A search from the hand-written cell beats B8 (stage 5c; D28, D29)
+
+- **The start is a narrow peak.** A step of 0.2% of each gene's range keeps 0.93 of its worth; the genetic algorithm's
+  usual 2% keeps a tenth. The earlier searches' steps would have broken it at once.
+- **The search:** CMA-ES with its mean started at design 16, first step 0.5% (chosen by a pilot's rule), 200
+  generations in stage 4a's world, three runs.
+- **The test,** on 100 fresh starts:
+
+  | cell | fitness | survival | against B8 [95%] |
+  |---|---|---|---|
+  | the ceiling | 0.683 | 100% | |
+  | champion 3603 | 0.610 | 100% | +0.053 [+0.039, +0.068] |
+  | champion 3602 | 0.593 | 96% | +0.035 [+0.016, +0.055] |
+  | champion 3601 | 0.574 | 93% | +0.016 [−0.009, +0.040] |
+  | B8 | 0.557 | 95% | |
+  | design 16 | 0.537 | 82% | |
+
+- **Two of three champions beat B8,** the criterion set beforehand; all three improve on design 16.
+- **It repeats** on a third set of starts (D31): champion 3603 at 0.605, B8 at 0.531.
+- **I predicted it would fail.** The preregistered predictions said the search would polish the design without beating
+  B8.
+
+## 6. What the search changed (D31)
+
+- **In behaviour, three things.** Champion 3603, beside design 16:
+  - runs 61% of the time in dim light against 41%, and crosses the dark about twice as fast;
+  - holds a run while the light rises 93% of the time against about 65%;
+  - wanders less in bright light, and spends more of its life there.
+- **In the genes:** every gene moved about 1% of its range. The core's links carry about two thirds of the gain alone.
+  The retuned biases and inward spokes help only together with them.
+- **Three independent runs moved the same way,** and the path from design 16 to the champion is a smooth slope.
+- **Every part design 16 needs, the champions still need.** The search retuned the mechanism; it did not find another.
+
+## What this does and does not show
+
+- **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts, in
+  two of three runs. The cell's parts can do it, and a search can get there from a designed start.
+- **Not shown:**
+  - that such a cell emerges from nothing. The start was written by hand, and evolution from nothing failed on the old
+    cell and has not been tried on the new one;
+  - anything beyond one spoke mode (fourier1), one world and one sensor;
+  - that no simple rule could sit higher than B8. B8 is the best of those tried.
+- **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
+  body (D31 B.3).
+
+## Cost and conduct
+
+- **RunPod,** stages 4 and 5: about $22 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40), each launch confirmed by
+  the owner first.
+- **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
+  CPU's thermal limit (D23).
+- **Each stage** had a preregistration with predictions before it ran. The predictions that failed are recorded as
+  failed in their documents; the last was mine that no champion would beat B8.
+- **Errors of mine, disclosed where they happened:** a campaign bug that stopped a pull loop (D18); probes that bypassed
+  their log and a calculator with a wrong constant (D27); a scoring summary that misread a column (D29).
+
+## Next
+
+Evolution from nothing on the relative-sensing cell (D31 C2): the test the main caveat asks for.
