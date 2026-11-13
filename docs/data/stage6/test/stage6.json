@@ -1,0 +1,150 @@
+{
+ "fitness": {
+  "B0": 0.16465138789848,
+  "B5": 0.5000052572339739,
+  "B6": 0.387028770177753,
+  "B8": 0.538338491488307,
+  "ceiling": 0.6850197484318898,
+  "champion3603": 0.59568137871572,
+  "design16": 0.508938741596498,
+  "fourier1-6102": 0.48910869027723597,
+  "fourier1-6301": 0.58790427723678,
+  "fourier1-6302": 0.5097568036045,
+  "fourier1-6303": 0.164997031480579,
+  "uniform-6101": 0.164646643774892
+ },
+ "modes": {
+  "fourier1": {
+   "Q0": true,
+   "Q1": false,
+   "beating_B8": [
+    "fourier1-6301"
+   ],
+   "carrying_B8": [
+    "fourier1-6301",
+    "fourier1-6302"
+   ],
+   "champions": 3
+  }
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "the pilot's champions validate above stage 4c's in both modes",
+   "values": {
+    "stage4c": {
+     "fourier1": 0.16,
+     "uniform": 0.149
+    },
+    "stage6": {
+     "fourier1": 0.5164787633717595,
+     "uniform": 0.15187854446369595
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "the pilot's rule is met in at most one mode",
+   "values": {
+    "met": [
+     "fourier1"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "no confirmed mode carries B8",
+   "values": {
+    "fourier1": [
+     "fourier1-6301",
+     "fourier1-6302"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "no confirmatory champion beats B8",
+   "values": {
+    "fourier1": [
+     "fourier1-6301"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "fourier1's pilot champion validates higher than uniform's",
+   "values": {
+    "fourier1": 0.5164787633717595,
+    "uniform": 0.15187854446369595
+   }
+  }
+ ],
+ "q0": [
+  {
+   "fitness": 0.58790427723678,
+   "gap_share": 1.1326398082040268,
+   "high": 1.1930564689555312,
+   "low": 1.0823406941008689,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-6301",
+   "verdict": "carries B8"
+  },
+  {
+   "fitness": 0.5097568036045,
+   "gap_share": 0.923514385138698,
+   "high": 0.9872393332742887,
+   "low": 0.8556154772518739,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-6302",
+   "verdict": "carries B8"
+  },
+  {
+   "fitness": 0.164997031480579,
+   "gap_share": 0.0009249545375759229,
+   "high": 0.012693634972514684,
+   "low": -0.009621329559063143,
+   "mode": "fourier1",
+   "phase": "confirm",
+   "run": "fourier1-6303",
+   "verdict": "does not"
+  },
+  {
+   "fitness": 0.48910869027723597,
+   "gap_share": 0.8682592983858829,
+   "high": 0.9330096055056133,
+   "low": 0.802661769499075,
+   "mode": "fourier1",
+   "phase": "extend",
+   "run": "fourier1-6102",
+   "verdict": "partly"
+  },
+  {
+   "fitness": 0.48910869027723597,
+   "gap_share": 0.8682592983858829,
+   "high": 0.9326250758132221,
+   "low": 0.8017562734633633,
+   "mode": "fourier1",
+   "phase": "pilot",
+   "run": "fourier1-6102",
+   "verdict": "partly"
+  },
+  {
+   "fitness": 0.164646643774892,
+   "gap_share": -1.2695443707924269e-05,
+   "high": -4.2459228605812296e-06,
+   "low": -2.1425653249944385e-05,
+   "mode": "uniform",
+   "phase": "pilot",
+   "run": "uniform-6101",
+   "verdict": "does not"
+  }
+ ],
+ "quick": false
+}
