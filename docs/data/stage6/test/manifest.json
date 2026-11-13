@@ -1,10 +1,10 @@
 {
  "command": "/home/michael/Documents/dev/protocell/experiments/stage6.py --phase test --workers 1",
- "created_at": "2026-11-13T22:18:03+00:00",
+ "created_at": "2026-11-13T23:52:07+00:00",
  "git": {
   "branch": "stage6",
-  "dirty": false,
-  "sha": "d145dec6a9c9c54d0b4053cd264854b1728ed09a"
+  "dirty": true,
+  "sha": "9615083391891128dd3972a2dbaf6185f516a28c"
  },
  "manifest_version": 1,
  "platform": {
@@ -115,7 +115,7 @@
  },
  "timing": {
   "jobs": 84,
-  "wall_seconds": 5485.510912895203,
+  "wall_seconds": 5391.462341785431,
   "workers": 1
  }
 }

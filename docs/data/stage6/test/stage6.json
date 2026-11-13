@@ -7,10 +7,11 @@
   "ceiling": 0.6850197484318898,
   "champion3603": 0.59568137871572,
   "design16": 0.508938741596498,
-  "fourier1-6102": 0.48910869027723597,
+  "extend:fourier1-6102": 0.5730035635767969,
   "fourier1-6301": 0.58790427723678,
   "fourier1-6302": 0.5097568036045,
   "fourier1-6303": 0.164997031480579,
+  "pilot:fourier1-6102": 0.48910869027723597,
   "uniform-6101": 0.164646643774892
  },
  "modes": {
@@ -116,14 +117,14 @@
    "verdict": "does not"
   },
   {
-   "fitness": 0.48910869027723597,
-   "gap_share": 0.8682592983858829,
-   "high": 0.9330096055056133,
-   "low": 0.802661769499075,
+   "fitness": 0.5730035635767969,
+   "gap_share": 1.0927649676841393,
+   "high": 1.150012560735931,
+   "low": 1.0408636947731686,
    "mode": "fourier1",
    "phase": "extend",
-   "run": "fourier1-6102",
-   "verdict": "partly"
+   "run": "extend:fourier1-6102",
+   "verdict": "carries B8"
   },
   {
    "fitness": 0.48910869027723597,
@@ -132,7 +133,7 @@
    "low": 0.8017562734633633,
    "mode": "fourier1",
    "phase": "pilot",
-   "run": "fourier1-6102",
+   "run": "pilot:fourier1-6102",
    "verdict": "partly"
   },
   {
