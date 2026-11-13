@@ -104,7 +104,7 @@ I predicted stage 5c would fail and it did not (D29), so these carry less weight
    - Or a finer first step (0.02) or more generations, which would change two things at once.
 2. **Both modes in the pilot** (recommended), or fourier1 only at half the cost.
 3. **The criteria and the pilot's rule** in §4 and §6.
-4. **The pilot's cost:** two cpu5c 16-vCPU pods, about $3.50, at most $5.04. The balance was $13.24 on 2026-11-12.
+4. **The pilot's cost:** two cpu5c 16-vCPU pods, about $3.50, at most $5.04. The balance is $59.06 on 2026-11-13.
 
 ## 12. What would change this document
 
