@@ -36,3 +36,17 @@ def test_runs_then_the_test_read_the_criteria(tmp_path) -> None:
     for mode, v in summary["verdicts"].items():  # stage 6's reading of Q1 agrees with stage 4b's
         assert len(mine["modes"][mode]["beating_B8"]) == v["beat_the_bar"]
     assert stage6.main(["--phase", "read", "--quick", "--out", str(tmp_path)]) == mine
+
+
+def test_the_extension_carries_the_pilots_run_on(tmp_path) -> None:
+    with pytest.raises(SystemExit):  # no pilot yet
+        stage6.main(["--phase", "extend", "--mode", "fourier1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    with pytest.raises(SystemExit):  # fourier1 only
+        stage6.seed_for("extend", "uniform", 1)
+    stage6.main(["--phase", "pilot", "--mode", "fourier1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    stage6.main(["--phase", "extend", "--mode", "fourier1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    first = list(csv.DictReader(open(tmp_path / "pilot" / "fourier1-6102" / "generations.csv")))
+    both = list(csv.DictReader(open(tmp_path / "extend" / "fourier1-6102" / "generations.csv")))
+    assert len(both) == 2 * len(first)
+    same = [k for k in first[0] if k != "seconds"]
+    assert [[r[k] for k in same] for r in both[:len(first)]] == [[r[k] for k in same] for r in first]  # the pilot's generations, unchanged

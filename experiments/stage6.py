@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import shutil
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
@@ -38,7 +39,9 @@ from protocell.cmaes import CMA, run
 from protocell.manifest import build_manifest, finish_manifest, write_manifest
 
 SEEDS = {"pilot": {"uniform": (6101,), "fourier1": (6102,)},
-         "confirm": {"uniform": (6201, 6202, 6203), "fourier1": (6301, 6302, 6303)}}
+         "confirm": {"uniform": (6201, 6202, 6203), "fourier1": (6301, 6302, 6303)},
+         "extend": {"fourier1": (6102,)}}  # the pilot's fourier1 run, carried on (the draft's note of 2026-11-13): descriptive
+EXTEND_FACTOR = 2  # the extension runs to twice the generations, from the pilot's last checkpoint
 VALIDATION_SEED, VALIDATION_STARTS = stage5c.VALIDATION_SEED, stage5c.VALIDATION_STARTS  # stage 5c's: 48 starts at seed 32
 TEST_SEED, BOOTSTRAP_SEED = 37, 38  # fresh
 STAGE4C_PILOT = {"uniform": 0.149, "fourier1": 0.160}  # stage 4c's pilot champions' validation fitness (D20), on the old cell
@@ -46,13 +49,14 @@ REFERENCE_CHAMPION = Path("docs/data/stage5c/confirm/fourier1-3603/champion.npy"
 DEFAULT_OUT = Path("docs/data/stage6")
 
 
-def cma_for(quick: bool) -> CMA:
+def cma_for(quick: bool, phase: str = "pilot") -> CMA:
     base = CMA.quick() if quick else CMA().but(validation_starts=VALIDATION_STARTS)
-    return base.but(validation_seed=VALIDATION_SEED, sigma0=stage4c.SIGMA0)
+    base = base.but(validation_seed=VALIDATION_SEED, sigma0=stage4c.SIGMA0)
+    return base.but(generations=EXTEND_FACTOR * base.generations) if phase == "extend" else base
 
 
 def seed_for(phase: str, mode: str, replicate: int) -> int:
-    seeds = SEEDS[phase][mode]
+    seeds = SEEDS[phase].get(mode, ())
     if not 1 <= replicate <= len(seeds):
         raise SystemExit(f"{phase} has {len(seeds)} run(s) per mode")
     return seeds[replicate - 1]
@@ -60,9 +64,15 @@ def seed_for(phase: str, mode: str, replicate: int) -> int:
 
 def run_phase(phase: str, mode: str, replicate: int, out_root: Path, workers: int, quick: bool, stop_after: Optional[int]) -> Path:
     cfg = stage5b.world(quick)
-    cma = cma_for(quick)
+    cma = cma_for(quick, phase)
     seed = seed_for(phase, mode, replicate)
     out = out_root / phase / f"{mode}-{seed}"
+    if phase == "extend" and not (out / "checkpoint.npz").exists():  # carry on from the pilot's last checkpoint
+        source = out_root / "pilot" / f"{mode}-{seed}" / "checkpoint.npz"
+        if not source.exists():
+            raise SystemExit(f"the extension needs the pilot's checkpoint at {source}")
+        out.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, out / "checkpoint.npz")
     fade, tighten = stage4b.path_generations(quick)
     champion_from = fade + tighten + 1
     manifest = build_manifest(protocol=f"stage6/{phase}", settings={**cfg.as_dict(), "world": "stage 4a, stage 5's cell", "mode": mode,
@@ -172,7 +182,7 @@ def read_test(out_root: Path, quick: bool) -> Dict[str, Any]:
 
 def main(argv: Optional[Sequence[str]] = None) -> Any:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "test", "read"])
+    parser.add_argument("--phase", required=True, choices=["pilot", "confirm", "extend", "test", "read"])
     parser.add_argument("--mode", choices=list(MODES))
     parser.add_argument("--replicate", type=int, default=1)
     parser.add_argument("--workers", type=int, default=16)

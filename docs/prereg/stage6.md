@@ -152,6 +152,16 @@ On these validation starts design 16 scores 0.527 (83%), B8 0.557 (98%) and the 
 **Next:** §8's first row for the fourier1 mode: its three confirmatory runs (seeds 6301–6303), with the owner's cost
 confirmed. The uniform mode stops here unless the owner chooses otherwise.
 
+**The owner's answer on what follows the pilot (2026-11-13, before the runs).** "Go on both":
+1. **The fourier1 mode's three confirmatory runs,** seeds 6301–6303, as preregistered: three cpu5c pods of 16 vCPUs at
+   $0.56 an hour with 4.5-hour caps, about $5.25, at most $7.56.
+2. **An extension, not preregistered and descriptive only:** the pilot's fourier1 run (seed 6102) carried on from its
+   last checkpoint for 200 more generations in stage 4a's world, 400 in all, because it was still climbing at 200.
+   - Everything else is the run's own: its seed, its search state, validation every 10 generations.
+   - It writes `docs/data/stage6/extend/fourier1-6102/`; the pilot's files stay as they are.
+   - Its champion is tested beside the others and stays outside every criterion and every prediction.
+   - One cpu5c pod as above, about $1.75, at most $2.52.
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
