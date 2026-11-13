@@ -133,7 +133,7 @@ def read_test(out_root: Path, quick: bool) -> Dict[str, Any]:
     fit = {k: np.array(v) for k, v in per.items()}
     with (out / "comparisons.csv").open() as f:
         comparisons = list(csv.DictReader(f))
-    champions = find_champions(out_root)
+    champions = stage4b.unique_runs(find_champions(out_root))
     resamples = 200 if quick else stage4b.RESAMPLES
     q0 = []
     for i, c in enumerate(champions):

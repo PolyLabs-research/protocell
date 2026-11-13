@@ -186,6 +186,14 @@ def read_q3(run_name: str, fitness: Mapping[str, np.ndarray], onset: Mapping[str
             "onset_bias": {"G1": plain, "G0": frosted, "G-1": mirrored}, "compares_over_time": compares["any_level"], "flat_pool": compares}
 
 
+def unique_runs(champions: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+    """The champions with distinct run names: where two phases hold a run of the same name (stage 6's extension carries
+    the pilot's run on), each takes its phase before its name. Every result is keyed by the run's name. With no name
+    shared, nothing changes."""
+    names = [c["run"] for c in champions]
+    return [{**c, "run": f"{c['phase']}:{c['run']}"} if names.count(c["run"]) > 1 else dict(c) for c in champions]
+
+
 def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] = None, *, world: Any = stage4a.world,
                test_seed: int = TEST_SEED, bootstrap_seed: int = BOOTSTRAP_SEED, validation: Optional[Tuple[int, int]] = None,
                extra_cells: Sequence[Mapping[str, Any]] = (), protocol: str = "stage4b/test") -> Dict[str, Any]:
@@ -200,7 +208,7 @@ def test_phase(out_root: Path, workers: int, quick: bool, score: Optional[Any] =
     reps, settle, hold = (4, 700, 1800) if quick else (stage3c.FLAT_REPLICATES, stage3c.FLAT_SETTLE, stage3c.FLAT_HOLD)
     starts = sample_starts(cfg, "cave", n, test_seed)
     choices = stage4a_choices()
-    champions = find_champions(out_root) + [dict(c) for c in extra_cells]
+    champions = unique_runs(find_champions(out_root) + [dict(c) for c in extra_cells])
     if not champions:
         raise SystemExit(f"no champions under {out_root}")
     validation_seed = VALIDATION_SEED if validation is None else validation[0]

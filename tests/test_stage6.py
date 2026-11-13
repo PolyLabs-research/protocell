@@ -50,3 +50,15 @@ def test_the_extension_carries_the_pilots_run_on(tmp_path) -> None:
     assert len(both) == 2 * len(first)
     same = [k for k in first[0] if k != "seconds"]
     assert [[r[k] for k in same] for r in both[:len(first)]] == [[r[k] for k in same] for r in first]  # the pilot's generations, unchanged
+
+
+def test_the_extensions_champion_is_tested_under_its_own_name(tmp_path) -> None:
+    from experiments import stage4b
+    same = [{"phase": "pilot", "run": "a"}, {"phase": "extend", "run": "a"}, {"phase": "confirm", "run": "b"}]
+    assert [c["run"] for c in stage4b.unique_runs(same)] == ["pilot:a", "extend:a", "b"]
+    stage6.main(["--phase", "pilot", "--mode", "fourier1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    stage6.main(["--phase", "extend", "--mode", "fourier1", "--quick", "--workers", "2", "--out", str(tmp_path)])
+    mine = stage6.main(["--phase", "test", "--quick", "--workers", "2", "--out", str(tmp_path)])["stage6"]
+    assert {x["run"] for x in mine["q0"]} == {"pilot:fourier1-6102", "extend:fourier1-6102"}
+    labels = {r["label"] for r in csv.DictReader(open(tmp_path / "test" / "per_start.csv"))}
+    assert {"pilot:fourier1-6102", "extend:fourier1-6102"} <= labels
