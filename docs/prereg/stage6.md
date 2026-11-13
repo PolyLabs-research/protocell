@@ -114,6 +114,44 @@ I predicted stage 5c would fail and it did not (D29), so these carry less weight
 
 The runner and the test were built after the draft and before these answers (`experiments/stage6.py`).
 
+**The pilot's outcome (2026-11-13, before any confirmatory run).**
+
+The data are in `docs/data/stage6/pilot/`. Each run had its own cpu5c pod (16 vCPUs, $0.56 an hour), at code `9e494e1`,
+from a clean tree with warnings as errors, after the pod's test suite passed. About 3.1 hours a run and about $3.90 for
+both; the campaigns pulled both runs and the pods deleted themselves.
+
+| run | champion's validation fitness | validation survival | the champion's generation |
+|---|---|---|---|
+| uniform, seed 6101 | 0.152 | 0% of 48 | 180 |
+| fourier1, seed 6102 | 0.516 | 85% of 48 | 200 |
+
+On these validation starts design 16 scores 0.527 (83%), B8 0.557 (98%) and the still cell 0.152.
+
+**The rule (§4) is met in the fourier1 mode and not in the uniform.**
+
+- **fourier1 built a working cell from nothing and carried it into stage 4a's world.**
+  - As in stage 4c, the run lost most of what it had built while the gain fell (the best of each generation averaged
+    0.57 over generations 1–50 and 0.36 over 51–100).
+  - Unlike stage 4c, something survived: by generation 40–50 a candidate already survived a quarter of the validation
+    starts, and from generation 140 on the best candidate survives 46–85%.
+  - It was still climbing when the run ended: the best validation rose from 0.28 at generation 130 to 0.52 at 200, the
+    last validation being the highest.
+  - The step size fell from 0.15 to 0.10 over the run.
+- **The uniform run ended as stage 4c's did.** It built working cells while shaded (a peak of 0.74), lost them as the
+  gain fell, and from generation 60 its best candidate is the still cell (0.152, the same number as B0 on these starts,
+  with no beating at all). Its step size grew to 0.26.
+
+**The predictions so far:**
+
+| prediction | outcome |
+|---|---|
+| 1. both pilot champions validate above stage 4c's | ✓ by the letter (0.152 against 0.149; 0.516 against 0.160). For the uniform mode it means nothing: both numbers are the still cell on different starts |
+| 2. the pilot's rule is met in at most one mode | ✓ fourier1 only |
+| 5. fourier1's champion validates higher than uniform's | ✓ |
+
+**Next:** §8's first row for the fourier1 mode: its three confirmatory runs (seeds 6301–6303), with the owner's cost
+confirmed. The uniform mode stops here unless the owner chooses otherwise.
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, as dated notes before the
