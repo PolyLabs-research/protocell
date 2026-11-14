@@ -1957,3 +1957,77 @@ drift that makes the light rise).
    least half their bias.**
 
 **Impact:** this entry; `experiments/stage6_read.py`, `tests/test_stage6_read.py`; next, the run and D36.
+
+## D36 — The reading probe: the searched cell starts its runs on a rise; the evolved cell swims in circles and never rests
+
+**Date:** 2026-11-14  
+**Why:** D35.  
+**Ran:** `experiments/stage6_read.py`, seed 39, 100 fresh starts, one process here, about 4 minutes a run, from a clean tree
+with warnings as errors; data in `docs/data/stage6/read/`. A probe, not a criterion.
+- It ran four times. The first run was D35's plan (code `a8fe09d`, data `81dbb7c`). Each later run added a measure the
+  look before it had shown was needed, committed before it ran (`33cb5a3`, `baf5312`, `f8262de`); no earlier number
+  changed. D35's predictions are scored on the plan's own measures.
+
+### A. Measured
+1. **On these starts:** design 16 0.536 (83% survive), champion 3603 0.612 (99%), champion 6301 0.601 (100%), champion
+   6301 with its ring's links cut 0.270 (25%).
+2. **How champion 3603's runs come to begin aimed** (light 0.3–3, fresh onsets):
+   - **Its runs are aimed from their first tick** (+0.56 over 2,238 starts; design 16's 0.00 over 5,063). Almost no
+     start dies in its first two ticks (33, and 5), so the aim is not an effect of counting only runs that last.
+   - **It is not the heading kept from the last run.** Runs end pointing away from the mouth in both cells (design 16
+     −0.4 to −0.7; the champion −0.4 to −0.5 before rests of 30 ticks or more), because a run is cut once the light
+     falls. After rests of 100 ticks or more the next run points toward it
+     (+0.57 to +0.61; design 16 +0.36 to +0.42).
+   - **It is a rise before the run.** A resting cell creeps a little and turns at random. Over the 10 ticks before a
+     fresh run the light on the wall changes by a few tenths of a percent, and an onset's direction follows that change
+     (correlation +0.45 and +0.51):
+
+     | | fresh runs begun while the light was rising | their onset bias | begun while falling | their onset bias |
+     |---|---|---|---|---|
+     | design 16 | 51% | +0.26 | 49% | −0.28 |
+     | champion 3603 | 86% | +0.62 | 14% | +0.10 |
+   - **So the hand-written cell starts runs whichever way it is drifting, and the searched cell starts them when its
+     drift is climbing.** This is D31 B.3's guess, now measured, and it is why the goggles left the bias unchanged:
+     nothing is read across the body.
+3. **Champion 6301, evolved from random genomes, does not run and rest at all.**
+   - By day it is running 92–93% of the time at every light level, at 5.2–6.4 R a tick (design 16 moves at 1.2–2.6).
+     At night it is still (running 1%).
+   - It turns as it goes: its body spins −0.23 rad a tick while its beating pattern creeps +0.15 the other way, about
+     −0.08 net, a circle about every 77 ticks. Its cilium angle is −1.18 rad, and its ring's links are strong and
+     one-sided (7.2 from one neighbour, 2.0 from the other); design 16's are zero.
+   - It still closes on the light: 0.63 R a tick toward the mouth in dim light (design 16 0.39, champion 3603 0.81),
+     falling to 0.01 in the brightest, where it circles in place. It spends 24.8% of its life in light 5 and above,
+     the most of the three.
+   - Alone, its network moves about three times as fast while the light is changing, up or down, as in steady light.
+   - It made 5 fresh onsets in 100 lifetimes, so the run-and-rest readings do not apply to it.
+4. **With its ring's links cut,** champion 6301 still runs 80% of the time but slower (3.9), turns differently (spin
+   −0.16, creep +0.03), and no longer closes on the light in dim light (0.05 R a tick toward the mouth, from 0.63).
+5. **D35's predictions:**
+
+   | prediction | outcome |
+   |---|---|
+   | 1. champion 3603 is aimed more after short rests than after long | ✗: the other way (+0.44 against +0.57) |
+   | 2. after short rests an onset follows the previous run's direction, above 0.3 | ✗: +0.23 for champion 3603; not readable for 6301 |
+   | 3. champion 6301 does the same | ✗: it does not rest |
+   | 4. the light was rising before fewer than 60% of fresh onsets | ✗ in what it meant. With the plan's 2% edge nearly every change counted as level, so the measure said nothing; by sign, 86% of champion 3603's begin on a rise |
+   | 5. ring cut: less running in dim light, and the onsets lose half their bias | ✓ for the running (93% to 50%); the second half is hollow, with 5 onsets |
+
+### B. Reading
+1. **Two different ways of beating the best simple rule.**
+   - The searched cell is the hand design made selective: it rests, drifts, and commits to a run when the drift climbs.
+     Random turning with a run begun and held on a rise is how swimming bacteria climb a gradient.
+   - The evolved cell swims in circles all day and biases the circling toward the light, using its ring. Evolution did
+     not rediscover the hand-written mechanism; it found another.
+2. **How the circling is biased is not shown.** The network moves faster while the light changes, a little more on a
+   rise than on a fall (0.65 against 0.58 of full speed from light 0.05; 0.59 against 0.58 from light 1), which would
+   stretch the arc that climbs. That is a guess.
+3. **My idea in D35 was wrong,** and so was its premise that champion 6301 runs and rests. Reading four cuts in turn
+   is not a preregistered test; the result in A.2 stands on its size (86% against 51% over thousands of runs), and the
+   route to it is recorded above.
+
+### C. Decisions this surfaces (the owner's)
+1. **Stage 6b's cost** (the draft `docs/prereg/stage6b.md`, D34 item 3).
+2. **Read the circling** (optional, local): champion 6301's speed and turning around one loop against the light's
+   change, to show how the circle is biased.
+
+**Impact:** this entry; `experiments/stage6_read.py`, `tests/test_stage6_read.py`; `docs/data/stage6/read/`.
