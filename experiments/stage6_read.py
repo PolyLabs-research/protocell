@@ -163,6 +163,12 @@ def onset_reading(obs: Reader) -> Dict[str, Any]:
     known = fresh & np.isfinite(rise)
     for name, sel in (("rising", known & (rise > RISE_EDGE)), ("level", known & (np.abs(rise) <= RISE_EDGE)), ("falling", known & (rise < -RISE_EDGE))):
         out["by_light_before"][name] = {**_bias(cos[sel]), "share": float(sel.sum() / known.sum()) if known.any() else math.nan}
+    # added after the third look (D36): the same by the sign of the change alone, however small, and by its size
+    out["by_sign_before"] = {}
+    for name, sel in (("rising at all", known & (rise > 0.0)), ("falling at all", known & (rise < 0.0))):
+        out["by_sign_before"][name] = {**_bias(cos[sel]), "share": float(sel.sum() / known.sum()) if known.any() else math.nan,
+                                       "median_change": float(np.median(rise[sel])) if sel.any() else math.nan}
+    out["follows_light_before"] = _corr(rise[known], cos[known])
     return out
 
 
