@@ -12,7 +12,7 @@ starting with the simplest organism and few parts, each understood, and adding c
 
 - `docs/plan.md`: the plan and its stages
 - `docs/decisions.md`: the decisions log (D1, D2, ...)
-- `docs/stages-4-5.md`: stages 4 and 5 written up, the first cell to beat every simple rule
+- `docs/stages-4-5.md`: stages 4 to 6 written up, the cells that beat every simple rule
 - `docs/prereg/`: a preregistration before every build and run
 - `docs/determinism.md`: what is claimed about reproducibility, and the rules
 
@@ -36,7 +36,7 @@ better; neither search makes a working cell thrifty. The thrift probe (D22): the
 too little light, about half of B8's, not by spending. Stage 4d (D23): a cell fitted to B8's beats by CMA-ES stalls at a
 match of 0.31 and does not carry B8, which leaves open whether the cell could. Stage 4e (D25): cells written by hand in both modes
 do not carry B8 either; the notebooks point at the cell's wiring (it senses only through its beats and has no gain
-control). Stage 5 (D26): a cell that senses light relative to its recent level. Stage 5b (D27): written by hand on that cell, a fourier1 cell carries B8 on fresh starts, narrowly (0.909 of the gap, interval 0.850–0.965), and a uniform cell partly (0.618). Stage 5c (D28, D29): a search that starts at that hand-written cell and moves each gene about 1% finds cells that beat B8 on fresh starts in 2 of 3 runs (0.593 and 0.610 against 0.557), the first result for the hypothesis's strong sense, from a designed start. The explaining probe (D31): the search retuned the hand-written mechanism, mostly the core's links, into a cell that crosses the dark about twice as fast and holds a rising run more firmly. Stages 4 and 5 are written up in `docs/stages-4-5.md`. Stage 6 (D33): evolution from random genomes on that cell, in fourier1 mode, finds a cell that does B8's job in 2 of 3 runs, and one of them beats B8 (0.588 against 0.538); the uniform mode still fails.
+control). Stage 5 (D26): a cell that senses light relative to its recent level. Stage 5b (D27): written by hand on that cell, a fourier1 cell carries B8 on fresh starts, narrowly (0.909 of the gap, interval 0.850–0.965), and a uniform cell partly (0.618). Stage 5c (D28, D29): a search that starts at that hand-written cell and moves each gene about 1% finds cells that beat B8 on fresh starts in 2 of 3 runs (0.593 and 0.610 against 0.557), the first result for the hypothesis's strong sense, from a designed start. The explaining probe (D31): the search retuned the hand-written mechanism, mostly the core's links, into a cell that crosses the dark about twice as fast and holds a rising run more firmly. Stages 4 to 6 are written up in `docs/stages-4-5.md`. Stage 6 (D33): evolution from random genomes on that cell, in fourier1 mode, finds a cell that does B8's job in 2 of 3 runs, and one of them beats B8 (0.588 against 0.538); the uniform mode still fails.
 
 ## Running
 

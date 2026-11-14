@@ -1,7 +1,7 @@
-# Stages 4 and 5: a world with room, a cell that can use it, and the first cell to beat every simple rule
+# Stages 4 to 6: a world with room, a cell that can use it, and cells that beat every simple rule
 
-**Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log (D16–D31) and the data under
-`docs/data/`. It adds no result; each number is from the entry named beside it.
+**Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
+added on 2026-11-14 (D33 C1). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -9,10 +9,11 @@ The hypothesis is that behaviour emerges from the interaction of parts. Its stro
 than every simple mechanism. Through stage 3 the strong sense could not be tested, because in every world a simple rule
 sat within 2–3% of the best any cell could do (D11).
 
-Stages 4 and 5 asked three things in turn:
+Stages 4 to 6 asked four things in turn:
 1. Is there a world where the simple rules leave room?
 2. Can the cell do the best simple rule's job there at all?
 3. Can a cell of interacting parts beat it?
+4. Does such a cell emerge from random genomes?
 
 ## The short answer
 
@@ -24,6 +25,7 @@ Stages 4 and 5 asked three things in turn:
 | with relative sensing | Yes: a hand-written cell closes 0.91 of the gap to B8 | D26, D27 |
 | does a search from that cell beat B8 | Yes, in 2 of 3 runs, on fresh starts | D28, D29 |
 | what the search changed | A retuning of the hand-written mechanism, mostly the core's links | D31 |
+| does it emerge from random genomes | In fourier1 mode: 2 of 3 runs do B8's job and 1 beats B8. The uniform mode fails | D33 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -98,29 +100,53 @@ Stages 4 and 5 asked three things in turn:
 - **Three independent runs moved the same way,** and the path from design 16 to the champion is a smooth slope.
 - **Every part design 16 needs, the champions still need.** The search retuned the mechanism; it did not find another.
 
+## 7. Evolution from nothing, on the new cell (stage 6; D33)
+
+- **The design:** stage 4c exactly as it ran (the same search, eased-in path and world), with only the sensor changed.
+- **The pilot:** the fourier1 run built a working cell and kept it through the tightening economy; the uniform run
+  ended as the still cell, as before.
+- **The test,** on 100 fresh starts, three confirmatory fourier1 runs:
+
+  | cell | fitness | survival | against B8 [95%] | share of the gap to B8 closed |
+  |---|---|---|---|---|
+  | champion 6301 | 0.588 | 99% | +0.050 [+0.032, +0.069] | 1.13 |
+  | B8 | 0.538 | 87% | | |
+  | champion 6302 | 0.510 | 86% | −0.029 [−0.053, −0.004] | 0.92 |
+  | champion 6303 | 0.165 | 0% | −0.373 | 0.00 |
+
+  Beside them, stage 5c's champion 3603 scores 0.596 and design 16 scores 0.509.
+- **Two of three do B8's job** (the criterion for "carries B8"); **one of three beats B8,** short of the two the
+  criterion for "beats" asked.
+- **More generations help, in the one run tried:** the pilot's run, carried on from 200 to 400 generations, goes from
+  0.489 to 0.573, above B8. It was chosen for extending because it was still climbing, so it is descriptive.
+- **The earlier failures were the sensor's.** Stage 4c ended at the still cell with this search, path and world.
+- **Evolution built it another way:** the evolved cells need their ring's links, which design 16 does not use.
+
 ## What this does and does not show
 
-- **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts, in
-  two of three runs. The cell's parts can do it, and a search can get there from a designed start.
+- **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
+  two of three runs from a designed start, and in one of three from random genomes. From random genomes, two of three
+  do the best simple rule's job.
 - **Not shown:**
-  - that such a cell emerges from nothing. The start was written by hand, and evolution from nothing failed on the old
-    cell and has not been tried on the new one;
+  - that a cell beating B8 emerges from nothing reliably: one run of three did, one of four ended as the still cell,
+    and the sensor and the eased-in path were designed by hand;
   - anything beyond one spoke mode (fourier1), one world and one sensor;
   - that no simple rule could sit higher than B8. B8 is the best of those tried.
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
-  body (D31 B.3).
+  body (D31 B.3), and what the evolved cells' ring does (D33 B.4).
 
 ## Cost and conduct
 
-- **RunPod,** stages 4 and 5: about $22 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40), each launch confirmed by
+- **RunPod,** stages 4 to 6: about $33 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40), each launch confirmed by
   the owner first.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
 - **Each stage** had a preregistration with predictions before it ran. The predictions that failed are recorded as
-  failed in their documents; the last was mine that no champion would beat B8.
+  failed in their documents; twice I predicted that no champion would beat B8, and twice one did.
 - **Errors of mine, disclosed where they happened:** a campaign bug that stopped a pull loop (D18); probes that bypassed
-  their log and a calculator with a wrong constant (D27); a scoring summary that misread a column (D29).
+  their log and a calculator with a wrong constant (D27); a scoring summary that misread a column (D29); a test that
+  overwrote one champion's rows with another's (D33).
 
 ## Next
 
-Evolution from nothing on the relative-sensing cell (D31 C2): the test the main caveat asks for.
+Reading the evolved cell beside the hand-written one, and a reliability stage at 400 generations (D33 C2, C3).

@@ -1907,3 +1907,18 @@ clean tree with warnings as errors; data in `docs/data/stage5c/explain/`. A prob
 
 **Impact:** this entry; `docs/prereg/stage6.md` (the answers and outcomes); `experiments/stage6.py`,
 `tests/test_stage6.py`; `experiments/stage4b.py` (runs that share a name); `docs/data/stage6/`; `README.md` status.
+
+## D34 — The owner's decision on D33: the merge, the evolved cell read, and a reliability stage
+
+**Date:** 2026-11-14  
+**Why:** the owner on D33 C: "go on all" (items 1 to 3).
+
+### Decided
+1. **Stage 6 is added to the write-up** (`docs/stages-4-5.md`, now stages 4 to 6) **and `stage6` is merged into `main`.**
+2. **The evolved cell is read:** champion 6301 beside design 16, with the explaining probe's tools; its plan and
+   predictions come before it runs (D35).
+3. **Stage 6b is drafted:** fresh fourier1 runs at 400 generations, asking how reliably evolution from nothing does B8's
+   job and beats B8. The launch waits for the owner's cost confirmed against the draft's caps.
+4. **Left for later:** the uniform mode, and a longer run from stage 5c's champions.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
