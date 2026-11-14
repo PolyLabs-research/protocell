@@ -1,0 +1,412 @@
+{
+ "cells": {
+  "champion3603": {
+   "alpha": -0.006973029498825056,
+   "fitness": 0.6118263426075204,
+   "onsets": {
+    "all": {
+     "bias": 0.4643180119465019,
+     "runs": 2852,
+     "se": 0.008966172027795807
+    },
+    "by_light_before": {
+     "falling": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": 0.0
+     },
+     "level": {
+      "bias": 0.5404111474537442,
+      "runs": 2171,
+      "se": 0.009229026115919201,
+      "share": 0.9868181818181818
+     },
+     "rising": {
+      "bias": 0.8680561271669632,
+      "runs": 29,
+      "se": 0.028484367063755425,
+      "share": 0.013181818181818182
+     }
+    },
+    "by_rest": {
+     "10-30": {
+      "bias": 0.29516811154712946,
+      "follows_previous": 0.18398707649695553,
+      "runs": 175,
+      "se": 0.04150184274945703
+     },
+     "100-300": {
+      "bias": 0.612100398526003,
+      "follows_previous": 0.25275395104621434,
+      "runs": 629,
+      "se": 0.015439169684271446
+     },
+     "30-100": {
+      "bias": 0.4989326253460825,
+      "follows_previous": 0.23594798048093127,
+      "runs": 439,
+      "se": 0.021985216882813862
+     },
+     "300+": {
+      "bias": 0.5670942905845213,
+      "follows_previous": 0.12258286611054942,
+      "runs": 957,
+      "se": 0.01281714215934271
+     }
+    },
+    "follows": {
+     "long": {
+      "bias": 0.5670942905845213,
+      "follows_previous": 0.12258286611054942,
+      "previous_bias": 0.48243133323249165,
+      "previous_ticks": 41.72622779519331,
+      "runs": 957,
+      "se": 0.01281714215934271
+     },
+     "short": {
+      "bias": 0.44085642027309085,
+      "follows_previous": 0.2271872019209317,
+      "previous_bias": 0.20261430048853932,
+      "previous_ticks": 33.90553745928339,
+      "runs": 614,
+      "se": 0.020001919333424618
+     }
+    },
+    "fresh": {
+     "bias": 0.5433286391271747,
+     "runs": 2205,
+     "se": 0.009187740074191816
+    }
+   },
+   "ring": {
+    "bias": -2.286555509199914,
+    "from_ccw": 0.08998971173542714,
+    "from_cw": -0.338742746190575,
+    "gain": 19.993590635792287,
+    "log_tau": 0.8209262200307773,
+    "self": -0.004110024888690944
+   },
+   "survival": 0.99
+  },
+  "champion6301": {
+   "alpha": -1.175954875361385,
+   "fitness": 0.6007648564964978,
+   "onsets": {
+    "all": {
+     "bias": 0.38572293991435824,
+     "runs": 28991,
+     "se": 0.003637157860316874
+    },
+    "by_light_before": {
+     "falling": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "level": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "rising": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     }
+    },
+    "by_rest": {
+     "10-30": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "100-300": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "30-100": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "300+": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     }
+    },
+    "follows": {
+     "long": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "previous_bias": NaN,
+      "previous_ticks": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "short": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "previous_bias": NaN,
+      "previous_ticks": NaN,
+      "runs": 0,
+      "se": NaN
+     }
+    },
+    "fresh": {
+     "bias": -0.2877431472272923,
+     "runs": 5,
+     "se": 0.2486632349922433
+    }
+   },
+   "ring": {
+    "bias": -3.478289877167569,
+    "from_ccw": 1.9958196417560128,
+    "from_cw": 7.210078492240875,
+    "gain": 17.4611529075611,
+    "log_tau": 0.23433929469845774,
+    "self": 3.563728491231746
+   },
+   "survival": 1.0
+  },
+  "champion6301 ring cut": {
+   "alpha": -1.175954875361385,
+   "fitness": 0.26964113925373684,
+   "onsets": {
+    "all": {
+     "bias": 0.3328266892064026,
+     "runs": 10500,
+     "se": 0.006395388981462225
+    },
+    "by_light_before": {
+     "falling": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "level": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "rising": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     }
+    },
+    "by_rest": {
+     "10-30": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "100-300": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "30-100": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "300+": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "runs": 0,
+      "se": NaN
+     }
+    },
+    "follows": {
+     "long": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "previous_bias": NaN,
+      "previous_ticks": NaN,
+      "runs": 0,
+      "se": NaN
+     },
+     "short": {
+      "bias": NaN,
+      "follows_previous": NaN,
+      "previous_bias": NaN,
+      "previous_ticks": NaN,
+      "runs": 0,
+      "se": NaN
+     }
+    },
+    "fresh": {
+     "bias": -0.2829625539763161,
+     "runs": 5,
+     "se": 0.246835053883641
+    }
+   },
+   "ring": {
+    "bias": -3.478289877167569,
+    "from_ccw": 1.9958196417560128,
+    "from_cw": 7.210078492240875,
+    "gain": 17.4611529075611,
+    "log_tau": 0.23433929469845774,
+    "self": 3.563728491231746
+   },
+   "survival": 0.25
+  },
+  "design16": {
+   "alpha": 0.0,
+   "fitness": 0.5363426625273023,
+   "onsets": {
+    "all": {
+     "bias": -0.004178834422383526,
+     "runs": 5142,
+     "se": 0.009438587760819975
+    },
+    "by_light_before": {
+     "falling": {
+      "bias": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": 0.0
+     },
+     "level": {
+      "bias": -0.009189247272652634,
+      "runs": 5050,
+      "se": 0.009544755977581953,
+      "share": 0.9994062932911142
+     },
+     "rising": {
+      "bias": 0.9016071057726108,
+      "runs": 3,
+      "se": 0.0300126691386071,
+      "share": 0.0005937067088858105
+     }
+    },
+    "by_rest": {
+     "10-30": {
+      "bias": -0.4835352955172452,
+      "follows_previous": 0.24920396710831832,
+      "runs": 1764,
+      "se": 0.012804184542144962
+     },
+     "100-300": {
+      "bias": 0.42440170826540036,
+      "follows_previous": 0.29402423483234746,
+      "runs": 1268,
+      "se": 0.013917775753838535
+     },
+     "30-100": {
+      "bias": -0.05153433902860576,
+      "follows_previous": 0.46669804766613016,
+      "runs": 1110,
+      "se": 0.020415973772267573
+     },
+     "300+": {
+      "bias": 0.36039202428547473,
+      "follows_previous": 0.1530499673292378,
+      "runs": 911,
+      "se": 0.016638477460607395
+     }
+    },
+    "follows": {
+     "long": {
+      "bias": 0.36039202428547473,
+      "follows_previous": 0.1530499673292378,
+      "previous_bias": 0.6100224725961433,
+      "previous_ticks": 81.06256860592755,
+      "runs": 911,
+      "se": 0.016638477460607395
+     },
+     "short": {
+      "bias": -0.31668732693603796,
+      "follows_previous": 0.46783629835820967,
+      "previous_bias": -0.4966270132655542,
+      "previous_ticks": 18.046972860125262,
+      "runs": 2874,
+      "se": 0.011802038832156811
+     }
+    },
+    "fresh": {
+     "bias": -0.008714394002016481,
+     "runs": 5058,
+     "se": 0.009541671218144688
+    }
+   },
+   "ring": {
+    "bias": -2.4,
+    "from_ccw": 0.0,
+    "from_cw": 0.0,
+    "gain": 20.0,
+    "log_tau": 0.6931471805599453,
+    "self": 0.0
+   },
+   "survival": 0.83
+  }
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 1,
+   "text": "champion 3603's fresh onsets are aimed more after short rests than after long ones, by more than 0.2",
+   "values": {
+    "short_minus_long": -0.12623787031143047
+   }
+  },
+  {
+   "holds": false,
+   "number": 2,
+   "text": "after short rests an onset follows the previous run's direction: correlation above 0.3 for both champions",
+   "values": {
+    "champion3603": 0.2271872019209317,
+    "champion6301": NaN
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "the evolved cell does the same as the searched one: prediction 1's difference is also above 0.2 for champion 6301",
+   "values": {
+    "short_minus_long": NaN
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "the light was rising before fewer than 60% of either champion's fresh onsets",
+   "values": {
+    "champion3603": 0.013181818181818182,
+    "champion6301": NaN
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "with its ring's links cut, champion 6301 runs for less of the time in dim light and its fresh onsets lose at least half their bias",
+   "values": {
+    "bias": {
+     "cut": -0.2829625539763161,
+     "intact": -0.2877431472272923
+    },
+    "dim_running": {
+     "champion6301": 0.9316338035374514,
+     "champion6301 ring cut": 0.4968182856633401
+    }
+   }
+  }
+ ],
+ "quick": false
+}
