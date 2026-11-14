@@ -72,6 +72,22 @@
       "se": 0.01281714215934271
      }
     },
+    "by_sign_before": {
+     "falling at all": {
+      "bias": 0.0980705641849003,
+      "median_change": -0.001995097503856576,
+      "runs": 302,
+      "se": 0.029506358661769316,
+      "share": 0.13727272727272727
+     },
+     "rising at all": {
+      "bias": 0.6158002731433513,
+      "median_change": 0.005743445863235455,
+      "runs": 1898,
+      "se": 0.00843243198611171,
+      "share": 0.8627272727272727
+     }
+    },
     "follows": {
      "long": {
       "bias": 0.5670942905845213,
@@ -90,6 +106,7 @@
       "se": 0.020001919333424618
      }
     },
+    "follows_light_before": 0.445769079842074,
     "fresh": {
      "bias": 0.5433286391271747,
      "runs": 2205,
@@ -213,6 +230,22 @@
       "se": NaN
      }
     },
+    "by_sign_before": {
+     "falling at all": {
+      "bias": NaN,
+      "median_change": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "rising at all": {
+      "bias": NaN,
+      "median_change": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     }
+    },
     "follows": {
      "long": {
       "bias": NaN,
@@ -231,6 +264,7 @@
       "se": NaN
      }
     },
+    "follows_light_before": NaN,
     "fresh": {
      "bias": -0.2877431472272923,
      "runs": 5,
@@ -354,6 +388,22 @@
       "se": NaN
      }
     },
+    "by_sign_before": {
+     "falling at all": {
+      "bias": NaN,
+      "median_change": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     },
+     "rising at all": {
+      "bias": NaN,
+      "median_change": NaN,
+      "runs": 0,
+      "se": NaN,
+      "share": NaN
+     }
+    },
     "follows": {
      "long": {
       "bias": NaN,
@@ -372,6 +422,7 @@
       "se": NaN
      }
     },
+    "follows_light_before": NaN,
     "fresh": {
      "bias": -0.2829625539763161,
      "runs": 5,
@@ -495,6 +546,22 @@
       "se": 0.016638477460607395
      }
     },
+    "by_sign_before": {
+     "falling at all": {
+      "bias": -0.28436417163014194,
+      "median_change": -0.002751514345331527,
+      "runs": 2483,
+      "se": 0.011868406856494299,
+      "share": 0.49139125272115575
+     },
+     "rising at all": {
+      "bias": 0.2577336034039161,
+      "median_change": 0.002609530870131038,
+      "runs": 2570,
+      "se": 0.012826221282748334,
+      "share": 0.5086087472788442
+     }
+    },
     "follows": {
      "long": {
       "bias": 0.36039202428547473,
@@ -513,6 +580,7 @@
       "se": 0.011802038832156811
      }
     },
+    "follows_light_before": 0.5050359889458591,
     "fresh": {
      "bias": -0.008714394002016481,
      "runs": 5058,
