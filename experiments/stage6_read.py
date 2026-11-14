@@ -63,6 +63,10 @@ class History(explain.GapTracker):
         self.last_ticks = np.zeros(population, dtype=np.int64)
         self.onset_prev_cos: List[float] = []
         self.onset_prev_ticks: List[int] = []
+        # added after the first look (D36): the previous run's direction at its last tick, not only at its onset
+        self.heading_now = np.full(population, np.nan)
+        self.last_end_cos = np.full(population, np.nan)
+        self.onset_prev_end_cos: List[float] = []
 
     def step(self, running: np.ndarray, label: np.ndarray, direction: np.ndarray, target: np.ndarray) -> None:
         before = len(self.onsets)
@@ -70,12 +74,15 @@ class History(explain.GapTracker):
         for cell, _, angle in self.onsets[before:]:
             self.onset_prev_cos.append(float(self.last_cos[cell]))
             self.onset_prev_ticks.append(int(self.last_ticks[cell]))
+            self.onset_prev_end_cos.append(float(self.last_end_cos[cell]))
             self.current[cell] = math.cos(angle)
+        self.heading_now[running] = np.cos(direction - target)[running]
 
     def _close(self, which: np.ndarray) -> None:
         done = which & (self.length >= stage3c_probe.MIN_RUN)
         self.last_cos[done] = self.current[done]
         self.last_ticks[done] = self.length[done]
+        self.last_end_cos[done] = self.heading_now[done]
         super()._close(which)
 
 
@@ -122,13 +129,19 @@ def onset_reading(obs: Reader) -> Dict[str, Any]:
     gap = np.array(obs.runs.onset_gaps, dtype=np.int64)
     prev = np.array(obs.runs.onset_prev_cos)
     prev_ticks = np.array(obs.runs.onset_prev_ticks, dtype=np.int64)
+    prev_end = np.array(obs.runs.onset_prev_end_cos)
+
+    def mean(x: np.ndarray) -> float:
+        return float(x[np.isfinite(x)].mean()) if np.isfinite(x).any() else math.nan
     rise = np.array(obs.onset_rise)
     fresh = keep & (gap >= explain.RESUME_GAP)
     out: Dict[str, Any] = {"all": _bias(cos[keep]), "fresh": _bias(cos[fresh]), "by_rest": {}, "follows": {}, "by_light_before": {}}
     for lo, hi in GAPS:
         sel = fresh & (gap >= lo) & (gap < hi)
         name = f"{lo}-{hi}" if hi < 10 ** 9 else f"{lo}+"
-        out["by_rest"][name] = {**_bias(cos[sel]), "follows_previous": _corr(prev[sel], cos[sel])}
+        out["by_rest"][name] = {**_bias(cos[sel]), "follows_previous": _corr(prev[sel], cos[sel]), "previous_onset_bias": mean(prev[sel]),
+                                "previous_end_bias": mean(prev_end[sel]), "follows_previous_end": _corr(prev_end[sel], cos[sel]),
+                                "previous_ticks": float(prev_ticks[sel].mean()) if sel.any() else math.nan}
     for name, (lo, hi) in (("short", SHORT), ("long", LONG)):
         sel = fresh & (gap >= lo) & (gap < hi)
         out["follows"][name] = {**_bias(cos[sel]), "follows_previous": _corr(prev[sel], cos[sel]),
@@ -179,7 +192,11 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
         b, _ = explain.movement_rows(name, obs)
         budget += b
         reading = onset_reading(obs)
+        pairs = int(obs.pairs.sum())
         summary["cells"][name] = {"fitness": float(np.mean(r.fitness)), "survival": float(np.mean(r.survived)), "onsets": reading,
+                                  "runs": len(obs.runs.onsets), "running_ticks_paired": pairs,
+                                  "spin_during_runs": float(obs.spin.sum() / pairs) if pairs else math.nan,
+                                  "creep_during_runs": float(obs.creep.sum() / pairs) if pairs else math.nan,
                                   "ring": dict(zip(RING_GENES, (float(x) for x in g[lay.ring]))), "alpha": float(g[lay.alpha][0])}
         rest_rows += [{"cell": name, "rest": k, **v} for k, v in reading["by_rest"].items()]
         f = reading["follows"]
@@ -190,7 +207,8 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     loop = explain.open_loop(cfg, intact, args.quick)
     args.out.mkdir(parents=True, exist_ok=True)
     write_csv(args.out / "budget.csv", ("cell", "band", "share_of_life", *stage3c_probe.STATES, "speed", "toward_mouth", "mean_run_ticks"), budget)
-    write_csv(args.out / "onsets_by_rest.csv", ("cell", "rest", "runs", "bias", "se", "follows_previous"), rest_rows)
+    write_csv(args.out / "onsets_by_rest.csv", ("cell", "rest", "runs", "bias", "se", "follows_previous", "previous_onset_bias", "previous_end_bias",
+                                                  "follows_previous_end", "previous_ticks"), rest_rows)
     write_csv(args.out / "open_loop.csv", ("cell", "scenario", "level", "mean_beat", "forward", "running"), loop)
     s = summary["cells"]
 
