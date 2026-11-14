@@ -1,10 +1,10 @@
 {
  "command": "/home/michael/Documents/dev/protocell/experiments/stage6_read.py",
- "created_at": "2026-11-14T19:43:46+00:00",
+ "created_at": "2026-11-14T19:49:10+00:00",
  "git": {
   "branch": "stage6b",
   "dirty": false,
-  "sha": "a8fe09dcede8062fcd7ce0b357b6ccf3a365fc3f"
+  "sha": "33cb5a318846f9a27ceae1f726dab9771f9e8c54"
  },
  "manifest_version": 1,
  "out": "docs/data/stage6/read",
@@ -130,6 +130,6 @@
   }
  },
  "timing": {
-  "wall_seconds": 250.37578558921814
+  "wall_seconds": 246.71101689338684
  }
 }

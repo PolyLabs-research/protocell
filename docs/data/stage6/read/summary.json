@@ -2,6 +2,7 @@
  "cells": {
   "champion3603": {
    "alpha": -0.006973029498825056,
+   "creep_during_runs": -0.00044559899428532417,
    "fitness": 0.6118263426075204,
    "onsets": {
     "all": {
@@ -33,24 +34,40 @@
      "10-30": {
       "bias": 0.29516811154712946,
       "follows_previous": 0.18398707649695553,
+      "follows_previous_end": 0.21882954802985316,
+      "previous_end_bias": -0.027336140802358067,
+      "previous_onset_bias": 0.14638494491241874,
+      "previous_ticks": 22.297142857142855,
       "runs": 175,
       "se": 0.04150184274945703
      },
      "100-300": {
       "bias": 0.612100398526003,
       "follows_previous": 0.25275395104621434,
+      "follows_previous_end": 0.155941522228299,
+      "previous_end_bias": -0.49055473829948215,
+      "previous_onset_bias": 0.3563381676230313,
+      "previous_ticks": 47.14308426073132,
       "runs": 629,
       "se": 0.015439169684271446
      },
      "30-100": {
       "bias": 0.4989326253460825,
       "follows_previous": 0.23594798048093127,
+      "follows_previous_end": 0.2604803989234259,
+      "previous_end_bias": -0.4024074577796634,
+      "previous_onset_bias": 0.22502919166353044,
+      "previous_ticks": 38.533029612756266,
       "runs": 439,
       "se": 0.021985216882813862
      },
      "300+": {
       "bias": 0.5670942905845213,
       "follows_previous": 0.12258286611054942,
+      "follows_previous_end": 0.06118999431474476,
+      "previous_end_bias": -0.4570146409278622,
+      "previous_onset_bias": 0.48243133323249165,
+      "previous_ticks": 41.72622779519331,
       "runs": 957,
       "se": 0.01281714215934271
      }
@@ -87,10 +104,14 @@
     "log_tau": 0.8209262200307773,
     "self": -0.004110024888690944
    },
+   "running_ticks_paired": 856181,
+   "runs": 52078,
+   "spin_during_runs": -0.0022008148076530956,
    "survival": 0.99
   },
   "champion6301": {
    "alpha": -1.175954875361385,
+   "creep_during_runs": 0.1532868326797296,
    "fitness": 0.6007648564964978,
    "onsets": {
     "all": {
@@ -122,24 +143,40 @@
      "10-30": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "100-300": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "30-100": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "300+": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      }
@@ -176,10 +213,14 @@
     "log_tau": 0.23433929469845774,
     "self": 3.563728491231746
    },
+   "running_ticks_paired": 4702430,
+   "runs": 205063,
+   "spin_during_runs": -0.23494867944672734,
    "survival": 1.0
   },
   "champion6301 ring cut": {
    "alpha": -1.175954875361385,
+   "creep_during_runs": 0.026916123945297077,
    "fitness": 0.26964113925373684,
    "onsets": {
     "all": {
@@ -211,24 +252,40 @@
      "10-30": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "100-300": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "30-100": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      },
      "300+": {
       "bias": NaN,
       "follows_previous": NaN,
+      "follows_previous_end": NaN,
+      "previous_end_bias": NaN,
+      "previous_onset_bias": NaN,
+      "previous_ticks": NaN,
       "runs": 0,
       "se": NaN
      }
@@ -265,10 +322,14 @@
     "log_tau": 0.23433929469845774,
     "self": 3.563728491231746
    },
+   "running_ticks_paired": 1713307,
+   "runs": 85585,
+   "spin_during_runs": -0.15606513505965455,
    "survival": 0.25
   },
   "design16": {
    "alpha": 0.0,
+   "creep_during_runs": -0.00010617379780488738,
    "fitness": 0.5363426625273023,
    "onsets": {
     "all": {
@@ -300,24 +361,40 @@
      "10-30": {
       "bias": -0.4835352955172452,
       "follows_previous": 0.24920396710831832,
+      "follows_previous_end": 0.47975771573136605,
+      "previous_end_bias": -0.6831248838092325,
+      "previous_onset_bias": -0.6883029657048697,
+      "previous_ticks": 14.419501133786849,
       "runs": 1764,
       "se": 0.012804184542144962
      },
      "100-300": {
       "bias": 0.42440170826540036,
       "follows_previous": 0.29402423483234746,
+      "follows_previous_end": 0.14811250529527867,
+      "previous_end_bias": -0.5755458842989127,
+      "previous_onset_bias": 0.3952034193564106,
+      "previous_ticks": 44.34384858044164,
       "runs": 1268,
       "se": 0.013917775753838535
      },
      "30-100": {
       "bias": -0.05153433902860576,
       "follows_previous": 0.46669804766613016,
+      "follows_previous_end": 0.3679895401230348,
+      "previous_end_bias": -0.6610796894604629,
+      "previous_onset_bias": -0.1920176618214529,
+      "previous_ticks": 23.811711711711713,
       "runs": 1110,
       "se": 0.020415973772267573
      },
      "300+": {
       "bias": 0.36039202428547473,
       "follows_previous": 0.1530499673292378,
+      "follows_previous_end": 0.12149930214968727,
+      "previous_end_bias": -0.43494307063484333,
+      "previous_onset_bias": 0.6100224725961433,
+      "previous_ticks": 81.06256860592755,
       "runs": 911,
       "se": 0.016638477460607395
      }
@@ -354,6 +431,9 @@
     "log_tau": 0.6931471805599453,
     "self": 0.0
    },
+   "running_ticks_paired": 1076942,
+   "runs": 65481,
+   "spin_during_runs": 0.000315656284369078,
    "survival": 0.83
   }
  },
