@@ -90,6 +90,14 @@ beside B8, B5, B6, the ceiling, B0, and three reference cells (design 16, stage 
 3. **The cost in §7:** about $17–20, at most $22.40 with 8-hour caps. This is above the "about $18" I gave before the
    draft, because the slower CPU type takes longer.
 
+**The owner's answers (2026-11-14, before the runs).** "happy with max possible so go":
+- five runs at 400 generations, seeds 6401–6405;
+- the criteria in §4;
+- five cpu5c pods of 16 vCPUs at $0.56 an hour with 8-hour caps, at most $22.40.
+
+The runner and the test were built after the draft and before these answers (`experiments/stage6b.py`, the kept
+champion in `protocell/cmaes.py`).
+
 ## 10. What would change this document
 
 The owner's answers, as a dated note before the runs. Any amendment, with its reason, before the test. The test's
