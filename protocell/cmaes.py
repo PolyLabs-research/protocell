@@ -173,7 +173,7 @@ def _load(path: Path, n: int, population: int) -> "tuple[Strategy, Dict[str, Any
 
 def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, *, log: Callable[[str], None] = print,
         stop_after: Optional[int] = None, world_for: Optional[Callable[[int], Config]] = None, champion_from: int = 1,
-        start: Optional[np.ndarray] = None) -> Dict[str, Any]:
+        start: Optional[np.ndarray] = None, keep_at: "tuple[int, ...]" = ()) -> Dict[str, Any]:
     """One CMA-ES run, as ``protocell.evolve.run`` runs the GA: training starts drawn fresh each generation with shared
     noise; every ``validate_every`` generations the best samples and the distribution's mean are scored on the fixed
     validation starts, in ``cfg``; the champion is the best on validation from generation ``champion_from`` on;
@@ -184,7 +184,10 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
 
     ``start`` (stage 5c), a genome, is where the distribution's mean begins instead of a random draw; it is validated
     before generation 1 and recorded as generation 0, rank 0, the run's reference, never its champion. Without it a run
-    is the same bits as before it existed."""
+    is the same bits as before it existed.
+
+    ``keep_at`` (stage 6b) names generations at whose end the run's champion, as it then stands, is also written to
+    ``champion-at-<generation>.json``. It changes nothing else about the run."""
     out.mkdir(parents=True, exist_ok=True)
     ckpt = out / "checkpoint.npz"
     ga = cma.as_ga()
@@ -240,6 +243,9 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
                                          f"{state['champion_info']['candidate']})" if state["champion_info"] else "") + f" [{row['seconds']:.0f} s]")
         state["next_generation"] = g + 1
         _save(ckpt, strategy, state)
+        if (g + 1) in keep_at and state["champion_info"] is not None:
+            (out / f"champion-at-{g + 1}.json").write_text(json.dumps({"mode": mode, "seed": seed, **state["champion_info"],
+                                                                       "genome": np.asarray(state["champion"]).tolist()}, indent=1) + "\n")
         done += 1
     if state["next_generation"] >= cma.generations:
         write_csv(out / "generations.csv", GENERATION_COLUMNS, state["history"])
