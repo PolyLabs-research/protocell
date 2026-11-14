@@ -1922,3 +1922,38 @@ clean tree with warnings as errors; data in `docs/data/stage5c/explain/`. A prob
 4. **Left for later:** the uniform mode, and a longer run from stage 5c's champions.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D35 — The reading probe's plan and predictions, before it runs
+
+**Date:** 2026-11-14  
+**Why:** D34, item 2; D31 C3 (the aimed onsets) is taken up in the same probe.
+
+### Decided
+1. **Four cells on 100 fresh starts at seed 39** (`experiments/stage6_read.py`), one process here: design 16, stage 5c's
+   champion 3603, stage 6's champion 6301, and champion 6301 with its ring's links cut. A probe: it explains results and
+   sets no criterion.
+2. **For each onset, what came before it:**
+   - the idle ticks before the run (10 or more makes it fresh, as D30);
+   - the direction and the length of the run before that;
+   - the change in the wall's mean light over the 10 ticks before the run began (within 2% is level).
+3. **Read from these,** in light 0.3–3: the onset bias by the length of the rest; how far an onset's direction follows
+   the previous run's; the bias by whether the light was rising, level or falling before.
+4. **Beside them:** each cell's budget by light band, the three intact cells' networks alone, and their wall's genes.
+
+### The idea being tested
+A body keeps its heading while it rests: the turning noise is 0.05 rad a tick, so a heading lasts some hundreds of
+ticks. A cell that holds a climbing run and cuts a falling one ends its climbing runs still pointing up the light. If it
+then rests briefly, its next run begins aimed, with nothing read across the body. This replaces D31 B.3's guess (a
+drift that makes the light rise).
+
+### Predictions (written before the probe runs)
+1. **Champion 3603's fresh onsets are aimed more after short rests (10–100 ticks) than after long ones (300 or more),**
+   by more than 0.2.
+2. **After short rests an onset follows the previous run's direction:** a correlation above 0.3, for both champions.
+3. **The evolved cell does the same:** prediction 1's difference is also above 0.2 for champion 6301.
+4. **The light was rising before fewer than 60% of either champion's fresh onsets:** the aim does not come from a rise
+   just before the run.
+5. **With its ring's links cut, champion 6301 runs for less of the time in dim light, and its fresh onsets lose at
+   least half their bias.**
+
+**Impact:** this entry; `experiments/stage6_read.py`, `tests/test_stage6_read.py`; next, the run and D36.
