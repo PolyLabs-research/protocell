@@ -19,6 +19,7 @@ def test_an_onset_keeps_the_previous_runs_direction_and_length():
     assert math.isnan(t.onset_prev_cos[0])  # the first run has none before it
     assert t.onset_prev_cos[1] == 1.0 and t.onset_prev_ticks[1] == 5  # after a run toward the target, five ticks long
     assert t.onset_prev_cos[2] == -1.0 and t.onset_prev_ticks[2] == 4 and t.onset_gaps[1:] == [20, 3]
+    assert [(round(c), n, g) for _, c, n, g in t.starts][1:] == [(-1, 4, 20), (1, 3, 3)] and t.starts[0][2] == 5  # every start, with its length
     assert t.onset_prev_end_cos[1] == 1.0 and t.onset_prev_end_cos[2] == -1.0  # each run's direction at its last tick
 
 

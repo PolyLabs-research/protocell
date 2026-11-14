@@ -67,9 +67,14 @@ class History(explain.GapTracker):
         self.heading_now = np.full(population, np.nan)
         self.last_end_cos = np.full(population, np.nan)
         self.onset_prev_end_cos: List[float] = []
+        # added after the second look (D36): every start of running, however short, with its first tick's direction
+        self.start_cos = np.full(population, np.nan)
+        self.starts: List[tuple] = []  # (label, the first tick's cosine to the target, ticks it lasted, idle ticks before)
 
     def step(self, running: np.ndarray, label: np.ndarray, direction: np.ndarray, target: np.ndarray) -> None:
         before = len(self.onsets)
+        begin = running & (self.length == 0)
+        self.start_cos[begin] = np.cos(direction - target)[begin]
         super().step(running, label, direction, target)
         for cell, _, angle in self.onsets[before:]:
             self.onset_prev_cos.append(float(self.last_cos[cell]))
@@ -79,6 +84,8 @@ class History(explain.GapTracker):
         self.heading_now[running] = np.cos(direction - target)[running]
 
     def _close(self, which: np.ndarray) -> None:
+        for cell in np.flatnonzero(which & (self.length > 0)).tolist():
+            self.starts.append((int(self.label[cell]), float(self.start_cos[cell]), int(self.length[cell]), int(self.gap[cell])))
         done = which & (self.length >= stage3c_probe.MIN_RUN)
         self.last_cos[done] = self.current[done]
         self.last_ticks[done] = self.length[done]
@@ -147,6 +154,12 @@ def onset_reading(obs: Reader) -> Dict[str, Any]:
         out["follows"][name] = {**_bias(cos[sel]), "follows_previous": _corr(prev[sel], cos[sel]),
                                 "previous_bias": float(prev[sel][np.isfinite(prev[sel])].mean()) if np.isfinite(prev[sel]).any() else math.nan,
                                 "previous_ticks": float(prev_ticks[sel].mean()) if sel.any() else math.nan}
+    st = np.array(obs.runs.starts, dtype=np.float64).reshape(-1, 4)
+    mine = np.isin(st[:, 0], list(bands)) & (st[:, 3] >= explain.RESUME_GAP)
+    out["starts_by_length"] = {}
+    for name, lo, hi in (("every start", 1, 10 ** 9), ("1-2 ticks", 1, 3), ("3-9 ticks", 3, 10), ("10-29 ticks", 10, 30), ("30+ ticks", 30, 10 ** 9)):
+        sel = mine & (st[:, 2] >= lo) & (st[:, 2] < hi)
+        out["starts_by_length"][name] = {**_bias(st[sel, 1]), "share": float(sel.sum() / mine.sum()) if mine.any() else math.nan}
     known = fresh & np.isfinite(rise)
     for name, sel in (("rising", known & (rise > RISE_EDGE)), ("level", known & (np.abs(rise) <= RISE_EDGE)), ("falling", known & (rise < -RISE_EDGE))):
         out["by_light_before"][name] = {**_bias(cos[sel]), "share": float(sel.sum() / known.sum()) if known.any() else math.nan}
