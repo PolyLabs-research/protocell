@@ -68,10 +68,10 @@ ROW_COLUMNS = ("world", "cell", "fitness", "survival", "bar", "bar_fitness", "le
                "verdict")
 
 
-def world_cfg(name: str, quick: bool) -> Config:
+def world_cfg(name: str, quick: bool, worlds: Optional[Mapping[str, Tuple[Dict[str, Any], float]]] = None) -> Config:
     """The world as the cells meet it: stage 3's translucent pool with the world's changes and gain, and stage 5's sensor
     (the simple rules read the light directly, so the sensor does not touch them)."""
-    changes, gain = WORLDS[name]
+    changes, gain = (WORLDS if worlds is None else worlds)[name]
     base = probe.configure(quick).but(**changes).but(eta=CAVE.eta * gain)
     return base.but(sensing="relative", adapt_tau=stage5b.ADAPT_TAU, sense_floor=stage5b.SENSE_FLOOR, level_floor=stage5b.LEVEL_FLOOR)
 
@@ -83,34 +83,39 @@ def genomes(cfg: Config, quick: bool) -> Dict[str, np.ndarray]:
     return {name: (g0 if path is None else np.load(path).reshape(-1)) for name, path in CELLS.items()}
 
 
-def gap_share(cell: np.ndarray, bar: np.ndarray, still: np.ndarray, resamples: int, key: int) -> Tuple[float, float, float]:
+def gap_share(cell: np.ndarray, bar: np.ndarray, still: np.ndarray, resamples: int, key: int,
+              bootstrap_seed: int = BOOTSTRAP_SEED) -> Tuple[float, float, float]:
     def share(idx: np.ndarray) -> np.ndarray:
         lo, hi = still[idx].mean(axis=-1), bar[idx].mean(axis=-1)
         return (cell[idx].mean(axis=-1) - lo) / (hi - lo)
     from protocell.rng import stream
     point = float(share(np.arange(cell.shape[0])))
-    boot = share(stream(BOOTSTRAP_SEED, "bootstrap", (key,)).integers(0, cell.shape[0], size=(resamples, cell.shape[0])))
+    boot = share(stream(bootstrap_seed, "bootstrap", (key,)).integers(0, cell.shape[0], size=(resamples, cell.shape[0])))
     return point, float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))
 
 
-def run_world(name: str, quick: bool, cells: Mapping[str, np.ndarray], log: Any, key0: int) -> Dict[str, Any]:
-    cfg = world_cfg(name, quick)
+def run_world(name: str, quick: bool, cells: Mapping[str, np.ndarray], log: Any, key0: int,
+              worlds: Optional[Mapping[str, Tuple[Dict[str, Any], float]]] = None, seed: int = SEED,
+              bootstrap_seed: int = BOOTSTRAP_SEED, per_start: bool = False) -> Dict[str, Any]:
+    """One world: the simple rules over their grids, the bar chosen on the selection starts, and every cell on the
+    reporting starts. A later stage (stage 8) passes its own worlds and seeds."""
+    cfg = world_cfg(name, quick, worlds)
     select, report = ((1, 4), (5, 8)) if quick else (SELECT, REPORT)
     n = report[1]
     resamples = 200 if quick else RESAMPLES
-    starts = sample_starts(cfg, "cave", n, SEED)
+    starts = sample_starts(cfg, "cave", n, seed)
     sel, rep = np.arange(select[0] - 1, select[1]), np.arange(report[0] - 1, report[1])
     rules: Dict[Tuple[str, str], Dict[str, np.ndarray]] = {}
     for rule, param, sensed, spec in probe.rules(cfg):
         if rule not in (*probe.SIMPLE, "B0"):
             continue
-        r = simulate(sensed, starts, spec, seed=SEED, cell_ids=[NOISE_CELL_ID] * n)
+        r = simulate(sensed, starts, spec, seed=seed, cell_ids=[NOISE_CELL_ID] * n)
         rules[(rule, param)] = {"fitness": np.asarray(r.fitness, dtype=float), "survived": np.asarray(r.survived, dtype=float)}
     still = rules[("B0", "-")]["fitness"]
     simple = {k: v for k, v in rules.items() if k[0] in probe.SIMPLE}
     bar_key = max(simple, key=lambda k: (simple[k]["fitness"][sel].mean(), simple[k]["survived"][sel].mean()))
     bar = simple[bar_key]["fitness"]
-    ceiling, _ = probe.always_brightest(cfg, starts, SEED)
+    ceiling, _ = probe.always_brightest(cfg, starts, seed)
     best_each = {rule: max((k for k in simple if k[0] == rule), key=lambda k: simple[k]["fitness"][sel].mean()) for rule in probe.SIMPLE}
     out: Dict[str, Any] = {"bar": f"{bar_key[0]} ({bar_key[1]})", "bar_fitness": float(bar[rep].mean()), "bar_survival": float(simple[bar_key]["survived"][rep].mean()),
                            "still": float(still[rep].mean()), "ceiling": float(ceiling[rep].mean()),
@@ -118,14 +123,16 @@ def run_world(name: str, quick: bool, cells: Mapping[str, np.ndarray], log: Any,
                            "cells": {}}
     log(f"{name}: the bar is {out['bar']} at {out['bar_fitness']:.3f}; sitting still {out['still']:.3f}; the ceiling {out['ceiling']:.3f}")
     for i, (cell, g) in enumerate(cells.items()):
-        r = simulate(cfg, starts, {"controller": "network", "mode": MODE, "genomes": np.repeat(g[None], n, axis=0)}, seed=SEED, cell_ids=[NOISE_CELL_ID] * n)
+        r = simulate(cfg, starts, {"controller": "network", "mode": MODE, "genomes": np.repeat(g[None], n, axis=0)}, seed=seed, cell_ids=[NOISE_CELL_ID] * n)
         f = np.asarray(r.fitness, dtype=float)
-        d, lo, hi = bootstrap_ci(f[rep] - bar[rep], key0 + 2 * i, resamples, seed=BOOTSTRAP_SEED)
+        d, lo, hi = bootstrap_ci(f[rep] - bar[rep], key0 + 2 * i, resamples, seed=bootstrap_seed)
         room = out["bar_fitness"] - out["still"]
-        share = gap_share(f[rep], bar[rep], still[rep], resamples, key0 + 2 * i + 1) if room > 0.02 else (math.nan, math.nan, math.nan)
+        share = gap_share(f[rep], bar[rep], still[rep], resamples, key0 + 2 * i + 1, bootstrap_seed) if room > 0.02 else (math.nan, math.nan, math.nan)
         out["cells"][cell] = {"fitness": float(f[rep].mean()), "survival": float(np.asarray(r.survived, dtype=float)[rep].mean()), "less_bar": d, "low": lo,
                               "high": hi, "beats": lo > 0.0, "gap_share": share[0], "gap_low": share[1], "gap_high": share[2],
                               "verdict": verdict(share[0]) if math.isfinite(share[0]) else "no gap to close"}
+        if per_start:  # a later stage pairs cells start by start
+            out["cells"][cell]["report_fitness"] = f[rep].tolist()
         c = out["cells"][cell]
         log(f"  {cell}: {c['fitness']:.3f} ({c['survival']:.0%}), {c['less_bar']:+.3f} [{c['low']:+.3f}, {c['high']:+.3f}] against the bar; closes "
             f"{c['gap_share']:.2f}: {c['verdict']}")

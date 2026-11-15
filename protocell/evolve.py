@@ -144,12 +144,33 @@ def validation_job(job: Mapping[str, Any]) -> Dict[str, float]:
     return {"fitness": float(r.fitness.mean()), "survival": float(r.survived.mean()), "mean_beat": float(r.mean_beat.mean())}
 
 
-def evaluate(cfg: Config, mode: str, ga: GA, population: np.ndarray, seed: int, generation: int, mapper: Mapper) -> Dict[str, np.ndarray]:
+def training_worlds(cfgs: "list[Config] | tuple[Config, ...]", ga: GA, seed: int, generation: int) -> "list[tuple[Config, Starts, int]]":
+    """A generation's training starts when they come from several worlds (stage 8): the same number from each, drawn in
+    each world by the cave's rule from stream ``train`` keyed by (generation, world), numbered uniquely within the run.
+    Returns (world, its starts, the start's place among them) in the generation's order."""
+    if ga.train_starts % len(cfgs):
+        raise ValueError("the training starts must split evenly over the worlds")
+    k = ga.train_starts // len(cfgs)
+    out = []
+    for i, cfg in enumerate(cfgs):
+        starts = sample_starts(cfg, "cave", k, seed, stream_name=STREAM_TRAIN, key=(generation, i))
+        starts = starts.renumbered(generation * ga.train_starts + i * k + np.arange(1, k + 1))
+        out += [(cfg, starts, j) for j in range(k)]
+    return out
+
+
+def evaluate(cfg: "Config | list[Config] | tuple[Config, ...]", mode: str, ga: GA, population: np.ndarray, seed: int, generation: int,
+             mapper: Mapper) -> Dict[str, np.ndarray]:
     """Every genome on the generation's training starts: its fitness (the mean over the starts), and the per-start
-    matrices ``(population, starts)``."""
-    starts = training_starts(cfg, ga, seed, generation)
-    jobs = [{"cfg": cfg, "mode": mode, "seed": seed, "starts": starts, "start": s, "genomes": population[c:c + ga.chunk]}
-            for s in range(ga.train_starts) for c in range(0, ga.population, ga.chunk)]
+    matrices ``(population, starts)``. ``cfg`` is the generation's world, or several worlds that share its starts
+    equally (``training_worlds``)."""
+    if isinstance(cfg, (list, tuple)):
+        plan = training_worlds(cfg, ga, seed, generation)
+    else:
+        starts = training_starts(cfg, ga, seed, generation)
+        plan = [(cfg, starts, s) for s in range(ga.train_starts)]
+    jobs = [{"cfg": c_, "mode": mode, "seed": seed, "starts": st, "start": s, "genomes": population[c:c + ga.chunk]}
+            for c_, st, s in plan for c in range(0, ga.population, ga.chunk)]
     parts = list(mapper(train_job, jobs))
     n_chunks = ga.population // ga.chunk
     out = {}

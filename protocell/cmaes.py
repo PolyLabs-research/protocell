@@ -160,7 +160,8 @@ def normalised(cfg: Config, mode: str, genome: np.ndarray) -> np.ndarray:
 def _save(path: Path, strategy: Strategy, state: Mapping[str, Any]) -> None:
     tmp = path.with_suffix(".tmp.npz")
     np.savez(tmp, champion=state["champion"], samples=state["samples"], **strategy.state(),
-             meta=np.array(json.dumps({k: state[k] for k in ("next_generation", "history", "validation", "champion_info")})))
+             meta=np.array(json.dumps({k: state[k] for k in ("next_generation", "history", "validation", "champion_info", "validation_by_world")
+                                       if k in state})))
     os.replace(tmp, path)
 
 
@@ -173,7 +174,8 @@ def _load(path: Path, n: int, population: int) -> "tuple[Strategy, Dict[str, Any
 
 def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, *, log: Callable[[str], None] = print,
         stop_after: Optional[int] = None, world_for: Optional[Callable[[int], Config]] = None, champion_from: int = 1,
-        start: Optional[np.ndarray] = None, keep_at: "tuple[int, ...]" = ()) -> Dict[str, Any]:
+        start: Optional[np.ndarray] = None, keep_at: "tuple[int, ...]" = (),
+        validation_worlds: "Optional[list[tuple[str, Config, Any]]]" = None) -> Dict[str, Any]:
     """One CMA-ES run, as ``protocell.evolve.run`` runs the GA: training starts drawn fresh each generation with shared
     noise; every ``validate_every`` generations the best samples and the distribution's mean are scored on the fixed
     validation starts, in ``cfg``; the champion is the best on validation from generation ``champion_from`` on;
@@ -187,7 +189,12 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
     is the same bits as before it existed.
 
     ``keep_at`` (stage 6b) names generations at whose end the run's champion, as it then stands, is also written to
-    ``champion-at-<generation>.json``. It changes nothing else about the run."""
+    ``champion-at-<generation>.json``. It changes nothing else about the run.
+
+    ``world_for`` may return several worlds for a generation, which then share its training starts equally (stage 8).
+    ``validation_worlds``, (name, world, starts) for each, replaces the single validation: a candidate's validation
+    fitness and survival are the means over every world's starts, each world's own numbers are kept, and the finished
+    run also writes ``validation_worlds.csv``. Without them a run is the same bits as before."""
     out.mkdir(parents=True, exist_ok=True)
     ckpt = out / "checkpoint.npz"
     ga = cma.as_ga()
@@ -221,8 +228,22 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
         if (g + 1) % cma.validate_every == 0:
             candidates = [(f"sample {rank}", genomes[i], float(fit[i])) for rank, i in enumerate(order[: cma.validate_top], start=1)]
             candidates.append(("mean", to_genomes(cfg, mode, strategy.mean[None, :])[0], math.nan))
-            jobs = [{"cfg": cfg, "mode": mode, "seed": cma.validation_seed, "starts": vstarts, "genome": genome} for _, genome, _ in candidates]
-            for rank, ((name, genome, train_fit), v) in enumerate(zip(candidates, mapper(validation_job, jobs)), start=1):
+            if validation_worlds is None:
+                jobs = [{"cfg": cfg, "mode": mode, "seed": cma.validation_seed, "starts": vstarts, "genome": genome} for _, genome, _ in candidates]
+                results = list(mapper(validation_job, jobs))
+            else:
+                jobs = [{"cfg": wcfg, "mode": mode, "seed": cma.validation_seed, "starts": wstarts, "genome": genome}
+                        for _, genome, _ in candidates for _, wcfg, wstarts in validation_worlds]
+                parts = list(mapper(validation_job, jobs))
+                sizes = np.array([len(wstarts) for _, _, wstarts in validation_worlds], dtype=np.float64)
+                results = []
+                for c in range(len(candidates)):
+                    mine = parts[c * len(validation_worlds):(c + 1) * len(validation_worlds)]
+                    results.append({k: float(np.dot([m[k] for m in mine], sizes) / sizes.sum()) for k in ("fitness", "survival", "mean_beat")})
+                    state.setdefault("validation_by_world", []).extend(
+                        {"generation": g + 1, "rank": c + 1, "world": wname, "validation_fitness": m["fitness"], "validation_survival": m["survival"]}
+                        for (wname, _, _), m in zip(validation_worlds, mine))
+            for rank, ((name, genome, train_fit), v) in enumerate(zip(candidates, results), start=1):
                 info = state["champion_info"]
                 better = (g + 1) >= champion_from and (info is None or v["fitness"] > info["validation_fitness"])
                 if better:
@@ -231,7 +252,9 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
                                               "validation_fitness": v["fitness"], "validation_survival": v["survival"]}
                 state["validation"].append({"generation": g + 1, "rank": rank, "train_fitness": train_fit, "validation_fitness": v["fitness"],
                                             "validation_survival": v["survival"], "validation_mean_beat": v["mean_beat"], "champion": int(better)})
-        row = {"generation": g + 1, "shade_floor": train_cfg.shade_floor, "eta": train_cfg.eta, "sigma": strategy.sigma, "best_fitness": float(fit[best]),
+        several = isinstance(train_cfg, (list, tuple))
+        row = {"generation": g + 1, "shade_floor": math.nan if several else train_cfg.shade_floor, "eta": math.nan if several else train_cfg.eta,
+               "sigma": strategy.sigma, "best_fitness": float(fit[best]),
                "median_fitness": float(np.median(fit)), "mean_fitness": float(fit.mean()), "best_survival": float(ev["survived"][best].mean()),
                "share_surviving_all": float(ev["survived"].all(axis=1).mean()), "best_mean_beat": float(ev["mean_beat"][best].mean()),
                "seconds": round(time.time() - t0, 3)}
@@ -250,6 +273,8 @@ def run(cfg: Config, mode: str, cma: CMA, seed: int, out: Path, mapper: Mapper, 
     if state["next_generation"] >= cma.generations:
         write_csv(out / "generations.csv", GENERATION_COLUMNS, state["history"])
         write_csv(out / "validation.csv", VALIDATION_COLUMNS, state["validation"])
+        if state.get("validation_by_world"):
+            write_csv(out / "validation_worlds.csv", ("generation", "rank", "world", "validation_fitness", "validation_survival"), state["validation_by_world"])
         np.save(out / "mean.npy", to_genomes(cfg, mode, strategy.mean[None, :]))
         np.save(out / "population.npy", to_genomes(cfg, mode, state["samples"]))
         if state["champion_info"] is not None:  # a run that ends before champion_from (stage 4c's check) has none
