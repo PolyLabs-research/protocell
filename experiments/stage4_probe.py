@@ -100,7 +100,7 @@ def sim_job(job: Mapping[str, Any]) -> Dict[str, Any]:
             "survived": r.survived, "mean_beat": r.mean_beat}
 
 
-def always_brightest(cfg: Config, starts: Starts) -> Tuple[np.ndarray, np.ndarray]:
+def always_brightest(cfg: Config, starts: Starts, seed: int = SEED) -> Tuple[np.ndarray, np.ndarray]:
     """The ceiling: a still cell put at the brightest point every tick (the light's source, kept within the clamp radius),
     with each start's lifetime, reserve and sky, counted as ``simulate`` counts a cell (dead ticks 0). Damage is off in
     every candidate world. Returns each start's fitness and survival."""
@@ -108,7 +108,7 @@ def always_brightest(cfg: Config, starts: Starts) -> Tuple[np.ndarray, np.ndarra
         raise ValueError("the ceiling is computed without damage")
     n = len(starts)
     ends = lifetimes(cfg, starts)
-    sky = Sky(cfg, SEED, starts.index.tolist()) if cfg.cloud_shade != 1.0 else None
+    sky = Sky(cfg, seed, starts.index.tolist()) if cfg.cloud_shade != 1.0 else None  # the sky the cells at this seed see
     energy, alive, total = start_energy(cfg, "cave", starts.phase), np.ones(n, dtype=bool), np.zeros(n)
     heading, still = starts.heading.copy(), np.zeros((n, cfg.n_wall))  # a still cell keeps its heading
     for t in range(int(ends.max())):

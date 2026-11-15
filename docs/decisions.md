@@ -2089,3 +2089,19 @@ with warnings as errors; data in `docs/data/stage6/read/`. A probe, not a criter
    biased (D36 C2).
 
 **Impact:** this entry; `docs/stages-4-5.md`.
+
+## D39 — Stage 7's plan and predictions, before it runs
+
+**Date:** 2026-11-15  
+**Why:** D38, item 2.
+
+### Decided
+1. **Stage 7 is preregistered:** `docs/prereg/stage7.md`. Five cells, unchanged, in their home world and six they never
+   met (a fixed mouth, a tighter economy, flickering clouds with and without the sweep, a circling spot, a shaded
+   cell), against each world's own best simple rule, tuned there on separate starts.
+2. **It reports counts, not a pass:** for each cell, in how many unseen worlds it does the bar's job and in how many it
+   beats the bar. Six predictions are in the document.
+3. **It runs here,** one process, detached, about 3 to 4 hours (`experiments/stage7.py`; seed 42, bootstrap 43).
+
+**Impact:** this entry; `docs/prereg/stage7.md`; `experiments/stage7.py`, `tests/test_stage7.py`;
+`experiments/stage4_probe.py` (the ceiling takes the seed of its sky).
