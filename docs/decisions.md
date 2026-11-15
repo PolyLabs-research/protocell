@@ -2031,3 +2031,48 @@ with warnings as errors; data in `docs/data/stage6/read/`. A probe, not a criter
    change, to show how the circle is biased.
 
 **Impact:** this entry; `experiments/stage6_read.py`, `tests/test_stage6_read.py`; `docs/data/stage6/read/`.
+
+## D37 — Stage 6b: from random genomes, 4 of 5 runs do B8's job and 2 of 5 beat B8; more generations help every run
+
+**Date:** 2026-11-15  
+**Why:** D34 item 3; `docs/prereg/stage6b.md`. The owner: "happy with max possible so go".  
+**Ran:**
+- Five fourier1 runs from random genomes, seeds 6401–6405, 400 generations (code `d2daec8`), a cpu5c 16-vCPU pod each;
+  about $18.30. The launch's failure and recovery are in the draft's dated note.
+- The test (code `804704e`): here, one process, about 2.5 hours, 100 fresh starts at seed 40.
+
+### A. Measured
+1. **Q0 holds: 4 of 5 champions carry B8** (they close 0.99 to 1.21 of the gap from sitting still; the fifth 0.66).
+2. **Q1 does not hold: 2 of 5 beat B8** (+0.084 and +0.065, intervals clear of 0); the criterion asked for 3. Two more
+   are level with B8 (+0.011 and −0.002).
+3. **Q2 holds: all 5 are better at 400 generations than at 200,** by +0.027 to +0.301, every interval above 0.
+4. **No run ended as the still cell.** Two that looked lost at generation 200 recovered.
+5. **Champion 6402 scores 0.642,** the best cell so far: B8 0.558, the ceiling 0.689, stage 5c's champion 3603 0.611,
+   stage 6's champion 6301 0.605, design 16 0.560.
+6. **All five need their ring's links,** as stage 6's evolved cells did and design 16 does not.
+7. **Predictions:** 1, 4 and 5 hold; 2 and 3 fail. I expected 3 to carry and 3 to beat; 4 carry and 2 beat.
+8. **Across stages 6 and 6b, on their own fresh starts:** of the 8 preregistered fourier1 runs from random genomes, 6
+   carry B8 and 3 beat it (1 of 3 at 200 generations, 2 of 5 at 400).
+
+### B. Reading
+1. **That a cell doing the best simple rule's job emerges from random genomes is now a reliable result** in this world
+   and mode: 4 of 5 by a criterion fixed beforehand, with no failed run.
+2. **That it beats the best simple rule is real but not the rule.** It happens in 2 of 5 runs at 400 generations, as it
+   did in 1 of 3 at 200. The strong sense, by the majority criterion, is not shown from nothing.
+3. **Time helps, and had not run out.** Every run improved over its second 200 generations. Whether the runs level
+   with B8 would pass it with more is not known; the two that beat it gained least (they were already high).
+4. **The spread between runs is large:** 0.425 to 0.642 from the same search and world. What separates a run that
+   beats B8 from one that matches it has not been read.
+
+### C. Decisions this surfaces (the owner's)
+1. **Add stage 6b to the write-up and merge `stage6b` into `main` (recommended now).**
+2. **Do the cells hold up in worlds they never saw? (recommended next; local, free.)** The champions, design 16 and the
+   simple rules in stage 4's other worlds (a fixed mouth, clouds, a circling spot, other gains), as the plan asked of
+   stage 1. A cell that beats B8 only in the world it was evolved in is a narrower result.
+3. **More time for the same five runs:** carried on from their checkpoints to 800 generations, asking whether the
+   three that do not beat B8 get there. About $18, at most $22.40.
+4. **Read champion 6402** beside 6301: whether the best cell is the circling kind, and what it does better.
+
+**Impact:** this entry; `docs/prereg/stage6b.md` (the answers, the launch note, the outcome); `experiments/stage6b.py`,
+`tests/test_stage6b.py`; `protocell/cmaes.py` (a run may keep its champion at named generations); `cloud/campaign.sh`;
+`docs/data/stage6b/`; `README.md` status.
