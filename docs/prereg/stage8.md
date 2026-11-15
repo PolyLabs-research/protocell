@@ -120,6 +120,16 @@ A cell **does the job** in a world if it closes at least 0.9 of the gap from sit
 3. **The criteria** in §6 and the pilot's rule in §4.
 4. **The pilot's cost:** two pods, about $6.50–8, at most $8.96.
 
+**The owner's answers (2026-11-15, before the pilot).** "I'm happy to go with your recommendations here":
+- the four worlds trained in and the five held back, as in §2;
+- the mix: two starts from each world every generation, from generation 101;
+- the criteria in §6 and the pilot's rule in §4;
+- the pilot's pods: two cpu5c pods of 16 vCPUs at $0.56 an hour with 8-hour caps, at most $8.96. The account reloads
+  itself.
+
+The runner and the test were built after the draft and before these answers (`experiments/stage8.py`, the several
+worlds in `protocell/evolve.py` and `protocell/cmaes.py`).
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, before the other runs.
