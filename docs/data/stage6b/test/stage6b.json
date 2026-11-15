@@ -1,0 +1,236 @@
+{
+ "Q0": true,
+ "Q1": false,
+ "Q2": true,
+ "beating_B8": [
+  "fourier1-6402",
+  "fourier1-6405"
+ ],
+ "beating_B8_at_half": [
+  "fourier1-6402",
+  "fourier1-6405"
+ ],
+ "carrying_B8": [
+  "fourier1-6401",
+  "fourier1-6402",
+  "fourier1-6404",
+  "fourier1-6405"
+ ],
+ "fitness": {
+  "B0": 0.16552789672482898,
+  "B5": 0.520189502709601,
+  "B6": 0.4012345015189351,
+  "B8": 0.558114970751097,
+  "ceiling": 0.6894688278100201,
+  "champion3603": 0.61050700737883,
+  "champion6301": 0.6046141631706802,
+  "design16": 0.5601880455493479,
+  "fourier1-6401": 0.5689259698478899,
+  "fourier1-6401@200": 0.26762100544186807,
+  "fourier1-6402": 0.64177984960992,
+  "fourier1-6402@200": 0.6150399778154501,
+  "fourier1-6403": 0.424727487507143,
+  "fourier1-6403@200": 0.25467704505842703,
+  "fourier1-6404": 0.5559138362438599,
+  "fourier1-6404@200": 0.43092120047997207,
+  "fourier1-6405": 0.62299803718086,
+  "fourier1-6405@200": 0.5741905164847901
+ },
+ "later_better": [
+  "fourier1-6401",
+  "fourier1-6402",
+  "fourier1-6403",
+  "fourier1-6404",
+  "fourier1-6405"
+ ],
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "at least 3 of the 5 runs work",
+   "values": {
+    "working": [
+     "fourier1-6401",
+     "fourier1-6402",
+     "fourier1-6403",
+     "fourier1-6404",
+     "fourier1-6405"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 2,
+   "text": "Q0 fails narrowly: exactly 3 of 5 carry B8",
+   "values": {
+    "carrying": [
+     "fourier1-6401",
+     "fourier1-6402",
+     "fourier1-6404",
+     "fourier1-6405"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "Q1 holds: at least 3 of 5 beat B8 at 400 generations",
+   "values": {
+    "beating": [
+     "fourier1-6402",
+     "fourier1-6405"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "Q2 holds: the champion at 400 scores above the champion at 200 in at least 4 of 5 runs",
+   "values": {
+    "later_better": [
+     "fourier1-6401",
+     "fourier1-6402",
+     "fourier1-6403",
+     "fourier1-6404",
+     "fourier1-6405"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "at 200 generations, at most 2 of the 5 champions beat B8",
+   "values": {
+    "beating_at_200": [
+     "fourier1-6402",
+     "fourier1-6405"
+    ]
+   }
+  }
+ ],
+ "quick": false,
+ "runs": [
+  {
+   "at_half": {
+    "beats_B8": false,
+    "fitness": 0.26762100544186807,
+    "gap_share": 0.2600521399494881,
+    "later_less_earlier": {
+     "high": 0.3345510600676845,
+     "low": 0.26666061377167255,
+     "mean": 0.30130496440602206
+    },
+    "run": "fourier1-6401@200",
+    "verdict": "does not"
+   },
+   "beats_B8": false,
+   "champion_generation": 370,
+   "fitness": 0.5689259698478899,
+   "gap_share": 1.0275378376213924,
+   "high": 1.076258361450786,
+   "low": 0.9788648162452451,
+   "run": "fourier1-6401",
+   "verdict": "carries B8",
+   "works": true
+  },
+  {
+   "at_half": {
+    "beats_B8": true,
+    "fitness": 0.6150399778154501,
+    "gap_share": 1.1449996977244958,
+    "later_less_earlier": {
+     "high": 0.033183354434903486,
+     "low": 0.020576963419998744,
+     "mean": 0.026739871794469995
+    },
+    "run": "fourier1-6402@200",
+    "verdict": "carries B8"
+   },
+   "beats_B8": true,
+   "champion_generation": 370,
+   "fitness": 0.64177984960992,
+   "gap_share": 1.213111649348967,
+   "high": 1.267228091964762,
+   "low": 1.1694207165911283,
+   "run": "fourier1-6402",
+   "verdict": "carries B8",
+   "works": true
+  },
+  {
+   "at_half": {
+    "beats_B8": false,
+    "fitness": 0.25467704505842703,
+    "gap_share": 0.22708121135856116,
+    "later_less_earlier": {
+     "high": 0.2074215892687946,
+     "low": 0.13090370919231512,
+     "mean": 0.17005044244871606
+    },
+    "run": "fourier1-6403@200",
+    "verdict": "does not"
+   },
+   "beats_B8": false,
+   "champion_generation": 400,
+   "fitness": 0.424727487507143,
+   "gap_share": 0.6602346534847222,
+   "high": 0.7418966985852143,
+   "low": 0.5781589735241435,
+   "run": "fourier1-6403",
+   "verdict": "partly",
+   "works": true
+  },
+  {
+   "at_half": {
+    "beats_B8": false,
+    "fitness": 0.43092120047997207,
+    "gap_share": 0.6760113139572844,
+    "later_less_earlier": {
+     "high": 0.15932679290671023,
+     "low": 0.09318708905516607,
+     "mean": 0.12499263576388799
+    },
+    "run": "fourier1-6404@200",
+    "verdict": "partly"
+   },
+   "beats_B8": false,
+   "champion_generation": 400,
+   "fitness": 0.5559138362438599,
+   "gap_share": 0.9943932578200735,
+   "high": 1.0543512241901958,
+   "low": 0.9377104865053795,
+   "run": "fourier1-6404",
+   "verdict": "carries B8",
+   "works": true
+  },
+  {
+   "at_half": {
+    "beats_B8": true,
+    "fitness": 0.5741905164847901,
+    "gap_share": 1.0409477203842366,
+    "later_less_earlier": {
+     "high": 0.0570360262884785,
+     "low": 0.04187643766660649,
+     "mean": 0.048807520696069986
+    },
+    "run": "fourier1-6405@200",
+    "verdict": "carries B8"
+   },
+   "beats_B8": true,
+   "champion_generation": 360,
+   "fitness": 0.62299803718086,
+   "gap_share": 1.1652705112380286,
+   "high": 1.212998280219699,
+   "low": 1.1275180444727793,
+   "run": "fourier1-6405",
+   "verdict": "carries B8",
+   "works": true
+  }
+ ],
+ "working": [
+  "fourier1-6401",
+  "fourier1-6402",
+  "fourier1-6403",
+  "fourier1-6404",
+  "fourier1-6405"
+ ]
+}
