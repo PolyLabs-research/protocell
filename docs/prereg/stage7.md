@@ -72,3 +72,53 @@ Here, one process, started detached; about 3 to 4 hours. Nothing on RunPod.
 ## 8. What would change this document
 
 The outcome, after the run.
+
+**The outcome (2026-11-15; `docs/decisions.md` D40).**
+
+The run: here, one process, 2.8 hours, at code `cfb0c7a`, from a clean tree with warnings as errors; starts 51–150 at
+seed 42. Data in `docs/data/stage7/`.
+
+**Each cell's share of the gap from sitting still to the world's best simple rule** (1.00 is level with the rule; bold
+where the cell beats the rule, its interval above 0):
+
+| world | the best simple rule there | design 16 | champion 3603 | champion 6301 | champion 6402 | champion 6405 |
+|---|---|---|---|---|---|---|
+| home | B8 (tau 3), 0.540 | 0.97 | **1.16** | **1.16** | **1.26** | **1.21** |
+| fixed mouth | B5 (tau 30), 0.655 | 0.83 | 0.93 | 0.93 | 1.00 | 0.97 |
+| tighter | B8 (tau 3), 0.411 | 0.89 | **1.24** | 0.99 | **1.40** | **1.26** |
+| flicker | B8 (tau 10), 0.562 | 0.22 | 0.29 | 0.36 | 0.95 | 0.63 |
+| sweep and flicker | B8 (tau 10), 0.495 | 0.12 | 0.17 | 0.22 | 0.93 | 0.52 |
+| spot | B6 (cycle 20, run 10), 0.504 | 0.04 | 0.02 | 0.30 | 0.82 | 0.84 |
+| shaded | B6 (cycle 20, run 10), 0.591 | **1.04** | **1.05** | 0.87 | 0.81 | −0.04 |
+
+**In the six unseen worlds:**
+
+| cell | does the rule's job (0.9 or more) | beats the rule |
+|---|---|---|
+| design 16 (written by hand) | 1 | 1 |
+| champion 3603 (a search from it) | 3 | 2 |
+| champion 6301 (evolved) | 2 | 0 |
+| champion 6402 (evolved) | 4 | 1 |
+| champion 6405 (evolved) | 2 | 1 |
+
+- **At home every champion beats the rule again,** on new starts and against a rule re-tuned there.
+- **Where the geometry is the home's** (a fixed mouth, a tighter economy) every champion does the rule's job, and three
+  of four beat it in the tighter economy. With the mouth fixed no cell beats B5, which sits 0.036 below the ceiling.
+- **Flickering clouds break the hand-written line and stage 6's cell:** design 16, champion 3603 and champion 6301
+  close 0.12 to 0.36 of the gap and mostly starve (3% to 33% survive). Champion 6402 holds at 0.93 to 0.95.
+- **Under the circling spot** the hand-written line does nothing (0% survive); stage 6b's two champions close 0.82 and
+  0.84, with a third of their starts surviving.
+- **As shaded cells** the hand-written line beats the rule and survives every start; the evolved cells do not, and
+  champion 6405 starves on every start.
+- **Champion 6402 closes at least 0.81 of the gap in every world.** No other cell is above 0.5 in all of them.
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. at home, all four champions beat the bar again | ✓ |
+| 2. fixed mouth and tighter: every champion does the bar's job | ✓ |
+| 3. under the spot, no cell does the bar's job | ✓ (the best close 0.82 and 0.84) |
+| 4. under flicker no champion beats the bar, and at most half the pairs do its job | ✓ (2 of 8 pairs, both champion 6402) |
+| 5. shaded: no champion does the bar's job | ✗: champion 3603 does, and beats it |
+| 6. the searched cell holds up in at least as many unseen worlds as the best evolved cell | ✗: 3 against champion 6402's 4 |

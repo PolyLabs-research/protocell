@@ -2105,3 +2105,53 @@ with warnings as errors; data in `docs/data/stage6/read/`. A probe, not a criter
 
 **Impact:** this entry; `docs/prereg/stage7.md`; `experiments/stage7.py`, `tests/test_stage7.py`;
 `experiments/stage4_probe.py` (the ceiling takes the seed of its sky).
+
+## D40 — Stage 7: away from home the cells mostly match the best simple rule where the world is like home, and fail where it is not; one evolved cell holds up everywhere
+
+**Date:** 2026-11-15  
+**Why:** D39; `docs/prereg/stage7.md`.  
+**Ran:** `experiments/stage7.py` (code `cfb0c7a`), here, one process, 2.8 hours; five cells in the home world and six unseen
+ones, starts 51–150 at seed 42, each world's best simple rule tuned on starts 1–50. Data in `docs/data/stage7/`.
+
+### A. Measured
+1. **At home all four champions beat the best simple rule again** (+0.060 to +0.099), against a rule re-tuned there.
+2. **Across the six unseen worlds** (the share of the gap from sitting still to that world's best simple rule):
+
+   | world | design 16 | champion 3603 | champion 6301 | champion 6402 | champion 6405 |
+   |---|---|---|---|---|---|
+   | fixed mouth | 0.83 | 0.93 | 0.93 | 1.00 | 0.97 |
+   | tighter economy | 0.89 | 1.24, beats | 0.99 | 1.40, beats | 1.26, beats |
+   | flicker | 0.22 | 0.29 | 0.36 | 0.95 | 0.63 |
+   | sweep and flicker | 0.12 | 0.17 | 0.22 | 0.93 | 0.52 |
+   | circling spot | 0.04 | 0.02 | 0.30 | 0.82 | 0.84 |
+   | shaded cell | 1.04, beats | 1.05, beats | 0.87 | 0.81 | −0.04 |
+3. **Counts in the six:** the champions do the rule's job in 11 of 24 cell-and-world pairs and beat it in 4, three of
+   those in the tighter economy.
+4. **Champion 6402 closes at least 0.81 everywhere;** every other cell collapses in at least one world.
+5. **The two lines fail in different places.** The hand-written line (design 16, champion 3603) starves under
+   flickering clouds and under the spot, and does best of all when shaded. The evolved cells are weaker when shaded
+   (champion 6405 starves on every start), and two of the three fail under flicker.
+6. **Predictions:** 1 to 4 hold; 5 and 6 fail. I expected no champion to cope with shading and the searched cell to be
+   the most robust.
+
+### B. Reading
+1. **Beating the best simple rule is, so far, a result about one world.** Away from home it survives only where the
+   world is home made harder (the tighter economy) and, for the hand-written line, when shaded. The simple rules, with
+   one parameter re-tuned for each world, are robust; the cells were tuned to one world and are not re-tuned.
+2. **The comparison is a hard one for the cells,** and it should be: a simple rule with a knob that is set once per
+   world is still a simple rule. A cell evolved in one world has been asked nothing about the others.
+3. **The failures fit the mechanisms read in D36.** A cell that starts runs on a rise is fooled by a cloud passing.
+   Shading gives the hand-written line a direction across the body that its design can use and the circling cells
+   were never shaped around.
+4. **Champion 6402 shows a single cell can hold up across all seven worlds** without having met six of them. Why it
+   does, where its sibling 6405 from the same search does not, has not been read.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage7` into `main` and add it to the write-up (recommended now).**
+2. **Evolve in several worlds at once (recommended next): a stage 8.** The same search from random genomes, each
+   generation's starts drawn from a set of worlds, asking whether a generalist emerges that beats each world's best
+   simple rule, tested also on worlds held back. A draft first; RunPod, about $3.50–4 a run at 400 generations.
+3. **Read champion 6402** beside 6405 (local): what makes one sibling robust.
+4. **Still open:** more generations for stage 6b's five runs (about $18); how champion 6301's circling is biased.
+
+**Impact:** this entry; `docs/prereg/stage7.md` (the outcome); `docs/data/stage7/`; `README.md` status.
