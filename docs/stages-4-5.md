@@ -1,7 +1,7 @@
 # Stages 4 to 6: a world with room, a cell that can use it, and cells that beat every simple rule
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) and stage 6b on 2026-11-15 (D37 C1). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -26,6 +26,7 @@ Stages 4 to 6 asked four things in turn:
 | does a search from that cell beat B8 | Yes, in 2 of 3 runs, on fresh starts | D28, D29 |
 | what the search changed | A retuning of the hand-written mechanism, mostly the core's links | D31 |
 | does it emerge from random genomes | In fourier1 mode: 2 of 3 runs do B8's job and 1 beats B8. The uniform mode fails | D33 |
+| how reliably, and with more time | 4 of 5 runs do B8's job; 2 of 5 beat B8; every run is better at 400 generations than at 200 | D37 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -122,22 +123,52 @@ Stages 4 to 6 asked four things in turn:
 - **The earlier failures were the sensor's.** Stage 4c ended at the still cell with this search, path and world.
 - **Evolution built it another way:** the evolved cells need their ring's links, which design 16 does not use.
 
+## 8. How reliably, and with more time (stage 6b; D37)
+
+- **The design:** five fresh fourier1 runs from random genomes at 400 generations, each also keeping its champion as it
+  stood at generation 200. The criteria were fixed beforehand: 4 of 5 to count as doing B8's job reliably, 3 of 5 to
+  count as beating B8.
+- **The test,** on 100 fresh starts (B8 0.558, the ceiling 0.689):
+
+  | champion | fitness | against B8 [95%] | share of the gap closed | at 200 generations |
+  |---|---|---|---|---|
+  | 6402 | 0.642 | +0.084 [+0.069, +0.100] | 1.21 | 0.615 |
+  | 6405 | 0.623 | +0.065 [+0.052, +0.080] | 1.17 | 0.574 |
+  | 6401 | 0.569 | +0.011 [−0.008, +0.029] | 1.03 | 0.268 |
+  | 6404 | 0.556 | −0.002 [−0.024, +0.020] | 0.99 | 0.431 |
+  | 6403 | 0.425 | −0.133 [−0.168, −0.100] | 0.66 | 0.255 |
+
+- **It does B8's job reliably:** 4 of 5, and no run ended as the still cell.
+- **It beats B8 in 2 of 5,** one short of the criterion; two more are level with B8.
+- **Every run is better at 400 generations than at 200.**
+- **Champion 6402 is the best cell so far,** above the best from the hand-written start (0.611 on these starts).
+- **Across stages 6 and 6b:** of 8 preregistered runs from random genomes, 6 do B8's job and 3 beat B8.
+
+## 9. How the cells do it (D31, D36)
+
+- **The cell found by search from the hand design** rests, drifts a little and turns at random, and starts a run when
+  its drift is climbing: 86% of its fresh runs begin while the light is rising, against 51% for the hand-written cell.
+  So its runs begin aimed at the light with nothing read across the body.
+- **The cell evolved from random genomes** (champion 6301) does not rest. By day it swims in circles almost all the
+  time and biases the circling toward the light, using its ring's links; at night it is still. How the circling is
+  biased has not been shown.
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
-  two of three runs from a designed start, and in one of three from random genomes. From random genomes, two of three
-  do the best simple rule's job.
+  two of three runs from a designed start, and in three of eight from random genomes. From random genomes a cell that
+  does the best simple rule's job emerges reliably (four of five at 400 generations).
 - **Not shown:**
-  - that a cell beating B8 emerges from nothing reliably: one run of three did, one of four ended as the still cell,
-    and the sensor and the eased-in path were designed by hand;
+  - that a cell beating B8 emerges from nothing in most runs: 2 of 5 did at 400 generations, where the criterion
+    asked for 3; and the sensor and the eased-in path were designed by hand;
   - anything beyond one spoke mode (fourier1), one world and one sensor;
   - that no simple rule could sit higher than B8. B8 is the best of those tried.
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
-  body (D31 B.3), and what the evolved cells' ring does (D33 B.4).
+  body is answered for the searched cell (§9); how the evolved cell's circling is biased is not (D36 B.2).
 
 ## Cost and conduct
 
-- **RunPod,** stages 4 to 6: about $33 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40), each launch confirmed by
+- **RunPod,** stages 4 to 6: about $52 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30), each launch confirmed by
   the owner first.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
@@ -149,4 +180,4 @@ Stages 4 to 6 asked four things in turn:
 
 ## Next
 
-Reading the evolved cell beside the hand-written one, and a reliability stage at 400 generations (D33 C2, C3).
+Whether the cells hold up in worlds they never saw (D37 C2).

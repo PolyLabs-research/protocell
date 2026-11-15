@@ -2076,3 +2076,16 @@ with warnings as errors; data in `docs/data/stage6/read/`. A probe, not a criter
 **Impact:** this entry; `docs/prereg/stage6b.md` (the answers, the launch note, the outcome); `experiments/stage6b.py`,
 `tests/test_stage6b.py`; `protocell/cmaes.py` (a run may keep its champion at named generations); `cloud/campaign.sh`;
 `docs/data/stage6b/`; `README.md` status.
+
+## D38 — The owner's decision on D37: the write-up and the merge, then worlds the cells never saw
+
+**Date:** 2026-11-15  
+**Why:** the owner on D37 C: "Go with 1 and 2 for now".
+
+### Decided
+1. **Stage 6b and the two readings (D31, D36) are added to the write-up,** and `stage6b` is merged into `main`.
+2. **Next, the cells in worlds they never saw** (D37 C2): a plan with predictions first (D39), then the run here.
+3. **Left open:** more generations for the five runs (C3), reading champion 6402 (C4), how champion 6301's circling is
+   biased (D36 C2).
+
+**Impact:** this entry; `docs/stages-4-5.md`.
