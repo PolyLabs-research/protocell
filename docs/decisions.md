@@ -2155,3 +2155,17 @@ ones, starts 51–150 at seed 42, each world's best simple rule tuned on starts 
 4. **Still open:** more generations for stage 6b's five runs (about $18); how champion 6301's circling is biased.
 
 **Impact:** this entry; `docs/prereg/stage7.md` (the outcome); `docs/data/stage7/`; `README.md` status.
+
+## D41 — The owner's decision on D40: the merge, then evolution in several worlds at once
+
+**Date:** 2026-11-15  
+**Why:** the owner on D40 C: "Merged and move on as recommended".
+
+### Decided
+1. **Stage 7 is added to the write-up and `stage7` is merged into `main`.** The branch was not yet in `main` when the
+   owner wrote; the merge was made here, as the earlier ones were.
+2. **Stage 8 is drafted next** (D40 C2): the same search from random genomes with each generation's starts drawn from
+   several worlds, tested in those worlds and in worlds held back. The launch waits for the owner's answers and cost.
+3. **Left open:** reading champion 6402 beside 6405; more generations for stage 6b's runs; champion 6301's circling.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `README.md`.

@@ -1,7 +1,7 @@
-# Stages 4 to 6: a world with room, a cell that can use it, and cells that beat every simple rule
+# Stages 4 to 7: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) and stage 6b on 2026-11-15 (D37 C1). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) and stage 7 the same day (D40 C1). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -27,6 +27,7 @@ Stages 4 to 6 asked four things in turn:
 | what the search changed | A retuning of the hand-written mechanism, mostly the core's links | D31 |
 | does it emerge from random genomes | In fourier1 mode: 2 of 3 runs do B8's job and 1 beats B8. The uniform mode fails | D33 |
 | how reliably, and with more time | 4 of 5 runs do B8's job; 2 of 5 beat B8; every run is better at 400 generations than at 200 | D37 |
+| does it hold in worlds the cells never saw | Mostly where the world is like home; one evolved cell holds up in all six | D40 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -153,11 +154,36 @@ Stages 4 to 6 asked four things in turn:
   time and biases the circling toward the light, using its ring's links; at night it is still. How the circling is
   biased has not been shown.
 
+## 10. Worlds the cells never saw (stage 7; D40)
+
+- **The design:** five cells, unchanged, in their home world and six others: a fixed mouth, a tighter economy,
+  flickering clouds with and without the sweep, a spot circling the pool, and a cell that shades itself. In each world
+  the simple rules were re-tuned over their parameter grids on separate starts, and the best one set the bar.
+- **The share of the gap from sitting still to each world's best simple rule** (bold: the cell beats the rule):
+
+  | world | design 16 | champion 3603 | champion 6301 | champion 6402 | champion 6405 |
+  |---|---|---|---|---|---|
+  | home | 0.97 | **1.16** | **1.16** | **1.26** | **1.21** |
+  | fixed mouth | 0.83 | 0.93 | 0.93 | 1.00 | 0.97 |
+  | tighter economy | 0.89 | **1.24** | 0.99 | **1.40** | **1.26** |
+  | flicker | 0.22 | 0.29 | 0.36 | 0.95 | 0.63 |
+  | sweep and flicker | 0.12 | 0.17 | 0.22 | 0.93 | 0.52 |
+  | circling spot | 0.04 | 0.02 | 0.30 | 0.82 | 0.84 |
+  | shaded cell | **1.04** | **1.05** | 0.87 | 0.81 | −0.04 |
+
+- **At home every champion beats the rule again.** Away from home the four champions do the rule's job in 11 of 24
+  cases and beat it in 4, three of them in the tighter economy.
+- **The two lines fail in different places:** the hand-written line under clouds and the spot, the evolved cells when
+  shaded and, for two of three, under clouds.
+- **Champion 6402 closes at least 0.81 of the gap in every world.**
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
   two of three runs from a designed start, and in three of eight from random genomes. From random genomes a cell that
   does the best simple rule's job emerges reliably (four of five at 400 generations).
+- **Shown, as a limit:** beating the best simple rule is so far a result about the home world. The simple rules, with
+  one parameter re-tuned per world, hold up across worlds better than cells made in one world.
 - **Not shown:**
   - that a cell beating B8 emerges from nothing in most runs: 2 of 5 did at 400 generations, where the criterion
     asked for 3; and the sensor and the eased-in path were designed by hand;
@@ -180,4 +206,4 @@ Stages 4 to 6 asked four things in turn:
 
 ## Next
 
-Whether the cells hold up in worlds they never saw (D37 C2).
+Evolution in several worlds at once, asking whether a generalist emerges (D40 C2).
