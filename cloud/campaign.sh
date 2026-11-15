@@ -56,8 +56,17 @@ while pod_alive; do
             done
         done
         if [ "$missing" = 0 ]; then
-            "${RP[@]}" ssh "$POD" -- touch /root/protocell/pc-job/PULLED >> "$LOG" 2>&1
-            log "every run pulled; PULLED written; the pod deletes itself"
+            marked=0  # a refused call (the API's rate limit) must not pass for a written mark: the pod would wait out its hour
+            for _ in 1 2 3 4 5 6; do
+                if "${RP[@]}" ssh "$POD" -- touch /root/protocell/pc-job/PULLED >> "$LOG" 2>&1; then marked=1; break; fi
+                sleep 40
+            done
+            if [ "$marked" = 1 ]; then
+                log "every run pulled; PULLED written; the pod deletes itself"
+            else
+                log "every run pulled; PULLED COULD NOT BE WRITTEN: terminating the pod from here"
+                "${RP[@]}" terminate "$POD" >> "$LOG" 2>&1 || log "TERMINATE FAILED for $POD: terminate it by hand"
+            fi
             notify-send "protocell $EXPERIMENT $PHASE" "pulled; the pod deletes itself" 2> /dev/null || true
         else
             log "outputs missing: PULLED NOT written; fetch by hand before the pod's pull wait or deadline"
