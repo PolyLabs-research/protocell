@@ -1,0 +1,711 @@
+{
+ "beats_in_unseen": {
+  "champion3603": 2,
+  "champion6301": 0,
+  "champion6402": 1,
+  "champion6405": 1,
+  "design16": 1
+ },
+ "carries_in_unseen": {
+  "champion3603": 3,
+  "champion6301": 2,
+  "champion6402": 4,
+  "champion6405": 2,
+  "design16": 1
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "at home, all four champions beat the bar again",
+   "values": {
+    "champion3603": 0.06090716503044488,
+    "champion6301": 0.060415382924058784,
+    "champion6402": 0.09893666144943597,
+    "champion6405": 0.08274830902719961
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "with the mouth fixed and with the tighter economy, every champion still does the bar's job",
+   "values": {
+    "fixed mouth": [
+     "champion3603",
+     "champion6301",
+     "champion6402",
+     "champion6405"
+    ],
+    "tighter": [
+     "champion3603",
+     "champion6301",
+     "champion6402",
+     "champion6405"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "under the circling spot, no cell does the bar's job",
+   "values": {
+    "carry": []
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "under flickering clouds no champion beats the bar, and at most half of the champion-and-world pairs do its job",
+   "values": {
+    "flicker": [
+     "champion6402"
+    ],
+    "sweep and flicker": [
+     "champion6402"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 5,
+   "text": "as a shaded cell, no champion does the bar's job",
+   "values": {
+    "carry": [
+     "champion3603"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 6,
+   "text": "the searched cell holds up in at least as many unseen worlds as the best evolved cell",
+   "values": {
+    "champion3603": 3,
+    "champion6301": 2,
+    "champion6402": 4,
+    "champion6405": 2,
+    "design16": 1
+   }
+  }
+ ],
+ "quick": false,
+ "unseen_worlds": [
+  "fixed mouth",
+  "tighter",
+  "flicker",
+  "sweep and flicker",
+  "spot",
+  "shaded"
+ ],
+ "worlds": {
+  "fixed mouth": {
+   "bar": "B5 (tau=30)",
+   "bar_fitness": 0.6554780584655039,
+   "bar_survival": 1.0,
+   "ceiling": 0.69062233502392,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.6232568297068508,
+     "gap_high": 0.9639056837212677,
+     "gap_low": 0.90046531202305,
+     "gap_share": 0.9348274604988838,
+     "high": -0.018268175605116833,
+     "less_bar": -0.03222122875865292,
+     "low": -0.049467470490800226,
+     "survival": 0.97,
+     "verdict": "carries B8"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.6229607978288688,
+     "gap_high": 0.950712559289021,
+     "gap_low": 0.9135351263281462,
+     "gap_share": 0.9342286891296762,
+     "high": -0.02451755787400869,
+     "less_bar": -0.03251726063663497,
+     "low": -0.04254317511514839,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.6547497640930598,
+     "gap_high": 1.0066508424803633,
+     "gap_low": 0.9916746808918808,
+     "gap_share": 0.9985269092587351,
+     "high": 0.003186739933973773,
+     "less_bar": -0.0007282943724439894,
+     "low": -0.004183192004424048,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6405": {
+     "beats": false,
+     "fitness": 0.641295610053123,
+     "gap_high": 0.9866007150828547,
+     "gap_low": 0.950293519394553,
+     "gap_share": 0.9713137513686465,
+     "high": -0.006581012554083366,
+     "less_bar": -0.014182448412380833,
+     "low": -0.024523904308214897,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.569898466808092,
+     "gap_high": 0.8761547684374005,
+     "gap_low": 0.7728963862335314,
+     "gap_share": 0.8269017187532228,
+     "high": -0.06060767511662777,
+     "less_bar": -0.08557959165741182,
+     "low": -0.11169305683029125,
+     "survival": 0.83,
+     "verdict": "partly"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.25582043034015955,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.6554780584655039,
+     "param": "tau=30"
+    },
+    "B6": {
+     "fitness": 0.4605246133686737,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.6284768545330676,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.16107920573856332
+  },
+  "flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.5616410341622603,
+   "bar_survival": 0.83,
+   "ceiling": 0.6770649470540755,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.2713384236137367,
+     "gap_high": 0.369060058220293,
+     "gap_low": 0.2184032239212689,
+     "gap_share": 0.29195081091721803,
+     "high": -0.25307145313813123,
+     "less_bar": -0.29030261054852347,
+     "low": -0.32852275191802516,
+     "survival": 0.22,
+     "verdict": "does not"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.29749959117555147,
+     "gap_high": 0.4449643194731583,
+     "gap_low": 0.2681877331161241,
+     "gap_share": 0.35575799970757016,
+     "high": -0.22349629741165403,
+     "less_bar": -0.2641414429867088,
+     "low": -0.3055596781812189,
+     "survival": 0.33,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.540344739009848,
+     "gap_high": 1.0030935220515993,
+     "gap_low": 0.8919196105009343,
+     "gap_share": 0.9480582538178288,
+     "high": 0.0016027096609103958,
+     "less_bar": -0.02129629515241219,
+     "low": -0.045809370891765275,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "champion6405": {
+     "beats": false,
+     "fitness": 0.41162400240373176,
+     "gap_high": 0.7107401180268232,
+     "gap_low": 0.5533691259160608,
+     "gap_share": 0.6341078797585332,
+     "high": -0.1157074347128031,
+     "less_bar": -0.15001703175852849,
+     "low": -0.18456638557918015,
+     "survival": 0.55,
+     "verdict": "partly"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.2430576874857303,
+     "gap_high": 0.29790552481340893,
+     "gap_low": 0.1524216367660048,
+     "gap_share": 0.22297398620226397,
+     "high": -0.2790410367962763,
+     "less_bar": -0.3185833466765299,
+     "low": -0.3567398320509127,
+     "survival": 0.19,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.220545358967386,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.5239664771313736,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.4268383564291333,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.5616410341622603,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.15163758380228443
+  },
+  "home": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.5403581300761701,
+   "bar_survival": 0.87,
+   "ceiling": 0.69062233502392,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.601265295106615,
+     "gap_high": 1.2468330568926251,
+     "gap_low": 1.0850202586309892,
+     "gap_share": 1.1582083240458048,
+     "high": 0.08831580126321617,
+     "less_bar": 0.06090716503044488,
+     "low": 0.0347519376680152,
+     "survival": 0.96,
+     "verdict": "carries B8"
+    },
+    "champion6301": {
+     "beats": true,
+     "fitness": 0.6007735130002287,
+     "gap_high": 1.2454297050168421,
+     "gap_low": 1.0878128258644206,
+     "gap_share": 1.1569309041756106,
+     "high": 0.08708291685297219,
+     "less_bar": 0.060415382924058784,
+     "low": 0.03639523565369928,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.6392947915256061,
+     "gap_high": 1.3604129546021526,
+     "gap_low": 1.1750413509439992,
+     "gap_share": 1.2569911665857108,
+     "high": 0.12778459719493315,
+     "less_bar": 0.09893666144943597,
+     "low": 0.07300111058252452,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6405": {
+     "beats": true,
+     "fitness": 0.6231064391033696,
+     "gap_high": 1.3087431509707677,
+     "gap_low": 1.1414494883806368,
+     "gap_share": 1.2149413994605347,
+     "high": 0.10954277674969917,
+     "less_bar": 0.08274830902719961,
+     "low": 0.05879785465361473,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.5281345266599833,
+     "gap_high": 1.0429954364246201,
+     "gap_low": 0.8965531472272041,
+     "gap_share": 0.9682487961915676,
+     "high": 0.016324277721202415,
+     "less_bar": -0.012223603416186762,
+     "low": -0.04157897843583162,
+     "survival": 0.8,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.19146343222231244,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.5110166099783414,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.38975418751128055,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.5403581300761701,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.15537734352279634
+  },
+  "shaded": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.590763523186473,
+   "bar_survival": 1.0,
+   "ceiling": 0.6625555723533991,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.6131299865285164,
+     "gap_high": 1.061623211612443,
+     "gap_low": 1.038172142865274,
+     "gap_share": 1.0494828195725183,
+     "high": 0.027615804721111113,
+     "less_bar": 0.022366463342043445,
+     "low": 0.017566172866226668,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.5329917645918022,
+     "gap_high": 0.8810128882605849,
+     "gap_low": 0.8620892196033049,
+     "gap_share": 0.8721876828173581,
+     "high": -0.05413314889723328,
+     "less_bar": -0.05777175859467078,
+     "low": -0.06184369074688523,
+     "survival": 0.98,
+     "verdict": "partly"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.5056025251484183,
+     "gap_high": 0.8244144756157614,
+     "gap_low": 0.7984336375406761,
+     "gap_share": 0.8115926404595507,
+     "high": -0.07867190414587996,
+     "less_bar": -0.08516099803805456,
+     "low": -0.09177015827625865,
+     "survival": 0.9,
+     "verdict": "partly"
+    },
+    "champion6405": {
+     "beats": false,
+     "fitness": 0.12037339883656886,
+     "gap_high": -0.03005899326324153,
+     "gap_low": -0.05273141989459833,
+     "gap_share": -0.04067546558186771,
+     "high": -0.4547593172584258,
+     "less_bar": -0.470390124349904,
+     "low": -0.4858373870951359,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "design16": {
+     "beats": true,
+     "fitness": 0.6102829939270652,
+     "gap_high": 1.0548132395273524,
+     "gap_low": 1.0319602093141902,
+     "gap_share": 1.0431842278341863,
+     "high": 0.02492199207987137,
+     "less_bar": 0.019519470740592227,
+     "low": 0.014774339810586788,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.5318372306156685,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.4618016039427861,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.590763523186473,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.5789048612562049,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.13875889743420042
+  },
+  "spot": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.5035521529046169,
+   "bar_survival": 0.84,
+   "ceiling": 0.6579487225742392,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.14528918369904636,
+     "gap_high": 0.028667152263395577,
+     "gap_low": 0.010635680064302412,
+     "gap_share": 0.019626973106711597,
+     "high": -0.3435921658743949,
+     "less_bar": -0.3582629692055705,
+     "low": -0.37299718465936793,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.24736017820826114,
+     "gap_high": 0.3318811530422317,
+     "gap_low": 0.26615081568174714,
+     "gap_share": 0.2989403781926515,
+     "high": -0.23772906353675238,
+     "less_bar": -0.25619197469635574,
+     "low": -0.2749745071046636,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.43869208454867403,
+     "gap_high": 0.8538907577812529,
+     "gap_low": 0.7933437181191149,
+     "gap_share": 0.8225128829819552,
+     "high": -0.05191238645067045,
+     "less_bar": -0.06486006835594287,
+     "low": -0.07773353583691224,
+     "survival": 0.31,
+     "verdict": "partly"
+    },
+    "champion6405": {
+     "beats": false,
+     "fitness": 0.4460909143480303,
+     "gap_high": 0.87260554703381,
+     "gap_low": 0.8146255534725417,
+     "gap_share": 0.8427595001021886,
+     "high": -0.04507838899709249,
+     "less_bar": -0.05746123855658662,
+     "low": -0.06966530726773477,
+     "survival": 0.33,
+     "verdict": "partly"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.15273664790108477,
+     "gap_high": 0.050710412074861974,
+     "gap_low": 0.029123320008727662,
+     "gap_share": 0.040006676425260075,
+     "high": -0.3356921267188709,
+     "less_bar": -0.3508155050035321,
+     "low": -0.36585571368023984,
+     "survival": 0.0,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.11294119734539525,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.16088467110048627,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.5035521529046169,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.25346082454542396,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.1381167937323304
+  },
+  "sweep and flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.4951516880532707,
+   "bar_survival": 0.79,
+   "ceiling": 0.6770649470540755,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.2038188298414264,
+     "gap_high": 0.21682842523326998,
+     "gap_low": 0.11799328562232368,
+     "gap_share": 0.166579811871395,
+     "high": -0.2585994775704923,
+     "less_bar": -0.29133285821184435,
+     "low": -0.322463255619085,
+     "survival": 0.03,
+     "verdict": "does not"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.22190503477760504,
+     "gap_high": 0.2915841420231136,
+     "gap_low": 0.1495267187136279,
+     "gap_share": 0.21831928407841186,
+     "high": -0.23959436330022876,
+     "less_bar": -0.27324665327566566,
+     "low": -0.30586033207994084,
+     "survival": 0.1,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.47205799126182585,
+     "gap_high": 1.0029660036085053,
+     "gap_low": 0.8710181967126854,
+     "gap_share": 0.9339355222660277,
+     "high": 0.0018097714086852189,
+     "less_bar": -0.023093696791444934,
+     "low": -0.04715525612473671,
+     "survival": 0.69,
+     "verdict": "carries B8"
+    },
+    "champion6405": {
+     "beats": false,
+     "fitness": 0.3265003641468251,
+     "gap_high": 0.5885459292874323,
+     "gap_low": 0.44704377182868116,
+     "gap_share": 0.5175366796558146,
+     "high": -0.13800786032858084,
+     "less_bar": -0.16865132390644555,
+     "low": -0.1984019932544587,
+     "survival": 0.22,
+     "verdict": "partly"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.18657247001834015,
+     "gap_high": 0.1638061828021398,
+     "gap_low": 0.07305706895644822,
+     "gap_share": 0.11724289691950031,
+     "high": -0.27526137412363866,
+     "less_bar": -0.30857921803493044,
+     "low": -0.3403046842917358,
+     "survival": 0.03,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.1749469120873403,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.4417489645604643,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.32054529266145837,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.4951516880532707,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.14558869166604047
+  },
+  "tighter": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.411454439784639,
+   "bar_survival": 0.36,
+   "ceiling": 0.6579486284784886,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.4781808711740693,
+     "gap_high": 1.3541182156637128,
+     "gap_low": 1.137949073584111,
+     "gap_share": 1.2364509735920317,
+     "high": 0.09300362467445666,
+     "less_bar": 0.06672643138943034,
+     "low": 0.0408971916868133,
+     "survival": 0.7,
+     "verdict": "carries B8"
+    },
+    "champion6301": {
+     "beats": false,
+     "fitness": 0.4081724781352987,
+     "gap_high": 1.0725911633030762,
+     "gap_low": 0.9176255605678237,
+     "gap_share": 0.9883700804745699,
+     "high": 0.018597344155451077,
+     "less_bar": -0.003281961649340203,
+     "low": -0.024339875933150238,
+     "survival": 0.36,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5253241667883146,
+     "gap_high": 1.5294887529327965,
+     "gap_low": 1.3062341887997155,
+     "gap_share": 1.4035073845855763,
+     "high": 0.13551530144786575,
+     "less_bar": 0.11386972700367569,
+     "low": 0.09379116176450701,
+     "survival": 0.9,
+     "verdict": "carries B8"
+    },
+    "champion6405": {
+     "beats": true,
+     "fitness": 0.4845603976455935,
+     "gap_high": 1.3653473528251017,
+     "gap_low": 1.1767288724691718,
+     "gap_share": 1.2590573862809467,
+     "high": 0.09370485510345863,
+     "less_bar": 0.07310595786095454,
+     "low": 0.054145910721219576,
+     "survival": 0.63,
+     "verdict": "carries B8"
+    },
+    "design16": {
+     "beats": false,
+     "fitness": 0.38102798529154314,
+     "gap_high": 0.9736374871577892,
+     "gap_low": 0.8158610072886883,
+     "gap_share": 0.892181184606468,
+     "high": -0.007644709224041352,
+     "less_bar": -0.03042645449309578,
+     "low": -0.054090479654995464,
+     "survival": 0.38,
+     "verdict": "partly"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.1518581582002474,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.3684691859117073,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.3008427680689502,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.411454439784639,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.12925458086352934
+  }
+ }
+}
