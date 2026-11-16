@@ -130,6 +130,37 @@ A cell **does the job** in a world if it closes at least 0.9 of the gap from sit
 The runner and the test were built after the draft and before these answers (`experiments/stage8.py`, the several
 worlds in `protocell/evolve.py` and `protocell/cmaes.py`).
 
+**The pilot's outcome (2026-11-16, before the other runs).**
+
+The data are in `docs/data/stage8/pilot/`. Each run had its own cpu5c pod of 16 vCPUs at code `55c603c`, from a clean
+tree with warnings as errors, after the pod's test suite passed: seed 8101 on an AMD EPYC 9575F (6.0 hours), seed 8102
+on an EPYC 4564P (6.8 hours). The launches were 80 s apart; both runs were pulled and both pods deleted themselves.
+About $7.55, within the $8.96 cap.
+
+**Both pilot runs work** (§4). Each champion on the 12 validation starts of each world, fitness and survival:
+
+| run | champion's generation | home | flicker | spot | shaded | mean of the 48 |
+|---|---|---|---|---|---|---|
+| seed 8101 | 400 | 0.569 (92%) | 0.397 (50%) | 0.164 (0%) | 0.640 (100%) | 0.443 |
+| seed 8102 | 390 | 0.633 (100%) | 0.571 (92%) | 0.596 (100%) | 0.633 (100%) | 0.608 |
+
+- **Seed 8102 survives nearly every validation start in all four worlds.** It reached home by generation 120, the
+  spot between generations 160 and 200, and held all four from generation 240 on.
+- **Seed 8101 works in three worlds and never finds the spot** (0% survive there throughout). It was still climbing at
+  the end: its mean rose from 0.34 at generation 200 to 0.44 at 400.
+- **Both start from the shaded cell,** the world most like the path's first generations: 100% survival there from
+  generation 40 on in both runs, while the other three worlds were at the still cell's level.
+- **Not a verdict:** these starts chose the champions, and the bars here are not measured on them. The test decides
+  G1 to G3 on fresh starts, against each world's re-tuned best simple rule.
+
+**The predictions so far:**
+
+| prediction | outcome |
+|---|---|
+| 1. at least one pilot run works | ✓ both |
+
+**Next:** §4: runs 3 to 5 (seeds 8103–8105), with the owner's cost confirmed; the pilot's two runs are runs 1 and 2.
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, before the other runs.
