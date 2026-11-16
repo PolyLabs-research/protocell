@@ -2261,3 +2261,71 @@ takes worlds and seeds); `docs/data/stage8/`; `README.md` status.
 
 **Impact:** this entry; `experiments/stage8_read.py`, `tests/test_stage8_read.py`; `cloud/cpu_pod.py`,
 `cloud/pod_job.sh`, `tests/test_cloud.py`.
+
+## D45 — The reading of champion 8102: one cell with two ways of moving, a circler where it cannot see direction and a steerer where it can
+
+**Date:** 2026-11-16  
+**Why:** D44.  
+**Ran:** `experiments/stage8_read.py` (code `2048c7e`), seed 48, 60 fresh starts in each trained world, one process here,
+28 minutes, from a clean tree with warnings as errors; data in `docs/data/stage8/read/`. A probe, run once as planned.
+
+### A. Measured
+1. **In three of its four worlds champion 8102 swims in circles almost all day,** as stage 6's champion 6301 did:
+
+   | world | fitness (survival) | running by day | turning during runs (rad a tick) | rests a life |
+   |---|---|---|---|---|
+   | home | 0.622 (100%) | 95% | −0.075 | 19 |
+   | flicker | 0.562 (90%) | 82% | −0.092 | 215 |
+   | spot | 0.570 (100%) | 95% | −0.078 | 11 |
+   | shaded | 0.623 (100%) | 62% | −0.011 | 23 |
+2. **As a shaded cell it moves differently.** It runs less, hardly turns, and heads for the light at 3.5 R a tick in
+   dim light (1.0 at home).
+3. **It uses different parts in the two cases** (fitness lost with each removed):
+
+   | removed | home | flicker | spot | shaded |
+   |---|---|---|---|---|
+   | its senses | 0.50 | 0.44 | 0.46 | 0.51 |
+   | the ring's links | 0.36 | 0.31 | 0.43 | 0.00 |
+   | the core | 0.45 | 0.41 | 0.42 | 0.08 |
+   | the core's recurrence | 0.25 | 0.25 | 0.40 | 0.00 |
+   | the direction across the body | 0.00 | 0.00 | 0.00 | 0.14 |
+
+   Translucent, it needs its ring and core and reads nothing across its body. Shaded, it needs neither the ring nor the
+   core's loops, and loses 0.14 when the direction across its body is taken away.
+4. **A cloud slows it and does not stop it.** The network alone, through a cloud's shadow and the sun's return (the
+   share of ticks moving, before and in the 60 ticks after):
+
+   | | shadow, from light 1 | sun returns | shadow, from light 0.1 | sun returns |
+   |---|---|---|---|---|
+   | champion 8102 | 0.98 to 0.65 | 0.97 to 0.77 | 0.96 to 0.58 | 0.94 to 0.95 |
+   | champion 6402 | 0.77 to 0.47 | 0.72 to 0.53 | 0.67 to 0.27 | 0.52 to 0.83 |
+   | champion 3603 | 1.00 to 0.00 | 1.00 to 0.62 | 1.00 to 0.00 | 0.95 to 0.48 |
+
+   The hand-written line stops dead in a shadow, every time.
+5. **The three cells are three kinds of mover at home.** Champion 8102 circles. Champion 6402 runs 84% of the day in
+   straight lines (turning −0.002) with about 180 short rests a life. Champion 8105, the failed run, runs 24% of the
+   day with 256 rests, and is at its best only when shaded (0.637).
+6. **Predictions:** 1, 4 and 5 hold; 2 and 3 fail. I expected the ring to matter in every world, and the generalist to
+   ignore clouds; it needs no ring when shaded, and it does react to clouds, though it keeps moving.
+
+### B. Reading
+1. **The generalist is two mechanisms in one network.** Where the body gives no direction it circles and biases the
+   circle, with its ring and core. Where shading gives a direction across the body it steers by it and the circling
+   machinery goes idle. Nothing switches between them but the light itself.
+2. **Why the spot divides the runs** (D42 B.3) fits this. A spot that crosses the pool has to be followed all day, and
+   only a cell that keeps moving follows it. The failed run rests most of the day; it never became a circler, and the
+   shaded world, where it began, never asked it to.
+3. **Coping with clouds is not ignoring them.** Every cell here responds to a shadow. The cells that survive clouds
+   are the ones that keep most of their movement through one; the hand-written line, built to start runs on a rise
+   and stop on a fall, stops.
+4. **How the circle is biased is still not shown** (D36 B.2), for this cell or champion 6301.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage9` into `main`** (this reading and the RunPod update; recommended now).
+2. **Reliability of the generalist** (D42 C4): the five stage 8 runs carried on to 800 generations, about $18–20, or
+   five more runs. It would also be the first live launch on RunPod's new API.
+3. **Read the circle** (local, free): speed and turning around one loop against the light's change, for champions
+   8102 and 6301, to show how circling climbs a gradient.
+4. **Still open:** more generations for stage 6b's runs; the uniform mode.
+
+**Impact:** this entry; `docs/data/stage8/read/`.
