@@ -1,0 +1,351 @@
+{
+ "clouds": [
+  {
+   "cell": "champion8102",
+   "event": "shadow",
+   "moving_after": 0.65,
+   "moving_before": 0.975,
+   "pull_after": 0.5253246381978647,
+   "pull_before": 0.6425330736458373,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion8102",
+   "event": "sun returns",
+   "moving_after": 0.7666666666666667,
+   "moving_before": 0.965,
+   "pull_after": 0.6321378223334072,
+   "pull_before": 0.6611155283846749,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion8102",
+   "event": "shadow",
+   "moving_after": 0.5833333333333334,
+   "moving_before": 0.955,
+   "pull_after": 0.5288955259848725,
+   "pull_before": 0.6317354672832386,
+   "sunlit_level": 0.1
+  },
+  {
+   "cell": "champion8102",
+   "event": "sun returns",
+   "moving_after": 0.95,
+   "moving_before": 0.94,
+   "pull_after": 0.75985651588492,
+   "pull_before": 0.6581335413828973,
+   "sunlit_level": 0.1
+  },
+  {
+   "cell": "champion6402",
+   "event": "shadow",
+   "moving_after": 0.4666666666666667,
+   "moving_before": 0.765,
+   "pull_after": 0.29819235923257403,
+   "pull_before": 0.5065253052741828,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion6402",
+   "event": "sun returns",
+   "moving_after": 0.5333333333333333,
+   "moving_before": 0.72,
+   "pull_after": 0.3661990908394712,
+   "pull_before": 0.4809959502276777,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion6402",
+   "event": "shadow",
+   "moving_after": 0.26666666666666666,
+   "moving_before": 0.67,
+   "pull_after": 0.1491034394669129,
+   "pull_before": 0.439054569438171,
+   "sunlit_level": 0.1
+  },
+  {
+   "cell": "champion6402",
+   "event": "sun returns",
+   "moving_after": 0.8333333333333334,
+   "moving_before": 0.515,
+   "pull_after": 0.6415435949987061,
+   "pull_before": 0.28583454097623046,
+   "sunlit_level": 0.1
+  },
+  {
+   "cell": "champion3603",
+   "event": "shadow",
+   "moving_after": 0.0,
+   "moving_before": 1.0,
+   "pull_after": 0.01727238272875203,
+   "pull_before": 0.9373289493090385,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion3603",
+   "event": "sun returns",
+   "moving_after": 0.6166666666666667,
+   "moving_before": 1.0,
+   "pull_after": 0.5777517791036846,
+   "pull_before": 0.9283763827966165,
+   "sunlit_level": 1.0
+  },
+  {
+   "cell": "champion3603",
+   "event": "shadow",
+   "moving_after": 0.0,
+   "moving_before": 1.0,
+   "pull_after": 0.003837780089125276,
+   "pull_before": 0.898618177991174,
+   "sunlit_level": 0.1
+  },
+  {
+   "cell": "champion3603",
+   "event": "sun returns",
+   "moving_after": 0.48333333333333334,
+   "moving_before": 0.95,
+   "pull_after": 0.43744090625011195,
+   "pull_before": 0.7266196570185072,
+   "sunlit_level": 0.1
+  }
+ ],
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "champion 8102 is of the circling kind: by day at home it runs more than 80% of the time and turns more than 0.03 rad a tick",
+   "values": {
+    "running_by_day": 0.9528985555225968,
+    "turning": -0.07536729737817549
+   }
+  },
+  {
+   "holds": false,
+   "number": 2,
+   "text": "it needs its ring's links in all four worlds: more than 0.1 lost in each",
+   "values": {
+    "flicker": 0.30739032932765586,
+    "home": 0.3639344429228119,
+    "shaded": 0.004097278941684657,
+    "spot": 0.4291011871722341
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "a cloud moves champion 3603 and not champion 8102: 3603's share of ticks moving changes by more than 0.3 at some event, 8102's by less than 0.15 at every one",
+   "values": {
+    "champion3603": 1.0,
+    "champion6402": 0.4033333333333334,
+    "champion8102": 0.3716666666666666
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "it reads the direction across its body only when shaded: removing it costs more than 0.05 in the shaded world and less than 0.02 at home",
+   "values": {
+    "flicker": -0.002965856567763714,
+    "home": 0.0017228881661925932,
+    "shaded": 0.13796774284990448,
+    "spot": 0.002009992821306983
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "under the spot, champion 8105 runs less than half as much of its time in dim light as champion 8102",
+   "values": {
+    "champion8102": 0.8877770590487254,
+    "champion8105": 0.291796516846632
+   }
+  }
+ ],
+ "quick": false,
+ "worlds": {
+  "flicker": {
+   "cells": {
+    "champion6402": {
+     "cell": "champion6402",
+     "fitness": 0.536680989065237,
+     "fresh_onsets_a_life": 645.75,
+     "running_by_day": 0.6211014199276093,
+     "running_in_dim": 0.6897401888738862,
+     "survival": 0.8333333333333334,
+     "toward_in_dim": 0.48583754231903525,
+     "turning_during_runs": -0.03718645433475451,
+     "world": "flicker"
+    },
+    "champion8102": {
+     "cell": "champion8102",
+     "fitness": 0.5623821067427747,
+     "fresh_onsets_a_life": 214.96666666666667,
+     "running_by_day": 0.8157209916160395,
+     "running_in_dim": 0.8024010585829424,
+     "survival": 0.9,
+     "toward_in_dim": 0.630382812140273,
+     "turning_during_runs": -0.09222824198684365,
+     "world": "flicker"
+    },
+    "champion8105": {
+     "cell": "champion8105",
+     "fitness": 0.20497127581442323,
+     "fresh_onsets_a_life": 162.51666666666668,
+     "running_by_day": 0.18382069593678219,
+     "running_in_dim": 0.1995187682100936,
+     "survival": 0.016666666666666666,
+     "toward_in_dim": 0.045615238761051335,
+     "turning_during_runs": -0.025832783445000954,
+     "world": "flicker"
+    }
+   },
+   "direction_removed": -0.002965856567763714,
+   "removals": {
+    "blind": 0.44198952770756644,
+    "core": 0.4136750618579271,
+    "core_fast": 0.3969602278564971,
+    "core_recurrence": 0.2515591965614789,
+    "ring_links": 0.30739032932765586,
+    "wall_fast": 0.03343867036994286
+   }
+  },
+  "home": {
+   "cells": {
+    "champion6402": {
+     "cell": "champion6402",
+     "fitness": 0.6366007762467952,
+     "fresh_onsets_a_life": 180.63333333333333,
+     "running_by_day": 0.8357626691440592,
+     "running_in_dim": 0.864576348309225,
+     "survival": 1.0,
+     "toward_in_dim": 1.4066309183095698,
+     "turning_during_runs": -0.0024400202272898555,
+     "world": "home"
+    },
+    "champion8102": {
+     "cell": "champion8102",
+     "fitness": 0.6220721414187194,
+     "fresh_onsets_a_life": 18.483333333333334,
+     "running_by_day": 0.9528985555225968,
+     "running_in_dim": 0.929728888217329,
+     "survival": 1.0,
+     "toward_in_dim": 0.9956249383660675,
+     "turning_during_runs": -0.07536729737817549,
+     "world": "home"
+    },
+    "champion8105": {
+     "cell": "champion8105",
+     "fitness": 0.44891548868545983,
+     "fresh_onsets_a_life": 256.1,
+     "running_by_day": 0.2400786302714948,
+     "running_in_dim": 0.31015715307976,
+     "survival": 0.5833333333333334,
+     "toward_in_dim": 0.2723767525571934,
+     "turning_during_runs": -0.01995546721797035,
+     "world": "home"
+    }
+   },
+   "direction_removed": 0.0017228881661925932,
+   "removals": {
+    "blind": 0.49573035479566646,
+    "core": 0.4489963333679905,
+    "core_fast": 0.4681436684158912,
+    "core_recurrence": 0.25269743667942446,
+    "ring_links": 0.3639344429228119,
+    "wall_fast": 0.01763921610209862
+   }
+  },
+  "shaded": {
+   "cells": {
+    "champion6402": {
+     "cell": "champion6402",
+     "fitness": 0.49960054521493347,
+     "fresh_onsets_a_life": 18.133333333333333,
+     "running_by_day": 0.9991439165680475,
+     "running_in_dim": 0.982879395724942,
+     "survival": 0.9,
+     "toward_in_dim": 1.7028245938021858,
+     "turning_during_runs": 7.771231431790592e-05,
+     "world": "shaded"
+    },
+    "champion8102": {
+     "cell": "champion8102",
+     "fitness": 0.6234922729327234,
+     "fresh_onsets_a_life": 22.566666666666666,
+     "running_by_day": 0.6226864540448723,
+     "running_in_dim": 0.6545140869168473,
+     "survival": 1.0,
+     "toward_in_dim": 3.482392302338175,
+     "turning_during_runs": -0.010690652714552332,
+     "world": "shaded"
+    },
+    "champion8105": {
+     "cell": "champion8105",
+     "fitness": 0.6367836772051462,
+     "fresh_onsets_a_life": 518.15,
+     "running_by_day": 0.3598097909640841,
+     "running_in_dim": 0.5198537811286269,
+     "survival": 1.0,
+     "toward_in_dim": 3.35534120222096,
+     "turning_during_runs": -0.0245227665429782,
+     "world": "shaded"
+    }
+   },
+   "direction_removed": 0.13796774284990448,
+   "removals": {
+    "blind": 0.5052921672653647,
+    "core": 0.08240512113510923,
+    "core_fast": 0.019679693429238032,
+    "core_recurrence": -0.002540731367682958,
+    "ring_links": 0.004097278941684657,
+    "wall_fast": 0.006351197272600362
+   }
+  },
+  "spot": {
+   "cells": {
+    "champion6402": {
+     "cell": "champion6402",
+     "fitness": 0.44335056428975417,
+     "fresh_onsets_a_life": 320.6333333333333,
+     "running_by_day": 0.8251631514093427,
+     "running_in_dim": 0.8194452470384282,
+     "survival": 0.4,
+     "toward_in_dim": 1.4880467355722502,
+     "turning_during_runs": -0.0007514273149774903,
+     "world": "spot"
+    },
+    "champion8102": {
+     "cell": "champion8102",
+     "fitness": 0.5702606189475979,
+     "fresh_onsets_a_life": 10.7,
+     "running_by_day": 0.9508809029496269,
+     "running_in_dim": 0.8877770590487254,
+     "survival": 1.0,
+     "toward_in_dim": 1.1188367529635772,
+     "turning_during_runs": -0.07793626954718003,
+     "world": "spot"
+    },
+    "champion8105": {
+     "cell": "champion8105",
+     "fitness": 0.153676366944913,
+     "fresh_onsets_a_life": 185.4,
+     "running_by_day": 0.2527434999056923,
+     "running_in_dim": 0.291796516846632,
+     "survival": 0.0,
+     "toward_in_dim": 0.22679393683357346,
+     "turning_during_runs": -0.01707378288336719,
+     "world": "spot"
+    }
+   },
+   "direction_removed": 0.002009992821306983,
+   "removals": {
+    "blind": 0.46047142629250953,
+    "core": 0.41976561811815044,
+    "core_fast": 0.4350356452016494,
+    "core_recurrence": 0.3945788306158824,
+    "ring_links": 0.4291011871722341,
+    "wall_fast": 0.009596310614715664
+   }
+  }
+ }
+}

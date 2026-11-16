@@ -1,0 +1,65 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage8_read.py",
+ "created_at": "2026-11-16T22:10:12+00:00",
+ "git": {
+  "branch": "stage9",
+  "dirty": false,
+  "sha": "2048c7ea87ba41b24da55f363f1092651005c9a7"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8/read",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8/read",
+ "seeds": [
+  48
+ ],
+ "settings": {
+  "cells": [
+   "champion8102",
+   "champion6402",
+   "champion8105",
+   "champion3603"
+  ],
+  "quick": false,
+  "removals": [
+   "blind",
+   "ring_links",
+   "core",
+   "core_recurrence",
+   "wall_fast",
+   "core_fast"
+  ],
+  "starts": 60,
+  "subject": "champion8102",
+  "worlds": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded"
+  ]
+ },
+ "timing": {
+  "wall_seconds": 1682.826673746109
+ }
+}
