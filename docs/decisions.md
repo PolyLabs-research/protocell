@@ -2229,3 +2229,35 @@ takes worlds and seeds); `docs/data/stage8/`; `README.md` status.
 4. **The generalist's reliability** (more generations, or more runs) waits for the reading.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D44 — The reading of champion 8102: its plan and predictions, before it runs; the cloud tooling on RunPod's new API
+
+**Date:** 2026-11-16  
+**Why:** D43, item 2. The owner also asked that the RunPod API be checked.
+
+### Decided
+1. **The probe** (`experiments/stage8_read.py`): 60 fresh starts in each of the four trained worlds at seed 48, one
+   process here. A probe: it explains a result and sets no criterion.
+   - **How it moves,** beside champion 6402 and champion 8105 (a stage 8 run that failed): the time running and the
+     speed toward the light by light band, the turning during runs, how often it rests.
+   - **Which parts it needs in each world:** stage 4b's removals, world by world.
+   - **Whether it reads the direction across its body:** the goggles in each world.
+   - **What a cloud does to it:** its network alone through a cloud's shadow and the sun's return, beside champions
+     6402 and 3603.
+2. **Predictions (written before the probe runs):**
+   1. Champion 8102 is of the circling kind, as champion 6301 was: by day at home it runs more than 80% of the time
+      and turns more than 0.03 rad a tick.
+   2. It needs its ring's links in all four worlds (more than 0.1 lost in each).
+   3. A cloud moves champion 3603 and not champion 8102: 3603's share of ticks moving changes by more than 0.3 at some
+      cloud event, 8102's by less than 0.15 at every one.
+   4. It reads the direction across its body only when shaded: removing it costs more than 0.05 in the shaded world
+      and less than 0.02 at home.
+   5. Under the spot, champion 8105 runs less than half as much of its time in dim light as champion 8102.
+3. **RunPod's API.** RunPod retired its REST v1 (`rest.runpod.io` no longer resolves). The chess repository's shared
+   client was already moved to v2. This repository's own pieces are moved here (`a5d0818`): the CPU pod request
+   (`cloud/cpu_pod.py`), the reading of a pod's rate, and the pod's own delete call (`cloud/pod_job.sh`).
+   - Checked: the request's fields against RunPod's published v2 schema; the read-only prices call; the tests.
+   - Not checked: a live CPU launch. The next real launch is that proof; until then the launcher is unproven on v2.
+
+**Impact:** this entry; `experiments/stage8_read.py`, `tests/test_stage8_read.py`; `cloud/cpu_pod.py`,
+`cloud/pod_job.sh`, `tests/test_cloud.py`.
