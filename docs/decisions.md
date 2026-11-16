@@ -2199,8 +2199,8 @@ pilot), then "Ok given, proceed" (runs 3 to 5).
 2. **Evolution does not find it reliably:** one run in five, by the criterion; a second comes close (8104: the job in
    6 of 9). The other runs settle for the worlds nearest their start, the shaded cell and home.
 3. **The spot is the dividing line.** The runs that found it are the three best; the two that did not are the two
-   worst everywhere else too. Whether more generations would bring them there is not known; three of the five were
-   still improving at generation 400 on validation.
+   worst everywhere else too. Whether more generations would bring them there is not known; four of the five
+   champions come from the last generation, so the runs had not levelled off.
 4. **The specialist's sturdiness is its own puzzle.** Champion 6402 was never shown clouds or a spot and copes with
    most of them. What it and 8102 share has not been read.
 
