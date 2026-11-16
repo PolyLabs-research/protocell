@@ -1,0 +1,1269 @@
+{
+ "G1": false,
+ "G2": false,
+ "champions": [
+  "fourier1-8103",
+  "fourier1-8104",
+  "fourier1-8105",
+  "fourier1-8101",
+  "fourier1-8102"
+ ],
+ "generalists": [
+  "fourier1-8102"
+ ],
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "at least one pilot run works",
+   "values": {
+    "8101": true,
+    "8102": true
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "G1 fails: fewer than 3 of the 5 champions do the job in all four trained worlds",
+   "values": {
+    "generalists": [
+     "fourier1-8102"
+    ]
+   }
+  },
+  {
+   "holds": false,
+   "number": 3,
+   "text": "no champion beats the bar in more than two of the nine worlds",
+   "values": {
+    "fourier1-8101": [
+     "shaded"
+    ],
+    "fourier1-8102": [
+     "home",
+     "spot",
+     "shaded",
+     "tighter",
+     "slow spot"
+    ],
+    "fourier1-8103": [],
+    "fourier1-8104": [
+     "home",
+     "shaded"
+    ],
+    "fourier1-8105": [
+     "shaded"
+    ]
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "every champion scores below champion 6402 at home, with the interval below 0",
+   "values": {
+    "fourier1-8101": {
+     "high": -0.09197885872550315,
+     "low": -0.13304157649235093,
+     "mean": -0.11143599164617973
+    },
+    "fourier1-8102": {
+     "high": -0.011740190995869577,
+     "low": -0.022721186152179072,
+     "mean": -0.016963625498570892
+    },
+    "fourier1-8103": {
+     "high": -0.05131717468809008,
+     "low": -0.08550854738736388,
+     "mean": -0.06709711224850078
+    },
+    "fourier1-8104": {
+     "high": -0.03154115351278224,
+     "low": -0.05564228527041945,
+     "mean": -0.04267335862167155
+    },
+    "fourier1-8105": {
+     "high": -0.1665078361922311,
+     "low": -0.23176589109315943,
+     "mean": -0.19897786309672993
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "the best stage 8 champion does the job in at least 4 of the 5 held-back worlds",
+   "values": {
+    "fourier1-8101": [],
+    "fourier1-8102": [
+     "fixed mouth",
+     "tighter",
+     "slow clouds",
+     "slow spot"
+    ],
+    "fourier1-8103": [
+     "tighter",
+     "slow spot"
+    ],
+    "fourier1-8104": [
+     "fixed mouth",
+     "tighter",
+     "slow spot"
+    ],
+    "fourier1-8105": []
+   }
+  }
+ ],
+ "quick": false,
+ "reading": {
+  "champion3603": {
+   "beats": [
+    "home",
+    "shaded",
+    "tighter"
+   ],
+   "generalist": false,
+   "held": [
+    "fixed mouth",
+    "tighter"
+   ],
+   "home_less_specialist": {
+    "high": -0.016942807153825068,
+    "low": -0.03667805039195055,
+    "mean": -0.02601786339813679
+   },
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "champion6402": {
+   "beats": [
+    "home",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": false,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "trained": [
+    "home",
+    "flicker"
+   ],
+   "travels": true
+  },
+  "fourier1-8101": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "home_less_specialist": {
+    "high": -0.09197885872550315,
+    "low": -0.13304157649235093,
+    "mean": -0.11143599164617973
+   },
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "fourier1-8102": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "home_less_specialist": {
+    "high": -0.011740190995869577,
+    "low": -0.022721186152179072,
+    "mean": -0.016963625498570892
+   },
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "fourier1-8103": {
+   "beats": [],
+   "generalist": false,
+   "held": [
+    "tighter",
+    "slow spot"
+   ],
+   "home_less_specialist": {
+    "high": -0.05131717468809008,
+    "low": -0.08550854738736388,
+    "mean": -0.06709711224850078
+   },
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "fourier1-8104": {
+   "beats": [
+    "home",
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "slow spot"
+   ],
+   "home_less_specialist": {
+    "high": -0.03154115351278224,
+    "low": -0.05564228527041945,
+    "mean": -0.04267335862167155
+   },
+   "trained": [
+    "home",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "fourier1-8105": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "home_less_specialist": {
+    "high": -0.1665078361922311,
+    "low": -0.23176589109315943,
+    "mean": -0.19897786309672993
+   },
+   "trained": [
+    "shaded"
+   ],
+   "travels": false
+  }
+ },
+ "travellers": [
+  "fourier1-8104",
+  "fourier1-8102"
+ ],
+ "worlds": {
+  "fixed mouth": {
+   "bar": "B5 (tau=30)",
+   "bar_fitness": 0.6451161140525273,
+   "bar_survival": 1.0,
+   "ceiling": 0.6830092651728021,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.6245122573448174,
+     "gap_high": 0.9761384915295139,
+     "gap_low": 0.9296046861908059,
+     "gap_share": 0.9550159031718177,
+     "high": -0.010832343445438843,
+     "less_bar": -0.020603856707710075,
+     "low": -0.03174881152143558,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.6446619608502158,
+     "gap_high": 1.0088649695510161,
+     "gap_low": 0.9896179752343898,
+     "gap_share": 0.9990084540036639,
+     "high": 0.004002853275896754,
+     "less_bar": -0.0004541532023115802,
+     "low": -0.004865633536640497,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.552578590252338,
+     "gap_high": 0.8435351098843736,
+     "gap_low": 0.7470604091681882,
+     "gap_share": 0.797964187485819,
+     "high": -0.0718175782557185,
+     "less_bar": -0.09253752380018937,
+     "low": -0.11516170894689201,
+     "survival": 0.85,
+     "verdict": "partly"
+    },
+    "fourier1-8102": {
+     "beats": false,
+     "fitness": 0.6328265737747546,
+     "gap_high": 0.987074620267306,
+     "gap_low": 0.9570379901021921,
+     "gap_share": 0.9731684277525428,
+     "high": -0.005996541384166341,
+     "less_bar": -0.012289540277772822,
+     "low": -0.01939161503699856,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.586313801405293,
+     "gap_high": 0.9069520928675718,
+     "gap_low": 0.8310963319835197,
+     "gap_share": 0.8716177770322768,
+     "high": -0.04325507692941394,
+     "less_bar": -0.05880231264723445,
+     "low": -0.07732207364269982,
+     "survival": 0.96,
+     "verdict": "partly"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.6177037189148838,
+     "gap_high": 0.9589308826767272,
+     "gap_low": 0.918906910675946,
+     "gap_share": 0.940150921516421,
+     "high": -0.018800600190681704,
+     "less_bar": -0.027412395137643424,
+     "low": -0.03683761616765489,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.479692470638166,
+     "gap_high": 0.712391686691818,
+     "gap_low": 0.5625579825325606,
+     "gap_share": 0.6388329962400802,
+     "high": -0.1302653725748875,
+     "less_bar": -0.16542364341436142,
+     "low": -0.20241470399022893,
+     "survival": 0.69,
+     "verdict": "partly"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.2538289095529214,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.6451161140525273,
+     "param": "tau=30"
+    },
+    "B6": {
+     "fitness": 0.43201082398692287,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.6192684459707849,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.18709076375135716
+  },
+  "flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.5569412517550796,
+   "bar_survival": 0.86,
+   "ceiling": 0.6701376799429275,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.2766116382630576,
+     "gap_high": 0.34286618589810736,
+     "gap_low": 0.19323315561870516,
+     "gap_share": 0.2662538445510165,
+     "high": -0.24526982039295336,
+     "less_bar": -0.2803296134920219,
+     "low": -0.31673727992944684,
+     "survival": 0.24,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.5291276790100984,
+     "gap_high": 0.9886181705352157,
+     "gap_low": 0.8693000639155034,
+     "gap_share": 0.927199621129177,
+     "high": -0.004134571999804074,
+     "less_bar": -0.027813572744981186,
+     "low": -0.05072132653437763,
+     "survival": 0.76,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.3387796103091752,
+     "gap_high": 0.5017911970732816,
+     "gap_low": 0.3565621851141761,
+     "gap_share": 0.42897482829823247,
+     "high": -0.18362241637765056,
+     "less_bar": -0.21816164144590441,
+     "low": -0.2532671412219487,
+     "survival": 0.34,
+     "verdict": "does not"
+    },
+    "fourier1-8102": {
+     "beats": false,
+     "fitness": 0.5454176161008726,
+     "gap_high": 1.0176781396432246,
+     "gap_low": 0.925841923599542,
+     "gap_share": 0.9698375663821551,
+     "high": 0.007086572242083181,
+     "less_bar": -0.01152363565420707,
+     "low": -0.029218555567878453,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.42736288011917467,
+     "gap_high": 0.7370535555406068,
+     "gap_low": 0.5805447094861014,
+     "gap_share": 0.6608362889927407,
+     "high": -0.09965905837553432,
+     "less_bar": -0.12957837163590485,
+     "low": -0.16119131209894144,
+     "survival": 0.59,
+     "verdict": "partly"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.4658545384115551,
+     "gap_high": 0.8272285276553705,
+     "gap_low": 0.6928336886581368,
+     "gap_share": 0.7615859241706664,
+     "high": -0.06560563688509527,
+     "less_bar": -0.09108671334352447,
+     "low": -0.11863275951789,
+     "survival": 0.7,
+     "verdict": "partly"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.1939246418397088,
+     "gap_high": 0.0935369674437303,
+     "gap_low": 0.009755424136275968,
+     "gap_share": 0.04982553012685132,
+     "high": -0.32638650249031675,
+     "less_bar": -0.3630166099153708,
+     "low": -0.3979989891777716,
+     "survival": 0.05,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.22363298709056828,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.5063868585852611,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.3928253718171,
+     "param": "cycle=100,run=36"
+    },
+    "B8": {
+     "fitness": 0.5569412517550796,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.17488866938688077
+  },
+  "home": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.5602154500514915,
+   "bar_survival": 0.9,
+   "ceiling": 0.6830092651728021,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.6069782949188383,
+     "gap_high": 1.194100527942569,
+     "gap_low": 1.0610582924300034,
+     "gap_share": 1.1201108144902692,
+     "high": 0.07054585535412225,
+     "less_bar": 0.04676284486734672,
+     "low": 0.024992865006062338,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.6329961583169751,
+     "gap_high": 1.2589762110499276,
+     "gap_low": 1.1317718410473516,
+     "gap_share": 1.1869379455793125,
+     "high": 0.0940876897556754,
+     "less_bar": 0.07278070826548352,
+     "low": 0.05331531087996055,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.5215601666707955,
+     "gap_high": 0.9617848499593669,
+     "gap_low": 0.8442941517915865,
+     "gap_share": 0.9007135347650846,
+     "high": -0.015058213291250146,
+     "less_bar": -0.03865528338069621,
+     "low": -0.06290834669848891,
+     "survival": 0.83,
+     "verdict": "carries B8"
+    },
+    "fourier1-8102": {
+     "beats": true,
+     "fitness": 0.6160325328184042,
+     "gap_high": 1.2040316274720724,
+     "gap_low": 1.0937042580949603,
+     "gap_share": 1.1433667111704326,
+     "high": 0.07488370516692178,
+     "less_bar": 0.05581708276691262,
+     "low": 0.03891129257356689,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.5658990460684743,
+     "gap_high": 1.076384691205947,
+     "gap_low": 0.9588027640616061,
+     "gap_share": 1.014598370752891,
+     "high": 0.028489977593121572,
+     "less_bar": 0.0056835960169827225,
+     "low": -0.01610302087162778,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "fourier1-8104": {
+     "beats": true,
+     "fitness": 0.5903227996953037,
+     "gap_high": 1.1335661981923753,
+     "gap_low": 1.0338688176531723,
+     "gap_share": 1.0773310156411526,
+     "high": 0.048780180120719205,
+     "less_bar": 0.030107349643811974,
+     "low": 0.013539363260187027,
+     "survival": 0.97,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.43401829522024526,
+     "gap_high": 0.7540832673803598,
+     "gap_low": 0.5967559711015004,
+     "gap_share": 0.6758614003033041,
+     "high": -0.09355044302910258,
+     "less_bar": -0.1261971548312464,
+     "low": -0.1603985284570653,
+     "survival": 0.56,
+     "verdict": "partly"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.2084659746963581,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.4976510352869322,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.38095312916032387,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.5602154500514915,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.1708846053161471
+  },
+  "shaded": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.5925477951379378,
+   "bar_survival": 1.0,
+   "ceiling": 0.6557582160582827,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.6083384537702571,
+     "gap_high": 1.0479555684440103,
+     "gap_low": 1.0254076297626997,
+     "gap_share": 1.0361247842903003,
+     "high": 0.02063439569831186,
+     "less_bar": 0.01579065863231946,
+     "low": 0.011180179776735084,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.5105474490456021,
+     "gap_high": 0.8233990729755386,
+     "gap_low": 0.8011688409806597,
+     "gap_share": 0.8124052401302216,
+     "high": -0.07675889561485234,
+     "less_bar": -0.08200034609233545,
+     "low": -0.08735280659622252,
+     "survival": 0.95,
+     "verdict": "partly"
+    },
+    "fourier1-8101": {
+     "beats": true,
+     "fitness": 0.6287641333592237,
+     "gap_high": 1.0961983223755438,
+     "gap_low": 1.0703174838618708,
+     "gap_share": 1.0828532511842632,
+     "high": 0.04184828610481371,
+     "less_bar": 0.036216338221285956,
+     "low": 0.030882359681642817,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8102": {
+     "beats": true,
+     "fitness": 0.6239908128301173,
+     "gap_high": 1.0838172091077332,
+     "gap_low": 1.0606695696326014,
+     "gap_share": 1.0719331763173732,
+     "high": 0.0362694637857739,
+     "less_bar": 0.031443017692179616,
+     "low": 0.026785239223597775,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.5529015031002041,
+     "gap_high": 0.9223001114780649,
+     "gap_low": 0.8966848399891214,
+     "gap_share": 0.9092999360494053,
+     "high": -0.03403446701769892,
+     "less_bar": -0.03964629203773349,
+     "low": -0.045214464230703445,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8104": {
+     "beats": true,
+     "fitness": 0.6294937802401389,
+     "gap_high": 1.0984197958020643,
+     "gap_low": 1.0715688490476913,
+     "gap_share": 1.0845224872050587,
+     "high": 0.042661405535005144,
+     "less_bar": 0.03694598510220129,
+     "low": 0.03158860855072888,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": true,
+     "fitness": 0.6365435308059577,
+     "gap_high": 1.115464301403299,
+     "gap_low": 1.0866342983940471,
+     "gap_share": 1.1006504223609352,
+     "high": 0.04999140256652484,
+     "less_bar": 0.043995735668020064,
+     "low": 0.03817298122687596,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.533847019852537,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.46833085044840267,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.5925477951379378,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.5781736534309662,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.15543352739795732
+  },
+  "slow clouds": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.5423452843149089,
+   "bar_survival": 0.91,
+   "ceiling": 0.6695076330916864,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.47760609097644424,
+     "gap_high": 0.8966216607448595,
+     "gap_low": 0.7618897162766608,
+     "gap_share": 0.8297079564505886,
+     "high": -0.037892346366253514,
+     "less_bar": -0.06473919333846459,
+     "low": -0.0929534094800495,
+     "survival": 0.73,
+     "verdict": "partly"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5782039313717966,
+     "gap_high": 1.1621396269247604,
+     "gap_low": 1.036209293425995,
+     "gap_share": 1.094323731442084,
+     "high": 0.059105305949191646,
+     "less_bar": 0.035858647056887814,
+     "low": 0.014141893561431947,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.403732576732227,
+     "gap_high": 0.6958246355214482,
+     "gap_low": 0.5737084917389,
+     "gap_share": 0.6353887032116101,
+     "high": -0.11253298754187109,
+     "less_bar": -0.13861270758268174,
+     "low": -0.16478869942668586,
+     "survival": 0.4,
+     "verdict": "partly"
+    },
+    "fourier1-8102": {
+     "beats": false,
+     "fitness": 0.5394117082692997,
+     "gap_high": 1.0419218182095207,
+     "gap_low": 0.9477717806959556,
+     "gap_share": 0.9922834277977083,
+     "high": 0.015142747018335222,
+     "less_bar": -0.0029335760456091512,
+     "low": -0.019521376729902177,
+     "survival": 0.91,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.480544468734171,
+     "gap_high": 0.9047198832521997,
+     "gap_low": 0.7688732032226134,
+     "gap_share": 0.8374371592299215,
+     "high": -0.03458349817758367,
+     "less_bar": -0.061800815580737856,
+     "low": -0.08819936620573812,
+     "survival": 0.69,
+     "verdict": "partly"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.4938929163683728,
+     "gap_high": 0.9206588713169918,
+     "gap_low": 0.8259718587158935,
+     "gap_share": 0.8725493425707965,
+     "high": -0.030197315461581158,
+     "less_bar": -0.04845236794653604,
+     "low": -0.0663737703006552,
+     "survival": 0.75,
+     "verdict": "partly"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.2924874380874521,
+     "gap_high": 0.4216961399598637,
+     "gap_low": 0.2703241317999301,
+     "gap_share": 0.3427659345633533,
+     "high": -0.21634008017867157,
+     "less_bar": -0.24985784622745671,
+     "low": -0.2819194694028134,
+     "survival": 0.22,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.18536290844235778,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.47676737258304724,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.32992692343365937,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.5423452843149089,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.1621795878495884
+  },
+  "slow spot": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.513431736406679,
+   "bar_survival": 0.8,
+   "ceiling": 0.6516746487199784,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.46542275083894696,
+     "gap_high": 0.9179603252739247,
+     "gap_low": 0.8186392646116133,
+     "gap_share": 0.8655265290388662,
+     "high": -0.027592520615132492,
+     "less_bar": -0.04800898556773206,
+     "low": -0.06834630198927258,
+     "survival": 0.57,
+     "verdict": "partly"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.577025760987721,
+     "gap_high": 1.2470645228768187,
+     "gap_low": 1.1212477744485818,
+     "gap_share": 1.1781272634002113,
+     "high": 0.08245777558528869,
+     "less_bar": 0.06359402458104194,
+     "low": 0.046174576353081545,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.37804901191065854,
+     "gap_high": 0.6682254690887219,
+     "gap_low": 0.5792062511248878,
+     "gap_share": 0.6207921359748326,
+     "high": -0.11260712355034685,
+     "less_bar": -0.1353827244960205,
+     "low": -0.1575526162986279,
+     "survival": 0.08,
+     "verdict": "partly"
+    },
+    "fourier1-8102": {
+     "beats": true,
+     "fitness": 0.5713874926011298,
+     "gap_high": 1.227275829027078,
+     "gap_low": 1.1088246120936456,
+     "gap_share": 1.1623344381365808,
+     "high": 0.07671289985573697,
+     "less_bar": 0.057955756194450626,
+     "low": 0.04121119275552709,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.5033951004324456,
+     "gap_high": 1.02758577207763,
+     "gap_low": 0.9249969014205484,
+     "gap_share": 0.9718873194201444,
+     "high": 0.009653525947633397,
+     "less_bar": -0.010036635974233382,
+     "low": -0.028140891846881688,
+     "survival": 0.81,
+     "verdict": "carries B8"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.5237638031517339,
+     "gap_high": 1.081201974928875,
+     "gap_low": 0.9875479405251532,
+     "gap_share": 1.0289401840297052,
+     "high": 0.026963441196287182,
+     "less_bar": 0.01033206674505481,
+     "low": -0.004869418860388598,
+     "survival": 0.9,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.20728994085014216,
+     "gap_high": 0.17305158981484323,
+     "gap_low": 0.11400891597715042,
+     "gap_share": 0.1424949024036206,
+     "high": -0.28208118416488986,
+     "less_bar": -0.3061417955565369,
+     "low": -0.3311309493358721,
+     "survival": 0.0,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.15419955503083885,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.3102914588537591,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.513431736406679,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.47716939030587247,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.1564171875548245
+  },
+  "spot": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.5142675124778792,
+   "bar_survival": 0.87,
+   "ceiling": 0.6516746487199784,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.16504980558967974,
+     "gap_high": 0.031526782467296774,
+     "gap_low": 0.013117462756810982,
+     "gap_share": 0.022371513845577905,
+     "high": -0.335869496997294,
+     "less_bar": -0.34921770688819925,
+     "low": -0.36243768654212716,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.44524306935692337,
+     "gap_high": 0.8320242123230123,
+     "gap_low": 0.7829509612378417,
+     "gap_share": 0.8067673531296752,
+     "high": -0.05836063327894877,
+     "less_bar": -0.06902444312095563,
+     "low": -0.07924794050605119,
+     "survival": 0.35,
+     "verdict": "partly"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.17770780814855183,
+     "gap_high": 0.06957477976831368,
+     "gap_low": 0.04621776350260033,
+     "gap_share": 0.057807356975178054,
+     "high": -0.32280487121436285,
+     "less_bar": -0.3365597043293272,
+     "low": -0.34998875543166563,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "fourier1-8102": {
+     "beats": true,
+     "fitness": 0.5726318383809814,
+     "gap_high": 1.1975915634005974,
+     "gap_low": 1.1333870360481526,
+     "gap_share": 1.163389846656144,
+     "high": 0.06914172490746562,
+     "less_bar": 0.058364325903102386,
+     "low": 0.04845807387570955,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.4687088073933818,
+     "gap_high": 0.9031388986379173,
+     "gap_low": 0.8431653217916761,
+     "gap_share": 0.8724592510506,
+     "high": -0.03383079980863306,
+     "less_bar": -0.04555870508449731,
+     "low": -0.05681786660909694,
+     "survival": 0.49,
+     "verdict": "partly"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.48044601676825294,
+     "gap_high": 0.9435387780343361,
+     "gap_low": 0.8653615827080784,
+     "gap_share": 0.90531735075889,
+     "high": -0.01986012792919962,
+     "less_bar": -0.03382149570962612,
+     "low": -0.048690402524929656,
+     "survival": 0.78,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.1599583575529282,
+     "gap_high": 0.01679557588127349,
+     "gap_low": -0.0007361469363916109,
+     "gap_share": 0.008118099604767785,
+     "high": -0.3413149102272775,
+     "less_bar": -0.3543091549249509,
+     "low": -0.36810963139652064,
+     "survival": 0.0,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.13219767586841275,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.18027997093475234,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.5142675124778792,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.27311385221444107,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.15705849920344553
+  },
+  "sweep and flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.528278104180109,
+   "bar_survival": 0.84,
+   "ceiling": 0.6701376799429275,
+   "cells": {
+    "champion3603": {
+     "beats": false,
+     "fitness": 0.22710287316058056,
+     "gap_high": 0.23438236026278297,
+     "gap_low": 0.12261954179620037,
+     "gap_share": 0.1774863070545494,
+     "high": -0.2720594429273332,
+     "less_bar": -0.3011752310195284,
+     "low": -0.3297512751523423,
+     "survival": 0.08,
+     "verdict": "does not"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.49553429947328387,
+     "gap_high": 0.9655225790058795,
+     "gap_low": 0.8536700729371056,
+     "gap_share": 0.9105762195671759,
+     "high": -0.011769828090490058,
+     "less_bar": -0.03274380470682505,
+     "low": -0.054445665221284,
+     "survival": 0.75,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.3034856027268825,
+     "gap_high": 0.44358507561586324,
+     "gap_low": 0.32642994963277827,
+     "gap_share": 0.3860885907156483,
+     "high": -0.1979925193682085,
+     "less_bar": -0.22479250145322652,
+     "low": -0.2514929424942537,
+     "survival": 0.19,
+     "verdict": "does not"
+    },
+    "fourier1-8102": {
+     "beats": false,
+     "fitness": 0.48753707608141006,
+     "gap_high": 0.938687596769409,
+     "gap_low": 0.8375383405539999,
+     "gap_share": 0.8887356926317675,
+     "high": -0.021954446514193243,
+     "less_bar": -0.04074102809869896,
+     "low": -0.05996753418531563,
+     "survival": 0.75,
+     "verdict": "partly"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.38229272343336673,
+     "gap_high": 0.6724123420762594,
+     "gap_low": 0.5264695651543368,
+     "gap_share": 0.6013119198827312,
+     "high": -0.11842799302681661,
+     "less_bar": -0.14598538074674225,
+     "low": -0.17383320861220236,
+     "survival": 0.38,
+     "verdict": "partly"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.42711745109488997,
+     "gap_high": 0.7813748232183141,
+     "gap_low": 0.66204944141365,
+     "gap_share": 0.7237288668519293,
+     "high": -0.07977608737431398,
+     "less_bar": -0.10116065308521911,
+     "low": -0.12376303363975914,
+     "survival": 0.5,
+     "verdict": "partly"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.16742248022789025,
+     "gap_high": 0.03710835836596219,
+     "gap_low": -0.005998960771712131,
+     "gap_share": 0.014498334168028142,
+     "high": -0.33360551047424425,
+     "less_bar": -0.3608556239522187,
+     "low": -0.38595726493408045,
+     "survival": 0.0,
+     "verdict": "does not"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.18910340030917425,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.4438474103784516,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.34442644921847604,
+     "param": "cycle=100,run=36"
+    },
+    "B8": {
+     "fitness": 0.528278104180109,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.16211370642885783
+  },
+  "tighter": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.4301893211055119,
+   "bar_survival": 0.49,
+   "ceiling": 0.6516745574667607,
+   "cells": {
+    "champion3603": {
+     "beats": true,
+     "fitness": 0.4800656111487948,
+     "gap_high": 1.270455818116509,
+     "gap_low": 1.0970597197524767,
+     "gap_share": 1.1762211113215642,
+     "high": 0.07149069720754743,
+     "less_bar": 0.04987629004328286,
+     "low": 0.029019884760682943,
+     "survival": 0.7,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5250860194351321,
+     "gap_high": 1.4375303998521074,
+     "gap_low": 1.2543415790866081,
+     "gap_share": 1.335285596139583,
+     "high": 0.11318579427770759,
+     "less_bar": 0.09489669832962011,
+     "low": 0.07760940718125216,
+     "survival": 0.92,
+     "verdict": "carries B8"
+    },
+    "fourier1-8101": {
+     "beats": false,
+     "fitness": 0.3558868443910969,
+     "gap_high": 0.8067076834071436,
+     "gap_low": 0.6731618837035326,
+     "gap_share": 0.7374771658197498,
+     "high": -0.05191034617810664,
+     "less_bar": -0.07430247671441506,
+     "low": -0.096740712441014,
+     "survival": 0.26,
+     "verdict": "partly"
+    },
+    "fourier1-8102": {
+     "beats": true,
+     "fitness": 0.4912456210105023,
+     "gap_high": 1.2932894180149928,
+     "gap_low": 1.153598458540482,
+     "gap_share": 1.215721919435127,
+     "high": 0.07665846200510039,
+     "less_bar": 0.0610562999049904,
+     "low": 0.04676993473042379,
+     "survival": 0.71,
+     "verdict": "carries B8"
+    },
+    "fourier1-8103": {
+     "beats": false,
+     "fitness": 0.4240508380901014,
+     "gap_high": 1.0487296579644727,
+     "gap_low": 0.9149783504617839,
+     "gap_share": 0.9783117329323123,
+     "high": 0.012904829810137413,
+     "less_bar": -0.00613848301541049,
+     "low": -0.025351370693262553,
+     "survival": 0.37,
+     "verdict": "carries B8"
+    },
+    "fourier1-8104": {
+     "beats": false,
+     "fitness": 0.42932437848129823,
+     "gap_high": 1.0613829341608565,
+     "gap_low": 0.9415531293889922,
+     "gap_share": 0.9969440158773628,
+     "high": 0.015915146872840555,
+     "less_bar": -0.0008649426242137387,
+     "low": -0.017322250299877797,
+     "survival": 0.44,
+     "verdict": "carries B8"
+    },
+    "fourier1-8105": {
+     "beats": false,
+     "fitness": 0.3077382799232703,
+     "gap_high": 0.6487881273440378,
+     "gap_low": 0.4868782649167405,
+     "gap_share": 0.5673603922647156,
+     "high": -0.09656873968798228,
+     "less_bar": -0.12245104118224169,
+     "low": -0.14870810564250492,
+     "survival": 0.25,
+     "verdict": "partly"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.16493907917240608,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.36416726281059725,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.30232284372436935,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.4301893211055119,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.14715688719769301
+  }
+ }
+}
