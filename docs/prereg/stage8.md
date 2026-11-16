@@ -161,6 +161,9 @@ About $7.55, within the $8.96 cap.
 
 **Next:** §4: runs 3 to 5 (seeds 8103–8105), with the owner's cost confirmed; the pilot's two runs are runs 1 and 2.
 
+**The owner's answer on runs 3 to 5 (2026-11-16, before they run).** "Ok given, proceed": seeds 8103–8105, three cpu5c
+pods of 16 vCPUs at $0.56 an hour with 8-hour caps, at most $13.44.
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, before the other runs.
