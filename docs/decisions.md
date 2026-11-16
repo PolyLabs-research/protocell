@@ -2216,3 +2216,16 @@ pilot), then "Ok given, proceed" (runs 3 to 5).
 **Impact:** this entry; `docs/prereg/stage8.md` (the answers and outcomes); `experiments/stage8.py`,
 `tests/test_stage8.py`; `protocell/evolve.py`, `protocell/cmaes.py` (several worlds); `experiments/stage7.py` (its test
 takes worlds and seeds); `docs/data/stage8/`; `README.md` status.
+
+## D43 — The owner's decision on D42: the merge, the generalist read, the progress page
+
+**Date:** 2026-11-16  
+**Why:** the owner on D42 C: "Merge, write up and go with your recommendations."
+
+### Decided
+1. **Stage 8 is added to the write-up and `stage8` is merged into `main`.**
+2. **Champion 8102 is read** beside champion 6402 and a run that failed (8105): a plan with predictions first (D44).
+3. **The progress page is rebuilt** with stages 6b to 8 (outside the repository, as before).
+4. **The generalist's reliability** (more generations, or more runs) waits for the reading.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `README.md`.

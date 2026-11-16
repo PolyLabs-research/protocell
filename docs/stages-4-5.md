@@ -1,7 +1,7 @@
-# Stages 4 to 7: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
+# Stages 4 to 8: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) and stage 7 the same day (D40 C1). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) and stage 8 on 2026-11-16 (D42 C1). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -28,6 +28,7 @@ Stages 4 to 6 asked four things in turn:
 | does it emerge from random genomes | In fourier1 mode: 2 of 3 runs do B8's job and 1 beats B8. The uniform mode fails | D33 |
 | how reliably, and with more time | 4 of 5 runs do B8's job; 2 of 5 beat B8; every run is better at 400 generations than at 200 | D37 |
 | does it hold in worlds the cells never saw | Mostly where the world is like home; one evolved cell holds up in all six | D40 |
+| does a generalist emerge when evolution is given several worlds | In 1 run of 5; that cell beats the best simple rule in 5 of 9 worlds | D42 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -177,13 +178,29 @@ Stages 4 to 6 asked four things in turn:
   shaded and, for two of three, under clouds.
 - **Champion 6402 closes at least 0.81 of the gap in every world.**
 
+## 11. Evolution in several worlds at once (stage 8; D42)
+
+- **The design:** stage 6b's runs from random genomes, with each generation's starts drawn from four worlds after the
+  eased-in path: home, flickering clouds, the circling spot and the shaded cell. Five more worlds were held back. The
+  test is stage 7's, in all nine, against each world's re-tuned best simple rule.
+- **The criteria, set beforehand, are not met:** 1 of 5 champions does the rule's job in all four trained worlds (3
+  were asked for), and 2 of 5 do it in at least three of the five held back.
+- **The one generalist, champion 8102:** it closes at least 0.89 of the gap in all nine worlds, does the rule's job in
+  eight, and beats the rule in five: home, the spot, the shaded cell, and two worlds it never met (the tighter economy
+  and a slower spot). At home it is 0.017 below the home specialist.
+- **The others are partial.** All five handle the shaded world and most handle home; two never find the spot, and
+  those two are the worst elsewhere too.
+- **Champion 6402, made at home only, does the rule's job in seven of the nine worlds.**
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
   two of three runs from a designed start, and in three of eight from random genomes. From random genomes a cell that
   does the best simple rule's job emerges reliably (four of five at 400 generations).
-- **Shown, as a limit:** beating the best simple rule is so far a result about the home world. The simple rules, with
-  one parameter re-tuned per world, hold up across worlds better than cells made in one world.
+- **Shown, as a limit:** cells made in one world mostly beat the best simple rule only there; the simple rules, with
+  one parameter re-tuned per world, hold up across worlds better (stage 7).
+- **Shown, as an existence:** one cell evolved in four worlds beats each world's re-tuned best simple rule in five of
+  nine worlds, two of them never met (stage 8). Evolution found it in one run of five.
 - **Not shown:**
   - that a cell beating B8 emerges from nothing in most runs: 2 of 5 did at 400 generations, where the criterion
     asked for 3; and the sensor and the eased-in path were designed by hand;
@@ -194,7 +211,7 @@ Stages 4 to 6 asked four things in turn:
 
 ## Cost and conduct
 
-- **RunPod,** stages 4 to 6: about $52 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30), each launch confirmed by
+- **RunPod,** stages 4 to 8: about $70 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30, 8 $18), each launch confirmed by
   the owner first.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
@@ -206,4 +223,4 @@ Stages 4 to 6 asked four things in turn:
 
 ## Next
 
-Evolution in several worlds at once, asking whether a generalist emerges (D40 C2).
+Reading the generalist, champion 8102: how one cell handles four kinds of world (D42 C2).
