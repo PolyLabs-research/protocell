@@ -164,6 +164,69 @@ About $7.55, within the $8.96 cap.
 **The owner's answer on runs 3 to 5 (2026-11-16, before they run).** "Ok given, proceed": seeds 8103–8105, three cpu5c
 pods of 16 vCPUs at $0.56 an hour with 8-hour caps, at most $13.44.
 
+**The test's outcome (2026-11-16; `docs/decisions.md` D42).**
+
+- **Runs 3 to 5:** a cpu5c pod of 16 vCPUs each at code `9179ce2`, clean trees, warnings as errors (AMD EPYC 9575F,
+  4565P and 4564P); all pulled, all pods deleted themselves; about $10.50. Stage 8 on RunPod: about $18.
+- **The test:** here, one process, detached, 3.2 hours, at code `414afed`; starts 51–150 at seed 46, bootstrap at seed
+  47; each world's bar re-tuned on starts 1–50. Data in `docs/data/stage8/confirm/` and `test/`.
+
+**The champions on validation** (12 starts in each trained world; fitness and survival):
+
+| run | home | flicker | spot | shaded | mean |
+|---|---|---|---|---|---|
+| 8102 | 0.633 (100%) | 0.571 (92%) | 0.596 (100%) | 0.633 (100%) | 0.608 |
+| 8104 | 0.609 (100%) | 0.478 (75%) | 0.499 (67%) | 0.639 (100%) | 0.556 |
+| 8103 | 0.577 (100%) | 0.370 (42%) | 0.493 (50%) | 0.562 (100%) | 0.500 |
+| 8101 | 0.569 (92%) | 0.397 (50%) | 0.164 (0%) | 0.640 (100%) | 0.443 |
+| 8105 | 0.465 (67%) | 0.194 (8%) | 0.143 (0%) | 0.648 (100%) | 0.363 |
+
+**The test: each cell's share of the gap from sitting still to the world's best simple rule** (bold: it beats the
+rule, its interval above 0):
+
+| | world | its best simple rule | 8102 | 8104 | 8103 | 8101 | 8105 | champion 6402 | champion 3603 |
+|---|---|---|---|---|---|---|---|---|---|
+| trained in | home | B8 (tau 3), 0.560 | **1.14** | **1.08** | 1.01 | 0.90 | 0.68 | **1.19** | **1.12** |
+| trained in | flicker | B8 (tau 10), 0.557 | 0.97 | 0.76 | 0.66 | 0.43 | 0.05 | 0.93 | 0.27 |
+| trained in | spot | B6, 0.514 | **1.16** | 0.91 | 0.87 | 0.06 | 0.01 | 0.81 | 0.02 |
+| trained in | shaded | B6, 0.593 | **1.07** | **1.08** | 0.91 | **1.08** | **1.10** | 0.81 | **1.04** |
+| held back | fixed mouth | B5 (tau 30), 0.645 | 0.97 | 0.94 | 0.87 | 0.80 | 0.64 | 1.00 | 0.96 |
+| held back | tighter | B8 (tau 3), 0.430 | **1.22** | 1.00 | 0.98 | 0.74 | 0.57 | **1.34** | **1.18** |
+| held back | sweep and flicker | B8 (tau 10), 0.528 | 0.89 | 0.72 | 0.60 | 0.39 | 0.01 | 0.91 | 0.18 |
+| held back | slow clouds | B8 (tau 10), 0.542 | 0.99 | 0.87 | 0.84 | 0.64 | 0.34 | **1.09** | 0.83 |
+| held back | slow spot | B6, 0.513 | **1.16** | 1.03 | 0.97 | 0.62 | 0.14 | **1.18** | 0.87 |
+
+| cell | does the job in the 4 trained worlds | in the 5 held back | beats the bar, of 9 worlds | at home, less champion 6402 [95%] |
+|---|---|---|---|---|
+| 8102 | 4 | 4 | 5 | −0.017 [−0.023, −0.012] |
+| 8104 | 3 | 3 | 2 | −0.043 [−0.056, −0.032] |
+| 8103 | 2 | 2 | 0 | −0.067 [−0.086, −0.051] |
+| 8101 | 2 | 0 | 1 | −0.111 [−0.133, −0.092] |
+| 8105 | 1 | 0 | 1 | −0.199 [−0.232, −0.167] |
+| champion 6402 (reference) | 2 | 5 | 4 | |
+| champion 3603 (reference) | 2 | 2 | 3 | |
+
+- **G1 does not hold: 1 of the 5 champions is a generalist** (8102), where the criterion asked for 3.
+- **G2 does not hold: 2 of the 5 travel** (8102 in 4 of the held-back worlds, 8104 in 3).
+- **G3: champion 8102 beats the bar in 5 of the 9 worlds,** three it was trained in and two it never met, and closes at
+  least 0.89 of the gap in all nine. It is the first cell to beat the best simple rule under the circling spot.
+- **The cost of generality at home is small for 8102:** 0.017 below the home specialist, and it still beats home's bar.
+- **Every champion does the shaded world's job, and four of five beat its bar.** Two never find the spot.
+- **Champion 6402, trained only at home, does the job in all five held-back worlds here** and beats the bar in four of
+  the nine; it falls short under the spot and when shaded, as in stage 7.
+
+**The predictions:**
+
+| prediction | outcome |
+|---|---|
+| 1. at least one pilot run works | ✓ both |
+| 2. G1 fails: fewer than 3 of 5 generalists | ✓ 1 of 5 |
+| 3. no champion beats the bar in more than two of the nine worlds | ✗: champion 8102 in five |
+| 4. every champion scores below champion 6402 at home | ✓ |
+| 5. the best stage 8 champion does the job in at least 4 of the 5 held-back worlds | ✓ 4 |
+
+**Next:** §8's fourth row (G1 fails), with one clear generalist; the owner's call (D42 C).
+
 ## 12. What would change this document
 
 The owner's answers, as a dated note before the pilot. The pilot's outcome and any amendment, before the other runs.

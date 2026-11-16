@@ -2169,3 +2169,50 @@ ones, starts 51–150 at seed 42, each world's best simple rule tuned on starts 
 3. **Left open:** reading champion 6402 beside 6405; more generations for stage 6b's runs; champion 6301's circling.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D42 — Stage 8: asked to cope with four worlds at once, evolution produces one generalist in five runs; that one beats the best simple rule in five of nine worlds
+
+**Date:** 2026-11-16  
+**Why:** D41; `docs/prereg/stage8.md`. The owner: "I'm happy to go with your recommendations here" (the draft and the
+pilot), then "Ok given, proceed" (runs 3 to 5).  
+**Ran:**
+- Five fourier1 runs from random genomes, seeds 8101–8105, 400 generations, the training starts from four worlds after
+  generation 100 (code `55c603c` and `9179ce2`), a cpu5c 16-vCPU pod each; about $18.
+- The test (code `414afed`): here, one process, 3.2 hours, nine worlds, each world's best simple rule re-tuned there.
+
+### A. Measured
+1. **G1 does not hold: 1 of 5 champions does the job in all four trained worlds** (the criterion asked for 3).
+2. **G2 does not hold: 2 of 5 do the job in at least 3 of the 5 held-back worlds.**
+3. **Champion 8102 is a generalist that travels.** It closes at least 0.89 of the gap in all nine worlds, does the job
+   in 8, and beats the bar in 5: home (+0.056), the spot (+0.058), shaded, the tighter economy and the slow spot.
+4. **Its generality costs little at home:** 0.017 below champion 6402, the home specialist, and above home's bar.
+5. **The other four are partial:** every champion handles the shaded world (four beat its bar) and home (four of five
+   close 0.9 or more); the spot and the clouds are where they fall. Two never find the spot.
+6. **The runs' order on validation is their order on the test** (8102, 8104, 8103, 8101, 8105).
+7. **Champion 6402, made at home only, again holds up well:** the job in 7 of the 9 worlds, the bar beaten in 4.
+8. **Predictions:** 1, 2, 4 and 5 hold; 3 fails. I expected no cell to beat the bar in more than two worlds.
+
+### B. Reading
+1. **A cell of interacting parts can beat the best simple rule across different worlds,** including a world built
+   around a different light (the spot), and worlds it never met. One evolved cell does, against rules re-tuned for
+   each world. That answers stage 7's limit for what is possible.
+2. **Evolution does not find it reliably:** one run in five, by the criterion; a second comes close (8104: the job in
+   6 of 9). The other runs settle for the worlds nearest their start, the shaded cell and home.
+3. **The spot is the dividing line.** The runs that found it are the three best; the two that did not are the two
+   worst everywhere else too. Whether more generations would bring them there is not known; three of the five were
+   still improving at generation 400 on validation.
+4. **The specialist's sturdiness is its own puzzle.** Champion 6402 was never shown clouds or a spot and copes with
+   most of them. What it and 8102 share has not been read.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage8` into `main` and add it to the write-up (recommended now).**
+2. **Read champion 8102 (recommended next; local, free):** how one cell handles a sweeping mouth, clouds, a spot and
+   shading, beside 6402 and a run that failed (8105). The reading probes of D31 and D36 are built.
+3. **Rebuild the progress page** with stages 6b to 8 (local).
+4. **Reliability of the generalist:** the same five runs carried on to 800 generations (about $18–20), or five more
+   runs; a spend decision once 8102 is read.
+5. **Still open:** more generations for stage 6b's runs; how champion 6301's circling is biased; the uniform mode.
+
+**Impact:** this entry; `docs/prereg/stage8.md` (the answers and outcomes); `experiments/stage8.py`,
+`tests/test_stage8.py`; `protocell/evolve.py`, `protocell/cmaes.py` (several worlds); `experiments/stage7.py` (its test
+takes worlds and seeds); `docs/data/stage8/`; `README.md` status.
