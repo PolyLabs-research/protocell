@@ -52,19 +52,20 @@ def listed_rate(price: float, vcpu: int) -> float:
 def body(tag: str, deadline: int, flavor: str, vcpu: int, disk_gb: int) -> Dict[str, Any]:
     if flavor not in FLAVORS:
         raise cloud.CloudError(f"unknown CPU flavour {flavor!r}")
+    if vcpu < 2 or vcpu & (vcpu - 1):
+        raise cloud.CloudError("RunPod's v2 API takes a vCPU count that is a power of two, 2 or more")
+    # RunPod's REST v2 ``CreatePodRequest`` (v1, rest.runpod.io, was retired in November 2026): as the chess library's
+    # GPU request, with ``cpu`` in place of ``gpu``. The API refuses unknown fields.
     return {
         "name": cloud.pod_name(tag, deadline),
-        "imageName": CPU_IMAGE,
-        "computeType": "CPU",
-        "cpuFlavorIds": [flavor],
-        "cpuFlavorPriority": "custom",
-        "vcpuCount": vcpu,
-        "cloudType": "SECURE",
-        "containerDiskInGb": disk_gb,
-        "volumeInGb": 0,  # no pod volume: it would bill after a stop, and pods are never stopped
-        "ports": ["22/tcp"],
-        "supportPublicIp": True,  # full SSH (rsync) needs a public IP
-        "dockerStartCmd": cloud.watchdog_start_cmd(True),
+        "image": CPU_IMAGE,
+        "cloud": "SECURE",
+        "cpu": {"id": flavor, "vcpuCount": vcpu},
+        "disk": disk_gb,
+        # no ``mounts``: no volume, nothing that bills after a stop, and pods are never stopped
+        "ports": ["22/tcp"],  # ssh.direct, the full SSH that rsync needs, publishes 22/tcp
+        "startSsh": True,  # the account's registered SSH keys reach the pod's sshd
+        "cmd": cloud.watchdog_start_cmd(True),
         "env": {"TAZ_DEADLINE": str(deadline)},
     }
 
@@ -102,7 +103,7 @@ def cmd_launch(rp: "cloud.RunPod", args: argparse.Namespace) -> int:
     pod = rp.create_pod(b)
     cloud.ledger("launch", pod_id=pod["id"], name=b["name"], deadline=deadline,
                  spec={"project": "protocell", "flavor": args.flavor, "vcpu": args.vcpu, "hours": args.hours, "image": CPU_IMAGE})
-    actual = float(pod.get("costPerHr") or rate)
+    actual = float(pod.get("cost") or rate)  # v2: the pod's hourly rate
     refusal = None
     if actual > args.max_rate:
         refusal = f"the pod's rate ${actual:.3f}/h is over the confirmed ceiling ${args.max_rate:.3f}/h"
@@ -116,7 +117,7 @@ def cmd_launch(rp: "cloud.RunPod", args: argparse.Namespace) -> int:
         cloud.ledger("terminate", pod_id=pod["id"], reason=f"actual rate refused: {refusal}")
         print(f"terminated {pod['id']} at once: {refusal}")
         return 2
-    print(f"launched {pod['id']} {b['name']} at ${actual:.3f}/h (vCPU {pod.get('vcpuCount')}, RAM {pod.get('memoryInGb')} GB); "
+    print(f"launched {pod['id']} {b['name']} at ${actual:.3f}/h (vCPU {(pod.get('cpu') or {}).get('vcpuCount')}, RAM {(pod.get('cpu') or {}).get('memory')} GB); "
           f"worst case ${actual * args.hours:.2f} by the deadline")
     return 0
 

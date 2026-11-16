@@ -22,9 +22,15 @@ def _load():
 def test_a_cpu_pod_is_asked_for_as_the_lifecycle_requires() -> None:
     m = _load()
     b = m.body("protocell-pilot", 1_900_000_000, "cpu5c", 32, 20)
-    assert b["name"] == "taz-protocell-pilot-dl1900000000" and b["computeType"] == "CPU" and b["cpuFlavorIds"] == ["cpu5c"]
-    assert b["vcpuCount"] == 32 and b["volumeInGb"] == 0 and b["imageName"] == m.CPU_IMAGE and b["env"]["TAZ_DEADLINE"] == "1900000000"
-    assert "TAZ_DEADLINE" in " ".join(b["dockerStartCmd"]) and b["dockerStartCmd"][-1].endswith("exec /start.sh")
+    # RunPod's REST v2 request (v1 was retired): the fields its schema names, and no others
+    assert set(b) == {"name", "image", "cloud", "cpu", "disk", "ports", "startSsh", "cmd", "env"}
+    assert b["name"] == "taz-protocell-pilot-dl1900000000" and b["cpu"] == {"id": "cpu5c", "vcpuCount": 32} and b["cloud"] == "SECURE"
+    assert b["image"] == m.CPU_IMAGE and b["disk"] == 20 and b["startSsh"] is True and b["env"]["TAZ_DEADLINE"] == "1900000000"
+    assert "TAZ_DEADLINE" in " ".join(b["cmd"]) and b["cmd"][-1].endswith("exec /start.sh") and "api.runpod.io/v2" in " ".join(b["cmd"])
+    job = (Path(__file__).resolve().parent.parent / "cloud" / "pod_job.sh").read_text()
+    assert "api.runpod.io/v2/pods/$POD_ID" in job and "rest.runpod.io" not in job  # the pod's own delete call
+    with pytest.raises(m.cloud.CloudError):  # v2 takes a power of two
+        m.body("protocell-pilot", 1_900_000_000, "cpu5c", 24, 20)
     assert m.listed_rate(0.07, 32) == pytest.approx(1.12)  # the pilot's pod billed $1.12/h
     with pytest.raises(m.cloud.CloudError):
         m.body("protocell-pilot", 1_900_000_000, "cpu9x", 32, 20)
