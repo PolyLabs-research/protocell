@@ -20,8 +20,6 @@ HAS_GPU=0
 if [ "${GPU:-1}" != "0" ] && command -v nvidia-smi >/dev/null 2>&1; then
     if nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader 2>/dev/null; then HAS_GPU=1; fi
 fi
-EXTRAS="dev,fast"
-[ "$HAS_GPU" = 1 ] && EXTRAS="dev,gpu"
 echo "== $NAME: $(lscpu 2>/dev/null | sed -n 's/^Model name: *//p' | head -1); $CORES physical cores; timing on $WORKERS processes; GPU: $HAS_GPU"
 
 if [ ! -x .venv/bin/python ]; then
@@ -34,11 +32,17 @@ if [ ! -x .venv/bin/python ]; then
         exit 1
     fi
 fi
-if command -v uv >/dev/null 2>&1; then
-    uv pip install --python .venv/bin/python -e ".[$EXTRAS]"
+install() {
+    if command -v uv >/dev/null 2>&1; then
+        uv pip install --python .venv/bin/python -e ".[$1]"
+    else
+        .venv/bin/python -m pip install --upgrade pip && .venv/bin/python -m pip install -e ".[$1]"
+    fi
+}
+if [ "$HAS_GPU" = 1 ]; then
+    install "dev,gpu" || { echo "!! the GPU's packages did not install: going on with the CPU alone"; HAS_GPU=0; install "dev,fast"; }
 else
-    .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/python -m pip install -e ".[$EXTRAS]"
+    install "dev,fast"
 fi
 PY=.venv/bin/python
 $PY -c "import sys, numpy, numba; print('python', sys.version.split()[0], 'numpy', numpy.__version__, 'numba', numba.__version__)"
