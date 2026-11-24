@@ -2702,7 +2702,7 @@ ended 17:24 to 17:42; data in `docs/data/stage8b/` (`extend/`, `fresh/`).
    read 0.18 to 0.22 and this machine reads 0.18). Each was given back within a minute. Pods 4 and 5 took four tries.
 2. **The five that ran:** three on an EPYC 9575F, two on an EPYC 4564P. Each passed the compiled life's tests there
    (27 of 27) before its job began.
-3. **A generation took 2.3 to 4.8 s** (the run's mean; I had estimated 6 to 10). A pod's three runs took 60 to 72
+3. **A generation took 2.3 to 4.8 s** (the run's mean; I had estimated 6 to 10). A pod's three runs took 66 to 79
    minutes.
 4. **Cost: $3.74** (the balance, $58.10 before and $54.36 after), against a ceiling of $10.08. The slow hosts are in it.
 5. **Every pod's job ended with exit 0, was pulled, and the pod deleted itself.** No pod is left. This was the
@@ -2734,7 +2734,8 @@ Not the test: the criteria are read on the reference, on fresh starts.
 1. **Carried on:** every run's champion comes from after generation 700, and every one validates higher than its
    champion at 400 did (0.443, 0.608, 0.502, 0.544 and 0.363 on the compiled life). Runs 8103 and 8104 now survive
    every validation start in all four worlds, as 8102 does. Runs 8101 and 8105 still never survive under the spot.
-2. **Fresh:** six of the ten (8202, 8203, 8205, 8206, 8208, 8210) survive at least nine starts in ten in every world.
+2. **Fresh:** six of the ten (8202, 8203, 8205, 8206, 8208, 8210) survive at least ten of the twelve starts in every
+   world.
    One (8204) is a still cell. The other three do not survive the spot.
 3. **The champion at 400, validated again on the compiled life before generation 401** (stage 8b §3): within 0.002 of
    the reference's number for four runs, and 0.012 below it for run 8104 (0.544 against 0.556, the same survival).
