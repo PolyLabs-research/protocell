@@ -2373,3 +2373,70 @@ one: the simulation is NumPy on the CPU.
 
 **Impact:** this entry; `docs/prereg/fast.md`; `protocell/fast.py`, `protocell/fast_cuda.py`, `experiments/fastcheck.py`,
 `tests/test_fast.py`, `tests/test_fastcheck.py`; `pyproject.toml`, `.github/workflows/ci.yml`.
+
+## D48 — The compiled life's check: the same model, the same outcomes but for one pair's survival, which misses the tolerance I set; a follow-up on that pair, planned before it runs
+
+**Date:** 2026-11-24  
+**Why:** D47.  
+**Ran:** `experiments/fastcheck.py` (code `820119e`), parts `same`, `agree` and `speed`, one process here (the speed
+part's generation on 8, for 5 s), 26 minutes in all, from a clean tree; data in `docs/data/fast/` (`1a0fb85`).
+
+### A. Measured
+1. **A, the same model: holds.** Under the C library's maths all 24 whole lives are the reference's in every number,
+   in the six worlds (lifetimes of 106,885 and 139,909 ticks; one life starved at tick 56,922).
+2. **B, the same outcomes,** on 1,800 paired lives (three cells, 100 fresh starts, six worlds):
+
+   | criterion | result |
+   |---|---|
+   | B1: every pair's mean fitness within 0.01, survival within 5 points | **fails.** Fitness holds in all 18 pairs (largest 0.0027). Survival misses in one |
+   | B2: the interval holds 0 in all but 2 pairs | holds: in all 18 |
+   | B3: the mean difference over all lives within 0.003 | holds: −0.00002 [−0.0006, +0.0006] |
+   | B4: the engines rank a population alike | holds: Spearman 0.977 and 0.991, against 0.898 for the reference under two draws of luck |
+
+3. **The one miss: champion 6402 under the spot.** The reference has 20 of 100 lives survive, the compiled life 28.
+   Fitness 0.4301 and 0.4327 (+0.0027 [−0.0067, +0.0116]).
+   - 26 of those 100 lives survive in one engine and not the other: 9 in the reference only, 17 in the compiled life
+     only (a sign test gives p = 0.17).
+   - No other pair has any such life: in the other 1,700 lives the two engines agree on every survival.
+4. **How far single lives part:** 74% of the paired lives agree to within 0.001 in fitness and 92% to within 0.01.
+   It depends on the cell. Champion 8105 (a rester) has every life within 0.001 in every world; champion 6402 under
+   the spot has 2 in 100.
+5. **The ranking a search sees** (run 8102's last population, a generation's 8 starts, two draws of luck): the step
+   the search would take agrees 0.988 and 0.951 between the engines (cosine), against 0.70 for the reference between
+   the two draws of luck.
+6. **C, the cost.** One core: 3.82 microseconds a cell-tick on the reference, 0.33 on the compiled life (11.7 times).
+   A generation as a search scores it, one process: 252–265 s against 28–29 s. On 8 processes: 4.5 s, so 400
+   generations in half an hour. Stage 8's pods took 83–111 s a generation on 16 vCPUs.
+7. **Predictions:** 1 fails (it said B1 to B4 would all hold); 2, 3 and 4 hold.
+
+### B. Reading
+1. **The kernel computes the model** (A), and where lives stay close or survival is not in doubt the two engines give
+   the same numbers.
+2. **B1 failed as I wrote it, and the plan says what follows:** the compiled life is not used for a search until the
+   miss is understood.
+3. **What the miss may be, not yet shown.** In that one pair the lives part completely and survival is marginal. A
+   life that survives in one engine and starves in the other is then a coin's fall. With 26 such lives and no
+   direction to them, a gap of more than 5 points comes about three times in ten. I set the 5 points as if lives stayed
+   paired. But 17 against 9 could also be a direction, and a hundred starts cannot tell which.
+
+### C. Decided: the follow-up, before it runs
+1. **F:** champion 6402 under the spot on 600 fresh starts (seed 56; intervals 57), by three engines: the reference,
+   the compiled life as the searches use it, and the compiled life in its strict form (the reference's own formulas
+   with the C library's functions). `experiments/fastcheck.py --part follow`, one process, about five minutes.
+2. **Criteria:**
+   - **F1:** on the 600 starts the compiled life's survival is within 5 points of the reference's and its mean fitness
+     within 0.01. (With no direction the gap's spread is about 2 points here, so 5 is wide; a true gap of 8 would most likely fail it.)
+   - **F2:** the lives that survive in one engine only split with no direction: a two-sided sign test above 0.05.
+3. **What follows.** If F1 and F2 hold, the miss was the fall of parted lives and my tolerance was wrong for them; I
+   recommend the searches may run on the compiled life, and the owner decides (plan §8). If either fails, the compiled
+   life leans one way in that regime and is not used until the lean is found.
+4. **Predictions:**
+   1. F1 and F2 hold.
+   2. The strict kernel parts from the reference about as often as the default does: its count of lives that survive
+      in one engine only is within a third of the default's. (So the angle-sum rule is not what moves lives.)
+5. **Also changed with this entry, none of it in parts A or B:** the follow-up part; the check's GPU part takes a
+   number of starts and both GPU parts now run in Numba's simulator (a wrong setting in the GPU timing's warm-up,
+   found that way); `laptop.sh` says so when the machine's Python is too old.
+
+**Impact:** this entry; `docs/data/fast/`; `experiments/fastcheck.py`, `protocell/fast.py`, `tests/test_fastcheck.py`,
+`laptop.sh`.

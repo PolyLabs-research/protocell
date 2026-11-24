@@ -557,6 +557,8 @@ def cuda_ready() -> Tuple[bool, str]:
 
         if not cuda.is_available():
             return False, "no CUDA device or driver found"
+        if not hasattr(cuda, "get_current_device"):
+            return True, "Numba's CUDA simulator"
         name = cuda.get_current_device().name
         return True, name.decode() if isinstance(name, bytes) else str(name)
     except Exception as e:  # pragma: no cover - depends on the machine

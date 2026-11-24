@@ -55,6 +55,36 @@ def test_the_speed_part(tmp_path):
     assert (tmp_path / "speed-here" / "summary.json").exists()
 
 
+def test_the_follow_up_part(tmp_path):
+    s = fastcheck.main(["--part", "follow", "--quick", "--out", str(tmp_path)])
+    assert s["starts"] == 8 and s["world"] == "spot" and s["cell"] == "champion6402" and s["F1"] and s["F2"]
+    assert set(s["compiled"]) == set(s["strict"]) and [p["number"] for p in s["predictions"]] == [1, 2]
+    assert (tmp_path / "follow" / "lives.csv").read_text().count("\n") == 9
+    assert fastcheck.FOLLOW_SEED not in (fastcheck.SEED, fastcheck.BOOTSTRAP_SEED, *fastcheck.LUCK_SEEDS)
+
+
+def test_the_sign_test():
+    assert fastcheck.sign_test(0, 0) == 1.0 and fastcheck.sign_test(5, 5) == 1.0
+    assert fastcheck.sign_test(9, 17) == pytest.approx(0.1686, abs=1e-3)  # B's one pair
+    assert fastcheck.sign_test(0, 10) == pytest.approx(2 / 1024) and fastcheck.sign_test(10, 0) == fastcheck.sign_test(0, 10)
+
+
+def test_the_gpu_part_runs_in_numbas_simulator(tmp_path):
+    """The part meant for a machine with a GPU, on Numba's simulator (the kernel as plain Python): its plumbing."""
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    env = {**os.environ, "NUMBA_ENABLE_CUDASIM": "1", "PYTHONPATH": str(root)}
+    done = subprocess.run([sys.executable, "-m", "experiments.fastcheck", "--part", "gpu", "--quick", "--starts", "1", "--out", str(tmp_path)],
+                          capture_output=True, text=True, env=env, cwd=root)
+    assert done.returncode == 0, done.stdout[-400:] + done.stderr[-1200:]
+    s = json.loads((tmp_path / "gpu" / "summary.json").read_text())
+    assert s["lives"] == 12 and s["largest_early_position_difference"] == 0.0 and s["pooled_difference"] == 0.0  # the simulator is the CPU
+
+
 def test_the_gpu_part_needs_a_gpu(tmp_path):
     from protocell import fast
 

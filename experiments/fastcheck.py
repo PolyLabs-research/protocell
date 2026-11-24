@@ -17,6 +17,11 @@ Single lives part (a life is chaotic and the library functions differ in a last 
 ranking must not. The criteria are §4 of the plan.
 
 C (``speed``) and ``gpu`` describe; they set no criterion here. ``gpu`` is for a machine that has one.
+
+``follow`` is the follow-up to B's one miss (docs/decisions.md D48): the one cell and world whose survival the two
+engines scored more than 5 points apart, on 600 fresh starts, beside the kernel in its strict form.
+
+    .venv/bin/python -W error::RuntimeWarning -m experiments.fastcheck --part follow
 """
 
 from __future__ import annotations
@@ -55,6 +60,7 @@ CELLS = {"champion8102": Path("docs/data/stage8/pilot/fourier1-8102/champion.npy
 POPULATION = Path("docs/data/stage8/pilot/fourier1-8102/population.npy")  # the generalist's run at its end: from working cells to broken ones
 PATH_GENERATIONS = (25, 75)  # a generation on each half of stage 4b's path
 TOLERANCE, SURVIVAL_TOLERANCE, POOLED_TOLERANCE, MISSES_ALLOWED, RANK_NEED = 0.01, 0.05, 0.003, 2, 0.9  # §4
+FOLLOW_WORLD, FOLLOW_CELL, FOLLOW_STARTS, FOLLOW_SEED, FOLLOW_BOOTSTRAP = "spot", "champion6402", 600, 56, 57  # D48: fresh seeds
 DEFAULT_OUT = Path("docs/data/fast")
 SAME = ("fitness", "light_soaked", "mean_beat", "survived", "death_tick", "death_cause", "final_energy", "final_damage", "pos", "heading")
 
@@ -260,6 +266,66 @@ def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
     return summary
 
 
+# --- the follow-up to B1's miss (D48) -----------------------------------------------------------------------------------
+
+def sign_test(a: int, b: int) -> float:
+    """The two-sided chance of a split at least this uneven, were each of the a + b as likely to fall either way."""
+    n = a + b
+    if n == 0:
+        return 1.0
+    return min(1.0, 2.0 * sum(math.comb(n, k) for k in range(min(a, b) + 1)) / 2.0 ** n)
+
+
+def follow(out: Path, quick: bool, log: Any, starts_override: Optional[int] = None) -> Dict[str, Any]:
+    """One cell in one world on many fresh starts, by three engines: the reference, the compiled life as the searches
+    use it, and the compiled life in its strict form (the reference's own formulas with the C library's functions). Is
+    the survival the two engines gave a difference with a direction, or two samples of lives that have parted?"""
+    n = starts_override or (8 if quick else FOLLOW_STARTS)
+    resamples = 200 if quick else RESAMPLES
+    cfg, genome = worlds(quick)[FOLLOW_WORLD], cells(quick)[FOLLOW_CELL]
+    starts = sample_starts(cfg, "cave", n, FOLLOW_SEED)
+    genomes = np.repeat(genome[None], n, axis=0)
+    t0 = time.time()
+    ref = reference(cfg, starts, genomes, FOLLOW_SEED)
+    log(f"the reference: {n} lives in {time.time() - t0:.0f} s")
+    engines = {"compiled": fast.simulate_network(cfg, starts, MODE, genomes, seed=FOLLOW_SEED),
+               "strict": fast.simulate_network(cfg, starts, MODE, genomes, seed=FOLLOW_SEED, strict=True)}
+    rf, rs = np.asarray(ref.fitness, dtype=float), np.asarray(ref.survived, dtype=bool)
+    rows, summary = [], {"world": FOLLOW_WORLD, "cell": FOLLOW_CELL, "starts": n, "reference_fitness": float(rf.mean()), "reference_survival": float(rs.mean())}
+    for e, (name, got) in enumerate(engines.items()):
+        only_reference, only_engine = int((rs & ~got.survived).sum()), int((~rs & got.survived).sum())
+        mean, low, high = bootstrap_ci(got.fitness - rf, 70_000 + e, resamples, seed=FOLLOW_BOOTSTRAP)
+        summary[name] = {"fitness": float(got.fitness.mean()), "survival": float(got.survived.mean()), "fitness_difference": mean, "low": low, "high": high,
+                         "survived_in_reference_only": only_reference, "survived_in_engine_only": only_engine, "sign_test": sign_test(only_reference, only_engine),
+                         "within_0.001": float((np.abs(got.fitness - rf) < 0.001).mean())}
+        x = summary[name]
+        log(f"{name}: fitness {x['fitness']:.4f} against the reference's {rf.mean():.4f} ({mean:+.4f} [{low:+.4f}, {high:+.4f}]); survival {x['survival']:.1%} "
+            f"against {rs.mean():.1%}; survived in the reference only {only_reference}, in this engine only {only_engine} (sign test p = {x['sign_test']:.3f})")
+    between = (int((engines["compiled"].survived & ~engines["strict"].survived).sum()), int((~engines["compiled"].survived & engines["strict"].survived).sum()))
+    summary["compiled_against_strict"] = {"survived_in_compiled_only": between[0], "survived_in_strict_only": between[1], "sign_test": sign_test(*between)}
+    rows = [{"start": int(starts.index[i]), "reference_fitness": float(rf[i]), "compiled_fitness": float(engines["compiled"].fitness[i]),
+             "strict_fitness": float(engines["strict"].fitness[i]), "reference_survived": bool(rs[i]), "compiled_survived": bool(engines["compiled"].survived[i]),
+             "strict_survived": bool(engines["strict"].survived[i])} for i in range(n)]
+    write_csv(out / "lives.csv", tuple(rows[0]), rows)
+    c, k = summary["compiled"], summary["strict"]
+    f1 = abs(c["survival"] - summary["reference_survival"]) <= SURVIVAL_TOLERANCE and abs(c["fitness_difference"]) < TOLERANCE
+    f2 = c["sign_test"] > 0.05
+    flips_c, flips_k = c["survived_in_reference_only"] + c["survived_in_engine_only"], k["survived_in_reference_only"] + k["survived_in_engine_only"]
+    predictions = [
+        (1, "F1 and F2 hold", f1 and f2, {"F1": f1, "F2": f2}),
+        (2, "the strict kernel parts from the reference about as often as the default does: its count of lives that survive in one engine only "
+            "is within a third of the default's", flips_c > 0 and abs(flips_k - flips_c) <= flips_c / 3.0, {"default": flips_c, "strict": flips_k}),
+    ]
+    summary.update({"F1": f1, "F2": f2, "F": f1 and f2, "predictions": [{"number": i, "text": t, "holds": bool(h), "values": v} for i, t, h, v in predictions],
+                    "quick": quick})
+    log(f"compiled against strict: survived in the default only {between[0]}, in the strict only {between[1]}")
+    log(f"F1 (survival within {SURVIVAL_TOLERANCE:.0%} of the reference's and fitness within {TOLERANCE}, on {n} starts): {'holds' if f1 else 'FAILS'}")
+    log(f"F2 (the lives that survive in one engine only split with no direction, sign test above 0.05): {'holds' if f2 else 'FAILS'} (p = {c['sign_test']:.3f})")
+    for q in summary["predictions"]:
+        log(f"prediction {q['number']}: {'holds' if q['holds'] else 'FAILS'}: {q['text']}")
+    return summary
+
+
 # --- C: the cost -----------------------------------------------------------------------------------------------------------
 
 def speed(out: Path, quick: bool, log: Any, workers: int, device: str) -> Dict[str, Any]:
@@ -291,7 +357,7 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str) -> Dict[s
         if not ready:
             raise SystemExit(f"no GPU to time: {what}")
         mapper: Any = fast.CudaMapper()
-        evolve.evaluate(mix, MODE, ga.but(population=batch, chunk=batch), pop[:batch], SEED, 1, mapper)  # compiled before the clock starts
+        evolve.evaluate(mix, MODE, ga.but(population=batch, parents=batch, chunk=batch), pop[:batch], SEED, 1, mapper)  # compiled before the clock starts
         t0 = time.perf_counter()
         ev = evolve.evaluate(mix, MODE, ga, pop, SEED, 0, mapper)
         summary["generation_seconds"] = time.perf_counter() - t0
@@ -317,7 +383,7 @@ def _warm(_: int) -> bool:
 
 # --- the GPU's kernel beside the CPU's -------------------------------------------------------------------------------------
 
-def gpu(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
+def gpu(out: Path, quick: bool, log: Any, starts_override: Optional[int] = None) -> Dict[str, Any]:
     """For a machine with an Nvidia GPU. The GPU's kernel against the CPU's: the first ticks (the same model, to
     rounding), then whole lives (the same outcomes, in distribution), then the time. It describes; whether to search
     on the GPU is the owner's call once these numbers exist."""
@@ -327,7 +393,7 @@ def gpu(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
     log(f"the GPU: {what}")
     mine = cells(quick)
     names = list(mine)
-    n = 4 if quick else 25
+    n = starts_override or (4 if quick else 25)
     rows = []
     early = 0.0
     pooled: List[np.ndarray] = []
@@ -363,12 +429,13 @@ def gpu(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
 
 def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--part", required=True, choices=["same", "agree", "speed", "gpu"])
+    parser.add_argument("--part", required=True, choices=["same", "agree", "follow", "speed", "gpu"])
     parser.add_argument("--quick", action="store_true", help="the smoke test's sizes and a 2,000-tick day: not a result")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--workers", type=int, default=1, help="speed: the processes a generation is spread over")
     parser.add_argument("--device", choices=["cpu", "cuda"], default="cpu", help="speed: where the generation runs")
     parser.add_argument("--tag", default="", help="speed and gpu: a name for the machine, so each machine's numbers keep their own directory")
+    parser.add_argument("--starts", type=int, default=None, help="follow and gpu: the starts, in place of the plan's (a trial: not a result)")
     args = parser.parse_args(argv)
     out = args.out / (args.part if not args.tag else f"{args.part}-{args.tag}")
     out.mkdir(parents=True, exist_ok=True)
@@ -376,8 +443,9 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
                                                                            "starts": N_STARTS, "luck_seeds": list(LUCK_SEEDS), "population": str(POPULATION),
                                                                            "tolerances": {"pair": TOLERANCE, "survival": SURVIVAL_TOLERANCE, "pooled": POOLED_TOLERANCE,
                                                                                           "misses": MISSES_ALLOWED, "rank": RANK_NEED},
+                                                                           "follow": {"world": FOLLOW_WORLD, "cell": FOLLOW_CELL, "starts": args.starts or FOLLOW_STARTS},
                                                                            "workers": args.workers, "device": args.device, "quick": args.quick},
-                              seeds=[SEED, BOOTSTRAP_SEED, *LUCK_SEEDS], extra={"out": str(out)})
+                              seeds=[SEED, BOOTSTRAP_SEED, *LUCK_SEEDS, FOLLOW_SEED, FOLLOW_BOOTSTRAP], extra={"out": str(out)})
     t0 = time.time()
 
     def log(msg: str) -> None:
@@ -387,10 +455,12 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
         summary = same(out, args.quick, log)
     elif args.part == "agree":
         summary = agree(out, args.quick, log)
+    elif args.part == "follow":
+        summary = follow(out, args.quick, log, args.starts)
     elif args.part == "speed":
         summary = speed(out, args.quick, log, args.workers, args.device)
     else:
-        summary = gpu(out, args.quick, log)
+        summary = gpu(out, args.quick, log, args.starts)
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     finish_manifest(manifest, wall_seconds=time.time() - t0)
     write_manifest(out / "manifest.json", manifest)

@@ -25,7 +25,14 @@ EXTRAS="dev,fast"
 echo "== $NAME: $(lscpu 2>/dev/null | sed -n 's/^Model name: *//p' | head -1); $CORES physical cores; timing on $WORKERS processes; GPU: $HAS_GPU"
 
 if [ ! -x .venv/bin/python ]; then
-    if command -v uv >/dev/null 2>&1; then uv venv --python 3.11 .venv; else python3 -m venv .venv; fi
+    if command -v uv >/dev/null 2>&1; then
+        uv venv --python 3.11 .venv
+    elif python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' 2>/dev/null; then
+        python3 -m venv .venv
+    else
+        echo "!! this needs Python 3.11 or later, and this machine's python3 is older. Install uv (https://docs.astral.sh/uv/), which fetches one, and run this again."
+        exit 1
+    fi
 fi
 if command -v uv >/dev/null 2>&1; then
     uv pip install --python .venv/bin/python -e ".[$EXTRAS]"
