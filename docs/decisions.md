@@ -2512,3 +2512,26 @@ Champion 6402 under the spot, 600 fresh starts:
 5. CPU or GPU, after `laptop.sh` has run there.
 
 **Impact:** this entry; `docs/prereg/stage8b.md`; `experiments/stage8b.py`, `tests/test_stage8b.py`.
+
+## D51 — The owner's laptop runs Windows: the set-up script becomes Python, and the laptop's commands are tried here with Windows' way of starting processes
+
+**Date:** 2026-11-24  
+**Why:** the owner cloned `fast` on the laptop and ran `bash laptop.sh`. The laptop is Windows and has no bash. I had
+assumed Linux, from the laptop on his network that reports Linux; I had not asked.
+
+### Decided
+1. **`laptop.py` does the set-up script's work** on Windows, Linux and macOS, with nothing outside Python's own
+   library: the environment, the compiled life's tests, the CPU's timing and the GPU's. `laptop.sh` stays as a way in
+   on Linux and macOS.
+2. **Tried here:**
+   - `laptop.py` in a fresh copy, with only `venv` and `pip` (what a Windows machine has);
+   - every command the laptop will run (the timing, a stage 8b run carried on, a fresh run, the test) and their tests,
+     with worker processes started afresh rather than forked, which is the only way Windows starts them, and with
+     numerical warnings as errors. All pass, and a run's numbers are the same either way.
+3. **Not tried: anything on Windows itself.** Its C library is Microsoft's, so the laptop's bits will not be this
+   machine's. The tests compare the two engines on one machine, so they should hold there; their first run on the
+   laptop is that check.
+4. **Stage 8b's runner asks Windows not to sleep** while a run or the test is in flight.
+
+**Impact:** this entry; `laptop.py`, `laptop.sh`, `tests/test_laptop.py`; `experiments/stage8b.py`; `README.md`,
+`docs/prereg/stage8b.md`.

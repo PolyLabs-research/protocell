@@ -56,6 +56,17 @@ REFERENCES = stage8.REFERENCES
 DEFAULT_OUT = Path("docs/data/stage8b")
 
 
+def stay_awake() -> bool:
+    """On Windows, ask the system not to sleep on idle for as long as this process runs (a closed lid or an empty
+    battery still stops it). Elsewhere it does nothing: wrap the command in ``systemd-inhibit`` or ``caffeinate``."""
+    if os.name != "nt":
+        return False
+    import ctypes
+
+    continuous, system_required = 0x80000000, 0x00000001
+    return bool(ctypes.windll.kernel32.SetThreadExecutionState(continuous | system_required))
+
+
 def seed_for(phase: str, replicate: int) -> int:
     seeds = SEEDS[phase]
     if not 1 <= replicate <= len(seeds):
@@ -333,6 +344,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     args = parser.parse_args(argv)
     if args.phase == "status":
         return status(args.out, args.quick)
+    stay_awake()
     if args.phase == "test":
         return test_phase(args.out, args.quick, args.workers, args.worlds)
     return [run_phase(args.phase, r, args.out, args.workers, args.quick, args.stop_after, args.device, args.source) for r in args.replicate]

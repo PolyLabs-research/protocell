@@ -77,23 +77,27 @@ which it beats the bar (stage 8's G2 and G3).
 - **Time, from this machine** (`docs/data/fast/speed/`, and a trial of this stage's runner at full size, not kept): a
   generation late in run 8102 took 9 s on 4 processes, where its pod took 109 s. So 400 generations are about an hour
   on 4 processes and half that on 8; the fifteen runs here, 6,000 generations, are 7 to 15 hours. The laptop's own
-  figure comes from `laptop.sh`.
+  figure comes from `laptop.py`.
 - **A run checkpoints after every generation;** the same command carries it on after a stop.
 - **The test** is on the reference and is the slower part: about 7 hours as one process, under an hour with a
   process a world.
 
-On the laptop, from a fresh clone of this branch (a clean tree, as every run that counts):
+On the laptop, from a fresh clone of this branch (a clean tree, as every run that counts). `PY` is the environment's
+own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
 
-    bash laptop.sh                                   # once: set up, test, time the CPU and the GPU
-    P=".venv/bin/python -W error::RuntimeWarning -m experiments.stage8b"
-    systemd-inhibit $P --phase extend --replicate 1 2 3 4 5 --workers 8
-    systemd-inhibit $P --phase fresh --replicate 1 2 3 4 5 6 7 8 9 10 --workers 8
-    .venv/bin/python -m experiments.stage8b --phase status
-    systemd-inhibit $P --phase test --workers 9
-    git add docs/data/stage8b docs/data/fast && git commit -m "Stage 8b: the runs and the test, the data" && git push
+    python laptop.py                                 # once: set up, test, time the CPU and the GPU
+    PY -W error::RuntimeWarning -m experiments.stage8b --phase extend --replicate 1 2 3 4 5 --workers 8
+    PY -W error::RuntimeWarning -m experiments.stage8b --phase fresh --replicate 1 2 3 4 5 6 7 8 9 10 --workers 8
+    PY -m experiments.stage8b --phase status
+    PY -W error::RuntimeWarning -m experiments.stage8b --phase test --workers 9
+    git add docs/data/stage8b docs/data/fast
+    git commit -m "Stage 8b: the runs and the test, the data"
+    git push
 
-`--workers` is the laptop's physical cores (8 and 16 divide a generation's 16 jobs evenly); `--device cuda` runs the
-lives on the GPU instead, if `laptop.sh` shows it faster. `systemd-inhibit` keeps the machine awake.
+- `--workers` is the laptop's physical cores (`laptop.py` prints them; 8 and 16 divide a generation's 16 jobs evenly).
+- `--device cuda` runs the lives on the GPU instead, if `laptop.py` shows it faster.
+- **Staying awake:** on Windows the runner asks the system not to sleep while it runs (a closed lid still stops it);
+  on Linux wrap the command in `systemd-inhibit`.
 
 ## 8. For the owner
 
@@ -103,4 +107,4 @@ lives on the GPU instead, if `laptop.sh` shows it faster. `systemd-inhibit` keep
    in ten runs and three in ten are hard to tell apart with five.
 3. **The criteria** in §5, each stage 8's or stage 6b's bar carried over.
 4. **The carried-on runs' change of engine** (§3): the champion validated again before generation 401.
-5. **CPU or GPU:** whichever `laptop.sh` shows faster on the laptop. The GPU form has not run on a GPU yet.
+5. **CPU or GPU:** whichever `laptop.py` shows faster on the laptop. The GPU form has not run on a GPU yet.

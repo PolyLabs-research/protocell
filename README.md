@@ -55,7 +55,7 @@ number is still made by the reference.
     uv pip install --python .venv/bin/python -e ".[dev,fast]"    # the CPU; ".[dev,gpu]" adds an Nvidia GPU (it needs NVIDIA's driver only)
     .venv/bin/python -m experiments.fastcheck --part same        # the same bits as the reference, under the C library's maths
     .venv/bin/python -W error::RuntimeWarning -m experiments.fastcheck --part agree   # the same outcomes on fresh starts (about 45 min)
-    bash laptop.sh                                               # on another machine: set up, test, time the CPU and the GPU if there is one
+    python laptop.py                                             # on another machine (Windows, Linux or macOS): set up, test, time the CPU and the GPU if there is one
 
 ## Watching a cell
 
