@@ -2688,3 +2688,59 @@ deleted 3.6 hours after its launch, at most $10.08 in all, expected $6 to $9.50;
    deadlines and this machine's sweeper hold whatever it does.
 
 **Impact:** this entry; `docs/prereg/stage8b.md`; `cloud/launch_stage8b.sh`.
+
+## D57 — Stage 8b's runs are made: fifteen runs on five pods in an hour and a quarter, for $3.74
+
+**Date:** 2026-11-24  
+**Why:** D56.  
+**Ran:** `experiments/stage8b.py` phases `extend` and `fresh` (code `3449d5c`, a clean tree on every pod), on five cpu5c
+pods of 16 vCPUs, on the compiled life (Numba 0.68.1, numpy 2.4.6, Python 3.12.3), jobs started 16:14 to 16:30 UTC and
+ended 17:24 to 17:42; data in `docs/data/stage8b/` (`extend/`, `fresh/`).
+
+### A. The launch, as it went
+1. **Seven of the twelve pods launched came up on a slow host** (the speed gate read 13.8 to 19.5 s, where a sound host
+   read 0.18 to 0.22 and this machine reads 0.18). Each was given back within a minute. Pods 4 and 5 took four tries.
+2. **The five that ran:** three on an EPYC 9575F, two on an EPYC 4564P. Each passed the compiled life's tests there
+   (27 of 27) before its job began.
+3. **A generation took 2.3 to 4.8 s** (the run's mean; I had estimated 6 to 10). A pod's three runs took 60 to 72
+   minutes.
+4. **Cost: $3.74** (the balance, $58.10 before and $54.36 after), against a ceiling of $10.08. The slow hosts are in it.
+5. **Every pod's job ended with exit 0, was pulled, and the pod deleted itself.** No pod is left. This was the
+   launcher's first use of RunPod's new API (D44): it works.
+6. **The compiled life gives the same bits on a pod as here:** run 8102's champion at generation 400 validates at
+   0.6082508764890563 on the pod and in the trial on this machine (D50).
+
+### B. The runs, on validation (the compiled life; 12 fixed starts in each of the four worlds)
+Not the test: the criteria are read on the reference, on fresh starts.
+
+| run | champion from generation | mean (survival) | home | flicker | spot | shaded |
+|---|---|---|---|---|---|---|
+| 8101, carried on | 700 | 0.482 (71%) | 0.611 | 0.518 | 0.153 (0%) | 0.645 |
+| 8102, carried on | 740 | 0.627 (100%) | 0.633 | 0.623 | 0.607 | 0.645 |
+| 8103, carried on | 780 | 0.626 (100%) | 0.638 | 0.618 | 0.605 | 0.641 |
+| 8104, carried on | 790 | 0.621 (100%) | 0.639 | 0.613 | 0.595 | 0.639 |
+| 8105, carried on | 740 | 0.489 (75%) | 0.599 | 0.553 | 0.156 (0%) | 0.646 |
+| 8201, fresh | 390 | 0.453 (67%) | 0.598 | 0.431 | 0.149 (0%) | 0.635 |
+| 8202, fresh | 390 | 0.617 (100%) | 0.636 | 0.617 | 0.586 | 0.629 |
+| 8203, fresh | 400 | 0.604 (100%) | 0.626 | 0.598 | 0.561 | 0.629 |
+| 8204, fresh | 400 | 0.151 (2%) | 0.152 | 0.175 | 0.141 | 0.136 |
+| 8205, fresh | 400 | 0.592 (98%) | 0.615 | 0.563 | 0.559 | 0.630 |
+| 8206, fresh | 400 | 0.589 (98%) | 0.618 | 0.541 | 0.556 | 0.643 |
+| 8207, fresh | 400 | 0.390 (50%) | 0.522 | 0.259 | 0.142 (0%) | 0.638 |
+| 8208, fresh | 390 | 0.564 (96%) | 0.605 | 0.503 | 0.565 | 0.585 |
+| 8209, fresh | 400 | 0.326 (35%) | 0.369 | 0.157 | 0.136 (0%) | 0.639 |
+| 8210, fresh | 390 | 0.610 (100%) | 0.634 | 0.590 | 0.583 | 0.634 |
+
+1. **Carried on:** every run's champion comes from after generation 700, and every one validates higher than its
+   champion at 400 did (0.443, 0.608, 0.502, 0.544 and 0.363 on the compiled life). Runs 8103 and 8104 now survive
+   every validation start in all four worlds, as 8102 does. Runs 8101 and 8105 still never survive under the spot.
+2. **Fresh:** six of the ten (8202, 8203, 8205, 8206, 8208, 8210) survive at least nine starts in ten in every world.
+   One (8204) is a still cell. The other three do not survive the spot.
+3. **The champion at 400, validated again on the compiled life before generation 401** (stage 8b §3): within 0.002 of
+   the reference's number for four runs, and 0.012 below it for run 8104 (0.544 against 0.556, the same survival).
+
+### C. Next
+The test, on the reference, on this machine: 22 cells in nine worlds on fresh starts (seeds 54, 55), one process,
+about 8 hours. The criteria R1 to R3 and the six predictions are read from it and from nothing above.
+
+**Impact:** this entry; `docs/data/stage8b/extend/`, `docs/data/stage8b/fresh/`.
