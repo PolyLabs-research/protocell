@@ -111,3 +111,19 @@ So A's outcome is expected, the tolerances in B were chosen after the 16 lives, 
 1. **May the searches run on the compiled life?** Recommended if A and B hold.
 2. **CPU or GPU on the laptop:** measure there first (`laptop.sh` runs the tests and both timings).
 3. **The reliability run's design** (D45 C2), drafted separately as stage 8b.
+
+## 9. Outcome (added 2026-11-24; D48, D49)
+
+- **A holds:** 24 of 24 whole lives are the reference's in every number.
+- **B1 fails as written.** Every pair's mean fitness is within 0.003, where 0.01 was allowed. One pair's survival is
+  not within 5 points: champion 6402 under the spot, 20 of 100 on the reference and 28 on the compiled life.
+- **B2, B3 and B4 hold:** no interval misses 0; over 1,800 lives the mean difference is −0.00002; the engines rank a
+  population alike (Spearman 0.977 and 0.991, against 0.898 for the reference under two draws of luck).
+- **Predictions:** 1 fails (B1); 2, 3 and 4 hold.
+- **The follow-up on the one miss** (planned in D48 before it ran): the same cell and world on 600 fresh starts. Both
+  engines have 152 lives survive. 164 lives survive in one engine and not the other, 82 each way. So the miss was the
+  fall of lives that had parted, with no direction. My 5 points on survival were wrong for a pair whose lives part
+  completely and survive one time in four; B1 stays recorded as failed.
+- **C:** 11.7 times faster on one core (3.82 against 0.33 microseconds a cell-tick). A stage 8 generation takes 4.5 s
+  on 8 processes here; the pods took 83–111 s on 16 vCPUs.
+- **Still not shown:** anything on a GPU.

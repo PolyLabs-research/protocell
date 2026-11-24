@@ -2440,3 +2440,75 @@ part's generation on 8, for 5 s), 26 minutes in all, from a clean tree; data in 
 
 **Impact:** this entry; `docs/data/fast/`; `experiments/fastcheck.py`, `protocell/fast.py`, `tests/test_fastcheck.py`,
 `laptop.sh`.
+
+## D49 — The follow-up to the check's one miss: on 600 fresh starts the two engines' survival is the same, and the lives that part split evenly
+
+**Date:** 2026-11-24  
+**Why:** D48 C.  
+**Ran:** `experiments/fastcheck.py --part follow` (code `68d7c78`), one process here, 5 minutes, from a clean tree;
+data in `docs/data/fast/follow/` (`c0c797a`).
+
+### A. Measured
+Champion 6402 under the spot, 600 fresh starts:
+
+| engine | fitness | survival | lives that survive in the reference only, and in this engine only |
+|---|---|---|---|
+| the reference | 0.4394 | 25.3% | |
+| the compiled life | 0.4362 (−0.0033 [−0.0070, +0.0005]) | 25.3% | 82 and 82 |
+| the compiled life, strict | 0.4394 (−0.0001 [−0.0034, +0.0033]) | 26.3% | 72 and 78 |
+
+1. **F1 holds:** the survival is the same to the life (152 of 600 in each engine) and the fitness is within 0.01.
+2. **F2 holds:** 164 lives survive in one engine and not the other, 82 each way (sign test p = 1.0).
+3. **Both predictions hold.** The strict kernel parts from the reference in 150 lives, the default in 164.
+
+### B. Reading
+1. **The miss in B1 was the fall of parted lives, with no direction to it.** On six times the starts the gap of 8
+   points is a gap of none.
+2. **B1 stays failed as written.** Its 5 points on survival were mine, and wrong for a pair whose lives part
+   completely and survive about one time in four. Its limit on fitness held in every pair.
+3. **A last bit is enough.** The strict kernel is the reference with the C library's `exp` and `log` in place of
+   numpy's and nothing else changed (D48 A.1), and for this cell it parts from the reference in a quarter of the lives.
+   So the reference would part from itself as much on a machine whose library differed in a last bit. The angle-sum
+   rule adds nothing that shows.
+4. **What the check and the follow-up show together:** the compiled life is the reference's model; over 2,400 paired
+   lives its outcomes are the reference's in distribution; it ranks a population as the reference does, far more
+   closely than one engine agrees with itself under different luck; and it is 11.7 times faster on a core.
+5. **Not shown:** anything on a GPU; a second cell whose lives part this completely (champion 6402 under the spot was
+   the only pair of the 18 that did).
+
+### C. Decisions this surfaces (the owner's)
+1. **May the searches run on the compiled life?** Recommended: yes. Champions are still judged by the reference.
+2. **Merge `fast` into `main`** when he has looked.
+3. **The reliability run** (D45 C2, D46): drafted and built as stage 8b (D50).
+
+**Impact:** this entry; `docs/data/fast/follow/`; `docs/prereg/fast.md` (its outcome); `README.md`.
+
+## D50 — Stage 8b drafted and built: the generalist's reliability, with more time and with more runs, on the owner's machine
+
+**Date:** 2026-11-24  
+**Why:** D45 C2 and D46. A draft: nothing runs before the owner's answers.
+
+### Decided
+1. **The draft** (`docs/prereg/stage8b.md`): stage 8's five runs carried on from generation 400 to 800, and ten fresh
+   runs of stage 8's design at 400 generations (seeds 8201–8210), all on the compiled life; stage 8's test, on the
+   reference, at fresh seeds (54, 55).
+   - **Criteria:** R1, at least 3 of the 5 carried-on runs are generalists at 800 generations; R2, at least 4 of the 5
+     are better at 800 than at 400; R3, at least 5 of the 10 fresh runs give a generalist.
+   - **A carried-on run changes engine at generation 400,** so its champion is validated again on the compiled life
+     before generation 401 and later candidates must beat that number. Tried on run 8102 at full size (a trial, not
+     kept): 0.6084 on the reference, 0.6083 on the compiled life.
+2. **The runner** (`experiments/stage8b.py`): phases `extend`, `fresh`, `test` and `status`; `--device cuda` for a GPU;
+   the test's nine worlds side by side with `--workers`.
+3. **The cost is time on his machine, and less than it was:** a generation late in run 8102 took 9 s on 4 processes
+   here, against 109 s on its pod. The fifteen runs are 7 to 15 hours on 4 to 8 processes.
+4. **For the laptop:** `bash laptop.sh` sets it up, tests the compiled life and times its CPU and its GPU. That
+   timing chooses between them.
+
+### For the owner (the draft's §8)
+1. Both kinds of run, or one. Recommended: both.
+2. Ten fresh runs.
+3. The criteria.
+4. The carried-on runs' change of engine.
+5. CPU or GPU, after `laptop.sh` has run there.
+
+**Impact:** this entry; `docs/prereg/stage8b.md`; `experiments/stage8b.py`, `tests/test_stage8b.py`.
