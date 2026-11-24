@@ -2466,10 +2466,10 @@ Champion 6402 under the spot, 600 fresh starts:
    points is a gap of none.
 2. **B1 stays failed as written.** Its 5 points on survival were mine, and wrong for a pair whose lives part
    completely and survive about one time in four. Its limit on fitness held in every pair.
-3. **A last bit is enough.** The strict kernel is the reference with the C library's `exp` and `log` in place of
-   numpy's and nothing else changed (D48 A.1), and for this cell it parts from the reference in a quarter of the lives.
-   So the reference would part from itself as much on a machine whose library differed in a last bit. The angle-sum
-   rule adds nothing that shows.
+3. **A last bit is enough.** The strict kernel is the reference with the C library's functions in place of numpy's
+   and nothing else changed (D48 A.1), and for this cell it parts from the reference in a quarter of the lives. So the
+   reference would part from itself as much on a machine whose library differed in a last bit. The angle-sum rule
+   adds nothing that shows.
 4. **What the check and the follow-up show together:** the compiled life is the reference's model; over 2,400 paired
    lives its outcomes are the reference's in distribution; it ranks a population as the reference does, far more
    closely than one engine agrees with itself under different luck; and it is 11.7 times faster on a core.
