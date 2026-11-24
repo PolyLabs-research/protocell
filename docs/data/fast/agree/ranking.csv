@@ -1,0 +1,5 @@
+what,spearman,step_cosine,top_half_shared
+"the two engines, luck 52",0.97704829083,0.988068911374,0.9375
+"the two engines, luck 53",0.991047205643,0.950652455494,0.958333333333
+the reference under two draws of luck,0.898209441129,0.700818149642,0.875
+the compiled under two draws of luck,0.897381985893,0.713114207308,0.895833333333

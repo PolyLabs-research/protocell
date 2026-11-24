@@ -1,0 +1,90 @@
+{
+ "B": false,
+ "B1": false,
+ "B2": true,
+ "B3": true,
+ "B4": true,
+ "intervals_missing_zero": [],
+ "largest_pair_difference": 0.0026541013549098926,
+ "lives": 1800,
+ "pairs": 18,
+ "pooled_difference": {
+  "high": 0.0005483134334952268,
+  "low": -0.0006068474820787245,
+  "mean": -2.48947306586998e-05
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 1,
+   "text": "B1 to B4 all hold",
+   "values": {
+    "B1": false,
+    "B2": true,
+    "B3": true,
+    "B4": true
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "single lives part: fewer than 90% of the paired lives agree to within 0.001 in fitness",
+   "values": {
+    "within_0.001": 0.7433333333333333
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "and most do not part far: at least 80% agree to within 0.01",
+   "values": {
+    "within_0.01": 0.9233333333333333
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "the two engines rank a population more alike (Spearman above 0.95) than one engine does under two draws of luck (below 0.9)",
+   "values": {
+    "engines": 0.9770482908301682,
+    "luck": 0.8982094411285947
+   }
+  }
+ ],
+ "quick": false,
+ "ranking": [
+  {
+   "spearman": 0.9770482908301682,
+   "step_cosine": 0.9880689113740867,
+   "top_half_shared": 0.9375,
+   "what": "the two engines, luck 52"
+  },
+  {
+   "spearman": 0.9910472056429734,
+   "step_cosine": 0.9506524554944468,
+   "top_half_shared": 0.9583333333333334,
+   "what": "the two engines, luck 53"
+  },
+  {
+   "spearman": 0.8982094411285947,
+   "step_cosine": 0.7008181496424559,
+   "top_half_shared": 0.875,
+   "what": "the reference under two draws of luck"
+  },
+  {
+   "spearman": 0.8973819858925665,
+   "step_cosine": 0.7131142073076159,
+   "top_half_shared": 0.8958333333333334,
+   "what": "the compiled under two draws of luck"
+  }
+ ],
+ "ranking_seconds": {
+  "compiled 52": 29.090113401412964,
+  "compiled 53": 28.423991441726685,
+  "reference 52": 264.7660331726074,
+  "reference 53": 251.91568660736084
+ },
+ "survival_flips": 26,
+ "within_0.001": 0.7433333333333333,
+ "within_0.01": 0.9233333333333333
+}
