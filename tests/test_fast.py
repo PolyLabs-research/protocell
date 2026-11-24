@@ -197,6 +197,16 @@ def test_the_searches_jobs_have_the_references_shape(compiled):
     assert 0.0 <= vgot["survival"] <= 1.0 and 0.0 < vgot["fitness"] < 1.0
 
 
+def test_the_size_of_a_job_changes_no_life(compiled):
+    cfg = [stage8.world(w, True) for w in stage8.TRAINED]
+    pop = genomes_for(cfg[0], "fourier1", 8)
+    ga = stage8.cma_for(True).as_ga()
+    by_size = [evolve.evaluate(cfg, "fourier1", ga.but(chunk=c), pop, 31, 2, fast.Mapper()) for c in (8, 4, 1)]
+    for other in by_size[1:]:
+        assert all(np.array_equal(other[k], by_size[0][k]) for k in by_size[0])
+    assert by_size[0]["fitness"].shape == (8, 4)
+
+
 def test_the_mapper_sends_only_the_searches_jobs():
     seen = []
 

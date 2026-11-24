@@ -328,9 +328,11 @@ def follow(out: Path, quick: bool, log: Any, starts_override: Optional[int] = No
 
 # --- C: the cost -----------------------------------------------------------------------------------------------------------
 
-def speed(out: Path, quick: bool, log: Any, workers: int, device: str) -> Dict[str, Any]:
+def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: int = 48) -> Dict[str, Any]:
     """One core: the reference and the compiled life on the same 48 cells of a population on one start. Then a whole
-    generation as a search runs it (96 genomes on 8 starts, four worlds) with ``workers`` processes, or on the GPU."""
+    generation as a search runs it (96 genomes on 8 starts, four worlds) with ``workers`` processes, or on the GPU.
+    ``chunk`` is the genomes in a job: 48 makes 16 jobs, as the pods ran; fewer make more and smaller jobs, which
+    spread better over cores of unequal speed. It changes no result (tested)."""
     pop = population(quick)
     cfg = stage8.world("home", quick)
     start = sample_starts(cfg, "cave", 1, SEED)
@@ -351,7 +353,8 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str) -> Dict[s
     log(f"one core, {batch} cells on one start: the reference {summary['reference_us_a_cell_tick']:.2f} microseconds a cell-tick, the compiled life "
         f"{summary['compiled_us_a_cell_tick']:.2f}: {summary['one_core_ratio']:.1f} times faster")
     mix = [stage8.world(wname, quick) for wname in stage8.TRAINED]
-    ga = stage8.cma_for(quick).as_ga().but(population=len(pop), chunk=min(48, len(pop)))
+    ga = stage8.cma_for(quick).as_ga().but(population=len(pop), chunk=min(chunk, len(pop)))
+    summary["chunk"] = ga.chunk
     if device == "cuda":
         ready, what = fast.cuda_ready()
         if not ready:
@@ -369,7 +372,8 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str) -> Dict[s
             ev = evolve.evaluate(mix, MODE, ga, pop, SEED, 0, fast.Mapper(pool.map))
             summary["generation_seconds"] = time.perf_counter() - t0
     summary["generation_lives"] = int(ev["fitness"].size)
-    log(f"a generation ({summary['generation_lives']} lives, four worlds) on " + (f"the GPU ({summary.get('gpu')})" if device == "cuda" else f"{workers} processes")
+    log(f"a generation ({summary['generation_lives']} lives, four worlds) on "
+        + (f"the GPU ({summary.get('gpu')})" if device == "cuda" else f"{workers} processes in jobs of {ga.chunk} cells")
         + f": {summary['generation_seconds']:.1f} s; 400 generations at that rate {summary['generation_seconds'] * 400 / 3600:.1f} h")
     return summary
 
@@ -434,6 +438,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--workers", type=int, default=1, help="speed: the processes a generation is spread over")
     parser.add_argument("--device", choices=["cpu", "cuda"], default="cpu", help="speed: where the generation runs")
+    parser.add_argument("--chunk", type=int, default=48, help="speed: the genomes in a job (a divisor of 96)")
     parser.add_argument("--tag", default="", help="speed and gpu: a name for the machine, so each machine's numbers keep their own directory")
     parser.add_argument("--starts", type=int, default=None, help="follow and gpu: the starts, in place of the plan's (a trial: not a result)")
     args = parser.parse_args(argv)
@@ -458,7 +463,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     elif args.part == "follow":
         summary = follow(out, args.quick, log, args.starts)
     elif args.part == "speed":
-        summary = speed(out, args.quick, log, args.workers, args.device)
+        summary = speed(out, args.quick, log, args.workers, args.device, args.chunk)
     else:
         summary = gpu(out, args.quick, log, args.starts)
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")

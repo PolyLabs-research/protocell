@@ -126,9 +126,12 @@ def carry_on(source: Path, out: Path, quick: bool, mapper: Any, log: Any) -> Dic
 
 
 def run_phase(phase: str, replicate: int, out_root: Path, workers: int, quick: bool, stop_after: Optional[int], device: str,
-              source_root: Path) -> Path:
+              source_root: Path, chunk: Optional[int] = None) -> Path:
     home = stage8.world("home", quick)
     cma = stage8.cma_for(quick).but(generations=generations(phase, quick))
+    if chunk:  # the genomes in a job: it spreads the same lives differently over the processes and changes none of them
+        cma = cma.but(chunk=chunk)
+        cma.as_ga()  # refuses a size the population does not divide into
     seed = seed_for(phase, replicate)
     out = out_root / phase / f"{MODE}-{seed}"
     fade, tighten = stage4b.path_generations(quick)
@@ -336,6 +339,8 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     parser.add_argument("--replicate", type=int, nargs="+", default=[1], help="one run, or several one after another")
     parser.add_argument("--workers", type=int, default=8, help="the processes a generation (or the test's worlds) is spread over")
     parser.add_argument("--device", choices=["cpu", "cuda"], default="cpu", help="where the compiled life runs")
+    parser.add_argument("--chunk", type=int, default=None, help="the genomes in a job (default 48: 16 jobs a generation; 12 spreads better "
+                                                                "over cores of unequal speed). It changes no result")
     parser.add_argument("--stop-after", type=int, default=None)
     parser.add_argument("--quick", action="store_true", help="the smoke test's sizes and a 2,000-tick day: not a result")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
@@ -347,7 +352,7 @@ def main(argv: Optional[Sequence[str]] = None) -> Any:
     stay_awake()
     if args.phase == "test":
         return test_phase(args.out, args.quick, args.workers, args.worlds)
-    return [run_phase(args.phase, r, args.out, args.workers, args.quick, args.stop_after, args.device, args.source) for r in args.replicate]
+    return [run_phase(args.phase, r, args.out, args.workers, args.quick, args.stop_after, args.device, args.source, args.chunk) for r in args.replicate]
 
 
 if __name__ == "__main__":

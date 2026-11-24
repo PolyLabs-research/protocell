@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 NEED = (3, 11)
 TESTS = ("tests/test_fast.py", "tests/test_fastcheck.py")
-SHOWN = ("gpu", "one_core_ratio", "compiled_us_a_cell_tick", "workers", "device", "generation_seconds", "largest_early_position_difference",
+SHOWN = ("gpu", "one_core_ratio", "compiled_us_a_cell_tick", "workers", "chunk", "device", "generation_seconds", "largest_early_position_difference",
          "pooled_difference", "largest_pair_difference")
 
 
@@ -105,26 +105,48 @@ def run(cmd, check=True):
     return done.returncode == 0
 
 
+def _uv(args, check=True):
+    """uv, told to trust the system's certificates: a network that re-signs HTTPS is known to the system's store,
+    which pip reads and uv, left alone, does not. (Both spellings of the setting, for older and newer uv.)"""
+    env = dict(os.environ, UV_SYSTEM_CERTS="1", UV_NATIVE_TLS="1")
+    print("   > uv " + " ".join(str(a) for a in args), flush=True)
+    done = subprocess.run([shutil.which("uv")] + [str(a) for a in args], cwd=str(ROOT), env=env)
+    if check and done.returncode != 0:
+        raise SystemExit("!! that step failed (exit %d): what it printed above says why" % done.returncode)
+    return done.returncode == 0
+
+
+def has_pip(py):
+    try:
+        return subprocess.run([str(py), "-m", "pip", "--version"], capture_output=True, cwd=str(ROOT), timeout=120).returncode == 0
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
 def make_environment(py):
+    """The environment, by Python's own venv (which brings pip); by uv only where Python's cannot make one."""
     if py.exists():
         return
-    uv = shutil.which("uv")
-    if uv:
-        run([uv, "venv", "--python", sys.executable, ".venv"])
-    else:
-        run([sys.executable, "-m", "venv", ".venv"])
+    if run([sys.executable, "-m", "venv", ".venv"], check=False) and py.exists():
+        return
+    if not shutil.which("uv"):
+        raise SystemExit("!! Python could not make the environment (on Debian and Ubuntu: apt install python3-venv), and there is no uv to make it")
+    shutil.rmtree(str(ROOT / ".venv"), ignore_errors=True)
+    _uv(["venv", "--seed", "--python", sys.executable, ".venv"])
 
 
 def install(py, extras, check=True):
-    uv = shutil.which("uv")
-    if uv:
-        return run([uv, "pip", "install", "--python", py, "-e", ".[%s]" % extras], check=check)
-    return run([py, "-m", "pip", "install", "-e", ".[%s]" % extras], check=check)
+    """With pip where the environment has it (it reads the system's certificates); with uv otherwise."""
+    if has_pip(py):
+        return run([py, "-m", "pip", "install", "-e", ".[%s]" % extras], check=check)
+    if shutil.which("uv"):
+        return _uv(["pip", "install", "--python", py, "-e", ".[%s]" % extras], check=check)
+    raise SystemExit("!! the environment has no pip and there is no uv: delete .venv and run this again")
 
 
-def machine_name():
-    name = re.sub(r"[^A-Za-z0-9_-]+", "-", platform.node().split(".")[0]).strip("-")
-    return name or "machine"
+def tidy(name):
+    """A name fit for a directory's."""
+    return re.sub(r"[^A-Za-z0-9_-]+", "-", name).strip("-") or "laptop"
 
 
 def show(name):
@@ -141,13 +163,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--workers", type=int, default=None, help="the processes to time a generation on (default: the physical cores)")
     parser.add_argument("--no-gpu", action="store_true", help="leave the GPU out")
-    parser.add_argument("--name", default=None, help="a name for this machine in the output's directories (default: its host name)")
+    parser.add_argument("--name", default="laptop", help="a name for this machine in the output's directories (default: laptop; not its host name, "
+                                                         "which would go into the repository with the numbers)")
     args = parser.parse_args(argv)
     message = too_old()
     if message:
         print(message, flush=True)
         return 1
-    name = args.name or machine_name()
+    name = tidy(args.name)
     cores = physical_cores()
     workers = args.workers or cores
     gpu = None if args.no_gpu else nvidia_gpu()
@@ -166,8 +189,9 @@ def main(argv=None):
     print("== the compiled life's tests (about a minute)", flush=True)
     run([py, "-m", "pytest", "-q", *TESTS])
 
-    print("== the CPU: one core, then a generation on %d processes" % workers, flush=True)
+    print("== the CPU: one core, then a generation on %d processes, in jobs of 48 cells and then of 12" % workers, flush=True)
     run([py, "-m", "experiments.fastcheck", "--part", "speed", "--workers", workers, "--tag", name])
+    run([py, "-m", "experiments.fastcheck", "--part", "speed", "--workers", workers, "--chunk", 12, "--tag", name + "-jobs-of-12"])
 
     if gpu:
         print("== the GPU's kernel beside the CPU's (a few minutes), then a generation on the GPU", flush=True)

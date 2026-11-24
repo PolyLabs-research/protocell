@@ -2574,3 +2574,23 @@ they printed.
 5. **Still not shown:** a life on a GPU.
 
 **Impact:** this entry; `protocell/fast.py`, `protocell/fast_cuda.py`, `tests/test_fast.py`, `pyproject.toml`.
+
+## D53 — The laptop's network: the set-up script installs with pip; a job's size becomes a setting
+
+**Date:** 2026-11-24  
+**Why:** the owner ran `python laptop.py` on the laptop. It has `uv`, the script preferred it, and `uv` could not
+install: the laptop's network re-signs HTTPS, which the system's certificate store knows and `uv`, left alone, does
+not read. pip reads it, and had installed everything there by hand before. Nothing in his environment was changed.
+
+### Decided
+1. **`laptop.py` makes the environment with Python's own `venv` and installs with pip;** `uv` only where there is no
+   pip, and then told to read the system's certificates.
+2. **The script names its output `laptop` unless told otherwise,** not the machine's host name, which would go into
+   the repository with the numbers.
+3. **A job's size is a setting** (`--chunk`, in the timing and in stage 8b's runner). The laptop has 20 cores (an
+   Intel chip with cores of two speeds) and a generation was 16 jobs of 48 genomes: at most 16 cores busy, the slow
+   ones holding the generation up. Jobs of 12 make 64. The size of a job changes no life (a test; and a run's
+   champion here is the same number either way). The script times both.
+
+**Impact:** this entry; `laptop.py`, `tests/test_laptop.py`; `experiments/fastcheck.py`, `experiments/stage8b.py`,
+`tests/test_fast.py`; `docs/prereg/stage8b.md`.

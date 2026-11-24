@@ -94,7 +94,9 @@ own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
     git commit -m "Stage 8b: the runs and the test, the data"
     git push
 
-- `--workers` is the laptop's physical cores (`laptop.py` prints them; 8 and 16 divide a generation's 16 jobs evenly).
+- `--workers` is the laptop's physical cores (`laptop.py` prints them). A generation is 16 jobs of 48 genomes by
+  default; `--chunk 12` makes it 64 jobs of 12, which spread better over more than 16 cores or over cores of unequal
+  speed. The size of a job changes no life (tested).
 - `--device cuda` runs the lives on the GPU instead, if `laptop.py` shows it faster.
 - **Staying awake:** on Windows the runner asks the system not to sleep while it runs (a closed lid still stops it);
   on Linux wrap the command in `systemd-inhibit`.

@@ -25,9 +25,23 @@ def test_an_old_python_is_told_what_to_do_and_a_new_one_passes():
 
 def test_the_machines_cores_name_and_gpu():
     assert 1 <= laptop.physical_cores() <= 4096
-    assert re.fullmatch(r"[A-Za-z0-9_-]+", laptop.machine_name())
+    assert laptop.tidy("My Laptop.local!") == "My-Laptop-local" and laptop.tidy("///") == "laptop"
+    assert re.fullmatch(r"[A-Za-z0-9_-]+", laptop.tidy("laptop"))
     gpu = laptop.nvidia_gpu()
     assert gpu is None or isinstance(gpu, str)
+
+
+def test_pip_is_used_where_the_environment_has_it(monkeypatch):
+    """pip reads the system's certificates and uv, left alone, does not: on a network that re-signs HTTPS only pip works."""
+    calls = []
+    monkeypatch.setattr(laptop, "run", lambda cmd, check=True: calls.append(("pip", [str(c) for c in cmd])) or True)
+    monkeypatch.setattr(laptop, "_uv", lambda args, check=True: calls.append(("uv", [str(a) for a in args])) or True)
+    monkeypatch.setattr(laptop, "has_pip", lambda py: True)
+    assert laptop.install(Path("py"), "dev,fast") and calls[-1] == ("pip", ["py", "-m", "pip", "install", "-e", ".[dev,fast]"])
+    monkeypatch.setattr(laptop, "has_pip", lambda py: False)
+    monkeypatch.setattr(laptop.shutil, "which", lambda name: "/somewhere/uv" if name == "uv" else None)
+    assert laptop.install(Path("py"), "dev,gpu") and calls[-1] == ("uv", ["pip", "install", "--python", "py", "-e", ".[dev,gpu]"])
+    assert laptop.has_pip(Path(sys.executable)) in (True, False)
 
 
 def test_it_imports_nothing_outside_pythons_own_library():
