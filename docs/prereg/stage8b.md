@@ -89,10 +89,11 @@ own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
     PY -W error::RuntimeWarning -m experiments.stage8b --phase extend --replicate 1 2 3 4 5 --workers 8
     PY -W error::RuntimeWarning -m experiments.stage8b --phase fresh --replicate 1 2 3 4 5 6 7 8 9 10 --workers 8
     PY -m experiments.stage8b --phase status
-    PY -W error::RuntimeWarning -m experiments.stage8b --phase test --workers 9
     git add docs/data/stage8b docs/data/fast
-    git commit -m "Stage 8b: the runs and the test, the data"
+    git commit -m "Stage 8b: the runs, the data"
     git push
+
+Then, on this machine, from that data: `PY -W error::RuntimeWarning -m experiments.stage8b --phase test`.
 
 - `--workers` is the laptop's physical cores (`laptop.py` prints them). A generation is 16 jobs of 48 genomes by
   default; `--chunk 12` makes it 64 jobs of 12, which spread better over more than 16 cores or over cores of unequal
