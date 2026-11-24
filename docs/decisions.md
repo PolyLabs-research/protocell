@@ -2640,3 +2640,33 @@ not read. pip reads it, and had installed everything there by hand before. Nothi
 3. **Stage 8b's draft** (D50), still to be answered.
 
 **Impact:** this entry; `docs/prereg/fast.md` (its outcome); `docs/prereg/stage8b.md` (where it runs).
+
+## D55 — The owner chooses pods for stage 8b; the pods' scripts for the compiled life; the plan put to him before any launch
+
+**Date:** 2026-11-24  
+**Why:** the owner on D54 C1: "actually, lets go with a pod for this one as its short".
+
+### Decided
+1. **Stage 8b's runs are made on RunPod, on the compiled life,** not on the laptop.
+2. **The pods' scripts are made ready for it:**
+   - the pod's set-up installs Numba (0.68.1, the version checked here) and can run named tests in place of the
+     whole suite;
+   - `cloud/run_stage8b.sh` makes a pod's runs one after another, so a pod that reaches its deadline leaves one run
+     unfinished and not three;
+   - `cloud/launch_stage8b.sh` is `launch_phase.sh` for this stage, with two things learnt since: it asks a new
+     host its speed before staging anything on it and gives a slow one back, and it tries again when RunPod's API
+     refuses a call;
+   - the pull campaign is unchanged.
+   - *Tried here:* the pod's job at the smoke test's size, a failing run among its runs included; the pod's tests with
+     warnings as errors (27 pass); the launcher's dry run, which creates nothing.
+3. **The plan, put to the owner before any launch** (his rule: the rate, the hours and the worst cost, each time):
+   - five cpu5c pods of 16 vCPUs at $0.56 an hour, each with a deadline 3.6 hours from its launch: **at most $10.08**;
+   - pod k makes three runs one after another: run k carried on to 800 generations, then fresh runs k and k + 5;
+   - *expected:* a generation in 6 to 10 s (an estimate: the pods' recorded 83–111 s divided by this machine's ratio,
+     not measured on a pod), so 2 to 3.4 hours a pod and $6 to $9.50 in all.
+4. **If a pod reaches its deadline with a run unfinished,** the run's checkpoint is already here (the campaign pulls
+   every three minutes) and it is finished on this machine in one process.
+5. **Nothing is launched before his OK.**
+
+**Impact:** this entry; `cloud/setup_pod.sh`, `cloud/stage_pod.sh`, `cloud/run_stage8b.sh`, `cloud/launch_stage8b.sh`,
+`cloud/speed_gate.py`.
