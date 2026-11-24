@@ -2569,7 +2569,8 @@ they printed.
    - the kernel after the change is the kernel before it, bit for bit, on 720 whole lives at full size in the six
      worlds (162 of them deaths) and on a generation's 768 lives through each version's mapper (a scratch run here,
      not kept). So what D48 and D49 found stands for it;
-   - part A of the check is run again at this commit (`docs/data/fast/same-pieces/`).
+   - part A of the check, run again at this commit (`a3ff7f3`; `docs/data/fast/same-pieces/`), holds: 24 of 24
+     whole lives are the reference's in every number.
 5. **Still not shown:** a life on a GPU.
 
 **Impact:** this entry; `protocell/fast.py`, `protocell/fast_cuda.py`, `tests/test_fast.py`, `pyproject.toml`.
