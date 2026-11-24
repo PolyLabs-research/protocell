@@ -2329,3 +2329,18 @@ takes worlds and seeds); `docs/data/stage8/`; `README.md` status.
 4. **Still open:** more generations for stage 6b's runs; the uniform mode.
 
 **Impact:** this entry; `docs/data/stage8/read/`.
+
+## D46 — The owner's decision on D45: the merge; the reliability run moves from RunPod to the owner's laptop
+
+**Date:** 2026-11-24  
+**Why:** the owner on D45 C: "Merge. I want to shift the training to my Nvidia GPU laptop rather than the cloud for
+this one." He also asked about the project being set up for that.
+
+### Decided
+1. **The reading of champion 8102 is added to the write-up and `stage9` is merged into `main`** (D45 C1).
+2. **The generalist's reliability run** (D45 C2) **is to run on the owner's laptop, which has an Nvidia GPU, and not on
+   RunPod.** Whether it is more generations for stage 8's five runs or more runs is not chosen yet.
+3. **What the laptop needs is worked out before anything is drafted.** As the project stands nothing in it uses a GPU:
+   the simulation is NumPy on the CPU, and a generation's work is spread over processes.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `README.md`.

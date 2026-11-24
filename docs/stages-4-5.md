@@ -1,7 +1,7 @@
 # Stages 4 to 8: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) and stage 8 on 2026-11-16 (D42 C1). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) and the reading of champion 8102 on 2026-11-24 (D45 C1). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -29,6 +29,7 @@ Stages 4 to 6 asked four things in turn:
 | how reliably, and with more time | 4 of 5 runs do B8's job; 2 of 5 beat B8; every run is better at 400 generations than at 200 | D37 |
 | does it hold in worlds the cells never saw | Mostly where the world is like home; one evolved cell holds up in all six | D40 |
 | does a generalist emerge when evolution is given several worlds | In 1 run of 5; that cell beats the best simple rule in 5 of 9 worlds | D42 |
+| how the generalist does it | Two ways of moving in one network: it circles where its body gives no direction, and steers by its own shading where it does | D45 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -192,6 +193,23 @@ Stages 4 to 6 asked four things in turn:
   those two are the worst elsewhere too.
 - **Champion 6402, made at home only, does the rule's job in seven of the nine worlds.**
 
+## 12. How the generalist does it (D45)
+
+- **The probe:** champion 8102 on 60 fresh starts in each of its four trained worlds, beside champion 6402 and a
+  stage 8 run that failed (8105). It explains a result and sets no criterion.
+- **Translucent, it circles.** At home, under flickering clouds and under the spot it runs 82–95% of the day, turning
+  about −0.08 rad a tick, as champion 6301 did. There it needs its ring's links (0.31–0.43 of fitness lost without
+  them) and its core, and loses nothing when the direction across its body is taken away.
+- **Shaded, it steers.** It runs 62% of the day and hardly turns (−0.011 rad a tick). There it loses 0.14 without the
+  direction across its body, and nothing without its ring's links or the core's own loops.
+- **Nothing switches between the two but the light.** The same network does both.
+- **A cloud slows it and does not stop it.** Through a cloud's shadow its share of ticks moving falls from 0.98 to
+  0.65; the hand-written line's champion (3603) falls from 1.00 to 0.00, every time.
+- **Why the spot divides the runs:** a spot that crosses the pool has to be followed all day. The failed run rests
+  most of the day (it runs 24% of it) and never became a circler.
+- **Two of five predictions failed:** I expected the ring to matter in every world, and the generalist to ignore
+  clouds.
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
@@ -207,7 +225,8 @@ Stages 4 to 6 asked four things in turn:
   - anything beyond one spoke mode (fourier1), one world and one sensor;
   - that no simple rule could sit higher than B8. B8 is the best of those tried.
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
-  body is answered for the searched cell (§9); how the evolved cell's circling is biased is not (D36 B.2).
+  body is answered for the searched cell (§9); how the evolved cells' circling is biased is not, for champion 6301
+  (D36 B.2) or champion 8102 (D45 B.4). Whether a generalist emerges in more than one run of five is not known either.
 
 ## Cost and conduct
 
@@ -223,4 +242,5 @@ Stages 4 to 6 asked four things in turn:
 
 ## Next
 
-Reading the generalist, champion 8102: how one cell handles four kinds of world (D42 C2).
+The generalist's reliability (D45 C2): more generations for stage 8's five runs, or more runs. The owner wants it run
+on his own laptop in place of RunPod (D46); what that takes is worked out first.
