@@ -2594,3 +2594,49 @@ not read. pip reads it, and had installed everything there by hand before. Nothi
 
 **Impact:** this entry; `laptop.py`, `tests/test_laptop.py`; `experiments/fastcheck.py`, `experiments/stage8b.py`,
 `tests/test_fast.py`; `docs/prereg/stage8b.md`.
+
+## D54 — The first lives on a GPU: the same model, and too slow in double precision to help; on the laptop the CPU runs the searches
+
+**Date:** 2026-11-24  
+**Why:** D52, D53. The owner ran the tests, the CPU's timing and the GPU's part on the laptop (20 cores; an NVIDIA RTX
+2000 Ada laptop GPU, 8 GB) and sent what they printed. The files are on the laptop and come with the runs' data.
+
+### A. What he reported
+1. **The tests on Windows:** 23 passed, 1 skipped (the one that needs a machine with no GPU). The GPU's compile test
+   passes there now.
+2. **The CPU:** the reference 22.78 microseconds a cell-tick on one core, the compiled life 1.23; a generation on 20
+   processes 15.7 s, so 400 generations in 1.7 hours.
+3. **The GPU computes the same model.** Over the first 100 ticks its positions differ from the CPU kernel's by at most
+   7.5e-12 R.
+4. **And gives the same outcomes.** Over 450 whole lives (three cells, 25 starts, six worlds) the mean fitness
+   differs by +0.0012. The largest difference for one cell in one world is 0.013: champion 6402 under the spot, the
+   pair whose lives part (D49).
+5. **It is slow.** 75 whole lives take 36 to 40 s on the GPU, in every world. One CPU core of the laptop does the same
+   75 in 6 to 15 s.
+
+### B. Reading
+1. **The GPU form is right, and lives in short launches run on a real device.** Windows did not interfere.
+2. **In double precision this GPU does not help.** A launch carries its lives forward at about 110 microseconds a
+   tick; a CPU core takes about 1 for one life's tick. By that arithmetic the GPU would take about 20 s over a
+   generation's 768 lives, if it spreads them over all its processors: no better than the CPU's 15.7 s. That is an
+   estimate; the generation's own timing on the GPU has not come back.
+3. **This is what the plan allowed for** (`docs/prereg/fast.md` §7): the kernel is double precision, and this kind of
+   card does double precision at a small fraction of its single-precision speed. It is now measured for this card.
+4. **So on the laptop the CPU runs the searches.** Stage 8b's fifteen runs are 6,000 generations: 26 hours there at
+   15.7 s a generation.
+5. **The reference is slow on the laptop** (22 to 32 microseconds a cell-tick; 3.8 here), so the test, which is the
+   reference's, belongs on this machine, as every stage's test has been.
+
+### C. Decisions this surfaces (the owner's)
+1. **Where stage 8b's runs are made:**
+   - the laptop's CPU: about 26 hours for all fifteen, perhaps fewer in smaller jobs (not yet timed there);
+   - this machine: 4.5 s a generation on 8 processes, so about 7.5 hours; an all-core load has tripped its thermal
+     limit before (D23), so only on his word, and at a number of processes he chooses;
+   - RunPod on the compiled life: an estimate of about $10 for all fifteen (the pods' recorded 83–111 s a generation,
+     divided by this machine's 11.7), not measured on a pod.
+2. **A single-precision kernel for the GPU.** The card's single precision is many times faster than its double. It
+   would be a different instrument with its own plan and check: positions near 5,000 R, a heading that grows without
+   bound and small energy steps would have to stay in double precision. Not started.
+3. **Stage 8b's draft** (D50), still to be answered.
+
+**Impact:** this entry; `docs/prereg/fast.md` (its outcome); `docs/prereg/stage8b.md` (where it runs).

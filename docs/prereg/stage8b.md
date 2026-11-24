@@ -74,13 +74,13 @@ which it beats the bar (stage 8's G2 and G3).
 ## 7. Where it runs, and what it costs
 
 - **The owner's machine,** not RunPod: no money.
-- **Time, from this machine** (`docs/data/fast/speed/`, and a trial of this stage's runner at full size, not kept): a
-  generation late in run 8102 took 9 s on 4 processes, where its pod took 109 s. So 400 generations are about an hour
-  on 4 processes and half that on 8; the fifteen runs here, 6,000 generations, are 7 to 15 hours. The laptop's own
-  figure comes from `laptop.py`.
+- **Time.** A generation late in run 8102 took 109 s on its pod. On the compiled life it takes 4.5 s on 8 processes
+  on this machine (`docs/data/fast/speed/`) and 15.7 s on the laptop's 20 (D54). The fifteen runs here are 6,000
+  generations: about 26 hours on the laptop, about 7.5 on this machine.
+- **The laptop's GPU does not help:** in double precision it is slower than the laptop's CPU (D54).
 - **A run checkpoints after every generation;** the same command carries it on after a stop.
-- **The test** is on the reference and is the slower part: about 7 hours as one process, under an hour with a
-  process a world.
+- **The test** is on the reference and is made on this machine, as every stage's has been: the reference is six to
+  eight times slower on the laptop. About 7 hours as one process.
 
 On the laptop, from a fresh clone of this branch (a clean tree, as every run that counts). `PY` is the environment's
 own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
@@ -109,4 +109,4 @@ own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
    in ten runs and three in ten are hard to tell apart with five.
 3. **The criteria** in §5, each stage 8's or stage 6b's bar carried over.
 4. **The carried-on runs' change of engine** (§3): the champion validated again before generation 401.
-5. **CPU or GPU:** whichever `laptop.py` shows faster on the laptop. The GPU form has not run on a GPU yet.
+5. **Where the runs are made** (D54 C1): the laptop's CPU, this machine, or pods on the compiled life. Not its GPU.

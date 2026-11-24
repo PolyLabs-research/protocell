@@ -126,4 +126,7 @@ So A's outcome is expected, the tolerances in B were chosen after the 16 lives, 
   completely and survive one time in four; B1 stays recorded as failed.
 - **C:** 11.7 times faster on one core (3.82 against 0.33 microseconds a cell-tick). A stage 8 generation takes 4.5 s
   on 8 processes here; the pods took 83–111 s on 16 vCPUs.
-- **Still not shown:** anything on a GPU.
+- **On a GPU** (added later that day; D52, D54): on the owner's laptop (an NVIDIA RTX 2000 Ada, Windows) the GPU form
+  computes the same model (positions within 7.5e-12 R of the CPU kernel's over the first 100 ticks) and gives the same
+  outcomes (+0.0012 in mean fitness over 450 whole lives). It is too slow in double precision to help: 75 whole lives
+  take 36 to 40 s, where one of the laptop's CPU cores takes 6 to 15 s. On the laptop the CPU runs the searches.
