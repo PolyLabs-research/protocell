@@ -62,7 +62,16 @@ try "${RP[@]}" push "$POD" cloud/speed_gate.py /root/pc/speed_gate.py || fail "p
 speed=$("${RP[@]}" ssh "$POD" -- python3 /root/pc/speed_gate.py 2> /dev/null | tail -1)
 say "the host's speed gate: ${speed:-none} s (this box about 0.24; at most $SLOWEST)"
 awk -v t="${speed:-99}" -v most="$SLOWEST" 'BEGIN { exit !(t + 0 > 0 && t + 0 <= most) }' || fail "a slow host (${speed:-no answer} s)"
-POD_TESTS="$POD_TESTS" try bash cloud/stage_pod.sh "$POD" || fail "staging"
+stage() {
+    staged=$(POD_TESTS="$POD_TESTS" bash cloud/stage_pod.sh "$POD" 2>&1)
+    local status=$?
+    echo "$staged"
+    return $status
+}
+try stage || fail "staging"
+# Staging prints the pod's tests' last line and does not fail on it: read it here, and run nothing on a pod whose tests did not pass.
+echo "$staged" | grep -E '^tests: ' | grep -q ' passed' || fail "the pod's tests did not pass"
+if echo "$staged" | grep -E '^tests: ' | grep -q -E 'failed|error'; then fail "the pod's tests failed"; fi
 # Start the job detached on the pod; the local ssh is cut after 30 s (the job is setsid and nohup there, so it lives on).
 timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && ${CHUNK:+CHUNK=$CHUNK }nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_stage8b.sh $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
 sleep 25

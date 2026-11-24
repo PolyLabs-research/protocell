@@ -2670,3 +2670,21 @@ not read. pip reads it, and had installed everything there by hand before. Nothi
 
 **Impact:** this entry; `cloud/setup_pod.sh`, `cloud/stage_pod.sh`, `cloud/run_stage8b.sh`, `cloud/launch_stage8b.sh`,
 `cloud/speed_gate.py`.
+
+## D56 — The owner's OK on the launch: stage 8b's fifteen runs, on five pods
+
+**Date:** 2026-11-24  
+**Why:** D55, item 3. The plan was put to the owner with its terms: five cpu5c pods of 16 vCPUs at $0.56 an hour, each
+deleted 3.6 hours after its launch, at most $10.08 in all, expected $6 to $9.50; the draft as written.
+
+### Decided
+1. **The owner: "Launch all 15 (Recommended)".** Recorded in `docs/prereg/stage8b.md` §9 before any run.
+2. **The draft stands as written:** both kinds of run, ten fresh runs, the criteria R1 to R3, the carried-on runs'
+   champion validated again on the compiled life before generation 401.
+3. **Pod k makes runs `extend k`, `fresh k` and `fresh k + 5`,** one after another, with 16 workers.
+4. **The launcher reads the pod's tests' line** and runs nothing on a pod whose tests did not pass (staging itself
+   does not fail on it).
+5. **The launcher itself has not launched on RunPod's new API before** (D44): this launch is that proof. The pods'
+   deadlines and this machine's sweeper hold whatever it does.
+
+**Impact:** this entry; `docs/prereg/stage8b.md`; `cloud/launch_stage8b.sh`.

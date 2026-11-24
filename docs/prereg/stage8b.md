@@ -111,3 +111,12 @@ Then, on this machine, from that data: `PY -W error::RuntimeWarning -m experimen
 3. **The criteria** in §5, each stage 8's or stage 6b's bar carried over.
 4. **The carried-on runs' change of engine** (§3): the champion validated again before generation 401.
 5. **Where the runs are made** (D54 C1): the laptop's CPU, this machine, or pods on the compiled life. Not its GPU.
+
+## 9. The owner's answers (2026-11-24), before any run
+
+- **Where:** "actually, lets go with a pod for this one as its short" (D55).
+- **The launch, put to him with its terms** (five cpu5c pods of 16 vCPUs at $0.56 an hour, each deleted 3.6 hours
+  after its launch, at most $10.08; three runs a pod, one after another; the draft as written, with its criteria and
+  the carried-on runs' champion validated again on the compiled life): **"Launch all 15 (Recommended)"**.
+- So §8 stands as recommended: both kinds of run, ten fresh runs, the criteria of §5, the change of engine of §3. The
+  runs are made on pods; the test on this machine.
