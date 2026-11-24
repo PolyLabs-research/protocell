@@ -2344,3 +2344,32 @@ this one." He also asked about the project being set up for that.
    the simulation is NumPy on the CPU, and a generation's work is spread over processes.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D47 — A compiled life for the searches: its plan, criteria and predictions, before its check runs
+
+**Date:** 2026-11-24  
+**Why:** D46. The owner wants the next runs on his laptop, which has an Nvidia GPU. Nothing in the project could use
+one: the simulation is NumPy on the CPU.
+
+### Decided
+1. **What was found first** (scratch runs on one core here, not results): the reference costs 4–8 microseconds a
+   cell-tick in a batch of 48, most of it the overhead of a hundred small array operations a tick. The same life
+   written as scalar code and compiled costs 0.5–0.9.
+2. **So a second engine is built, for the searches only** (`protocell/fast.py`, plan in `docs/prereg/fast.md`): one
+   cell's life as scalar code, compiled by Numba for the CPU, and the same function compiled for an Nvidia GPU
+   (`protocell/fast_cuda.py`).
+   - It is the reference's model, operation for operation, with the reference's own noise, sky and light source.
+   - It differs in the library functions (`exp`, `log`, `sin`, `cos`), so single lives part from the reference's; the
+     claim is agreement in distribution and in ranking.
+   - The searches' code is not changed: a mapper swaps the two jobs.
+   - Every test and reported number stays on the reference.
+3. **The check, its four criteria and four predictions are in the plan (§4, §5), written before it runs,** with what
+   I had already seen (§6): a scratch version of part A passed, and I chose B's tolerances after 16 scratch lives.
+4. **The GPU form has not run on a GPU.** This machine has none. Here it is compiled (NVIDIA's compiler needs no
+   device) and run in Numba's simulator. Whether it beats the laptop's CPU cores is to be measured on the laptop: it
+   computes in double precision, which consumer GPUs do slowly.
+5. **Numba becomes an optional dependency** (`.[fast]`, and `.[gpu]` for an Nvidia GPU); CI installs `.[dev,fast]`.
+   It is installed in this machine's environment beside the same numpy (2.4.6).
+
+**Impact:** this entry; `docs/prereg/fast.md`; `protocell/fast.py`, `protocell/fast_cuda.py`, `experiments/fastcheck.py`,
+`tests/test_fast.py`, `tests/test_fastcheck.py`; `pyproject.toml`, `.github/workflows/ci.yml`.

@@ -19,6 +19,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9"]
+# The compiled life (protocell/fast.py): a second engine for the searches. `fast` runs it on the CPU; `gpu` adds
+# NVIDIA's compiler and runtime for an Nvidia GPU (the machine then needs only NVIDIA's driver).
+fast = ["numba>=0.61"]
+gpu = ["numba>=0.61", "numba-cuda[cu12]>=0.20"]
 
 [project.urls]
 Repository = "https://github.com/PolyLabs-research/protocell"

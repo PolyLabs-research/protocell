@@ -45,6 +45,18 @@ control). Stage 5 (D26): a cell that senses light relative to its recent level. 
     .venv/bin/python -W error::RuntimeWarning -m experiments.stage0 --workers 16   # stage 0's checks, from a clean tree
     .venv/bin/python -W error::RuntimeWarning -m experiments.cave --config all --workers 16   # the cave's checks (about 95 min)
 
+## The compiled life, and another machine
+
+The searches can run on a second engine, `protocell/fast.py`: one cell's life as scalar code, compiled by Numba for
+the CPU or for an Nvidia GPU (`docs/prereg/fast.md`). It is the reference's model with the reference's own noise; the
+library functions differ in a last bit, so single lives part and the distributions do not. Every test and reported
+number is still made by the reference.
+
+    uv pip install --python .venv/bin/python -e ".[dev,fast]"    # the CPU; ".[dev,gpu]" adds an Nvidia GPU (it needs NVIDIA's driver only)
+    .venv/bin/python -m experiments.fastcheck --part same        # the same bits as the reference, under the C library's maths
+    .venv/bin/python -W error::RuntimeWarning -m experiments.fastcheck --part agree   # the same outcomes on fresh starts (about 45 min)
+    bash laptop.sh                                               # on another machine: set up, test, time the CPU and the GPU if there is one
+
 ## Watching a cell
 
     .venv/bin/python -m tools.replay --config burn --start 51 --cells b0 b2r b2rr
