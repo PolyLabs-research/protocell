@@ -50,15 +50,18 @@ F_GAIN, F_ALPHA, F_SIN_ALPHA, N_CELLF = range(4)
 K_X, K_Y, K_HEADING, K_ENERGY, K_SHADE, K_ETA, N_TRACKF = range(7)
 # a start's tick-by-tick numbers, in ``sched``
 S_X, S_Y, S_SCALE, S_COVER, N_SCHED = range(5)
-# a life's outcome, in ``out``
-(O_FITNESS, O_SOAKED, O_BEAT, O_ALIVE, O_DEATH_TICK, O_CAUSE, O_ENERGY, O_DAMAGE, O_X, O_Y, O_HEADING, N_OUT) = range(12)
+# a life's outcome, in ``out``: with the network's state (``ys``, ``os_``) it is also everything a life needs to go on from
+(O_FITNESS, O_SOAKED, O_BEAT, O_ALIVE, O_DEATH_TICK, O_CAUSE, O_ENERGY, O_DAMAGE, O_X, O_Y, O_HEADING, O_LEVEL, N_OUT) = range(13)
 MAX_WALL, MAX_NEURONS = 32, 64  # the GPU's per-thread scratch is a fixed size
 
 
-def _life(l, cell, track, n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot, out,
+def _life(l, cell, track, n, m, t0, t1, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot, out, ys, os_,
           nx, ny, lt, xs, tmp, acc, y, o):
-    """One life, start to death or to its lifetime's end: life ``l`` is cell ``cell`` on start ``track``. Scalar code
-    in the subset both of Numba's targets compile; the eight last arguments are scratch."""
+    """Ticks ``t0`` to ``t1`` (or to its death, or its lifetime's end) of one life: life ``l`` is cell ``cell`` on start
+    ``track``. From tick 0 the life begins; from any later tick it goes on from what the call before left in ``out``,
+    ``ys`` and ``os_``, so a life run in pieces is the life run whole, bit for bit (tested). The CPU runs a life in one
+    call; the GPU in short ones. Scalar code in the subset both of Numba's targets compile; the eight last arguments
+    are scratch."""
 
     def add(v, k):
         # numpy's order for a row of k numbers: in turn below eight, else eight lanes added pairwise and the rest in turn
@@ -101,10 +104,6 @@ def _life(l, cell, track, n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, c
     relative = consts[C_RELATIVE] != 0.0
     strict = consts[C_STRICT] != 0.0
     ticks = tracki[track]
-    px = trackf[track, K_X]
-    py = trackf[track, K_Y]
-    heading = trackf[track, K_HEADING]
-    energy = trackf[track, K_ENERGY]
     shade = trackf[track, K_SHADE]
     eta = trackf[track, K_ETA]
     shaded = shade != 1.0
@@ -112,23 +111,47 @@ def _life(l, cell, track, n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, c
     alpha = cellf[cell, F_ALPHA]
     sin_alpha = cellf[cell, F_SIN_ALPHA]
     nf = float(n)
-    damage = 0.0
-    level = 0.0
-    fitness = 0.0
-    soaked_sum = 0.0
-    beat_sum = 0.0
-    alive = 1.0
-    death_tick = -1.0
-    cause = 0.0
     ch = 1.0
     sh = 0.0
     tx = 0.0
     ty = 0.0
     tn = 1.0
-    for i in range(m):
-        y[i] = 0.0
-        o[i] = 1.0 / (1.0 + math.exp(-min(max(0.0 + bias[cell, i], -500.0), 500.0)))
-    for t in range(ticks):
+    if t0 == 0:  # the life begins
+        px = trackf[track, K_X]
+        py = trackf[track, K_Y]
+        heading = trackf[track, K_HEADING]
+        energy = trackf[track, K_ENERGY]
+        damage = 0.0
+        level = 0.0
+        fitness = 0.0
+        soaked_sum = 0.0
+        beat_sum = 0.0
+        alive = 1.0
+        death_tick = -1.0
+        cause = 0.0
+        for i in range(m):
+            y[i] = 0.0
+            o[i] = 1.0 / (1.0 + math.exp(-min(max(0.0 + bias[cell, i], -500.0), 500.0)))
+    else:  # it goes on from where the call before left it
+        px = out[l, O_X]
+        py = out[l, O_Y]
+        heading = out[l, O_HEADING]
+        energy = out[l, O_ENERGY]
+        damage = out[l, O_DAMAGE]
+        level = out[l, O_LEVEL]
+        fitness = out[l, O_FITNESS]
+        soaked_sum = out[l, O_SOAKED]
+        beat_sum = out[l, O_BEAT]
+        alive = out[l, O_ALIVE]
+        death_tick = out[l, O_DEATH_TICK]
+        cause = out[l, O_CAUSE]
+        for i in range(m):
+            y[i] = ys[l, i]
+            o[i] = os_[l, i]
+    stop = min(t1, ticks)
+    if alive == 0.0:  # a cell that has died does not go on
+        stop = t0
+    for t in range(t0, stop):
         source_x = sched[track, t, S_X]
         source_y = sched[track, t, S_Y]
         scale = sched[track, t, S_SCALE]
@@ -246,18 +269,22 @@ def _life(l, cell, track, n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, c
     out[l, O_X] = px
     out[l, O_Y] = py
     out[l, O_HEADING] = heading
+    out[l, O_LEVEL] = level
+    for i in range(m):
+        ys[l, i] = y[i]
+        os_[l, i] = o[i]
 
 
 _life_cpu = njit(nogil=True, cache=True)(_life)
 
 
 @njit(nogil=True, cache=True)
-def _run_cpu(cells, tracks, n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot, out):
+def _run_cpu(cells, tracks, n, m, t0, t1, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot, out, ys, os_):
     nx, ny, lt, xs, tmp = np.empty(n), np.empty(n), np.empty(n), np.empty(n), np.empty(n)
     acc, y, o = np.empty(m), np.empty(m), np.empty(m)
     for l in range(cells.shape[0]):
-        _life_cpu(l, cells[l], tracks[l], n, m, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot,
-                  out, nx, ny, lt, xs, tmp, acc, y, o)
+        _life_cpu(l, cells[l], tracks[l], n, m, t0, t1, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot,
+                  out, ys, os_, nx, ny, lt, xs, tmp, acc, y, o)
 
 
 # --- what a life is given -----------------------------------------------------------------------------------------------
@@ -424,8 +451,9 @@ def _outcome(out: np.ndarray, ends: np.ndarray) -> Lives:
 
 
 def run_lives(cfg: Config, params: Params, tracks: Sequence[Track], cells: Sequence[int], on: Sequence[int], *, strict: bool = False,
-              device: str = "cpu") -> Lives:
-    """Life i is cell ``cells[i]`` of ``params`` on track ``on[i]``, all in one call. ``device`` is "cpu" or "cuda"."""
+              device: str = "cpu", pieces: Optional[int] = None) -> Lives:
+    """Life i is cell ``cells[i]`` of ``params`` on track ``on[i]``. ``device`` is "cpu" or "cuda". On the CPU each life
+    runs in one call, or with ``pieces`` in calls of that many ticks, as the GPU runs it: the same life either way."""
     arrays = cell_arrays(cfg, params)
     stacked = stack_tracks(tracks)
     cells_, on_ = np.asarray(list(cells), dtype=np.int64), np.asarray(list(on), dtype=np.int64)
@@ -434,10 +462,15 @@ def run_lives(cfg: Config, params: Params, tracks: Sequence[Track], cells: Seque
     consts = constants(cfg, strict)
     n, m = cfg.n_wall, cfg.n_wall + cfg.n_core
     if device == "cpu":
-        out = np.zeros((len(cells_), N_OUT))
-        _run_cpu(cells_, on_, n, m, consts, arrays["Wt"], arrays["bias"], arrays["tau"], arrays["cellf"], arrays["cta"], arrays["sta"],
-                 arrays["theta"], arrays["ct"], arrays["st"], stacked["tracki"], stacked["trackf"], stacked["sched"], stacked["sens"],
-                 stacked["mot"], out)
+        out, ys, os_ = np.zeros((len(cells_), N_OUT)), np.zeros((len(cells_), m)), np.zeros((len(cells_), m))
+        longest = int(stacked["tracki"].max()) if len(tracks) else 0
+        step = longest if pieces is None else int(pieces)
+        if step < 1 and longest:
+            raise ValueError("a piece is at least one tick")
+        for t0 in range(0, longest, max(step, 1)):
+            _run_cpu(cells_, on_, n, m, t0, t0 + step, consts, arrays["Wt"], arrays["bias"], arrays["tau"], arrays["cellf"], arrays["cta"],
+                     arrays["sta"], arrays["theta"], arrays["ct"], arrays["st"], stacked["tracki"], stacked["trackf"], stacked["sched"],
+                     stacked["sens"], stacked["mot"], out, ys, os_)
     elif device == "cuda":
         out = _run_cuda(cells_, on_, n, m, consts, arrays, stacked)
     else:

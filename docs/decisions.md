@@ -2535,3 +2535,41 @@ assumed Linux, from the laptop on his network that reports Linux; I had not aske
 
 **Impact:** this entry; `laptop.py`, `laptop.sh`, `tests/test_laptop.py`; `experiments/stage8b.py`; `README.md`,
 `docs/prereg/stage8b.md`.
+
+## D52 — On the laptop: the tests pass on Windows and its CPU is timed; the GPU's packages clash with numpy 2.5; the GPU now runs lives in short launches
+
+**Date:** 2026-11-24  
+**Why:** the owner ran the laptop's steps by hand on it (Windows; an NVIDIA RTX 2000 Ada laptop GPU) and sent what
+they printed.
+
+### A. What he reported
+1. **The compiled life's tests on Windows:** 20 passed, 2 skipped, in 131 s. The bit-for-bit tests against the
+   reference are among those that passed.
+2. **The CPU:** the reference 31.73 microseconds a cell-tick, the compiled life 0.79 (40 times faster); a generation on
+   8 processes 18.9 s, so 400 generations in 2.1 hours. This machine does a generation in 4.5 s on 8.
+3. **The GPU did not get as far as a life.** NVIDIA's `numba-cuda` (0.30.4, its newest) calls `numpy.row_stack` when
+   it compiles a kernel, and numpy 2.5 removed it. Python 3.12 and later are given numpy 2.5; this machine's Python
+   3.11 is given 2.4, which is why it did not show here.
+4. **One of his two skipped tests was the GPU's compile test.** I had written it to skip on any error, so it hid this.
+
+### B. Decided
+1. **The `gpu` extra holds numpy below 2.5.** Reproduced here on Python 3.13 with his install command (the same
+   error); with the pin the life compiles for the GPU and the tests pass (32 of 32 there).
+2. **The compile test fails, and no longer skips, when NVIDIA's packages are installed.**
+3. **The GPU runs lives in short launches, not a whole life in one.**
+   - *Why:* Windows resets a GPU that does not answer for about two seconds, and a whole life in one launch could
+     hold his for longer. Microsoft's and NVIDIA's pages do not say whether a compute job is spared; I did not want
+     to find out on his display.
+   - *How:* the life (`protocell.fast._life`) now runs a range of ticks and keeps its state, so a later call goes on
+     from where the last stopped. The CPU still runs a life in one call. The GPU's launches are steered toward a
+     fifth of a second each.
+4. **What shows the change is safe:**
+   - a life run in pieces is the life run whole, bit for bit: whole lives to their ends and to their deaths, in pieces
+     of 1,000, 251 and 7 ticks, both forms of the kernel (a test);
+   - the kernel after the change is the kernel before it, bit for bit, on 720 whole lives at full size in the six
+     worlds (162 of them deaths) and on a generation's 768 lives through each version's mapper (a scratch run here,
+     not kept). So what D48 and D49 found stands for it;
+   - part A of the check is run again at this commit (`docs/data/fast/same-pieces/`).
+5. **Still not shown:** a life on a GPU.
+
+**Impact:** this entry; `protocell/fast.py`, `protocell/fast_cuda.py`, `tests/test_fast.py`, `pyproject.toml`.

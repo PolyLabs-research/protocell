@@ -150,6 +150,37 @@ def test_a_batch_equals_its_singles_and_the_order_does_not_matter(compiled):
     assert len(set(together.fitness.tolist())) == len(specs)  # the lives differ
 
 
+def test_a_life_run_in_pieces_is_the_life_run_whole(compiled):
+    """What the GPU does (short launches, a life's state carried between them), done on the CPU: whole lives to their
+    ends and to their deaths, in pieces of a few sizes, in the default form and the strict one."""
+    died = set()
+    for name, cfg in worlds().items():
+        starts = sample_starts(cfg, "cave", 3, 13)
+        params = decode(cfg, "fourier1", genomes_for(cfg, "fourier1", 3))
+        tracks = [fast.build_track(cfg, starts, i, 13) for i in range(3)]
+        cells, on = [0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2]
+        for strict in (False, True):
+            whole = fast.run_lives(cfg, params, tracks, cells, on, strict=strict)
+            for pieces in (1000, 251, 7) if name in ("home", "starving", "burning") else (251,):
+                parted = fast.run_lives(cfg, params, tracks, cells, on, strict=strict, pieces=pieces)
+                for k in SAME:
+                    assert np.array_equal(getattr(parted, k), getattr(whole, k)), (name, strict, pieces, k)
+        assert len(set(whole.lifetime.tolist())) == 3  # three lifetimes: the pieces end at different places in each
+        died |= set(whole.death_cause.tolist())
+    assert died == {0, 1, 2}  # lives that ran their course, starved, and burnt: a dead cell stays dead in the pieces after
+    with pytest.raises(ValueError, match="piece"):
+        fast.run_lives(cfg, params, tracks, cells, on, pieces=0)
+
+
+def test_the_gpus_launches_are_steered_toward_a_fifth_of_a_second():
+    fast_cuda = pytest.importorskip("protocell.fast_cuda")
+    assert fast_cuda.TARGET_SECONDS == 0.2 and fast_cuda.LEAST_TICKS <= fast_cuda.FIRST_TICKS <= fast_cuda.MOST_TICKS
+    assert fast_cuda.next_ticks(256, 0.2) == 256  # on target: as it was
+    assert fast_cuda.next_ticks(256, 0.001) == 512  # far too short: at most doubled
+    assert fast_cuda.next_ticks(4096, 1.6) == 512  # too long: cut at once, to what the target allows
+    assert fast_cuda.next_ticks(16, 100.0) == fast_cuda.LEAST_TICKS and fast_cuda.next_ticks(60_000, 0.01) == fast_cuda.MOST_TICKS
+
+
 def test_the_searches_jobs_have_the_references_shape(compiled):
     cfg = stage8.world("home", quick=True)
     starts = sample_starts(cfg, "cave", 2, 4)
@@ -228,6 +259,9 @@ from protocell.cell import random_genomes
 from protocell.rng import stream
 from protocell.world import sample_starts
 
+from protocell import fast_cuda
+fast_cuda.FIRST_TICKS, fast_cuda.LEAST_TICKS, fast_cuda.MOST_TICKS = 5, 3, 5  # launches of a few ticks: a life is carried across several
+
 cfg = stage8.world("shaded", quick=True)
 starts = sample_starts(cfg, "cave", 2, 5)
 genomes = random_genomes(cfg, "fourier1", 3, stream(5, "genomes"))
@@ -253,15 +287,22 @@ def test_the_gpu_path_gives_the_cpus_bits_in_numbas_simulator():
 
 
 def test_the_life_compiles_for_cuda():
-    """The life compiles to GPU code where the CUDA compiler is installed (the ``gpu`` extra), device or no device.
-    (The kernel around it, a dozen lines, needs a device to compile; the simulator's test runs it.)"""
+    """The life compiles to GPU code wherever NVIDIA's compiler is installed (the ``gpu`` extra), device or no device.
+    Without that extra there is no compiler and the test is skipped; with it, a failure here is a failure: a GPU run
+    would stop at the same place. (The kernel around the life, a dozen lines, needs a device to compile; the
+    simulator's test runs it.)"""
+    import importlib.util
+
     cuda = pytest.importorskip("numba.cuda")
     from numba import float64, int64
 
     f1, f2, f3, i1 = float64[::1], float64[:, ::1], float64[:, :, ::1], int64[::1]
-    signature = (int64, int64, int64, int64, int64, f1, f3, f2, f2, f2, f2, f2, f1, f1, f1, i1, f2, f3, f3, f2, f2, f1, f1, f1, f1, f1, f1, f1, f1)
-    try:
+    signature = (int64, int64, int64, int64, int64, int64, int64, f1, f3, f2, f2, f2, f2, f2, f1, f1, f1, i1, f2, f3, f3, f2, f2, f2, f2, f1, f1, f1, f1, f1, f1, f1, f1)
+    if importlib.util.find_spec("numba_cuda") is None:  # Numba's own, older CUDA target: here only if a compiler happens to be about
+        try:
+            ptx, _ = cuda.compile_ptx(fast._life, signature, device=True, cc=(7, 5))
+        except Exception as e:
+            pytest.skip(f"no CUDA compiler without the gpu extra: {type(e).__name__}")
+    else:
         ptx, _ = cuda.compile_ptx(fast._life, signature, device=True, cc=(7, 5))
-    except Exception as e:  # no NVVM here: the CUDA compiler comes with the gpu extra
-        pytest.skip(f"no CUDA compiler: {type(e).__name__}")
     assert ".func" in ptx and len(ptx) > 20_000  # a device function with a life's worth of code
