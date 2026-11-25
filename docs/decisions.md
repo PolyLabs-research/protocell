@@ -2854,3 +2854,34 @@ the cheap runs meant the thirty fresh runs on pods, and shown the launch's terms
 **Impact:** this entry; `docs/stages-4-5.md`; `docs/prereg/stage8c.md`, `experiments/stage8c.py`, `tests/test_stage8c.py`;
 `experiments/stage8b.py` (its runner takes another stage's seed and name), `cloud/launch_stage8b.sh` and
 `cloud/run_stage8b.sh` (they take the stage); `docs/prereg/stage8b.md` (the correction, dated).
+
+## D60 — The reading of stage 8b's cells: its plan and predictions, before it runs
+
+**Date:** 2026-11-25  
+**Why:** D59, item 4.
+
+### Decided
+1. **The probe** (`experiments/stage8b_read.py`): 60 fresh starts in each of the four trained worlds at seed 67, one
+   process here, on the reference. A probe: it explains a result and sets no criterion.
+   - **How nine cells move,** as stage 8's reading measured it (D44): the share of the day running, the turning during
+     runs, the running and the speed toward the light in dim light, the fresh onsets a life.
+     - the five strongest generalists: runs 8102, 8103 and 8104 at 800 generations, fresh runs 8202 and 8210;
+     - runs 8103 and 8104 as they stood at 400 generations, before they were generalists;
+     - runs 8101 and 8105 at 800 generations, which still never survive the spot.
+   - **For the five generalists, world by world:** what removing the ring's links costs, and what removing the
+     direction across the body costs.
+2. **A circler is what D44 called one:** at home it runs more than 80% of the day and turns more than 0.03 rad a tick
+   during runs.
+3. **Predictions (written before the probe runs):**
+   1. At least 3 of the 4 new generalists (8103 and 8104 at 800; 8202; 8210) are circlers at home, as champion 8102 is.
+   2. At least 3 of the 4 need their ring's links where the cell is translucent and not when it is shaded: more than
+      0.1 lost at home, under flicker and under the spot, less than 0.05 when shaded.
+   3. At least 3 of the 4 read the direction across the body only when shaded: removing it costs more than 0.05 there
+      and less than 0.02 at home.
+   4. Time made circlers of runs 8103 and 8104: neither was one at 400 generations and both are at 800.
+   5. The two runs that never survive the spot (8101 and 8105 at 800) are not circlers.
+   6. Under the spot each of those two runs less than half as much of the day as champion 8102 does.
+4. **What I know going in:** D45's reading of champion 8102 at 400 generations, and these cells' validation and test
+   numbers (D57, D58). Nothing about how the new cells move.
+
+**Impact:** this entry; `experiments/stage8b_read.py`, `tests/test_stage8b_read.py`.
