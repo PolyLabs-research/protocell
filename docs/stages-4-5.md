@@ -1,7 +1,7 @@
-# Stages 4 to 8: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
+# Stages 4 to 8b: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) and the reading of champion 8102 on 2026-11-24 (D45 C1). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -30,6 +30,8 @@ Stages 4 to 6 asked four things in turn:
 | does it hold in worlds the cells never saw | Mostly where the world is like home; one evolved cell holds up in all six | D40 |
 | does a generalist emerge when evolution is given several worlds | In 1 run of 5; that cell beats the best simple rule in 5 of 9 worlds | D42 |
 | how the generalist does it | Two ways of moving in one network: it circles where its body gives no direction, and steers by its own shading where it does | D45 |
+| can the searches run faster | Yes: the same model as compiled code, 11.7 times faster on a core; a run costs about 25 cents on a pod | D47–D49, D57 |
+| is a generalist an accident of one run | No: about half the runs give one, 6 of 15 at 400 generations and 3 of 5 at 800. All three criteria hold, two exactly at their bar | D58 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -210,6 +212,54 @@ Stages 4 to 6 asked four things in turn:
 - **Two of five predictions failed:** I expected the ring to matter in every world, and the generalist to ignore
   clouds.
 
+## 13. A faster engine for the searches (the compiled life; D47–D49, D52, D54)
+
+- **Why:** the simulation was NumPy on the CPU, a hundred small array operations a tick. A stage 8 run took 9 to 10
+  hours on a 16-vCPU pod, most of it that per-tick overhead.
+- **What:** one cell's life written as scalar code and compiled (Numba). The same model, operation for operation,
+  with the reference's own noise, sky and light source. Only the library functions differ (`exp`, `log`, `sin`,
+  `cos`), in a last bit now and then.
+- **For the searches only.** Every test and reported number is still made by the reference.
+- **The same model:** with both engines on the C library's functions, 24 whole lives are the reference's bit for bit.
+- **The same outcomes, with one miss as I had written the criterion:** over 1,800 paired lives every cell-and-world
+  pair's mean fitness is within 0.003, and the two engines rank a population alike (Spearman 0.977 and 0.991, against
+  0.898 for the reference under two draws of luck). One pair's survival was 8 points apart where I had allowed 5:
+  champion 6402 under the spot, whose lives part completely. On 600 more starts both engines had 152 lives survive,
+  and the lives surviving in one engine only fell 82 each way. So the miss was the fall of parted lives; the
+  criterion stays recorded as failed.
+- **The speed:** 11.7 times faster on a core. A stage 8 generation takes 4.5 s on 8 processes on this machine and 2.3
+  to 4.8 s on a 16-vCPU pod, where the reference took 83 to 111 s.
+- **On a GPU** (the owner's laptop, an NVIDIA RTX 2000 Ada): the same model and the same outcomes, and too slow to
+  help. The kernel is double precision, which that card does slowly: 75 whole lives take 36 to 40 s on it and 6 to 15 s
+  on one of the laptop's CPU cores.
+
+## 14. How reliably a generalist emerges (stage 8b; D55–D58)
+
+- **The question:** stage 8 gave one generalist in five runs. An accident, a matter of time, or a rate?
+- **The runs,** on the compiled life: stage 8's five runs carried on from generation 400 to 800, and ten fresh runs
+  of stage 8's design at 400 generations. The test is stage 8's, on the reference, on fresh starts.
+- **All three criteria hold, two of them exactly at their bar:**
+
+  | criterion | result |
+  |---|---|
+  | at least 3 of the 5 carried-on runs are generalists at 800 generations | 3 (8102, 8103, 8104) |
+  | at least 4 of the 5 are better at 800 generations than at 400 | 5, by +0.012 to +0.113 |
+  | at least 5 of the 10 fresh runs give a generalist | 5 |
+
+- **Time turned two runs into generalists.** At 400 generations runs 8103 and 8104 did the bar's job in two of their
+  four worlds. At 800 they do it in all nine worlds and beat the bar in eight.
+- **Two runs improved and did not arrive:** 8101 and 8105 still fail under flicker and the spot at 800 generations.
+- **At 400 generations, from random genomes:** 6 generalists in 15 runs, 40% (95% interval 20% to 64%).
+- **Every generalist travels:** each does the bar's job in 4 or 5 of the 5 held-back worlds and beats the bar in 5 to
+  8 of the nine worlds.
+- **Generality costs little at home:** five of the eight generalists score 0.629 to 0.637 there, the home specialist
+  0.639, the bar 0.543.
+- **The spot and the flickering clouds divide the runs:** every cell that is not a generalist fails under one or both.
+- **The third criterion's bar was a half,** which I had wrongly called stage 8's share (D59). At stage 8's own, three
+  in five, it would have needed 6 of the 10 and would not have held.
+- **Two of six predictions failed:** I expected fewer than three generalists at 800 generations, and one to three
+  among the ten fresh runs.
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
@@ -217,30 +267,36 @@ Stages 4 to 6 asked four things in turn:
   does the best simple rule's job emerges reliably (four of five at 400 generations).
 - **Shown, as a limit:** cells made in one world mostly beat the best simple rule only there; the simple rules, with
   one parameter re-tuned per world, hold up across worlds better (stage 7).
-- **Shown, as an existence:** one cell evolved in four worlds beats each world's re-tuned best simple rule in five of
-  nine worlds, two of them never met (stage 8). Evolution found it in one run of five.
+- **Shown:** evolved in four worlds at once, a cell that copes with all of them emerges in about half the runs: 6 of
+  15 at 400 generations, 3 of 5 at 800 (stages 8 and 8b). Each such cell also copes with worlds it never met, and
+  beats each world's re-tuned best simple rule in most of the nine worlds.
 - **Not shown:**
-  - that a cell beating B8 emerges from nothing in most runs: 2 of 5 did at 400 generations, where the criterion
-    asked for 3; and the sensor and the eased-in path were designed by hand;
-  - anything beyond one spoke mode (fourier1), one world and one sensor;
-  - that no simple rule could sit higher than B8. B8 is the best of those tried.
+  - the rate with any precision: 6 of 15 leaves it between 20% and 64%, and two of stage 8b's criteria held by one run;
+  - that a cell beating B8 emerges from nothing in most runs at home alone: 2 of 5 did at 400 generations, where the
+    criterion asked for 3; and the sensor and the eased-in path were designed by hand;
+  - anything beyond one spoke mode (fourier1) and one sensor;
+  - that no simple rule could sit higher than the bars. They are the best of those tried.
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
   body is answered for the searched cell (§9); how the evolved cells' circling is biased is not, for champion 6301
-  (D36 B.2) or champion 8102 (D45 B.4). Whether a generalist emerges in more than one run of five is not known either.
+  (D36 B.2) or champion 8102 (D45 B.4). Whether the new generalists move as champion 8102 does, and what the runs that
+  never find the spot lack, has not been read.
 
 ## Cost and conduct
 
 - **RunPod,** stages 4 to 8: about $70 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30, 8 $18), each launch confirmed by
-  the owner first.
+  the owner first. Stage 8b, on the compiled life: $3.74 for fifteen runs, about 25 cents a run, where a stage 8 run
+  cost about $3.60.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
 - **Each stage** had a preregistration with predictions before it ran. The predictions that failed are recorded as
   failed in their documents; twice I predicted that no champion would beat B8, and twice one did.
 - **Errors of mine, disclosed where they happened:** a campaign bug that stopped a pull loop (D18); probes that bypassed
   their log and a calculator with a wrong constant (D27); a scoring summary that misread a column (D29); a test that
-  overwrote one champion's rows with another's (D33).
+  overwrote one champion's rows with another's (D33); a tolerance on survival set as if paired lives stayed paired
+  (D48); a set-up script written for Linux when the owner's laptop was Windows, unasked (D51); a test that skipped on
+  any error and so hid a real one (D52).
 
 ## Next
 
-The generalist's reliability (D45 C2): more generations for stage 8's five runs, or more runs. The owner wants it run
-on his own laptop in place of RunPod (D46); what that takes is worked out first.
+The owner on D58 (D59): the new generalists read beside champion 8102, and what the runs that never find the spot
+lack; and thirty more fresh runs to pin the rate (stage 8c).
