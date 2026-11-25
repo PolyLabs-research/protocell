@@ -1,0 +1,12 @@
+{
+ "batch": 48,
+ "compiled_us_a_cell_tick": 0.3278320946265012,
+ "device": "cpu",
+ "generation_lives": 768,
+ "generation_seconds": 4.464013950899243,
+ "one_core_ratio": 11.659729823105156,
+ "quick": false,
+ "reference_us_a_cell_tick": 3.8224336506876475,
+ "ticks": 4000,
+ "workers": 8
+}

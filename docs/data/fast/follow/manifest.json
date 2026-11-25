@@ -1,0 +1,81 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/fastcheck.py --part follow",
+ "created_at": "2026-11-24T10:47:08+00:00",
+ "git": {
+  "branch": "fast",
+  "dirty": false,
+  "sha": "68d7c78bb9c724817a1b1408ab327e36fdcaa396"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/fast/follow",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "fastcheck/follow",
+ "seeds": [
+  50,
+  51,
+  52,
+  53,
+  56,
+  57
+ ],
+ "settings": {
+  "cells": [
+   "champion8102",
+   "champion6402",
+   "champion8105"
+  ],
+  "device": "cpu",
+  "follow": {
+   "cell": "champion6402",
+   "starts": 600,
+   "world": "spot"
+  },
+  "luck_seeds": [
+   52,
+   53
+  ],
+  "population": "docs/data/stage8/pilot/fourier1-8102/population.npy",
+  "quick": false,
+  "starts": 100,
+  "tolerances": {
+   "misses": 2,
+   "pair": 0.01,
+   "pooled": 0.003,
+   "rank": 0.9,
+   "survival": 0.05
+  },
+  "workers": 1,
+  "worlds": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded",
+   "path 25",
+   "path 75"
+  ]
+ },
+ "timing": {
+  "wall_seconds": 274.51681756973267
+ }
+}

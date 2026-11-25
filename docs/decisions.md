@@ -2344,3 +2344,485 @@ this one." He also asked about the project being set up for that.
    the simulation is NumPy on the CPU, and a generation's work is spread over processes.
 
 **Impact:** this entry; `docs/stages-4-5.md`; `README.md`.
+
+## D47 — A compiled life for the searches: its plan, criteria and predictions, before its check runs
+
+**Date:** 2026-11-24  
+**Why:** D46. The owner wants the next runs on his laptop, which has an Nvidia GPU. Nothing in the project could use
+one: the simulation is NumPy on the CPU.
+
+### Decided
+1. **What was found first** (scratch runs on one core here, not results): the reference costs 4–8 microseconds a
+   cell-tick in a batch of 48, most of it the overhead of a hundred small array operations a tick. The same life
+   written as scalar code and compiled costs 0.5–0.9.
+2. **So a second engine is built, for the searches only** (`protocell/fast.py`, plan in `docs/prereg/fast.md`): one
+   cell's life as scalar code, compiled by Numba for the CPU, and the same function compiled for an Nvidia GPU
+   (`protocell/fast_cuda.py`).
+   - It is the reference's model, operation for operation, with the reference's own noise, sky and light source.
+   - It differs in the library functions (`exp`, `log`, `sin`, `cos`), so single lives part from the reference's; the
+     claim is agreement in distribution and in ranking.
+   - The searches' code is not changed: a mapper swaps the two jobs.
+   - Every test and reported number stays on the reference.
+3. **The check, its four criteria and four predictions are in the plan (§4, §5), written before it runs,** with what
+   I had already seen (§6): a scratch version of part A passed, and I chose B's tolerances after 16 scratch lives.
+4. **The GPU form has not run on a GPU.** This machine has none. Here it is compiled (NVIDIA's compiler needs no
+   device) and run in Numba's simulator. Whether it beats the laptop's CPU cores is to be measured on the laptop: it
+   computes in double precision, which consumer GPUs do slowly.
+5. **Numba becomes an optional dependency** (`.[fast]`, and `.[gpu]` for an Nvidia GPU); CI installs `.[dev,fast]`.
+   It is installed in this machine's environment beside the same numpy (2.4.6).
+
+**Impact:** this entry; `docs/prereg/fast.md`; `protocell/fast.py`, `protocell/fast_cuda.py`, `experiments/fastcheck.py`,
+`tests/test_fast.py`, `tests/test_fastcheck.py`; `pyproject.toml`, `.github/workflows/ci.yml`.
+
+## D48 — The compiled life's check: the same model, the same outcomes but for one pair's survival, which misses the tolerance I set; a follow-up on that pair, planned before it runs
+
+**Date:** 2026-11-24  
+**Why:** D47.  
+**Ran:** `experiments/fastcheck.py` (code `820119e`), parts `same`, `agree` and `speed`, one process here (the speed
+part's generation on 8, for 5 s), 26 minutes in all, from a clean tree; data in `docs/data/fast/` (`1a0fb85`).
+
+### A. Measured
+1. **A, the same model: holds.** Under the C library's maths all 24 whole lives are the reference's in every number,
+   in the six worlds (lifetimes of 106,885 and 139,909 ticks; one life starved at tick 56,922).
+2. **B, the same outcomes,** on 1,800 paired lives (three cells, 100 fresh starts, six worlds):
+
+   | criterion | result |
+   |---|---|
+   | B1: every pair's mean fitness within 0.01, survival within 5 points | **fails.** Fitness holds in all 18 pairs (largest 0.0027). Survival misses in one |
+   | B2: the interval holds 0 in all but 2 pairs | holds: in all 18 |
+   | B3: the mean difference over all lives within 0.003 | holds: −0.00002 [−0.0006, +0.0006] |
+   | B4: the engines rank a population alike | holds: Spearman 0.977 and 0.991, against 0.898 for the reference under two draws of luck |
+
+3. **The one miss: champion 6402 under the spot.** The reference has 20 of 100 lives survive, the compiled life 28.
+   Fitness 0.4301 and 0.4327 (+0.0027 [−0.0067, +0.0116]).
+   - 26 of those 100 lives survive in one engine and not the other: 9 in the reference only, 17 in the compiled life
+     only (a sign test gives p = 0.17).
+   - No other pair has any such life: in the other 1,700 lives the two engines agree on every survival.
+4. **How far single lives part:** 74% of the paired lives agree to within 0.001 in fitness and 92% to within 0.01.
+   It depends on the cell. Champion 8105 (a rester) has every life within 0.001 in every world; champion 6402 under
+   the spot has 2 in 100.
+5. **The ranking a search sees** (run 8102's last population, a generation's 8 starts, two draws of luck): the step
+   the search would take agrees 0.988 and 0.951 between the engines (cosine), against 0.70 for the reference between
+   the two draws of luck.
+6. **C, the cost.** One core: 3.82 microseconds a cell-tick on the reference, 0.33 on the compiled life (11.7 times).
+   A generation as a search scores it, one process: 252–265 s against 28–29 s. On 8 processes: 4.5 s, so 400
+   generations in half an hour. Stage 8's pods took 83–111 s a generation on 16 vCPUs.
+7. **Predictions:** 1 fails (it said B1 to B4 would all hold); 2, 3 and 4 hold.
+
+### B. Reading
+1. **The kernel computes the model** (A), and where lives stay close or survival is not in doubt the two engines give
+   the same numbers.
+2. **B1 failed as I wrote it, and the plan says what follows:** the compiled life is not used for a search until the
+   miss is understood.
+3. **What the miss may be, not yet shown.** In that one pair the lives part completely and survival is marginal. A
+   life that survives in one engine and starves in the other is then a coin's fall. With 26 such lives and no
+   direction to them, a gap of more than 5 points comes about three times in ten. I set the 5 points as if lives stayed
+   paired. But 17 against 9 could also be a direction, and a hundred starts cannot tell which.
+
+### C. Decided: the follow-up, before it runs
+1. **F:** champion 6402 under the spot on 600 fresh starts (seed 56; intervals 57), by three engines: the reference,
+   the compiled life as the searches use it, and the compiled life in its strict form (the reference's own formulas
+   with the C library's functions). `experiments/fastcheck.py --part follow`, one process, about five minutes.
+2. **Criteria:**
+   - **F1:** on the 600 starts the compiled life's survival is within 5 points of the reference's and its mean fitness
+     within 0.01. (With no direction the gap's spread is about 2 points here, so 5 is wide; a true gap of 8 would most likely fail it.)
+   - **F2:** the lives that survive in one engine only split with no direction: a two-sided sign test above 0.05.
+3. **What follows.** If F1 and F2 hold, the miss was the fall of parted lives and my tolerance was wrong for them; I
+   recommend the searches may run on the compiled life, and the owner decides (plan §8). If either fails, the compiled
+   life leans one way in that regime and is not used until the lean is found.
+4. **Predictions:**
+   1. F1 and F2 hold.
+   2. The strict kernel parts from the reference about as often as the default does: its count of lives that survive
+      in one engine only is within a third of the default's. (So the angle-sum rule is not what moves lives.)
+5. **Also changed with this entry, none of it in parts A or B:** the follow-up part; the check's GPU part takes a
+   number of starts and both GPU parts now run in Numba's simulator (a wrong setting in the GPU timing's warm-up,
+   found that way); `laptop.sh` says so when the machine's Python is too old.
+
+**Impact:** this entry; `docs/data/fast/`; `experiments/fastcheck.py`, `protocell/fast.py`, `tests/test_fastcheck.py`,
+`laptop.sh`.
+
+## D49 — The follow-up to the check's one miss: on 600 fresh starts the two engines' survival is the same, and the lives that part split evenly
+
+**Date:** 2026-11-24  
+**Why:** D48 C.  
+**Ran:** `experiments/fastcheck.py --part follow` (code `68d7c78`), one process here, 5 minutes, from a clean tree;
+data in `docs/data/fast/follow/` (`c0c797a`).
+
+### A. Measured
+Champion 6402 under the spot, 600 fresh starts:
+
+| engine | fitness | survival | lives that survive in the reference only, and in this engine only |
+|---|---|---|---|
+| the reference | 0.4394 | 25.3% | |
+| the compiled life | 0.4362 (−0.0033 [−0.0070, +0.0005]) | 25.3% | 82 and 82 |
+| the compiled life, strict | 0.4394 (−0.0001 [−0.0034, +0.0033]) | 26.3% | 72 and 78 |
+
+1. **F1 holds:** the survival is the same to the life (152 of 600 in each engine) and the fitness is within 0.01.
+2. **F2 holds:** 164 lives survive in one engine and not the other, 82 each way (sign test p = 1.0).
+3. **Both predictions hold.** The strict kernel parts from the reference in 150 lives, the default in 164.
+
+### B. Reading
+1. **The miss in B1 was the fall of parted lives, with no direction to it.** On six times the starts the gap of 8
+   points is a gap of none.
+2. **B1 stays failed as written.** Its 5 points on survival were mine, and wrong for a pair whose lives part
+   completely and survive about one time in four. Its limit on fitness held in every pair.
+3. **A last bit is enough.** The strict kernel is the reference with the C library's functions in place of numpy's
+   and nothing else changed (D48 A.1), and for this cell it parts from the reference in a quarter of the lives. So the
+   reference would part from itself as much on a machine whose library differed in a last bit. The angle-sum rule
+   adds nothing that shows.
+4. **What the check and the follow-up show together:** the compiled life is the reference's model; over 2,400 paired
+   lives its outcomes are the reference's in distribution; it ranks a population as the reference does, far more
+   closely than one engine agrees with itself under different luck; and it is 11.7 times faster on a core.
+5. **Not shown:** anything on a GPU; a second cell whose lives part this completely (champion 6402 under the spot was
+   the only pair of the 18 that did).
+
+### C. Decisions this surfaces (the owner's)
+1. **May the searches run on the compiled life?** Recommended: yes. Champions are still judged by the reference.
+2. **Merge `fast` into `main`** when he has looked.
+3. **The reliability run** (D45 C2, D46): drafted and built as stage 8b (D50).
+
+**Impact:** this entry; `docs/data/fast/follow/`; `docs/prereg/fast.md` (its outcome); `README.md`.
+
+## D50 — Stage 8b drafted and built: the generalist's reliability, with more time and with more runs, on the owner's machine
+
+**Date:** 2026-11-24  
+**Why:** D45 C2 and D46. A draft: nothing runs before the owner's answers.
+
+### Decided
+1. **The draft** (`docs/prereg/stage8b.md`): stage 8's five runs carried on from generation 400 to 800, and ten fresh
+   runs of stage 8's design at 400 generations (seeds 8201–8210), all on the compiled life; stage 8's test, on the
+   reference, at fresh seeds (54, 55).
+   - **Criteria:** R1, at least 3 of the 5 carried-on runs are generalists at 800 generations; R2, at least 4 of the 5
+     are better at 800 than at 400; R3, at least 5 of the 10 fresh runs give a generalist.
+   - **A carried-on run changes engine at generation 400,** so its champion is validated again on the compiled life
+     before generation 401 and later candidates must beat that number. Tried on run 8102 at full size (a trial, not
+     kept): 0.6084 on the reference, 0.6083 on the compiled life.
+2. **The runner** (`experiments/stage8b.py`): phases `extend`, `fresh`, `test` and `status`; `--device cuda` for a GPU;
+   the test's nine worlds side by side with `--workers`.
+3. **The cost is time on his machine, and less than it was:** a generation late in run 8102 took 9 s on 4 processes
+   here, against 109 s on its pod. The fifteen runs are 7 to 15 hours on 4 to 8 processes.
+4. **For the laptop:** `bash laptop.sh` sets it up, tests the compiled life and times its CPU and its GPU. That
+   timing chooses between them.
+
+### For the owner (the draft's §8)
+1. Both kinds of run, or one. Recommended: both.
+2. Ten fresh runs.
+3. The criteria.
+4. The carried-on runs' change of engine.
+5. CPU or GPU, after `laptop.sh` has run there.
+
+**Impact:** this entry; `docs/prereg/stage8b.md`; `experiments/stage8b.py`, `tests/test_stage8b.py`.
+
+## D51 — The owner's laptop runs Windows: the set-up script becomes Python, and the laptop's commands are tried here with Windows' way of starting processes
+
+**Date:** 2026-11-24  
+**Why:** the owner cloned `fast` on the laptop and ran `bash laptop.sh`. The laptop is Windows and has no bash. I had
+assumed Linux, from the laptop on his network that reports Linux; I had not asked.
+
+### Decided
+1. **`laptop.py` does the set-up script's work** on Windows, Linux and macOS, with nothing outside Python's own
+   library: the environment, the compiled life's tests, the CPU's timing and the GPU's. `laptop.sh` stays as a way in
+   on Linux and macOS.
+2. **Tried here:**
+   - `laptop.py` in a fresh copy, with only `venv` and `pip` (what a Windows machine has);
+   - every command the laptop will run (the timing, a stage 8b run carried on, a fresh run, the test) and their tests,
+     with worker processes started afresh rather than forked, which is the only way Windows starts them, and with
+     numerical warnings as errors. All pass, and a run's numbers are the same either way.
+3. **Not tried: anything on Windows itself.** Its C library is Microsoft's, so the laptop's bits will not be this
+   machine's. The tests compare the two engines on one machine, so they should hold there; their first run on the
+   laptop is that check.
+4. **Stage 8b's runner asks Windows not to sleep** while a run or the test is in flight.
+
+**Impact:** this entry; `laptop.py`, `laptop.sh`, `tests/test_laptop.py`; `experiments/stage8b.py`; `README.md`,
+`docs/prereg/stage8b.md`.
+
+## D52 — On the laptop: the tests pass on Windows and its CPU is timed; the GPU's packages clash with numpy 2.5; the GPU now runs lives in short launches
+
+**Date:** 2026-11-24  
+**Why:** the owner ran the laptop's steps by hand on it (Windows; an NVIDIA RTX 2000 Ada laptop GPU) and sent what
+they printed.
+
+### A. What he reported
+1. **The compiled life's tests on Windows:** 20 passed, 2 skipped, in 131 s. The bit-for-bit tests against the
+   reference are among those that passed.
+2. **The CPU:** the reference 31.73 microseconds a cell-tick, the compiled life 0.79 (40 times faster); a generation on
+   8 processes 18.9 s, so 400 generations in 2.1 hours. This machine does a generation in 4.5 s on 8.
+3. **The GPU did not get as far as a life.** NVIDIA's `numba-cuda` (0.30.4, its newest) calls `numpy.row_stack` when
+   it compiles a kernel, and numpy 2.5 removed it. Python 3.12 and later are given numpy 2.5; this machine's Python
+   3.11 is given 2.4, which is why it did not show here.
+4. **One of his two skipped tests was the GPU's compile test.** I had written it to skip on any error, so it hid this.
+
+### B. Decided
+1. **The `gpu` extra holds numpy below 2.5.** Reproduced here on Python 3.13 with his install command (the same
+   error); with the pin the life compiles for the GPU and the tests pass (32 of 32 there).
+2. **The compile test fails, and no longer skips, when NVIDIA's packages are installed.**
+3. **The GPU runs lives in short launches, not a whole life in one.**
+   - *Why:* Windows resets a GPU that does not answer for about two seconds, and a whole life in one launch could
+     hold his for longer. Microsoft's and NVIDIA's pages do not say whether a compute job is spared; I did not want
+     to find out on his display.
+   - *How:* the life (`protocell.fast._life`) now runs a range of ticks and keeps its state, so a later call goes on
+     from where the last stopped. The CPU still runs a life in one call. The GPU's launches are steered toward a
+     fifth of a second each.
+4. **What shows the change is safe:**
+   - a life run in pieces is the life run whole, bit for bit: whole lives to their ends and to their deaths, in pieces
+     of 1,000, 251 and 7 ticks, both forms of the kernel (a test);
+   - the kernel after the change is the kernel before it, bit for bit, on 720 whole lives at full size in the six
+     worlds (162 of them deaths) and on a generation's 768 lives through each version's mapper (a scratch run here,
+     not kept). So what D48 and D49 found stands for it;
+   - part A of the check, run again at this commit (`a3ff7f3`; `docs/data/fast/same-pieces/`), holds: 24 of 24
+     whole lives are the reference's in every number.
+5. **Still not shown:** a life on a GPU.
+
+**Impact:** this entry; `protocell/fast.py`, `protocell/fast_cuda.py`, `tests/test_fast.py`, `pyproject.toml`.
+
+## D53 — The laptop's network: the set-up script installs with pip; a job's size becomes a setting
+
+**Date:** 2026-11-24  
+**Why:** the owner ran `python laptop.py` on the laptop. It has `uv`, the script preferred it, and `uv` could not
+install: the laptop's network re-signs HTTPS, which the system's certificate store knows and `uv`, left alone, does
+not read. pip reads it, and had installed everything there by hand before. Nothing in his environment was changed.
+
+### Decided
+1. **`laptop.py` makes the environment with Python's own `venv` and installs with pip;** `uv` only where there is no
+   pip, and then told to read the system's certificates.
+2. **The script names its output `laptop` unless told otherwise,** not the machine's host name, which would go into
+   the repository with the numbers.
+3. **A job's size is a setting** (`--chunk`, in the timing and in stage 8b's runner). The laptop has 20 cores (an
+   Intel chip with cores of two speeds) and a generation was 16 jobs of 48 genomes: at most 16 cores busy, the slow
+   ones holding the generation up. Jobs of 12 make 64. The size of a job changes no life (a test; and a run's
+   champion here is the same number either way). The script times both.
+
+**Impact:** this entry; `laptop.py`, `tests/test_laptop.py`; `experiments/fastcheck.py`, `experiments/stage8b.py`,
+`tests/test_fast.py`; `docs/prereg/stage8b.md`.
+
+## D54 — The first lives on a GPU: the same model, and too slow in double precision to help; on the laptop the CPU runs the searches
+
+**Date:** 2026-11-24  
+**Why:** D52, D53. The owner ran the tests, the CPU's timing and the GPU's part on the laptop (20 cores; an NVIDIA RTX
+2000 Ada laptop GPU, 8 GB) and sent what they printed. The files are on the laptop and come with the runs' data.
+
+### A. What he reported
+1. **The tests on Windows:** 23 passed, 1 skipped (the one that needs a machine with no GPU). The GPU's compile test
+   passes there now.
+2. **The CPU:** the reference 22.78 microseconds a cell-tick on one core, the compiled life 1.23; a generation on 20
+   processes 15.7 s, so 400 generations in 1.7 hours.
+3. **The GPU computes the same model.** Over the first 100 ticks its positions differ from the CPU kernel's by at most
+   7.5e-12 R.
+4. **And gives the same outcomes.** Over 450 whole lives (three cells, 25 starts, six worlds) the mean fitness
+   differs by +0.0012. The largest difference for one cell in one world is 0.013: champion 6402 under the spot, the
+   pair whose lives part (D49).
+5. **It is slow.** 75 whole lives take 36 to 40 s on the GPU, in every world. One CPU core of the laptop does the same
+   75 in 6 to 15 s.
+
+### B. Reading
+1. **The GPU form is right, and lives in short launches run on a real device.** Windows did not interfere.
+2. **In double precision this GPU does not help.** A launch carries its lives forward at about 110 microseconds a
+   tick; a CPU core takes about 1 for one life's tick. By that arithmetic the GPU would take about 20 s over a
+   generation's 768 lives, if it spreads them over all its processors: no better than the CPU's 15.7 s. That is an
+   estimate; the generation's own timing on the GPU has not come back.
+3. **This is what the plan allowed for** (`docs/prereg/fast.md` §7): the kernel is double precision, and this kind of
+   card does double precision at a small fraction of its single-precision speed. It is now measured for this card.
+4. **So on the laptop the CPU runs the searches.** Stage 8b's fifteen runs are 6,000 generations: 26 hours there at
+   15.7 s a generation.
+5. **The reference is slow on the laptop** (22 to 32 microseconds a cell-tick; 3.8 here), so the test, which is the
+   reference's, belongs on this machine, as every stage's test has been.
+
+### C. Decisions this surfaces (the owner's)
+1. **Where stage 8b's runs are made:**
+   - the laptop's CPU: about 26 hours for all fifteen, perhaps fewer in smaller jobs (not yet timed there);
+   - this machine: 4.5 s a generation on 8 processes, so about 7.5 hours; an all-core load has tripped its thermal
+     limit before (D23), so only on his word, and at a number of processes he chooses;
+   - RunPod on the compiled life: an estimate of about $10 for all fifteen (the pods' recorded 83–111 s a generation,
+     divided by this machine's 11.7), not measured on a pod.
+2. **A single-precision kernel for the GPU.** The card's single precision is many times faster than its double. It
+   would be a different instrument with its own plan and check: positions near 5,000 R, a heading that grows without
+   bound and small energy steps would have to stay in double precision. Not started.
+3. **Stage 8b's draft** (D50), still to be answered.
+
+**Impact:** this entry; `docs/prereg/fast.md` (its outcome); `docs/prereg/stage8b.md` (where it runs).
+
+## D55 — The owner chooses pods for stage 8b; the pods' scripts for the compiled life; the plan put to him before any launch
+
+**Date:** 2026-11-24  
+**Why:** the owner on D54 C1: "actually, lets go with a pod for this one as its short".
+
+### Decided
+1. **Stage 8b's runs are made on RunPod, on the compiled life,** not on the laptop.
+2. **The pods' scripts are made ready for it:**
+   - the pod's set-up installs Numba (0.68.1, the version checked here) and can run named tests in place of the
+     whole suite;
+   - `cloud/run_stage8b.sh` makes a pod's runs one after another, so a pod that reaches its deadline leaves one run
+     unfinished and not three;
+   - `cloud/launch_stage8b.sh` is `launch_phase.sh` for this stage, with two things learnt since: it asks a new
+     host its speed before staging anything on it and gives a slow one back, and it tries again when RunPod's API
+     refuses a call;
+   - the pull campaign is unchanged.
+   - *Tried here:* the pod's job at the smoke test's size, a failing run among its runs included; the pod's tests with
+     warnings as errors (27 pass); the launcher's dry run, which creates nothing.
+3. **The plan, put to the owner before any launch** (his rule: the rate, the hours and the worst cost, each time):
+   - five cpu5c pods of 16 vCPUs at $0.56 an hour, each with a deadline 3.6 hours from its launch: **at most $10.08**;
+   - pod k makes three runs one after another: run k carried on to 800 generations, then fresh runs k and k + 5;
+   - *expected:* a generation in 6 to 10 s (an estimate: the pods' recorded 83–111 s divided by this machine's ratio,
+     not measured on a pod), so 2 to 3.4 hours a pod and $6 to $9.50 in all.
+4. **If a pod reaches its deadline with a run unfinished,** the run's checkpoint is already here (the campaign pulls
+   every three minutes) and it is finished on this machine in one process.
+5. **Nothing is launched before his OK.**
+
+**Impact:** this entry; `cloud/setup_pod.sh`, `cloud/stage_pod.sh`, `cloud/run_stage8b.sh`, `cloud/launch_stage8b.sh`,
+`cloud/speed_gate.py`.
+
+## D56 — The owner's OK on the launch: stage 8b's fifteen runs, on five pods
+
+**Date:** 2026-11-24  
+**Why:** D55, item 3. The plan was put to the owner with its terms: five cpu5c pods of 16 vCPUs at $0.56 an hour, each
+deleted 3.6 hours after its launch, at most $10.08 in all, expected $6 to $9.50; the draft as written.
+
+### Decided
+1. **The owner: "Launch all 15 (Recommended)".** Recorded in `docs/prereg/stage8b.md` §9 before any run.
+2. **The draft stands as written:** both kinds of run, ten fresh runs, the criteria R1 to R3, the carried-on runs'
+   champion validated again on the compiled life before generation 401.
+3. **Pod k makes runs `extend k`, `fresh k` and `fresh k + 5`,** one after another, with 16 workers.
+4. **The launcher reads the pod's tests' line** and runs nothing on a pod whose tests did not pass (staging itself
+   does not fail on it).
+5. **The launcher itself has not launched on RunPod's new API before** (D44): this launch is that proof. The pods'
+   deadlines and this machine's sweeper hold whatever it does.
+
+**Impact:** this entry; `docs/prereg/stage8b.md`; `cloud/launch_stage8b.sh`.
+
+## D57 — Stage 8b's runs are made: fifteen runs on five pods in an hour and a quarter, for $3.74
+
+**Date:** 2026-11-24  
+**Why:** D56.  
+**Ran:** `experiments/stage8b.py` phases `extend` and `fresh` (code `3449d5c`, a clean tree on every pod), on five cpu5c
+pods of 16 vCPUs, on the compiled life (Numba 0.68.1, numpy 2.4.6, Python 3.12.3), jobs started 16:14 to 16:30 UTC and
+ended 17:24 to 17:42; data in `docs/data/stage8b/` (`extend/`, `fresh/`).
+
+### A. The launch, as it went
+1. **Seven of the twelve pods launched came up on a slow host** (the speed gate read 13.8 to 19.5 s, where a sound host
+   read 0.18 to 0.22 and this machine reads 0.18). Each was given back within a minute. Pods 4 and 5 took four tries.
+2. **The five that ran:** three on an EPYC 9575F, two on an EPYC 4564P. Each passed the compiled life's tests there
+   (27 of 27) before its job began.
+3. **A generation took 2.3 to 4.8 s** (the run's mean; I had estimated 6 to 10). A pod's three runs took 66 to 79
+   minutes.
+4. **Cost: $3.74** (the balance, $58.10 before and $54.36 after), against a ceiling of $10.08. The slow hosts are in it.
+5. **Every pod's job ended with exit 0, was pulled, and the pod deleted itself.** No pod is left. This was the
+   launcher's first use of RunPod's new API (D44): it works.
+6. **The compiled life gives the same bits on a pod as here:** run 8102's champion at generation 400 validates at
+   0.6082508764890563 on the pod and in the trial on this machine (D50).
+
+### B. The runs, on validation (the compiled life; 12 fixed starts in each of the four worlds)
+Not the test: the criteria are read on the reference, on fresh starts.
+
+| run | champion from generation | mean (survival) | home | flicker | spot | shaded |
+|---|---|---|---|---|---|---|
+| 8101, carried on | 700 | 0.482 (71%) | 0.611 | 0.518 | 0.153 (0%) | 0.645 |
+| 8102, carried on | 740 | 0.627 (100%) | 0.633 | 0.623 | 0.607 | 0.645 |
+| 8103, carried on | 780 | 0.626 (100%) | 0.638 | 0.618 | 0.605 | 0.641 |
+| 8104, carried on | 790 | 0.621 (100%) | 0.639 | 0.613 | 0.595 | 0.639 |
+| 8105, carried on | 740 | 0.489 (75%) | 0.599 | 0.553 | 0.156 (0%) | 0.646 |
+| 8201, fresh | 390 | 0.453 (67%) | 0.598 | 0.431 | 0.149 (0%) | 0.635 |
+| 8202, fresh | 390 | 0.617 (100%) | 0.636 | 0.617 | 0.586 | 0.629 |
+| 8203, fresh | 400 | 0.604 (100%) | 0.626 | 0.598 | 0.561 | 0.629 |
+| 8204, fresh | 400 | 0.151 (2%) | 0.152 | 0.175 | 0.141 | 0.136 |
+| 8205, fresh | 400 | 0.592 (98%) | 0.615 | 0.563 | 0.559 | 0.630 |
+| 8206, fresh | 400 | 0.589 (98%) | 0.618 | 0.541 | 0.556 | 0.643 |
+| 8207, fresh | 400 | 0.390 (50%) | 0.522 | 0.259 | 0.142 (0%) | 0.638 |
+| 8208, fresh | 390 | 0.564 (96%) | 0.605 | 0.503 | 0.565 | 0.585 |
+| 8209, fresh | 400 | 0.326 (35%) | 0.369 | 0.157 | 0.136 (0%) | 0.639 |
+| 8210, fresh | 390 | 0.610 (100%) | 0.634 | 0.590 | 0.583 | 0.634 |
+
+1. **Carried on:** every run's champion comes from after generation 700, and every one validates higher than its
+   champion at 400 did (0.443, 0.608, 0.502, 0.544 and 0.363 on the compiled life). Runs 8103 and 8104 now survive
+   every validation start in all four worlds, as 8102 does. Runs 8101 and 8105 still never survive under the spot.
+2. **Fresh:** six of the ten (8202, 8203, 8205, 8206, 8208, 8210) survive at least ten of the twelve starts in every
+   world.
+   One (8204) is a still cell. The other three do not survive the spot.
+3. **The champion at 400, validated again on the compiled life before generation 401** (stage 8b §3): within 0.002 of
+   the reference's number for four runs, and 0.012 below it for run 8104 (0.544 against 0.556, the same survival).
+
+### C. Next
+The test, on the reference, on this machine: 22 cells in nine worlds on fresh starts (seeds 54, 55), one process,
+about 8 hours. The criteria R1 to R3 and the six predictions are read from it and from nothing above.
+
+**Impact:** this entry; `docs/data/stage8b/extend/`, `docs/data/stage8b/fresh/`.
+
+## D58 — Stage 8b: a generalist emerges in about half the runs, and more time makes more of them; all three criteria hold, two of them exactly at their bar
+
+**Date:** 2026-11-25  
+**Why:** D56, D57.  
+**Ran:** `experiments/stage8b.py --phase test` (code `be35cae`), on the reference, one process here, 5.4 hours, from a
+clean tree with warnings as errors; seeds 54 and 55; data in `docs/data/stage8b/test/` (`2447913`).
+
+### A. Measured
+Nine worlds, 150 fresh starts in each: each world's simple rules tuned on the first 50 and the best the bar, every cell
+reported on the other 100. A generalist does the bar's job in all four worlds it was trained in.
+
+1. **The criteria:**
+
+   | criterion | result |
+   |---|---|
+   | R1: at least 3 of the 5 carried-on runs are generalists at 800 generations | **holds:** 3 (8102, 8103, 8104) |
+   | R2: at least 4 of the 5 are better at 800 generations than at 400 | **holds:** 5, by +0.012 to +0.113, every interval above 0 |
+   | R3: at least 5 of the 10 fresh runs give a generalist | **holds:** 5 (8202, 8203, 8205, 8206, 8210) |
+
+2. **The cells** (worlds in which each does the bar's job, of the 4 trained in and the 5 held back; worlds in which it
+   beats the bar, of the 9):
+
+   | cell | trained | held back | beats the bar |
+   |---|---|---|---|
+   | 8102 at 800 (at 400) | 4 (4) | 5 (5) | 6 (6) |
+   | 8103 at 800 (at 400) | 4 (2) | 5 (2) | 8 (0) |
+   | 8104 at 800 (at 400) | 4 (2) | 5 (3) | 8 (3) |
+   | 8101 at 800 (at 400) | 2 (2) | 1 (0) | 1 (1) |
+   | 8105 at 800 (at 400) | 2 (1) | 1 (0) | 1 (1) |
+   | fresh 8202, 8210 | 4 | 5 | 6 |
+   | fresh 8203, 8205, 8206 | 4 | 4 | 5 |
+   | fresh 8208 | 3 | 2 | 3 |
+   | fresh 8201 | 2 | 1 | 1 |
+   | fresh 8207, 8209 | 1 | 0 | 1 |
+   | fresh 8204 (a still cell) | 0 | 0 | 0 |
+   | champion 6402 (home's specialist) | 2 | 5 | 4 |
+   | champion 3603 (the hand-written line) | 2 | 2 | 3 |
+
+3. **Time turned two runs into generalists.** Runs 8103 and 8104 did the bar's job in two of their four worlds at 400
+   generations (not under flicker, not under the spot). At 800 they do it in all nine worlds and beat the bar in eight.
+4. **Two runs improved and did not arrive.** Runs 8101 and 8105 are better at 800 (+0.043 and +0.113) and still do
+   not do the bar's job under flicker or the spot.
+5. **At 400 generations, from random genomes:** 6 generalists in 15 runs (stage 8's five and the ten fresh): 40%, with
+   a 95% interval of 20% to 64%.
+6. **Every generalist travels:** each does the bar's job in 4 or 5 of the 5 held-back worlds and beats the bar in 5 to
+   8 of the nine. None beats it with the mouth fixed, where the bar (0.661) is within 0.03 of the ceiling.
+7. **Generality costs little at home now:** five of the eight generalists score 0.629 to 0.637 there and the other
+   three 0.596 to 0.608; the home specialist scores 0.639, the bar 0.543.
+8. **Fresh run 8208 is not a generalist on the test** (0.81 of the gap under flicker, 74% surviving), though its
+   validation had it surviving in every world (D57). The other fourteen runs stand on the test as validation showed.
+9. **Stage 8's champions stand on these fresh starts as stage 8 found them:** 8102 a generalist at 400 generations,
+   the other four not.
+10. **Predictions:** 2, 3, 5 and 6 hold. 1 and 4 fail: I expected R1 and R3 to fail, with fewer than three generalists
+    at 800 generations and one to three among the ten fresh runs.
+
+### B. Reading
+1. **A generalist was not a one-in-five accident.** Asked to cope with four worlds at once, evolution from random
+   genomes gives one in about four runs of ten at 400 generations, and in three of five at 800.
+2. **R1 and R3 hold exactly at their bar** (3 of 5, 5 of 10). One run fewer in either and it would not have held, and
+   the rate's interval is wide. "About half" is as much as these runs say.
+3. **Time is a lever, and not for every run.** Every run improved; two crossed over; the two that never survive under
+   the spot at 400 still do not at 800.
+4. **The spot and the flickering clouds divide the runs,** as D45 read it: every cell that is not a generalist fails
+   under one or both, and all but the still cell cope with the shaded world.
+5. **The strong sense, across worlds:** the generalists beat each world's own best simple rule, re-tuned there, in
+   most of the nine worlds, held-back ones among them.
+6. **As before:** one spoke mode, one sensor, a path into the worlds designed by hand. New here: the runs were made on
+   the compiled life and judged on the reference, and the carried-on runs changed engine at generation 400.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `fast` into `main`** (his pull request #1): the compiled life, the laptop's set-up, stage 8b.
+2. **Add stage 8b to the write-up** (`docs/stages-4-5.md`). Recommended with the merge.
+3. **What next.** A run now costs about 25 cents on a pod ($3.74 for these fifteen), so runs are no longer what is
+   scarce.
+   - Read the new generalists beside 8102 (local, free): are 8103 and 8104 circlers too, and what do 8101 and 8105
+     lack under the spot?
+   - Pin the rate: 30 more fresh runs would cost about $8.
+   - Still open: the uniform mode; a single-precision kernel for the GPU (D54 C2).
+
+**Impact:** this entry; `docs/data/stage8b/test/`; `docs/prereg/stage8b.md` (its outcome); `README.md`.

@@ -1,0 +1,134 @@
+# Preregistration draft: stage 8b — how reliably a generalist emerges, with more time and with more runs
+
+**Written:** 2026-11-24, after the reading of champion 8102 (`docs/decisions.md` D45) and the owner's decision D46
+(the runs move from RunPod to his own machine), before any run. A draft: §8's points are the owner's.
+
+## 1. The question
+
+Stage 8 asked evolution for a cell that copes with four worlds at once. One run in five gave one (champion 8102), so
+the criteria set beforehand were not met. That one result can be read two ways, and they call for different runs.
+
+- **R1, more time makes generalists:** carried on to 800 generations, do stage 8's other runs become generalists?
+  Stage 6b found that every run was better at 400 generations than at 200.
+- **R2, time helps each run:** is each run better at 800 generations than it was at 400?
+- **R3, the rate from nothing:** of ten fresh runs at 400 generations, how many give a generalist?
+
+A generalist is what stage 8 called one (G1): a cell that does the best simple rule's job in all four worlds it was
+trained in.
+
+## 2. The runs
+
+| | runs | from | to |
+|---|---|---|---|
+| carried on | stage 8's five, seeds 8101–8105 | their checkpoints at generation 400 | generation 800 |
+| fresh | ten, seeds 8201–8210 | random genomes | generation 400 |
+
+- **Everything else is stage 8's:** the cell (fourier1, relative sensing), CMA-ES and its settings, the eased-in path
+  over generations 1–100, then 8 training starts a generation, 2 from each of home, flicker, spot and shaded; the
+  validation of 12 fixed starts in each (seed 44); the champion the best mean over those 48 from generation 101 on.
+- **A fresh run also keeps its champion at generation 200,** as stage 8's did; a carried-on run keeps its at 600.
+
+## 3. The engine, and one consequence
+
+These are the first runs made on the compiled life (`docs/prereg/fast.md`), which this stage depends on: it runs only
+if that plan's check holds (D48).
+
+- **A fresh run** is on the compiled life from its first generation: its training lives and its validation.
+- **A carried-on run changes engine at generation 400.** Its champion so far was validated by the reference, on a
+  pod. Before generation 401 that champion is validated again on the compiled life, on the same 48 starts, and that
+  number is the one later candidates must beat. So every comparison after generation 400 is made on one engine. Both
+  numbers are kept (`carried-on.json`); stage 8's own files are not touched.
+- **The test is on the reference,** as always.
+
+## 4. The test
+
+Stage 8's, unchanged but for its seeds (54 for the starts, 55 for the intervals: fresh): the nine worlds, four
+trained in and five held back; in each the simple rules tuned on starts 1–50 and the best the bar; every cell
+reported on starts 51–150.
+
+The cells: each carried-on run's champion at 800 generations beside its champion at 400 (stage 8's own), each fresh
+run's champion, and champions 6402 and 3603 for reference. The worlds do not depend on each other, so they may run
+side by side.
+
+## 5. Criteria
+
+- **R1:** at least 3 of the 5 carried-on runs' champions at 800 generations are generalists (stage 8's bar, 3 of 5).
+- **R2:** at least 4 of the 5 are better at 800 than at 400: the champion at 800 less the champion at 400, in fitness
+  over the four trained worlds' reporting starts, above 0 (stage 6b's rule for time).
+- **R3:** at least 5 of the 10 fresh runs' champions are generalists (the same share as stage 8's bar).
+
+Reported with no criterion: the rate of generalists at 400 generations over stage 8's five runs and the ten fresh ones
+together, with a 95% interval; for every new champion, the held-back worlds it does the job in and the worlds in
+which it beats the bar (stage 8's G2 and G3).
+
+## 6. Predictions
+
+1. R1 fails: fewer than 3 of the 5 are generalists at 800 generations.
+2. R2 holds: at least 4 of the 5 are better at 800 than at 400.
+3. More time makes at least one new generalist among runs 8101, 8103, 8104 and 8105.
+4. R3 fails: between 1 and 3 of the 10 fresh runs give a generalist.
+5. Some new champion beats the bar in at least 5 of the nine worlds, as champion 8102 did.
+6. On the test's fresh starts stage 8's champions stand as they did: 8102 a generalist at 400 generations, the other
+   four not.
+
+## 7. Where it runs, and what it costs
+
+- **The owner's machine,** not RunPod: no money.
+- **Time.** A generation late in run 8102 took 109 s on its pod. On the compiled life it takes 4.5 s on 8 processes
+  on this machine (`docs/data/fast/speed/`) and 15.7 s on the laptop's 20 (D54). The fifteen runs here are 6,000
+  generations: about 26 hours on the laptop, about 7.5 on this machine.
+- **The laptop's GPU does not help:** in double precision it is slower than the laptop's CPU (D54).
+- **A run checkpoints after every generation;** the same command carries it on after a stop.
+- **The test** is on the reference and is made on this machine, as every stage's has been: the reference is six to
+  eight times slower on the laptop. About 7 hours as one process.
+
+On the laptop, from a fresh clone of this branch (a clean tree, as every run that counts). `PY` is the environment's
+own Python: `.venv\Scripts\python` on Windows, `.venv/bin/python` elsewhere.
+
+    python laptop.py                                 # once: set up, test, time the CPU and the GPU
+    PY -W error::RuntimeWarning -m experiments.stage8b --phase extend --replicate 1 2 3 4 5 --workers 8
+    PY -W error::RuntimeWarning -m experiments.stage8b --phase fresh --replicate 1 2 3 4 5 6 7 8 9 10 --workers 8
+    PY -m experiments.stage8b --phase status
+    git add docs/data/stage8b docs/data/fast
+    git commit -m "Stage 8b: the runs, the data"
+    git push
+
+Then, on this machine, from that data: `PY -W error::RuntimeWarning -m experiments.stage8b --phase test`.
+
+- `--workers` is the laptop's physical cores (`laptop.py` prints them). A generation is 16 jobs of 48 genomes by
+  default; `--chunk 12` makes it 64 jobs of 12, which spread better over more than 16 cores or over cores of unequal
+  speed. The size of a job changes no life (tested).
+- `--device cuda` runs the lives on the GPU instead, if `laptop.py` shows it faster.
+- **Staying awake:** on Windows the runner asks the system not to sleep while it runs (a closed lid still stops it);
+  on Linux wrap the command in `systemd-inhibit`.
+
+## 8. For the owner
+
+1. **Both kinds of run, or one?** Recommended: both. They answer different questions and together cost a night.
+   Carried on alone is 2,000 generations; fresh alone 4,000.
+2. **Ten fresh runs?** With stage 8's five that makes fifteen at 400 generations. Five would do less: one generalist
+   in ten runs and three in ten are hard to tell apart with five.
+3. **The criteria** in §5, each stage 8's or stage 6b's bar carried over.
+4. **The carried-on runs' change of engine** (§3): the champion validated again before generation 401.
+5. **Where the runs are made** (D54 C1): the laptop's CPU, this machine, or pods on the compiled life. Not its GPU.
+
+## 9. The owner's answers (2026-11-24), before any run
+
+- **Where:** "actually, lets go with a pod for this one as its short" (D55).
+- **The launch, put to him with its terms** (five cpu5c pods of 16 vCPUs at $0.56 an hour, each deleted 3.6 hours
+  after its launch, at most $10.08; three runs a pod, one after another; the draft as written, with its criteria and
+  the carried-on runs' champion validated again on the compiled life): **"Launch all 15 (Recommended)"**.
+- So §8 stands as recommended: both kinds of run, ten fresh runs, the criteria of §5, the change of engine of §3. The
+  runs are made on pods; the test on this machine.
+
+## 10. Outcome (2026-11-25; D57, D58)
+
+- **The runs:** fifteen, on five pods, 66 to 79 minutes a pod, $3.74 (the ceiling was $10.08). A generation took 2.3 to
+  4.8 s.
+- **R1 holds:** 3 of the 5 carried-on runs are generalists at 800 generations (8102, 8103, 8104).
+- **R2 holds:** all 5 are better at 800 generations than at 400 (+0.012 to +0.113).
+- **R3 holds:** 5 of the 10 fresh runs give a generalist (8202, 8203, 8205, 8206, 8210).
+- **R1 and R3 hold exactly at their bar.**
+- **At 400 generations:** 6 generalists in 15 runs, 40% (95% interval 20% to 64%).
+- **Every generalist travels** (4 or 5 of the 5 held-back worlds) and beats the bar in 5 to 8 of the nine worlds.
+- **Predictions:** 2, 3, 5 and 6 hold; 1 and 4 fail (I expected R1 and R3 to fail).

@@ -1,0 +1,58 @@
+{
+ "F": true,
+ "F1": true,
+ "F2": true,
+ "cell": "champion6402",
+ "compiled": {
+  "fitness": 0.43615276657546814,
+  "fitness_difference": -0.003282666224307104,
+  "high": 0.000452801579385958,
+  "low": -0.006981166399712258,
+  "sign_test": 1.0,
+  "survival": 0.25333333333333335,
+  "survived_in_engine_only": 82,
+  "survived_in_reference_only": 82,
+  "within_0.001": 0.011666666666666667
+ },
+ "compiled_against_strict": {
+  "sign_test": 0.6791635203785479,
+  "survived_in_compiled_only": 70,
+  "survived_in_strict_only": 76
+ },
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "F1 and F2 hold",
+   "values": {
+    "F1": true,
+    "F2": true
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "the strict kernel parts from the reference about as often as the default does: its count of lives that survive in one engine only is within a third of the default's",
+   "values": {
+    "default": 164,
+    "strict": 150
+   }
+  }
+ ],
+ "quick": false,
+ "reference_fitness": 0.4394354327997752,
+ "reference_survival": 0.25333333333333335,
+ "starts": 600,
+ "strict": {
+  "fitness": 0.4393665067844948,
+  "fitness_difference": -6.892601528052665e-05,
+  "high": 0.0032695255187798564,
+  "low": -0.003354822085619821,
+  "sign_test": 0.6832317601040963,
+  "survival": 0.2633333333333333,
+  "survived_in_engine_only": 78,
+  "survived_in_reference_only": 72,
+  "within_0.001": 0.02
+ },
+ "world": "spot"
+}

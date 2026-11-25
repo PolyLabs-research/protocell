@@ -1,0 +1,158 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage8b.py --phase test --workers 1",
+ "created_at": "2026-11-24T18:32:39+00:00",
+ "git": {
+  "branch": "fast",
+  "dirty": false,
+  "sha": "be35cae5059ed7fdb3ca72ab633466b17d1205d4"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8b/test",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8b/test",
+ "seeds": [
+  54,
+  55
+ ],
+ "settings": {
+  "cells": {
+   "8101 at 400": "stage 8",
+   "8101 at 800": "extended",
+   "8102 at 400": "stage 8",
+   "8102 at 800": "extended",
+   "8103 at 400": "stage 8",
+   "8103 at 800": "extended",
+   "8104 at 400": "stage 8",
+   "8104 at 800": "extended",
+   "8105 at 400": "stage 8",
+   "8105 at 800": "extended",
+   "8201": "fresh",
+   "8202": "fresh",
+   "8203": "fresh",
+   "8204": "fresh",
+   "8205": "fresh",
+   "8206": "fresh",
+   "8207": "fresh",
+   "8208": "fresh",
+   "8209": "fresh",
+   "8210": "fresh",
+   "champion3603": "reference",
+   "champion6402": "reference"
+  },
+  "engine": "the reference (protocell.sim.simulate)",
+  "held": [
+   "fixed mouth",
+   "tighter",
+   "sweep and flicker",
+   "slow clouds",
+   "slow spot"
+  ],
+  "quick": false,
+  "report": [
+   51,
+   150
+  ],
+  "select": [
+   1,
+   50
+  ],
+  "trained": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded"
+  ],
+  "workers": 1,
+  "worlds": {
+   "fixed mouth": {
+    "changes": {},
+    "gain": 0.55
+   },
+   "flicker": {
+    "changes": {
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 60.0,
+     "cloud_sun_mean": 120.0
+    },
+    "gain": 0.55
+   },
+   "home": {
+    "changes": {
+     "cave_sweep": true
+    },
+    "gain": 0.55
+   },
+   "shaded": {
+    "changes": {
+     "cave_sweep": true,
+     "shade_floor": 0.3
+    },
+    "gain": 0.55
+   },
+   "slow clouds": {
+    "changes": {
+     "cave_sweep": true,
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 300.0,
+     "cloud_sun_mean": 600.0
+    },
+    "gain": 0.55
+   },
+   "slow spot": {
+    "changes": {
+     "cave_path": "circle",
+     "path_period": 21600,
+     "path_radius": 2500.0
+    },
+    "gain": 0.45
+   },
+   "spot": {
+    "changes": {
+     "cave_path": "circle",
+     "path_period": 7200,
+     "path_radius": 2500.0
+    },
+    "gain": 0.45
+   },
+   "sweep and flicker": {
+    "changes": {
+     "cave_sweep": true,
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 60.0,
+     "cloud_sun_mean": 120.0
+    },
+    "gain": 0.55
+   },
+   "tighter": {
+    "changes": {
+     "cave_sweep": true
+    },
+    "gain": 0.45
+   }
+  }
+ },
+ "timing": {
+  "wall_seconds": 19451.892365455627
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "source": "docs/data/stage8/pilot/fourier1-8101",
+ "generation": 400,
+ "champion_generation": 400,
+ "reference_validation_fitness": 0.44268958270378755,
+ "reference_validation_survival": 0.6041666666666666,
+ "compiled_validation_fitness": 0.44269107632601745,
+ "compiled_validation_survival": 0.6041666666666666
+}
