@@ -2745,3 +2745,84 @@ The test, on the reference, on this machine: 22 cells in nine worlds on fresh st
 about 8 hours. The criteria R1 to R3 and the six predictions are read from it and from nothing above.
 
 **Impact:** this entry; `docs/data/stage8b/extend/`, `docs/data/stage8b/fresh/`.
+
+## D58 — Stage 8b: a generalist emerges in about half the runs, and more time makes more of them; all three criteria hold, two of them exactly at their bar
+
+**Date:** 2026-11-25  
+**Why:** D56, D57.  
+**Ran:** `experiments/stage8b.py --phase test` (code `be35cae`), on the reference, one process here, 5.4 hours, from a
+clean tree with warnings as errors; seeds 54 and 55; data in `docs/data/stage8b/test/` (`2447913`).
+
+### A. Measured
+Nine worlds, 150 fresh starts in each: each world's simple rules tuned on the first 50 and the best the bar, every cell
+reported on the other 100. A generalist does the bar's job in all four worlds it was trained in.
+
+1. **The criteria:**
+
+   | criterion | result |
+   |---|---|
+   | R1: at least 3 of the 5 carried-on runs are generalists at 800 generations | **holds:** 3 (8102, 8103, 8104) |
+   | R2: at least 4 of the 5 are better at 800 generations than at 400 | **holds:** 5, by +0.012 to +0.113, every interval above 0 |
+   | R3: at least 5 of the 10 fresh runs give a generalist | **holds:** 5 (8202, 8203, 8205, 8206, 8210) |
+
+2. **The cells** (worlds in which each does the bar's job, of the 4 trained in and the 5 held back; worlds in which it
+   beats the bar, of the 9):
+
+   | cell | trained | held back | beats the bar |
+   |---|---|---|---|
+   | 8102 at 800 (at 400) | 4 (4) | 5 (5) | 6 (6) |
+   | 8103 at 800 (at 400) | 4 (2) | 5 (2) | 8 (0) |
+   | 8104 at 800 (at 400) | 4 (2) | 5 (3) | 8 (3) |
+   | 8101 at 800 (at 400) | 2 (2) | 1 (0) | 1 (1) |
+   | 8105 at 800 (at 400) | 2 (1) | 1 (0) | 1 (1) |
+   | fresh 8202, 8210 | 4 | 5 | 6 |
+   | fresh 8203, 8205, 8206 | 4 | 4 | 5 |
+   | fresh 8208 | 3 | 2 | 3 |
+   | fresh 8201 | 2 | 1 | 1 |
+   | fresh 8207, 8209 | 1 | 0 | 1 |
+   | fresh 8204 (a still cell) | 0 | 0 | 0 |
+   | champion 6402 (home's specialist) | 2 | 5 | 4 |
+   | champion 3603 (the hand-written line) | 2 | 2 | 3 |
+
+3. **Time turned two runs into generalists.** Runs 8103 and 8104 did the bar's job in two of their four worlds at 400
+   generations (not under flicker, not under the spot). At 800 they do it in all nine worlds and beat the bar in eight.
+4. **Two runs improved and did not arrive.** Runs 8101 and 8105 are better at 800 (+0.043 and +0.113) and still do
+   not do the bar's job under flicker or the spot.
+5. **At 400 generations, from random genomes:** 6 generalists in 15 runs (stage 8's five and the ten fresh): 40%, with
+   a 95% interval of 20% to 64%.
+6. **Every generalist travels:** each does the bar's job in 4 or 5 of the 5 held-back worlds and beats the bar in 5 to
+   8 of the nine. None beats it with the mouth fixed, where the bar (0.661) is within 0.03 of the ceiling.
+7. **Generality costs little at home now:** the generalists score 0.629 to 0.637 there, the home specialist 0.639, the
+   bar 0.543.
+8. **Fresh run 8208 is not a generalist on the test** (0.81 of the gap under flicker, 74% surviving), though its
+   validation had it surviving in every world (D57). The other fifteen cells stand on the test as validation showed.
+9. **Stage 8's champions stand on these fresh starts as stage 8 found them:** 8102 a generalist at 400 generations,
+   the other four not.
+10. **Predictions:** 2, 3, 5 and 6 hold. 1 and 4 fail: I expected R1 and R3 to fail, with fewer than three generalists
+    at 800 generations and one to three among the ten fresh runs.
+
+### B. Reading
+1. **A generalist was not a one-in-five accident.** Asked to cope with four worlds at once, evolution from random
+   genomes gives one in about four runs of ten at 400 generations, and in three of five at 800.
+2. **R1 and R3 hold exactly at their bar** (3 of 5, 5 of 10). One run fewer in either and it would not have held, and
+   the rate's interval is wide. "About half" is as much as these runs say.
+3. **Time is a lever, and not for every run.** Every run improved; two crossed over; the two that never survive under
+   the spot at 400 still do not at 800.
+4. **The spot and the flickering clouds divide the runs,** as D45 read it: every cell that is not a generalist fails
+   under one or both, and all but the still cell cope with the shaded world.
+5. **The strong sense, across worlds:** the generalists beat each world's own best simple rule, re-tuned there, in
+   most of the nine worlds, held-back ones among them.
+6. **As before:** one spoke mode, one sensor, a path into the worlds designed by hand. New here: the runs were made on
+   the compiled life and judged on the reference, and the carried-on runs changed engine at generation 400.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `fast` into `main`** (his pull request #1): the compiled life, the laptop's set-up, stage 8b.
+2. **Add stage 8b to the write-up** (`docs/stages-4-5.md`). Recommended with the merge.
+3. **What next.** A run now costs about 25 cents on a pod ($3.74 for these fifteen), so runs are no longer what is
+   scarce.
+   - Read the new generalists beside 8102 (local, free): are 8103 and 8104 circlers too, and what do 8101 and 8105
+     lack under the spot?
+   - Pin the rate: 30 more fresh runs would cost about $8.
+   - Still open: the uniform mode; a single-precision kernel for the GPU (D54 C2).
+
+**Impact:** this entry; `docs/data/stage8b/test/`; `docs/prereg/stage8b.md` (its outcome); `README.md`.

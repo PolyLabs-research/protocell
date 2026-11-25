@@ -120,3 +120,15 @@ Then, on this machine, from that data: `PY -W error::RuntimeWarning -m experimen
   the carried-on runs' champion validated again on the compiled life): **"Launch all 15 (Recommended)"**.
 - So §8 stands as recommended: both kinds of run, ten fresh runs, the criteria of §5, the change of engine of §3. The
   runs are made on pods; the test on this machine.
+
+## 10. Outcome (2026-11-25; D57, D58)
+
+- **The runs:** fifteen, on five pods, 66 to 79 minutes a pod, $3.74 (the ceiling was $10.08). A generation took 2.3 to
+  4.8 s.
+- **R1 holds:** 3 of the 5 carried-on runs are generalists at 800 generations (8102, 8103, 8104).
+- **R2 holds:** all 5 are better at 800 generations than at 400 (+0.012 to +0.113).
+- **R3 holds:** 5 of the 10 fresh runs give a generalist (8202, 8203, 8205, 8206, 8210).
+- **R1 and R3 hold exactly at their bar.**
+- **At 400 generations:** 6 generalists in 15 runs, 40% (95% interval 20% to 64%).
+- **Every generalist travels** (4 or 5 of the 5 held-back worlds) and beats the bar in 5 to 8 of the nine worlds.
+- **Predictions:** 2, 3, 5 and 6 hold; 1 and 4 fail (I expected R1 and R3 to fail).
