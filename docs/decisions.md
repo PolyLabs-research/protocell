@@ -2951,3 +2951,39 @@ run once as planned.
 2. **How the circle climbs** (D45 C3) is the open mechanism, and worth more now that five runs share it.
 
 **Impact:** this entry; `docs/data/stage8b/read/`.
+
+## D62 — Stage 8c's runs are made: thirty fresh runs on six pods in under two hours, for $6.44
+
+**Date:** 2026-11-25  
+**Why:** D59, item 3.  
+**Ran:** `experiments/stage8c.py --phase fresh` (a clean tree on every pod), on six cpu5c pods of 16 vCPUs, on the
+compiled life (Numba 0.68.1, numpy 2.4.6, Python 3.12.3), jobs from 15:18 to 17:17 UTC; data in
+`docs/data/stage8c/fresh/`.
+
+### A. The launch, as it went
+1. **All six pods came up on the first try,** none on a slow host (the speed gate read 0.18 to 0.24 s). Five ran on an
+   EPYC 9575F and one on an EPYC 4564P. Each passed the compiled life's and the stage's tests there (29 of 29).
+2. **A pod's five runs took 97 to 117 minutes;** a generation 2.1 to 4.1 s (a run's mean).
+3. **Cost: $6.44** (the balance, $54.36 before and $47.92 after), against a ceiling of $9.41: about 21 cents a run.
+4. **Every job ended with exit 0, was pulled, and its pod deleted itself.** No pod is left.
+5. **Two commits ran, with the same stage code.** Pods 1 to 3 ran `1e1f85b` and pods 4 to 6 `3a01205`: I committed the
+   reading probe (D60) while the pods were still being set up. The second commit adds only that probe's files and
+   log entry; nothing a run uses differs. Each run's manifest names its own commit.
+   - *Put right:* the set-up's "staged" line named this checkout's commit at the end of the set-up, not the one it
+     had sent, and so said `3a01205` for pods 2 and 3; it now names what it sent. And no commit is made here between
+     a launch's first pod and its last pod's set-up.
+
+### B. The runs, on validation (the compiled life; 12 fixed starts in each of the four worlds)
+Not the test.
+
+1. **Thirteen of the thirty survive at least ten starts of twelve in every world** (8211, 8213, 8215, 8218, 8219,
+   8220, 8223, 8224, 8227, 8231, 8233, 8237, 8240). Two more (8235, 8238) do but for nine of twelve under flicker.
+2. **Three are still cells** (8217, 8222, 8228).
+3. **The other twelve** survive when shaded and mostly at home, and none of them survives a start under the spot but
+   8212 (two of twelve).
+
+### C. Next
+The test, on the reference, on this machine: the thirty champions and two references in nine worlds on fresh starts
+(seeds 65, 66), one process. E1, E2 and the seven predictions are read from it.
+
+**Impact:** this entry; `docs/data/stage8c/fresh/`; `cloud/stage_pod.sh`.

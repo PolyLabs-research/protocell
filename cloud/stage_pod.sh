@@ -19,10 +19,11 @@ CHESS=$HOME/Documents/dev/chess
 RP=("$CHESS/.venv/bin/python" "$CHESS/scripts/runpod_pod.py")
 STAGE=$(mktemp -d)
 trap 'rm -rf "$STAGE"' EXIT
+COMMIT=$(git rev-parse --short "$BRANCH")  # what the bundle holds: this checkout may move on while the pod is set up
 git bundle create "$STAGE/protocell.bundle" "$BRANCH" 2> /dev/null
 "${RP[@]}" ssh "$POD" -- mkdir -p /root/pc
 "${RP[@]}" push "$POD" "$STAGE/protocell.bundle" /root/pc/protocell.bundle
 for f in setup_pod.sh pod_job.sh; do "${RP[@]}" push "$POD" "cloud/$f" "/root/pc/$f"; done
 # shellcheck disable=SC2086  # POD_TESTS is a list of files
 "${RP[@]}" ssh "$POD" -- bash /root/pc/setup_pod.sh /root/pc/protocell.bundle "$BRANCH" ${POD_TESTS:-} 2>&1 | grep -E '^(code|stack|cpu|tests|cost):'
-echo "staged $(git rev-parse --short HEAD) on $POD"
+echo "staged $COMMIT on $POD"
