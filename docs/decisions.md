@@ -2792,10 +2792,10 @@ reported on the other 100. A generalist does the bar's job in all four worlds it
    a 95% interval of 20% to 64%.
 6. **Every generalist travels:** each does the bar's job in 4 or 5 of the 5 held-back worlds and beats the bar in 5 to
    8 of the nine. None beats it with the mouth fixed, where the bar (0.661) is within 0.03 of the ceiling.
-7. **Generality costs little at home now:** the generalists score 0.629 to 0.637 there, the home specialist 0.639, the
-   bar 0.543.
+7. **Generality costs little at home now:** five of the eight generalists score 0.629 to 0.637 there and the other
+   three 0.596 to 0.608; the home specialist scores 0.639, the bar 0.543.
 8. **Fresh run 8208 is not a generalist on the test** (0.81 of the gap under flicker, 74% surviving), though its
-   validation had it surviving in every world (D57). The other fifteen cells stand on the test as validation showed.
+   validation had it surviving in every world (D57). The other fourteen runs stand on the test as validation showed.
 9. **Stage 8's champions stand on these fresh starts as stage 8 found them:** 8102 a generalist at 400 generations,
    the other four not.
 10. **Predictions:** 2, 3, 5 and 6 hold. 1 and 4 fail: I expected R1 and R3 to fail, with fewer than three generalists
