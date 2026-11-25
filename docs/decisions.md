@@ -2885,3 +2885,69 @@ the cheap runs meant the thirty fresh runs on pods, and shown the launch's terms
    numbers (D57, D58). Nothing about how the new cells move.
 
 **Impact:** this entry; `experiments/stage8b_read.py`, `tests/test_stage8b_read.py`.
+
+## D61 — The reading of stage 8b's cells: five runs found the same kind of cell; time did not make circlers of two runs, it made their circling unbroken
+
+**Date:** 2026-11-25  
+**Why:** D60.  
+**Ran:** `experiments/stage8b_read.py` (code `3a01205`), seed 67, 60 fresh starts in each of the four trained worlds,
+one process here, 54 minutes, from a clean tree with warnings as errors; data in `docs/data/stage8b/read/`. A probe,
+run once as planned.
+
+### A. Measured
+1. **All five generalists are circlers at home,** and the two runs that never survive the spot are not:
+
+   | cell | fitness at home | running by day | turning during runs (rad a tick) | fresh onsets a life |
+   |---|---|---|---|---|
+   | 8102 at 800 | 0.624 | 94% | −0.068 | 8 |
+   | 8103 at 800 | 0.632 | 95% | −0.046 | 11 |
+   | 8104 at 800 | 0.623 | 98% | +0.079 | 16 |
+   | fresh 8202 | 0.622 | 93% | −0.056 | 5 |
+   | fresh 8210 | 0.625 | 96% | −0.081 | 12 |
+   | 8103 at 400 | 0.559 | 93% | −0.059 | 600 |
+   | 8104 at 400 | 0.590 | 95% | +0.056 | 84 |
+   | 8101 at 800 | 0.551 | 36% | −0.013 | 332 |
+   | 8105 at 800 | 0.553 | 34% | −0.014 | 390 |
+
+   Run 8104 circles the other way from the other four.
+2. **All five use the same parts in the same places** (fitness lost with each removed):
+
+   | removed | home | flicker | spot | shaded |
+   |---|---|---|---|---|
+   | the ring's links | 0.31 to 0.45 | 0.25 to 0.37 | 0.39 to 0.46 | 0.004 to 0.009 |
+   | the direction across the body | 0.00 | 0.003 to 0.008 | 0.001 | 0.12 to 0.15 |
+
+3. **Runs 8103 and 8104 were circlers already at 400 generations.** What differs at 800 is that their running is
+   hardly ever broken:
+
+   | run | fresh onsets a life at home, at 400 and at 800 | under the spot | fitness under the spot (surviving) |
+   |---|---|---|---|
+   | 8103 | 600, then 11 | 579, then 4 | 0.468 (47%), then 0.585 (100%) |
+   | 8104 | 84, then 16 | 75, then 4 | 0.475 (75%), then 0.572 (100%) |
+
+4. **The two runs that never survive the spot** run a third of the day there (35% and 34%; champion 8102, 93%), turn
+   less than 0.01 rad a tick, and all starve (fitness 0.158 and 0.160).
+5. **When shaded the five do not all move alike:** four run 31% to 46% of the day; fresh run 8202 runs 82% of it,
+   turning. All five lose 0.12 to 0.15 there without the direction across the body, and nothing without the ring's
+   links.
+6. **Predictions:** 1, 2, 3, 5 and 6 hold. 4 fails: I expected time to have made circlers of runs 8103 and 8104.
+
+### B. Reading
+1. **Five runs, from five random beginnings, arrived at the same kind of cell** that D45 found in champion 8102: where
+   its body gives no direction it swims in circles, with its ring's links; where it shades itself it steers by the
+   shading. One of them circles the other way, as arrivals that owe nothing to each other may.
+2. **So the generalist is what this cell and these four worlds select,** and not an accident of one run's history.
+3. **What time gave runs 8103 and 8104 was not the mechanism.** They had it at 400 generations. At 800 their circling
+   is unbroken, and with that they follow the spot and outlast the clouds. That the one causes the other is not
+   shown: the probe measured both and removed neither.
+4. **The runs that fail are the other kind,** as D45 B.2 read run 8105 at 400: cells that run a third of the day and
+   do not circle. Four hundred more generations improved them and left them that kind.
+5. **Still not shown:** how a circle is biased toward the light (D36 B.2, D45 B.4). It is now a question about five
+   cells.
+
+### C. What this surfaces (the owner's)
+1. **Is every generalist a circler?** Stage 8c's thirty runs will say how many generalists there are; the same
+   measures on each would say whether there is any other kind. About a minute and a half a cell and world here.
+2. **How the circle climbs** (D45 C3) is the open mechanism, and worth more now that five runs share it.
+
+**Impact:** this entry; `docs/data/stage8b/read/`.
