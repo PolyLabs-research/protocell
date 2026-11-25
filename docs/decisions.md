@@ -2826,3 +2826,31 @@ reported on the other 100. A generalist does the bar's job in all four worlds it
    - Still open: the uniform mode; a single-precision kernel for the GPU (D54 C2).
 
 **Impact:** this entry; `docs/data/stage8b/test/`; `docs/prereg/stage8b.md` (its outcome); `README.md`.
+
+## D59 — The owner's decisions on D58: merged, the write-up, the reading, thirty more runs; and a correction to stage 8b's third criterion
+
+**Date:** 2026-11-25  
+**Why:** the owner on D58 C: "Merged, please write up then continue as you suggest with the cheap runs". Asked whether
+the cheap runs meant the thirty fresh runs on pods, and shown the launch's terms, he chose "Yes, 30 runs
+(Recommended)".
+
+### Decided
+1. **`fast` is in `main`:** the owner merged his pull request #1 (`35d91ce`).
+2. **The compiled life and stage 8b are added to the write-up** (`docs/stages-4-5.md` §13, §14).
+3. **Thirty more fresh runs pin the rate: stage 8c,** preregistered in `docs/prereg/stage8c.md` before any run.
+   - Seeds 8211 to 8240, each exactly one of stage 8b's fresh runs, on the compiled life.
+   - Criteria: E1, at least 15 of the 30 give a generalist; E2, at least 18 of the 30. Seven predictions.
+   - On RunPod, on the terms he was shown: six cpu5c pods of 16 vCPUs at $0.56 an hour, five runs each, each pod
+     deleted 2.8 hours after its launch, at most $9.41.
+   - The test on this machine, on the reference, at seeds 65 and 66.
+4. **The new generalists are read beside champion 8102** on this machine, with a plan and predictions of their own
+   first.
+5. **A correction to stage 8b, mine.** Its draft called the bar of R3, 5 of the 10 fresh runs, "the same share as
+   stage 8's bar". It is not: stage 8's bar was 3 of 5.
+   - R3 held as registered, at 5 of 10. At stage 8's share, 6 of 10, it would not have.
+   - D58 stands for the criteria as they were registered; its B.2 ("exactly at their bar") is to be read with this.
+   - Stage 8c carries both bars: E1 is a half, E2 is three in five.
+
+**Impact:** this entry; `docs/stages-4-5.md`; `docs/prereg/stage8c.md`, `experiments/stage8c.py`, `tests/test_stage8c.py`;
+`experiments/stage8b.py` (its runner takes another stage's seed and name), `cloud/launch_stage8b.sh` and
+`cloud/run_stage8b.sh` (they take the stage); `docs/prereg/stage8b.md` (the correction, dated).

@@ -126,13 +126,15 @@ def carry_on(source: Path, out: Path, quick: bool, mapper: Any, log: Any) -> Dic
 
 
 def run_phase(phase: str, replicate: int, out_root: Path, workers: int, quick: bool, stop_after: Optional[int], device: str,
-              source_root: Path, chunk: Optional[int] = None) -> Path:
+              source_root: Path, chunk: Optional[int] = None, seed: Optional[int] = None, protocol: str = "stage8b") -> Path:
+    """One run. ``seed`` and ``protocol``, when given, are a later stage's own (stage 8c makes more fresh runs with this
+    runner, under its own seeds and name)."""
     home = stage8.world("home", quick)
     cma = stage8.cma_for(quick).but(generations=generations(phase, quick))
     if chunk:  # the genomes in a job: it spreads the same lives differently over the processes and changes none of them
         cma = cma.but(chunk=chunk)
         cma.as_ga()  # refuses a size the population does not divide into
-    seed = seed_for(phase, replicate)
+    seed = seed_for(phase, replicate) if seed is None else int(seed)
     out = out_root / phase / f"{MODE}-{seed}"
     fade, tighten = stage4b.path_generations(quick)
     eased = fade + tighten
@@ -141,7 +143,7 @@ def run_phase(phase: str, replicate: int, out_root: Path, workers: int, quick: b
     keep = (half,) if phase == "fresh" else (3 * half,)  # a fresh run's champion at 200, as stage 8 kept it; a carried-on run's at 600
     import numba
 
-    manifest = build_manifest(protocol=f"stage8b/{phase}", settings={**home.as_dict(), "world": "stage 4b's path, then four worlds at once", "mode": MODE,
+    manifest = build_manifest(protocol=f"{protocol}/{phase}", settings={**home.as_dict(), "world": "stage 4b's path, then four worlds at once", "mode": MODE,
                                                                      "genome_length": genome_length(home, MODE), "search": "CMA-ES", "cma": cma.as_dict(),
                                                                      "engine": "the compiled life (protocell/fast.py)", "device": device, "numba": numba.__version__,
                                                                      "trained": list(stage8.TRAINED),
@@ -224,8 +226,8 @@ def test_cells(out_root: Path, quick: bool) -> Tuple[Dict[str, np.ndarray], Dict
 def _world(job: Mapping[str, Any]) -> Tuple[str, Dict[str, Any], List[str]]:
     lines: List[str] = []
     w = job["world"]
-    out = stage7.run_world(w, job["quick"], job["cells"], lines.append, 1000 * (list(stage8.WORLDS).index(w) + 1), stage8.WORLDS, TEST_SEED, BOOTSTRAP_SEED,
-                           per_start=True)
+    out = stage7.run_world(w, job["quick"], job["cells"], lines.append, 1000 * (list(stage8.WORLDS).index(w) + 1), stage8.WORLDS,
+                           job.get("seed", TEST_SEED), job.get("bootstrap", BOOTSTRAP_SEED), per_start=True)
     return w, out, lines
 
 

@@ -56,6 +56,8 @@ side by side.
 - **R2:** at least 4 of the 5 are better at 800 than at 400: the champion at 800 less the champion at 400, in fitness
   over the four trained worlds' reporting starts, above 0 (stage 6b's rule for time).
 - **R3:** at least 5 of the 10 fresh runs' champions are generalists (the same share as stage 8's bar).
+  *Correction, 2026-11-25 (D59), after the outcome: it is not the same share. 5 of 10 is a half; stage 8's bar was
+  3 of 5. R3 was registered and read at 5 of 10. At stage 8's share, 6 of 10, it would not have held.*
 
 Reported with no criterion: the rate of generalists at 400 generations over stage 8's five runs and the ten fresh ones
 together, with a 95% interval; for every new champion, the held-back worlds it does the job in and the worlds in

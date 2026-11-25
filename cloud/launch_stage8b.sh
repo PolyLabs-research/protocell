@@ -21,6 +21,7 @@ WORKERS=${WORKERS:-16}
 VCPU=${VCPU:-16}
 FLAVOR=${FLAVOR:-cpu5c}
 SLOWEST=${SLOWEST:-0.6}  # the speed gate's seconds: this box takes about 0.24
+STAGE=${STAGE:-stage8b}  # the stage's module: stage8b, or a later stage with the same phases (stage8c)
 POD_TESTS=${POD_TESTS:-tests/test_fast.py tests/test_fastcheck.py tests/test_stage8b.py}
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 cd "$REPO" || exit 1
@@ -39,10 +40,10 @@ try() {
 
 names=()
 for run in "${RUNS[@]}"; do
-    name=$("$PY" -c "from experiments.stage8b import MODE, seed_for; p, r = '$run'.split(':'); print(f'{p}/{MODE}-{seed_for(p, int(r))}')") || exit 1
+    name=$("$PY" -c "from experiments.$STAGE import MODE, seed_for; p, r = '$run'.split(':'); print(f'{p}/{MODE}-{seed_for(p, int(r))}')") || exit 1
     names+=("$name")
 done
-say "launch $TAG: stage8b ${RUNS[*]} -> ${names[*]}; ${HOURS} h cap at most \$${MAX_RATE}/h"
+say "launch $TAG: $STAGE ${RUNS[*]} -> ${names[*]}; ${HOURS} h cap at most \$${MAX_RATE}/h"
 out=$("$PY" cloud/cpu_pod.py launch --tag "$TAG" --flavor "$FLAVOR" --vcpu "$VCPU" --hours "$HOURS" --max-rate "$MAX_RATE" --yes 2>&1)
 echo "$out"
 POD=$(echo "$out" | sed -n 's/^launched \([a-z0-9]*\) .*/\1/p')
@@ -73,10 +74,10 @@ try stage || fail "staging"
 echo "$staged" | grep -E '^tests: ' | grep -q ' passed' || fail "the pod's tests did not pass"
 if echo "$staged" | grep -E '^tests: ' | grep -q -E 'failed|error'; then fail "the pod's tests failed"; fi
 # Start the job detached on the pod; the local ssh is cut after 30 s (the job is setsid and nohup there, so it lives on).
-timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && ${CHUNK:+CHUNK=$CHUNK }nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_stage8b.sh $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
+timeout 30 "${RP[@]}" ssh "$POD" -- "cd /root/protocell && STAGE=$STAGE ${CHUNK:+CHUNK=$CHUNK }nohup setsid bash /root/pc/pod_job.sh /root/protocell/pc-job $PULL_WAIT -- bash /root/protocell/cloud/run_stage8b.sh $WORKERS ${RUNS[*]} > /dev/null 2>&1 < /dev/null &" > /dev/null 2>&1
 sleep 25
 try "${RP[@]}" ssh "$POD" -- "grep -q 'job start' /root/protocell/pc-job/lifecycle.log" || fail "the job did not start"
 say "job started on $POD"
-# The campaign pulls docs/data/stage8b/ whole (its phase is "."), and looks for each run under its own phase's folder.
-EXPERIMENT=stage8b PULL_EVERY=${PULL_EVERY:-180} setsid nohup bash cloud/campaign.sh "$POD" . "${names[@]}" > /dev/null 2>&1 < /dev/null &
-say "campaign started for $POD (log ~/protocell-runs/campaign-stage8b-.-$POD.log)"
+# The campaign pulls the stage's whole data folder (its phase is "."), and looks for each run under its own phase's folder.
+EXPERIMENT=$STAGE PULL_EVERY=${PULL_EVERY:-180} setsid nohup bash cloud/campaign.sh "$POD" . "${names[@]}" > /dev/null 2>&1 < /dev/null &
+say "campaign started for $POD (log ~/protocell-runs/campaign-$STAGE-.-$POD.log)"

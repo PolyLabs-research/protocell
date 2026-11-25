@@ -11,13 +11,14 @@ set -u
 cd "${PROTOCELL_ROOT:-/root/protocell}" || exit 1
 WORKERS=$1
 shift
+STAGE=${STAGE:-stage8b}  # the stage's module: stage8b, or a later stage with the same phases (stage8c)
 mkdir -p logs
 status=0
 for run in "$@"; do
     phase=${run%%:*}
     rep=${run##*:}
     # shellcheck disable=SC2086  # the chunk and any extra arguments are separate words when set
-    "${PYTHON:-python3}" -W error::RuntimeWarning -m experiments.stage8b --phase "$phase" --replicate "$rep" --workers "$WORKERS" \
-        ${CHUNK:+--chunk $CHUNK} ${STAGE8B_EXTRA:-} > "logs/stage8b-$phase-$rep.log" 2>&1 || status=1
+    "${PYTHON:-python3}" -W error::RuntimeWarning -m "experiments.$STAGE" --phase "$phase" --replicate "$rep" --workers "$WORKERS" \
+        ${CHUNK:+--chunk $CHUNK} ${STAGE8B_EXTRA:-} > "logs/$STAGE-$phase-$rep.log" 2>&1 || status=1
 done
 exit $status
