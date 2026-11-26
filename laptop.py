@@ -200,9 +200,8 @@ def main(argv=None):
             if precision == "double" and not args.double:
                 continue
             print(f"== {what}: the GPU's kernel beside the CPU's (a few minutes), then a generation on the GPU", flush=True)
-            label = name + ("-single" if precision == "single" else "")
             if run([py, "-m", "experiments.fastcheck", "--part", "gpu", "--precision", precision, "--tag", name], check=False):
-                run([py, "-m", "experiments.fastcheck", "--part", "speed", "--device", "cuda", "--precision", precision, "--tag", label + "-gpu"],
+                run([py, "-m", "experiments.fastcheck", "--part", "speed", "--device", "cuda", "--precision", precision, "--tag", name + "-gpu"],
                     check=False)
             else:
                 print(f"!! the GPU part in {what} did not run: the CPU's numbers above still stand", flush=True)
