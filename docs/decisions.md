@@ -3243,3 +3243,34 @@ clean tree with warnings as errors; seeds 70 and 71; data in `docs/data/stage8d/
    - **How a circle climbs toward the light** (D45 C3), now a question about many cells.
 
 **Impact:** this entry; `docs/data/stage8d/test/`; `docs/prereg/stage8d.md` (its outcome); `README.md`.
+
+## D70 — A single-precision life for the GPU: built, and its check on the CPU holds; its speed on a GPU waits for the owner's laptop
+
+**Date:** 2026-11-26 (the engine was built and checked earlier the same day, on branch `fast32`; this entry waited for
+stage 8d's test so the log stays in order).  
+**Why:** D64, item 4; D54 C2.
+
+### Decided, and done
+1. **What was built** (`protocell/fast32.py`, `protocell/fast32_cuda.py`; plan `docs/prereg/fast32.md`): the compiled
+   life with most of its arithmetic in single precision.
+   - In double: the cell's place, its heading, its reserve and damage, the light's source, and the outcome's sums.
+   - In single: everything else.
+   - Specialised to the stages' cell (16 wall nodes, 8 core neurons).
+   - The double engine, the searches' mappers and the check take a precision (`precision="single"`).
+   - Its GPU code compiles here with 127 of about 2,600 instructions in double, most of them loads, stores and
+     conversions.
+2. **Its check, part agree, ran on this machine's CPU** before any use, against criteria written first, on the double
+   engine's starts and luck (`docs/data/fast/agree-single/`, code `a8792eb`, 37 minutes):
+   - S1 to S5 all hold: every pair's mean fitness within 0.006 of the reference's; no interval misses 0; the pooled
+     difference +0.0004 [−0.0008, +0.0016]; the ranking alike (Spearman 0.979 and 0.964, against 0.898); 17 lives
+     survive in the reference only and 20 in the single-precision life only (p = 0.74).
+   - All four predictions hold. Its lives part from the reference sooner than the double engine's: 61% of paired lives
+     agree within 0.001 (the double engine 74%).
+3. **On a CPU it is about 1.4 times faster than the double engine** (0.24 against 0.34 microseconds a cell-tick here).
+4. **The laptop script times it on the GPU** (`python laptop.py`), beside the laptop's CPU. Tested here in a fresh copy
+   with Python 3.13, pip only and a stand-in for `nvidia-smi`; not yet on a GPU.
+5. **Searches stay on the double engine** until the owner says otherwise (the plan's §4).
+
+**Impact:** this entry; the merge of `fast32` (`protocell/fast32.py`, `protocell/fast32_cuda.py`, `protocell/fast.py`,
+`experiments/fastcheck.py`, `laptop.py`, `tests/test_fast32.py`, `tests/test_fastcheck.py`, `docs/prereg/fast32.md`,
+`docs/data/fast/agree-single/`).
