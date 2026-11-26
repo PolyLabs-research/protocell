@@ -1,0 +1,73 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage8d_read.py",
+ "created_at": "2026-11-26T08:49:18+00:00",
+ "git": {
+  "branch": "stage8d",
+  "dirty": false,
+  "sha": "7ac8e0e9b308d5d51fc03061094da3605805b515"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8d/read",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8d/read",
+ "seeds": [
+  72
+ ],
+ "settings": {
+  "circler": [
+   0.8,
+   0.03
+  ],
+  "generalists": [
+   8211,
+   8215,
+   8220,
+   8223,
+   8227,
+   8238,
+   8240
+  ],
+  "near": [
+   8213,
+   8218,
+   8219,
+   8224,
+   8231,
+   8233,
+   8235,
+   8237
+  ],
+  "quick": false,
+  "starts": 60,
+  "worlds": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded"
+  ]
+ },
+ "timing": {
+  "wall_seconds": 3078.1593763828278
+ }
+}

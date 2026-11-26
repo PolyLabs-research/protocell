@@ -1,0 +1,925 @@
+{
+ "circlers": [
+  "8211",
+  "8220",
+  "8223",
+  "8227",
+  "8238",
+  "8240",
+  "8213",
+  "8218",
+  "8219",
+  "8224",
+  "8231",
+  "8233",
+  "8235",
+  "8237"
+ ],
+ "medians": {
+  "flicker": {
+   "generalists": {
+    "fitness": 0.5571322593951216,
+    "fresh_onsets_a_life": 284.8833333333333,
+    "running_by_day": 0.8227347749004918,
+    "turning_during_runs": 0.07647656903605907
+   },
+   "near": {
+    "fitness": 0.5419541393332747,
+    "fresh_onsets_a_life": 241.75833333333333,
+    "running_by_day": 0.8225505455357816,
+    "turning_during_runs": 0.08367820835850524
+   }
+  },
+  "home": {
+   "generalists": {
+    "fitness": 0.6143503800413638,
+    "fresh_onsets_a_life": 22.516666666666666,
+    "running_by_day": 0.9174405778391497,
+    "turning_during_runs": 0.018250097552517993
+   },
+   "near": {
+    "fitness": 0.6099299179603787,
+    "fresh_onsets_a_life": 21.516666666666666,
+    "running_by_day": 0.9330590689932646,
+    "turning_during_runs": 0.06674136785408506
+   }
+  },
+  "shaded": {
+   "generalists": {
+    "fitness": 0.612151977941743,
+    "fresh_onsets_a_life": 123.58333333333333,
+    "running_by_day": 0.829524751925869,
+    "turning_during_runs": 0.0006486815453474522
+   },
+   "near": {
+    "fitness": 0.6266715056879661,
+    "fresh_onsets_a_life": 165.18333333333334,
+    "running_by_day": 0.6669046837270813,
+    "turning_during_runs": 0.029487579810092264
+   }
+  },
+  "spot": {
+   "generalists": {
+    "fitness": 0.5545308735258802,
+    "fresh_onsets_a_life": 8.1,
+    "running_by_day": 0.9277771895532163,
+    "turning_during_runs": 0.031184230546211812
+   },
+   "near": {
+    "fitness": 0.5470378370781487,
+    "fresh_onsets_a_life": 8.525,
+    "running_by_day": 0.9276237140858414,
+    "turning_during_runs": 0.07198721979943452
+   }
+  }
+ },
+ "movement": {
+  "flicker": {
+   "8211": {
+    "cell": "8211",
+    "fitness": 0.557187367404204,
+    "fresh_onsets_a_life": 353.28333333333336,
+    "group": "generalist",
+    "running_by_day": 0.7344174616067295,
+    "running_in_dim": 0.5974266813561518,
+    "survival": 0.85,
+    "toward_in_dim": 0.5319040488601074,
+    "turning_during_runs": 0.0956286255391316,
+    "world": "flicker"
+   },
+   "8213": {
+    "cell": "8213",
+    "fitness": 0.5285069382187794,
+    "fresh_onsets_a_life": 193.25,
+    "group": "near",
+    "running_by_day": 0.8363626027808737,
+    "running_in_dim": 0.7509463973278193,
+    "survival": 0.8,
+    "toward_in_dim": 0.4043188840774143,
+    "turning_during_runs": 0.11716047887405397,
+    "world": "flicker"
+   },
+   "8215": {
+    "cell": "8215",
+    "fitness": 0.5488760382564098,
+    "fresh_onsets_a_life": 223.88333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8274949226816005,
+    "running_in_dim": 0.7685684139126503,
+    "survival": 0.85,
+    "toward_in_dim": 0.48573348101755603,
+    "turning_during_runs": 0.07647656903605907,
+    "world": "flicker"
+   },
+   "8218": {
+    "cell": "8218",
+    "fitness": 0.5424765712345941,
+    "fresh_onsets_a_life": 219.65,
+    "group": "near",
+    "running_by_day": 0.821923165554733,
+    "running_in_dim": 0.7836284319117938,
+    "survival": 0.8166666666666667,
+    "toward_in_dim": 0.34908475794718635,
+    "turning_during_runs": -0.05697830822313418,
+    "world": "flicker"
+   },
+   "8219": {
+    "cell": "8219",
+    "fitness": 0.5414317074319553,
+    "fresh_onsets_a_life": 646.1333333333333,
+    "group": "near",
+    "running_by_day": 0.8221067469984503,
+    "running_in_dim": 0.8197960719425094,
+    "survival": 0.8333333333333334,
+    "toward_in_dim": 0.444270428004448,
+    "turning_during_runs": 0.0866989451721632,
+    "world": "flicker"
+   },
+   "8220": {
+    "cell": "8220",
+    "fitness": 0.5678473102812666,
+    "fresh_onsets_a_life": 214.78333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8509066175573295,
+    "running_in_dim": 0.7949349884907855,
+    "survival": 0.9333333333333333,
+    "toward_in_dim": 0.5307156463925954,
+    "turning_during_runs": -0.10066637561302676,
+    "world": "flicker"
+   },
+   "8223": {
+    "cell": "8223",
+    "fitness": 0.5571322593951216,
+    "fresh_onsets_a_life": 351.71666666666664,
+    "group": "generalist",
+    "running_by_day": 0.7953231745509425,
+    "running_in_dim": 0.8178343587047641,
+    "survival": 0.8666666666666667,
+    "toward_in_dim": 0.5135334853068703,
+    "turning_during_runs": 0.09867570607446863,
+    "world": "flicker"
+   },
+   "8224": {
+    "cell": "8224",
+    "fitness": 0.5435936851021397,
+    "fresh_onsets_a_life": 257.56666666666666,
+    "group": "near",
+    "running_by_day": 0.8315473605539047,
+    "running_in_dim": 0.8139824997566953,
+    "survival": 0.8666666666666667,
+    "toward_in_dim": 0.48448304607142023,
+    "turning_during_runs": -0.09479097152531152,
+    "world": "flicker"
+   },
+   "8227": {
+    "cell": "8227",
+    "fitness": 0.5545523323229664,
+    "fresh_onsets_a_life": 198.7,
+    "group": "generalist",
+    "running_by_day": 0.8227347749004918,
+    "running_in_dim": 0.7196786072982926,
+    "survival": 0.8666666666666667,
+    "toward_in_dim": 0.4652399395996228,
+    "turning_during_runs": 0.12022395953401893,
+    "world": "flicker"
+   },
+   "8231": {
+    "cell": "8231",
+    "fitness": 0.5461243539399059,
+    "fresh_onsets_a_life": 247.23333333333332,
+    "group": "near",
+    "running_by_day": 0.8229943440731128,
+    "running_in_dim": 0.8154802068111916,
+    "survival": 0.8333333333333334,
+    "toward_in_dim": 0.4283553759206677,
+    "turning_during_runs": 0.10652247754244809,
+    "world": "flicker"
+   },
+   "8233": {
+    "cell": "8233",
+    "fitness": 0.5155999324733868,
+    "fresh_onsets_a_life": 313.3833333333333,
+    "group": "near",
+    "running_by_day": 0.8050058314060041,
+    "running_in_dim": 0.8109497137933157,
+    "survival": 0.7666666666666667,
+    "toward_in_dim": 0.36207892104829675,
+    "turning_during_runs": 0.09062537381819465,
+    "world": "flicker"
+   },
+   "8235": {
+    "cell": "8235",
+    "fitness": 0.5257298940567952,
+    "fresh_onsets_a_life": 236.28333333333333,
+    "group": "near",
+    "running_by_day": 0.8238887033616134,
+    "running_in_dim": 0.8038023230330923,
+    "survival": 0.8333333333333334,
+    "toward_in_dim": 0.4035555157815037,
+    "turning_during_runs": -0.046790544998176975,
+    "world": "flicker"
+   },
+   "8237": {
+    "cell": "8237",
+    "fitness": 0.5511372860957662,
+    "fresh_onsets_a_life": 229.25,
+    "group": "near",
+    "running_by_day": 0.8027446558564373,
+    "running_in_dim": 0.6856817288454489,
+    "survival": 0.8833333333333333,
+    "toward_in_dim": 0.45511039747904874,
+    "turning_during_runs": 0.08065747154484729,
+    "world": "flicker"
+   },
+   "8238": {
+    "cell": "8238",
+    "fitness": 0.5495646522880382,
+    "fresh_onsets_a_life": 370.25,
+    "group": "generalist",
+    "running_by_day": 0.7425619646437034,
+    "running_in_dim": 0.7388468619392893,
+    "survival": 0.85,
+    "toward_in_dim": 0.4350312949498291,
+    "turning_during_runs": -0.12316252525697641,
+    "world": "flicker"
+   },
+   "8240": {
+    "cell": "8240",
+    "fitness": 0.5706388751331289,
+    "fresh_onsets_a_life": 284.8833333333333,
+    "group": "generalist",
+    "running_by_day": 0.8423966436199825,
+    "running_in_dim": 0.8467487420289171,
+    "survival": 0.9333333333333333,
+    "toward_in_dim": 0.7819920984705653,
+    "turning_during_runs": -0.1354427201886127,
+    "world": "flicker"
+   }
+  },
+  "home": {
+   "8211": {
+    "cell": "8211",
+    "fitness": 0.6143503800413638,
+    "fresh_onsets_a_life": 28.316666666666666,
+    "group": "generalist",
+    "running_by_day": 0.9011399349869336,
+    "running_in_dim": 0.7455278842322748,
+    "survival": 1.0,
+    "toward_in_dim": 0.8157616131580462,
+    "turning_during_runs": 0.07970572008235198,
+    "world": "home"
+   },
+   "8213": {
+    "cell": "8213",
+    "fitness": 0.6037494862259941,
+    "fresh_onsets_a_life": 20.833333333333332,
+    "group": "near",
+    "running_by_day": 0.9918353599834309,
+    "running_in_dim": 0.9238034362291848,
+    "survival": 1.0,
+    "toward_in_dim": 0.6978738429041483,
+    "turning_during_runs": 0.11739137363389777,
+    "world": "home"
+   },
+   "8215": {
+    "cell": "8215",
+    "fitness": 0.6200478692257863,
+    "fresh_onsets_a_life": 22.516666666666666,
+    "group": "generalist",
+    "running_by_day": 0.9811714279560318,
+    "running_in_dim": 0.9439874205716078,
+    "survival": 1.0,
+    "toward_in_dim": 0.9886539652242572,
+    "turning_during_runs": 0.018250097552517993,
+    "world": "home"
+   },
+   "8218": {
+    "cell": "8218",
+    "fitness": 0.5936834125881654,
+    "fresh_onsets_a_life": 15.8,
+    "group": "near",
+    "running_by_day": 0.8617730409310096,
+    "running_in_dim": 0.5553925249841142,
+    "survival": 0.9833333333333333,
+    "toward_in_dim": 0.45246895170224893,
+    "turning_during_runs": -0.04503712304669549,
+    "world": "home"
+   },
+   "8219": {
+    "cell": "8219",
+    "fitness": 0.606900980128345,
+    "fresh_onsets_a_life": 439.1,
+    "group": "near",
+    "running_by_day": 0.94934129095359,
+    "running_in_dim": 0.8977669773321504,
+    "survival": 1.0,
+    "toward_in_dim": 0.7180833596816112,
+    "turning_during_runs": 0.08426444969747814,
+    "world": "home"
+   },
+   "8220": {
+    "cell": "8220",
+    "fitness": 0.626439164883027,
+    "fresh_onsets_a_life": 13.95,
+    "group": "generalist",
+    "running_by_day": 0.9831750287846232,
+    "running_in_dim": 0.8922272062037899,
+    "survival": 1.0,
+    "toward_in_dim": 0.9789885931259356,
+    "turning_during_runs": -0.09892427946067824,
+    "world": "home"
+   },
+   "8223": {
+    "cell": "8223",
+    "fitness": 0.6142127853623087,
+    "fresh_onsets_a_life": 1.6833333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8803922381474807,
+    "running_in_dim": 0.8653433497595346,
+    "survival": 1.0,
+    "toward_in_dim": 0.762561673219369,
+    "turning_during_runs": 0.09115413109354803,
+    "world": "home"
+   },
+   "8224": {
+    "cell": "8224",
+    "fitness": 0.6122961945836448,
+    "fresh_onsets_a_life": 3.4166666666666665,
+    "group": "near",
+    "running_by_day": 0.973171349521269,
+    "running_in_dim": 0.9363621092375132,
+    "survival": 1.0,
+    "toward_in_dim": 0.7573464261062872,
+    "turning_during_runs": -0.08654482777453168,
+    "world": "home"
+   },
+   "8227": {
+    "cell": "8227",
+    "fitness": 0.613198465399111,
+    "fresh_onsets_a_life": 18.433333333333334,
+    "group": "generalist",
+    "running_by_day": 0.9174405778391497,
+    "running_in_dim": 0.7146971175791673,
+    "survival": 1.0,
+    "toward_in_dim": 0.6835636982577006,
+    "turning_during_runs": 0.09288719106058087,
+    "world": "home"
+   },
+   "8231": {
+    "cell": "8231",
+    "fitness": 0.6175794611494948,
+    "fresh_onsets_a_life": 22.2,
+    "group": "near",
+    "running_by_day": 0.9270438033088867,
+    "running_in_dim": 0.8971075922956976,
+    "survival": 1.0,
+    "toward_in_dim": 0.9148466683668718,
+    "turning_during_runs": 0.095634153846506,
+    "world": "home"
+   },
+   "8233": {
+    "cell": "8233",
+    "fitness": 0.6075636413371125,
+    "fresh_onsets_a_life": 6.766666666666667,
+    "group": "near",
+    "running_by_day": 0.913176365269369,
+    "running_in_dim": 0.8427328717074359,
+    "survival": 1.0,
+    "toward_in_dim": 0.6275193548305693,
+    "turning_during_runs": 0.06936740132467137,
+    "world": "home"
+   },
+   "8235": {
+    "cell": "8235",
+    "fitness": 0.6209440116163595,
+    "fresh_onsets_a_life": 43.25,
+    "group": "near",
+    "running_by_day": 0.9390743346776426,
+    "running_in_dim": 0.9047637108397178,
+    "survival": 1.0,
+    "toward_in_dim": 0.9540859673078531,
+    "turning_during_runs": -0.035296730021071775,
+    "world": "home"
+   },
+   "8237": {
+    "cell": "8237",
+    "fitness": 0.617489813843001,
+    "fresh_onsets_a_life": 22.466666666666665,
+    "group": "near",
+    "running_by_day": 0.917024940011566,
+    "running_in_dim": 0.7406463932394824,
+    "survival": 1.0,
+    "toward_in_dim": 0.8012413721159841,
+    "turning_during_runs": 0.06411533438349876,
+    "world": "home"
+   },
+   "8238": {
+    "cell": "8238",
+    "fitness": 0.6129919760203894,
+    "fresh_onsets_a_life": 135.78333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8888111303766529,
+    "running_in_dim": 0.8431337660428738,
+    "survival": 1.0,
+    "toward_in_dim": 0.733381035685457,
+    "turning_during_runs": -0.09612801867278066,
+    "world": "home"
+   },
+   "8240": {
+    "cell": "8240",
+    "fitness": 0.6270730577973496,
+    "fresh_onsets_a_life": 29.116666666666667,
+    "group": "generalist",
+    "running_by_day": 0.9513445889408844,
+    "running_in_dim": 0.9303902482191053,
+    "survival": 1.0,
+    "toward_in_dim": 1.2305765370296196,
+    "turning_during_runs": -0.10365998039355792,
+    "world": "home"
+   }
+  },
+  "shaded": {
+   "8211": {
+    "cell": "8211",
+    "fitness": 0.635049032558825,
+    "fresh_onsets_a_life": 314.85,
+    "group": "generalist",
+    "running_by_day": 0.43280730079347884,
+    "running_in_dim": 0.681914925064294,
+    "survival": 1.0,
+    "toward_in_dim": 4.058291897412672,
+    "turning_during_runs": 0.0006486815453474522,
+    "world": "shaded"
+   },
+   "8213": {
+    "cell": "8213",
+    "fitness": 0.6129867555933575,
+    "fresh_onsets_a_life": 11.766666666666667,
+    "group": "near",
+    "running_by_day": 0.7737018549662952,
+    "running_in_dim": 0.8019718757809128,
+    "survival": 1.0,
+    "toward_in_dim": 3.064217871463769,
+    "turning_during_runs": 0.11883907233941704,
+    "world": "shaded"
+   },
+   "8215": {
+    "cell": "8215",
+    "fitness": 0.6028012755328068,
+    "fresh_onsets_a_life": 24.566666666666666,
+    "group": "generalist",
+    "running_by_day": 0.8532600078498036,
+    "running_in_dim": 0.8646810049803845,
+    "survival": 1.0,
+    "toward_in_dim": 3.547515037135613,
+    "turning_during_runs": -0.02665085042982195,
+    "world": "shaded"
+   },
+   "8218": {
+    "cell": "8218",
+    "fitness": 0.6257297729828003,
+    "fresh_onsets_a_life": 580.3,
+    "group": "near",
+    "running_by_day": 0.4712617067878376,
+    "running_in_dim": 0.639058834624135,
+    "survival": 1.0,
+    "toward_in_dim": 2.998440308837075,
+    "turning_during_runs": 0.08094620840340173,
+    "world": "shaded"
+   },
+   "8219": {
+    "cell": "8219",
+    "fitness": 0.6287129000675736,
+    "fresh_onsets_a_life": 458.68333333333334,
+    "group": "near",
+    "running_by_day": 0.6359157660074815,
+    "running_in_dim": 0.6908268013512184,
+    "survival": 1.0,
+    "toward_in_dim": 3.9269506717335307,
+    "turning_during_runs": -0.023964293098029384,
+    "world": "shaded"
+   },
+   "8220": {
+    "cell": "8220",
+    "fitness": 0.612151977941743,
+    "fresh_onsets_a_life": 9.2,
+    "group": "generalist",
+    "running_by_day": 0.8572273541969171,
+    "running_in_dim": 0.845248461627772,
+    "survival": 1.0,
+    "toward_in_dim": 3.7231050270833963,
+    "turning_during_runs": 0.028275037288799373,
+    "world": "shaded"
+   },
+   "8223": {
+    "cell": "8223",
+    "fitness": 0.6311180473411034,
+    "fresh_onsets_a_life": 296.43333333333334,
+    "group": "generalist",
+    "running_by_day": 0.3690304753161692,
+    "running_in_dim": 0.6267310040113947,
+    "survival": 1.0,
+    "toward_in_dim": 3.0878232642261696,
+    "turning_during_runs": -0.04130127855174344,
+    "world": "shaded"
+   },
+   "8224": {
+    "cell": "8224",
+    "fitness": 0.6276132383931319,
+    "fresh_onsets_a_life": 5.35,
+    "group": "near",
+    "running_by_day": 0.7559376942101694,
+    "running_in_dim": 0.6753031402217846,
+    "survival": 1.0,
+    "toward_in_dim": 3.974393181160999,
+    "turning_during_runs": 0.04603297406335697,
+    "world": "shaded"
+   },
+   "8227": {
+    "cell": "8227",
+    "fitness": 0.6017291588141016,
+    "fresh_onsets_a_life": 13.033333333333333,
+    "group": "generalist",
+    "running_by_day": 0.829524751925869,
+    "running_in_dim": 0.7444278167018117,
+    "survival": 1.0,
+    "toward_in_dim": 3.153071621224649,
+    "turning_during_runs": -0.026718956187973295,
+    "world": "shaded"
+   },
+   "8231": {
+    "cell": "8231",
+    "fitness": 0.6308010444777555,
+    "fresh_onsets_a_life": 318.6,
+    "group": "near",
+    "running_by_day": 0.4240726739486494,
+    "running_in_dim": 0.7414629896958534,
+    "survival": 1.0,
+    "toward_in_dim": 3.2624829610734674,
+    "turning_during_runs": -0.018332823186824436,
+    "world": "shaded"
+   },
+   "8233": {
+    "cell": "8233",
+    "fitness": 0.5714427105985833,
+    "fresh_onsets_a_life": 10.883333333333333,
+    "group": "near",
+    "running_by_day": 0.9508182334076781,
+    "running_in_dim": 0.8452642431305751,
+    "survival": 1.0,
+    "toward_in_dim": 4.278507732537333,
+    "turning_during_runs": -0.09521313479645856,
+    "world": "shaded"
+   },
+   "8235": {
+    "cell": "8235",
+    "fitness": 0.6335563861488874,
+    "fresh_onsets_a_life": 462.35,
+    "group": "near",
+    "running_by_day": 0.5634131098382346,
+    "running_in_dim": 0.6203016519032799,
+    "survival": 1.0,
+    "toward_in_dim": 3.89980568005742,
+    "turning_during_runs": 0.01294218555682756,
+    "world": "shaded"
+   },
+   "8237": {
+    "cell": "8237",
+    "fitness": 0.6199011681522602,
+    "fresh_onsets_a_life": 11.216666666666667,
+    "group": "near",
+    "running_by_day": 0.6978936014466811,
+    "running_in_dim": 0.7331422815554641,
+    "survival": 1.0,
+    "toward_in_dim": 3.8137513520032162,
+    "turning_during_runs": 0.06637562068027847,
+    "world": "shaded"
+   },
+   "8238": {
+    "cell": "8238",
+    "fitness": 0.6072526662497034,
+    "fresh_onsets_a_life": 123.58333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8865381423066611,
+    "running_in_dim": 0.7895133001008336,
+    "survival": 1.0,
+    "toward_in_dim": 3.6875333260361023,
+    "turning_during_runs": 0.01376244099722284,
+    "world": "shaded"
+   },
+   "8240": {
+    "cell": "8240",
+    "fitness": 0.6300513784683234,
+    "fresh_onsets_a_life": 607.0,
+    "group": "generalist",
+    "running_by_day": 0.5303511081580764,
+    "running_in_dim": 0.6152238005896542,
+    "survival": 1.0,
+    "toward_in_dim": 3.122674149726381,
+    "turning_during_runs": 0.01896886983129992,
+    "world": "shaded"
+   }
+  },
+  "spot": {
+   "8211": {
+    "cell": "8211",
+    "fitness": 0.5543312930669366,
+    "fresh_onsets_a_life": 8.1,
+    "group": "generalist",
+    "running_by_day": 0.9013851784950325,
+    "running_in_dim": 0.7043297870849278,
+    "survival": 1.0,
+    "toward_in_dim": 0.9527531273491444,
+    "turning_during_runs": 0.08141403422549605,
+    "world": "spot"
+   },
+   "8213": {
+    "cell": "8213",
+    "fitness": 0.5561774868619643,
+    "fresh_onsets_a_life": 10.05,
+    "group": "near",
+    "running_by_day": 0.9768065783916979,
+    "running_in_dim": 0.8666527279274256,
+    "survival": 1.0,
+    "toward_in_dim": 0.8945496968387772,
+    "turning_during_runs": 0.1051170794132193,
+    "world": "spot"
+   },
+   "8215": {
+    "cell": "8215",
+    "fitness": 0.5571026855592742,
+    "fresh_onsets_a_life": 20.533333333333335,
+    "group": "generalist",
+    "running_by_day": 0.9820476387932554,
+    "running_in_dim": 0.8905137473984007,
+    "survival": 1.0,
+    "toward_in_dim": 1.039650383421662,
+    "turning_during_runs": 0.031184230546211812,
+    "world": "spot"
+   },
+   "8218": {
+    "cell": "8218",
+    "fitness": 0.5491417949752541,
+    "fresh_onsets_a_life": 7.0,
+    "group": "near",
+    "running_by_day": 0.8840314042293761,
+    "running_in_dim": 0.6940312982488808,
+    "survival": 1.0,
+    "toward_in_dim": 0.691980402920564,
+    "turning_during_runs": -0.04750593750159646,
+    "world": "spot"
+   },
+   "8219": {
+    "cell": "8219",
+    "fitness": 0.5204070080729832,
+    "fresh_onsets_a_life": 433.3333333333333,
+    "group": "near",
+    "running_by_day": 0.9330913580434897,
+    "running_in_dim": 0.9058274509803922,
+    "survival": 0.95,
+    "toward_in_dim": 0.8389599828191743,
+    "turning_during_runs": 0.081873240248824,
+    "world": "spot"
+   },
+   "8220": {
+    "cell": "8220",
+    "fitness": 0.5690964456738021,
+    "fresh_onsets_a_life": 6.05,
+    "group": "generalist",
+    "running_by_day": 0.9729142879959083,
+    "running_in_dim": 0.868123467854601,
+    "survival": 1.0,
+    "toward_in_dim": 1.1340446137720348,
+    "turning_during_runs": -0.09295594482505416,
+    "world": "spot"
+   },
+   "8223": {
+    "cell": "8223",
+    "fitness": 0.5533532610968696,
+    "fresh_onsets_a_life": 1.1833333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8754006879889598,
+    "running_in_dim": 0.8795443213596653,
+    "survival": 1.0,
+    "toward_in_dim": 0.980864733276348,
+    "turning_during_runs": 0.09495178733432899,
+    "world": "spot"
+   },
+   "8224": {
+    "cell": "8224",
+    "fitness": 0.5609199930177426,
+    "fresh_onsets_a_life": 3.3833333333333333,
+    "group": "near",
+    "running_by_day": 0.9728149611974991,
+    "running_in_dim": 0.8780901566454614,
+    "survival": 1.0,
+    "toward_in_dim": 1.0542788273770383,
+    "turning_during_runs": -0.08848171904829823,
+    "world": "spot"
+   },
+   "8227": {
+    "cell": "8227",
+    "fitness": 0.5649626222699743,
+    "fresh_onsets_a_life": 4.866666666666666,
+    "group": "generalist",
+    "running_by_day": 0.9277771895532163,
+    "running_in_dim": 0.7436227330083875,
+    "survival": 1.0,
+    "toward_in_dim": 0.7271629504708395,
+    "turning_during_runs": 0.09835910093311533,
+    "world": "spot"
+   },
+   "8231": {
+    "cell": "8231",
+    "fitness": 0.5502777415920522,
+    "fresh_onsets_a_life": 17.3,
+    "group": "near",
+    "running_by_day": 0.922156070128193,
+    "running_in_dim": 0.8972932888394513,
+    "survival": 1.0,
+    "toward_in_dim": 1.0565021998171038,
+    "turning_during_runs": 0.09883410066645772,
+    "world": "spot"
+   },
+   "8233": {
+    "cell": "8233",
+    "fitness": 0.5375842681594543,
+    "fresh_onsets_a_life": 3.45,
+    "group": "near",
+    "running_by_day": 0.9060715461157338,
+    "running_in_dim": 0.8712914912366592,
+    "survival": 1.0,
+    "toward_in_dim": 0.8447675721940183,
+    "turning_during_runs": 0.07397721691781785,
+    "world": "spot"
+   },
+   "8235": {
+    "cell": "8235",
+    "fitness": 0.5449338791810433,
+    "fresh_onsets_a_life": 33.95,
+    "group": "near",
+    "running_by_day": 0.9448070078084744,
+    "running_in_dim": 0.920573127872398,
+    "survival": 1.0,
+    "toward_in_dim": 1.1164394226694103,
+    "turning_during_runs": -0.04307493127813402,
+    "world": "spot"
+   },
+   "8237": {
+    "cell": "8237",
+    "fitness": 0.5384192049928764,
+    "fresh_onsets_a_life": 5.833333333333333,
+    "group": "near",
+    "running_by_day": 0.9167180789781875,
+    "running_in_dim": 0.7662121946155444,
+    "survival": 1.0,
+    "toward_in_dim": 0.979207997332836,
+    "turning_during_runs": 0.0699972226810512,
+    "world": "spot"
+   },
+   "8238": {
+    "cell": "8238",
+    "fitness": 0.5545308735258802,
+    "fresh_onsets_a_life": 121.78333333333333,
+    "group": "generalist",
+    "running_by_day": 0.8895673917908864,
+    "running_in_dim": 0.8407767547256404,
+    "survival": 1.0,
+    "toward_in_dim": 0.8198986501651698,
+    "turning_during_runs": -0.10128000007009627,
+    "world": "spot"
+   },
+   "8240": {
+    "cell": "8240",
+    "fitness": 0.5469424983194234,
+    "fresh_onsets_a_life": 23.833333333333332,
+    "group": "generalist",
+    "running_by_day": 0.9452019929083703,
+    "running_in_dim": 0.9246296456727021,
+    "survival": 1.0,
+    "toward_in_dim": 1.3898753520927687,
+    "turning_during_runs": -0.10654061577567864,
+    "world": "spot"
+   }
+  }
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 1,
+   "text": "all 15 are circlers at home: each runs more than 80% of the day and turns more than 0.03 rad a tick during runs",
+   "values": {
+    "8211": {
+     "running_by_day": 0.9011399349869336,
+     "turning": 0.07970572008235198
+    },
+    "8213": {
+     "running_by_day": 0.9918353599834309,
+     "turning": 0.11739137363389777
+    },
+    "8215": {
+     "running_by_day": 0.9811714279560318,
+     "turning": 0.018250097552517993
+    },
+    "8218": {
+     "running_by_day": 0.8617730409310096,
+     "turning": -0.04503712304669549
+    },
+    "8219": {
+     "running_by_day": 0.94934129095359,
+     "turning": 0.08426444969747814
+    },
+    "8220": {
+     "running_by_day": 0.9831750287846232,
+     "turning": -0.09892427946067824
+    },
+    "8223": {
+     "running_by_day": 0.8803922381474807,
+     "turning": 0.09115413109354803
+    },
+    "8224": {
+     "running_by_day": 0.973171349521269,
+     "turning": -0.08654482777453168
+    },
+    "8227": {
+     "running_by_day": 0.9174405778391497,
+     "turning": 0.09288719106058087
+    },
+    "8231": {
+     "running_by_day": 0.9270438033088867,
+     "turning": 0.095634153846506
+    },
+    "8233": {
+     "running_by_day": 0.913176365269369,
+     "turning": 0.06936740132467137
+    },
+    "8235": {
+     "running_by_day": 0.9390743346776426,
+     "turning": -0.035296730021071775
+    },
+    "8237": {
+     "running_by_day": 0.917024940011566,
+     "turning": 0.06411533438349876
+    },
+    "8238": {
+     "running_by_day": 0.8888111303766529,
+     "turning": -0.09612801867278066
+    },
+    "8240": {
+     "running_by_day": 0.9513445889408844,
+     "turning": -0.10365998039355792
+    }
+   }
+  },
+  {
+   "holds": false,
+   "number": 2,
+   "text": "under flicker the eight's running breaks more often: their median fresh onsets a life is above the seven's",
+   "values": {
+    "generalists": 284.8833333333333,
+    "near": 241.75833333333333
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "under flicker the eight run less of the day: their median share of the day running is below the seven's",
+   "values": {
+    "generalists": 0.8227347749004918,
+    "near": 0.8225505455357816
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "at home too the eight's running breaks more often: their median fresh onsets a life is above the seven's",
+   "values": {
+    "generalists": 22.516666666666666,
+    "near": 21.516666666666666
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "under the spot all 15 run more than 80% of the day",
+   "values": {
+    "8211": 0.9013851784950325,
+    "8213": 0.9768065783916979,
+    "8215": 0.9820476387932554,
+    "8218": 0.8840314042293761,
+    "8219": 0.9330913580434897,
+    "8220": 0.9729142879959083,
+    "8223": 0.8754006879889598,
+    "8224": 0.9728149611974991,
+    "8227": 0.9277771895532163,
+    "8231": 0.922156070128193,
+    "8233": 0.9060715461157338,
+    "8235": 0.9448070078084744,
+    "8237": 0.9167180789781875,
+    "8238": 0.8895673917908864,
+    "8240": 0.9452019929083703
+   }
+  }
+ ],
+ "quick": false
+}
