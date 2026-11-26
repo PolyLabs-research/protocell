@@ -1,0 +1,172 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage8c.py --phase test --workers 1",
+ "created_at": "2026-11-25T17:46:24+00:00",
+ "git": {
+  "branch": "stage8c",
+  "dirty": false,
+  "sha": "43163d33b514f9ba741cf0ff778f183103adad88"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8c/test",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8c/test",
+ "seeds": [
+  65,
+  66
+ ],
+ "settings": {
+  "cells": {
+   "8211": "fresh",
+   "8212": "fresh",
+   "8213": "fresh",
+   "8214": "fresh",
+   "8215": "fresh",
+   "8216": "fresh",
+   "8217": "fresh",
+   "8218": "fresh",
+   "8219": "fresh",
+   "8220": "fresh",
+   "8221": "fresh",
+   "8222": "fresh",
+   "8223": "fresh",
+   "8224": "fresh",
+   "8225": "fresh",
+   "8226": "fresh",
+   "8227": "fresh",
+   "8228": "fresh",
+   "8229": "fresh",
+   "8230": "fresh",
+   "8231": "fresh",
+   "8232": "fresh",
+   "8233": "fresh",
+   "8234": "fresh",
+   "8235": "fresh",
+   "8236": "fresh",
+   "8237": "fresh",
+   "8238": "fresh",
+   "8239": "fresh",
+   "8240": "fresh",
+   "champion6402": "reference",
+   "champion8102": "reference"
+  },
+  "earlier": [
+   6,
+   15
+  ],
+  "engine": "the reference (protocell.sim.simulate)",
+  "held": [
+   "fixed mouth",
+   "tighter",
+   "sweep and flicker",
+   "slow clouds",
+   "slow spot"
+  ],
+  "quick": false,
+  "report": [
+   51,
+   150
+  ],
+  "select": [
+   1,
+   50
+  ],
+  "trained": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded"
+  ],
+  "workers": 1,
+  "worlds": {
+   "fixed mouth": {
+    "changes": {},
+    "gain": 0.55
+   },
+   "flicker": {
+    "changes": {
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 60.0,
+     "cloud_sun_mean": 120.0
+    },
+    "gain": 0.55
+   },
+   "home": {
+    "changes": {
+     "cave_sweep": true
+    },
+    "gain": 0.55
+   },
+   "shaded": {
+    "changes": {
+     "cave_sweep": true,
+     "shade_floor": 0.3
+    },
+    "gain": 0.55
+   },
+   "slow clouds": {
+    "changes": {
+     "cave_sweep": true,
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 300.0,
+     "cloud_sun_mean": 600.0
+    },
+    "gain": 0.55
+   },
+   "slow spot": {
+    "changes": {
+     "cave_path": "circle",
+     "path_period": 21600,
+     "path_radius": 2500.0
+    },
+    "gain": 0.45
+   },
+   "spot": {
+    "changes": {
+     "cave_path": "circle",
+     "path_period": 7200,
+     "path_radius": 2500.0
+    },
+    "gain": 0.45
+   },
+   "sweep and flicker": {
+    "changes": {
+     "cave_sweep": true,
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 60.0,
+     "cloud_sun_mean": 120.0
+    },
+    "gain": 0.55
+   },
+   "tighter": {
+    "changes": {
+     "cave_sweep": true
+    },
+    "gain": 0.45
+   }
+  }
+ },
+ "timing": {
+  "wall_seconds": 24661.539907217026
+ }
+}
