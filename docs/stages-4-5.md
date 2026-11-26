@@ -1,7 +1,7 @@
 # Stages 4 to 8b: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2); the rate of generalists corrected on 2026-11-26 from stage 8c (D63), which has no section of its own here yet. It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -31,7 +31,7 @@ Stages 4 to 6 asked four things in turn:
 | does a generalist emerge when evolution is given several worlds | In 1 run of 5; that cell beats the best simple rule in 5 of 9 worlds | D42 |
 | how the generalist does it | Two ways of moving in one network: it circles where its body gives no direction, and steers by its own shading where it does | D45 |
 | can the searches run faster | Yes: the same model as compiled code, 11.7 times faster on a core; a run costs about 25 cents on a pod | D47–D49, D57 |
-| is a generalist an accident of one run | No: about half the runs give one, 6 of 15 at 400 generations and 3 of 5 at 800. All three criteria hold, two exactly at their bar | D58 |
+| is a generalist an accident of one run | No. At 400 generations 13 of 45 runs give one, about three in ten (stage 8b's 15 runs had suggested a half; stage 8c's 30 corrected it). At 800 generations, 3 of 5 | D58, D63 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -267,11 +267,14 @@ Stages 4 to 6 asked four things in turn:
   does the best simple rule's job emerges reliably (four of five at 400 generations).
 - **Shown, as a limit:** cells made in one world mostly beat the best simple rule only there; the simple rules, with
   one parameter re-tuned per world, hold up across worlds better (stage 7).
-- **Shown:** evolved in four worlds at once, a cell that copes with all of them emerges in about half the runs: 6 of
-  15 at 400 generations, 3 of 5 at 800 (stages 8 and 8b). Each such cell also copes with worlds it never met, and
-  beats each world's re-tuned best simple rule in most of the nine worlds.
+- **Shown:** evolved in four worlds at once, a cell that copes with all of them emerges in about three runs of ten at
+  400 generations: 13 of 45 (18% to 43%; stages 8, 8b and 8c, D63). At 800 generations, 3 of 5 (stage 8b). Each such
+  cell also copes with worlds it never met, and beats each world's re-tuned best simple rule in most of the nine
+  worlds.
+  *Corrected 2026-11-26:* after stage 8b this said "about half the runs", from 6 of 15. Stage 8c's thirty more runs
+  gave 7.
 - **Not shown:**
-  - the rate with any precision: 6 of 15 leaves it between 20% and 64%, and two of stage 8b's criteria held by one run;
+  - the rate at 800 generations beyond five runs, two of whose criteria held by one run;
   - that a cell beating B8 emerges from nothing in most runs at home alone: 2 of 5 did at 400 generations, where the
     criterion asked for 3; and the sensor and the eased-in path were designed by hand;
   - anything beyond one spoke mode (fourier1) and one sensor;

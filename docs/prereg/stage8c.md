@@ -63,3 +63,14 @@ Stage 8b's fresh runs are not counted twice: its 6 generalists in 15 runs enter 
 - On D58: "Merged, please write up then continue as you suggest with the cheap runs".
 - Asked whether that meant the thirty runs, with these terms (six pods at $0.56 an hour, each deleted 2.8 hours after
   its launch, at most $9.41): **"Yes, 30 runs (Recommended)"**.
+
+## 8. Outcome (2026-11-26; D62, D63)
+
+- **The runs:** thirty, on six pods, 97 to 117 minutes a pod, $6.44 (the ceiling was $9.41).
+- **E1 fails and E2 fails:** 7 of the 30 fresh runs give a generalist (15 and 18 were asked for).
+- **The rate at 400 generations:** 7 of these 30 (12% to 41%); 13 of all 45 runs, which is 29% (18% to 43%).
+- **Eight more runs** do the bar's job in three of the four trained worlds and close 0.83 to 0.89 of the gap under
+  flicker, where 0.9 is the line. Three runs end as still cells.
+- **Every generalist travels** (4 or 5 of the 5 held-back worlds).
+- **Predictions:** 1, 2, 5, 6 and 7 hold; 3 and 4 fail (I expected 8 to 16 generalists, and a rate over the 45 runs
+  between 30% and 50%).

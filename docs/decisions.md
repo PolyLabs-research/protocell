@@ -2987,3 +2987,71 @@ The test, on the reference, on this machine: the thirty champions and two refere
 (seeds 65, 66), one process. E1, E2 and the seven predictions are read from it.
 
 **Impact:** this entry; `docs/data/stage8c/fresh/`; `cloud/stage_pod.sh`.
+
+## D63 — Stage 8c: seven of thirty fresh runs give a generalist; both criteria fail; over forty-five runs the rate at 400 generations is three in ten, not a half
+
+**Date:** 2026-11-26  
+**Why:** D59, D62.  
+**Ran:** `experiments/stage8c.py --phase test` (code `43163d3`), on the reference, one process here, 6.9 hours, from a
+clean tree with warnings as errors; seeds 65 and 66; data in `docs/data/stage8c/test/`.
+
+### A. Measured
+1. **The criteria:**
+
+   | criterion | result |
+   |---|---|
+   | E1: at least 15 of the 30 fresh runs give a generalist | **fails:** 7 (8211, 8215, 8220, 8223, 8227, 8238, 8240) |
+   | E2: at least 18 of the 30 do | **fails:** 7 |
+
+2. **The rate at 400 generations from random genomes:** 7 of these 30 (23%; 95% interval 12% to 41%). Over all 45 runs
+   made (stage 8's 5, stage 8b's 10, these 30): 13, which is 29% (18% to 43%).
+3. **The thirty, by what they do** (the worlds, of the four trained in, in which a cell does the bar's job):
+
+   | | runs | |
+   |---|---|---|
+   | all four: generalists | 7 | each also does the job in 4 or 5 of the 5 held-back worlds and beats the bar in 5 or 6 of the nine |
+   | three: all but flicker | 8 | under flicker they close 0.83 to 0.89 of the gap, where 0.9 is the line |
+   | two: home and shaded | 2 | |
+   | one: shaded only | 10 | none does the job under the spot |
+   | none: still cells | 3 | |
+
+4. **The line under flicker is thin.** The seven generalists close 0.90 to 0.97 of the gap there (fitness 0.520 to
+   0.549); the eight that miss close 0.83 to 0.89 (0.491 to 0.516); the bar is 0.559. Four of the seven are within
+   0.03 of the line.
+5. **Validation saw the fifteen as one group** (D62: thirteen surviving in every world and two nearly). The test
+   divides them, seven and eight.
+6. **Stage 8b's ten fresh runs gave 5 generalists and these thirty give 7.** By Fisher's exact test two samples of one
+   rate differ that much about one time in eight (p = 0.13).
+7. **The references stand:** champion 8102 a generalist on these starts too, champion 6402 not.
+8. **Predictions:** 1, 2, 5, 6 and 7 hold. 3 and 4 fail: I expected 8 to 16 generalists and a rate over the 45 runs
+   between 30% and 50%. It is 7, and 29%.
+
+### B. Reading
+1. **A generalist emerges in about three runs of ten at 400 generations,** not in about half, as stage 8b's fifteen
+   runs suggested (D58 B.1). With 45 runs the rate lies between 18% and 43%. D58's "about half" is withdrawn for 400
+   generations.
+2. **What stage 8b said of 800 generations stands on its five runs and no more:** three of five, and every run
+   better than at 400.
+3. **About half the runs do something less than the criterion asks.** Counted after the fact, and so a description
+   and not a result: 22 of the 45 runs do the bar's job under the spot at 400 generations (49%; 35% to 63%), the
+   world that divides the runs most sharply. Of the 15 here that do, 8 fall short only under the flickering clouds,
+   and by little.
+4. **That is the place stage 8b's two late arrivals stood.** Runs 8103 and 8104 at 400 generations failed under
+   flicker and the spot while already circling (D61), and 400 more generations carried both over. Whether the same
+   holds for these eight is not known: none of them has been carried on, and none has been read.
+5. **The count of generalists depends on a line drawn at 0.9 of a gap,** with eleven cells within 0.07 of it under
+   flicker. The criteria were registered on that line and are read on it; the fifteen-and-eight picture is the better
+   description of what the runs made.
+
+### C. Decisions this surfaces (the owner's)
+1. **Carry stage 8c's eight near-misses on to 800 generations** (and, as a control, some of the runs that do not
+   follow the spot): does time carry them over, as it did runs 8103 and 8104? Eight runs of 400 generations are about
+   $2 on pods. It would need its plan and criterion first.
+2. **Read the fifteen** with stage 8b's probe (local, free, about a quarter of an hour): are all of them circlers,
+   and do the eight differ from the seven in how often their running breaks (D61 B.3)?
+3. **Merge `stage8c`** when he has looked: the write-up, stage 8c, the reading (D61).
+4. **Still open:** how a circle climbs toward the light (D45 C3); the uniform mode; a single-precision kernel for
+   the GPU (D54 C2).
+
+**Impact:** this entry; `docs/data/stage8c/test/`; `docs/prereg/stage8c.md` (its outcome); `README.md`;
+`docs/stages-4-5.md` (the rate, corrected where it is stated).
