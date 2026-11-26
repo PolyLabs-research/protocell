@@ -3078,3 +3078,23 @@ clean tree with warnings as errors; seeds 65 and 66; data in `docs/data/stage8c/
    of its own. Its speed can only be measured on the owner's laptop.
 
 **Impact:** this entry; `docs/stages-4-5.md`.
+
+## D65 — Stage 8d preregistered and built: the near-misses carried on, with a control; the fifteen read beside each other
+
+**Date:** 2026-11-26  
+**Why:** D64, items 2 and 3.
+
+### Decided
+1. **Stage 8d** (`docs/prereg/stage8d.md`, `experiments/stage8d.py`): stage 8c's eight near-misses and four controls
+   carried on from generation 400 to 800 on the compiled life; stage 8's test on the reference at seeds 70 and 71.
+   - Criteria: N1, at least 5 of the 8 near-misses are generalists at 800 generations; N2, at most 1 of the 4 controls
+     is. Six predictions.
+   - Stage 8b's runner carries on any finished run now, not only stage 8's (`source_run`).
+2. **The reading of the fifteen** (`experiments/stage8d_read.py`, the draft's §7): stage 8c's seven generalists and
+   eight near-misses, movement only, seed 72, one process here. Five predictions.
+3. **Tried here:** a quick stage 8c run carried on by stage 8d's runner and read by its test; the probe at the smoke
+   test's size (9 tests pass, with stage 8b's and 8c's).
+4. **The launch waits for the owner's word on its terms.**
+
+**Impact:** this entry; `docs/prereg/stage8d.md`; `experiments/stage8d.py`, `experiments/stage8d_read.py`,
+`tests/test_stage8d.py`, `tests/test_stage8d_read.py`; `experiments/stage8b.py`.

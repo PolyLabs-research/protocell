@@ -126,9 +126,11 @@ def carry_on(source: Path, out: Path, quick: bool, mapper: Any, log: Any) -> Dic
 
 
 def run_phase(phase: str, replicate: int, out_root: Path, workers: int, quick: bool, stop_after: Optional[int], device: str,
-              source_root: Path, chunk: Optional[int] = None, seed: Optional[int] = None, protocol: str = "stage8b") -> Path:
+              source_root: Path, chunk: Optional[int] = None, seed: Optional[int] = None, protocol: str = "stage8b",
+              source_run: Optional[Path] = None) -> Path:
     """One run. ``seed`` and ``protocol``, when given, are a later stage's own (stage 8c makes more fresh runs with this
-    runner, under its own seeds and name)."""
+    runner, under its own seeds and name). ``source_run``, when given, is the finished run an ``extend`` run carries on
+    from, in place of stage 8's (stage 8d carries stage 8c's runs on)."""
     home = stage8.world("home", quick)
     cma = stage8.cma_for(quick).but(generations=generations(phase, quick))
     if chunk:  # the genomes in a job: it spreads the same lives differently over the processes and changes none of them
@@ -160,7 +162,7 @@ def run_phase(phase: str, replicate: int, out_root: Path, workers: int, quick: b
     with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
         mapper = mapper_for(device, pool)
         if phase == "extend" and not (out / "checkpoint.npz").exists():
-            carry_on(source_root / EXTENDED[seed] / f"{MODE}-{seed}", out, quick, mapper, log)
+            carry_on(source_run if source_run is not None else source_root / EXTENDED[seed] / f"{MODE}-{seed}", out, quick, mapper, log)
         state = run(home, MODE, cma, seed, out, mapper, log=log, stop_after=stop_after,
                     world_for=lambda g: stage4b.training_world(home, g, fade, tighten) if g <= eased else mix,
                     champion_from=eased + 1, keep_at=keep, validation_worlds=stage8.validation_worlds(quick))
