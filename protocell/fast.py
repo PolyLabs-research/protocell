@@ -53,6 +53,7 @@ S_X, S_Y, S_SCALE, S_COVER, N_SCHED = range(5)
 # a life's outcome, in ``out``: with the network's state (``ys``, ``os_``) it is also everything a life needs to go on from
 (O_FITNESS, O_SOAKED, O_BEAT, O_ALIVE, O_DEATH_TICK, O_CAUSE, O_ENERGY, O_DAMAGE, O_X, O_Y, O_HEADING, O_LEVEL, N_OUT) = range(13)
 MAX_WALL, MAX_NEURONS = 32, 64  # the GPU's per-thread scratch is a fixed size
+PRECISIONS = ("double", "single")  # "single": protocell.fast32
 
 
 def _life(l, cell, track, n, m, t0, t1, consts, Wt, bias, tau, cellf, cta, sta, theta, ct, st, tracki, trackf, sched, sens, mot, out, ys, os_,
@@ -491,10 +492,15 @@ class LifeSpec:
 
 
 def run_specs(specs: Sequence[LifeSpec], *, device: str = "cpu", max_tracks: Optional[int] = None, strict: bool = False,
-              cell_id: int = evolve.NOISE_CELL_ID, ticks: Optional[int] = None) -> Lives:
+              cell_id: int = evolve.NOISE_CELL_ID, ticks: Optional[int] = None, precision: str = "double") -> Lives:
     """Any lives, returned in the order given. Lives whose worlds share the kernel's constants run together; a start's
     track is built once however many lives share it; at most ``max_tracks`` tracks are held at a time (one on the CPU,
-    where the lives run in turn anyway, sixteen on the GPU: a start's noise is about 30 MB)."""
+    where the lives run in turn anyway, sixteen on the GPU: a start's noise is about 30 MB). ``precision`` "single"
+    runs them on ``protocell.fast32``, which has no strict form."""
+    if precision not in PRECISIONS:
+        raise ValueError(f"precision is one of {PRECISIONS}, not {precision!r}")
+    if precision == "single" and strict:
+        raise ValueError("the single-precision life has no strict form")
     if max_tracks is None:
         max_tracks = 1 if device == "cpu" else 16
     result = _blank(len(specs))
@@ -520,7 +526,12 @@ def run_specs(specs: Sequence[LifeSpec], *, device: str = "cpu", max_tracks: Opt
             hi = min(lo + max_tracks, len(builders))
             mine = np.flatnonzero((on_ >= lo) & (on_ < hi))
             tracks = [build_track(b.cfg, b.starts, b.row, b.seed, cell_id=cell_id, ticks=ticks) for b in builders[lo:hi]]
-            r = run_lives(first.cfg, params, tracks, mine, on_[mine] - lo, strict=strict, device=device)
+            if precision == "single":
+                from protocell import fast32  # it imports this module
+
+                r = fast32.run_lives32(first.cfg, params, tracks, mine, on_[mine] - lo, device=device)
+            else:
+                r = run_lives(first.cfg, params, tracks, mine, on_[mine] - lo, strict=strict, device=device)
             to = np.asarray(members, dtype=np.intp)[mine]
             for k in Lives.__dataclass_fields__:
                 getattr(result, k)[to] = getattr(r, k)
@@ -528,14 +539,14 @@ def run_specs(specs: Sequence[LifeSpec], *, device: str = "cpu", max_tracks: Opt
 
 
 def simulate_network(cfg: Config, starts: Starts, mode: str, genomes: np.ndarray, *, seed: int, cell_id: int = evolve.NOISE_CELL_ID,
-                     ticks: Optional[int] = None, strict: bool = False, device: str = "cpu") -> Lives:
+                     ticks: Optional[int] = None, strict: bool = False, device: str = "cpu", precision: str = "double") -> Lives:
     """``simulate`` for the network cell, one genome a start, on the compiled engine. Every cell draws the noise of
     cell ``cell_id`` on its start, as the searches and the tests have it."""
     genomes = np.asarray(genomes, dtype=np.float64)
     if genomes.shape[0] != len(starts):
         raise ValueError(f"{genomes.shape[0]} genomes for {len(starts)} starts")
     return run_specs([LifeSpec(cfg, mode, genomes[i], starts, i, seed) for i in range(len(starts))], device=device, strict=strict,
-                     cell_id=cell_id, ticks=ticks)
+                     cell_id=cell_id, ticks=ticks, precision=precision)
 
 
 # --- the searches' jobs (protocell.evolve's, on this engine) -----------------------------------------------------------
@@ -572,12 +583,18 @@ JOBS: Dict[Callable[..., Any], Callable[..., Any]] = {evolve.train_job: train_jo
 class Mapper:
     """A mapper for ``protocell.evolve.run`` and ``protocell.cmaes.run`` that sends the searches' two jobs to this
     engine and passes every other job on unchanged: ``Mapper(pool.map)`` runs them in the pool's processes. The
-    searches themselves are untouched."""
+    searches themselves are untouched. ``precision`` "single" sends them to ``protocell.fast32``."""
 
-    def __init__(self, inner: Callable[[Callable[[Any], Any], Iterable[Any]], Iterable[Any]] = map) -> None:
-        self.inner = inner
+    def __init__(self, inner: Callable[[Callable[[Any], Any], Iterable[Any]], Iterable[Any]] = map, precision: str = "double") -> None:
+        if precision not in PRECISIONS:
+            raise ValueError(f"precision is one of {PRECISIONS}, not {precision!r}")
+        self.inner, self.precision = inner, precision
 
     def __call__(self, fn: Callable[[Any], Any], jobs: Iterable[Any]) -> Iterable[Any]:
+        if self.precision == "single":
+            from protocell import fast32
+
+            return self.inner(fast32.JOBS.get(fn, fn), jobs)
         return self.inner(JOBS.get(fn, fn), jobs)
 
 
@@ -611,11 +628,14 @@ class CudaMapper:
     jobs are one launch: every genome on every start at once), and passes every other job to ``inner``.
     ``max_tracks`` bounds the starts held on the device at once."""
 
-    def __init__(self, inner: Callable[[Callable[[Any], Any], Iterable[Any]], Iterable[Any]] = map, max_tracks: int = 16) -> None:
-        self.inner, self.max_tracks = inner, int(max_tracks)
+    def __init__(self, inner: Callable[[Callable[[Any], Any], Iterable[Any]], Iterable[Any]] = map, max_tracks: int = 16,
+                 precision: str = "double") -> None:
+        if precision not in PRECISIONS:
+            raise ValueError(f"precision is one of {PRECISIONS}, not {precision!r}")
+        self.inner, self.max_tracks, self.precision = inner, int(max_tracks), precision
 
     def _run(self, per_job: List[List[LifeSpec]]) -> List[Lives]:
-        r = run_specs([s for specs in per_job for s in specs], device="cuda", max_tracks=self.max_tracks)
+        r = run_specs([s for specs in per_job for s in specs], device="cuda", max_tracks=self.max_tracks, precision=self.precision)
         bounds = np.cumsum([0] + [len(specs) for specs in per_job])
         return [r.take(range(int(bounds[i]), int(bounds[i + 1]))) for i in range(len(per_job))]
 

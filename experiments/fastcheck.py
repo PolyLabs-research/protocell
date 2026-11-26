@@ -18,6 +18,13 @@ ranking must not. The criteria are §4 of the plan.
 
 C (``speed``) and ``gpu`` describe; they set no criterion here. ``gpu`` is for a machine that has one.
 
+``--precision single`` runs parts ``agree``, ``speed`` and ``gpu`` on the single-precision life
+(``protocell.fast32``; docs/prereg/fast32.md), on the same starts and luck as the double engine's check, with that
+plan's criteria S1 to S5 in place of B1 to B4; its data go to ``<part>-single/``.
+
+    .venv/bin/python -W error::RuntimeWarning -m experiments.fastcheck --part agree --precision single
+    .venv/bin/python -m experiments.fastcheck --part gpu --precision single --tag laptop      # on the laptop
+
 ``follow`` is the follow-up to B's one miss (docs/decisions.md D48): the one cell and world whose survival the two
 engines scored more than 5 points apart, on 600 fresh starts, beside the kernel in its strict form.
 
@@ -164,7 +171,7 @@ def cosine(a: np.ndarray, b: np.ndarray) -> float:
     return float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))
 
 
-def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
+def agree(out: Path, quick: bool, log: Any, precision: str = "double") -> Dict[str, Any]:
     n = 6 if quick else N_STARTS
     resamples = 200 if quick else RESAMPLES
     mine = cells(quick)
@@ -178,7 +185,7 @@ def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
         t0 = time.time()
         ref = reference(cfg, every, genomes, SEED)
         t1 = time.time()
-        got = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED)
+        got = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, precision=precision)
         t2 = time.time()
         for c, cell in enumerate(names):
             rows = slice(c * n, (c + 1) * n)
@@ -211,7 +218,7 @@ def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
     scores: Dict[Tuple[str, int], np.ndarray] = {}
     seconds: Dict[Tuple[str, int], float] = {}
     for seed in LUCK_SEEDS:
-        for engine, mapper in (("reference", map), ("compiled", fast.Mapper())):
+        for engine, mapper in (("reference", map), ("compiled", fast.Mapper(precision=precision))):
             t0 = time.time()
             scores[(engine, seed)] = evolve.evaluate(mix, MODE, ga, pop, seed, 0, mapper)["fitness"]
             seconds[(engine, seed)] = time.time() - t0
@@ -240,6 +247,8 @@ def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
     b3 = abs(pooled_mean) < POOLED_TOLERANCE
     b4 = engines >= RANK_NEED and engines > luck
     within = float((np.abs(every_d) < 0.001).mean())
+    if precision == "single":
+        return agree_single(out, quick, log, pair_rows, life_rows, every_d, pooled_mean, pooled_low, pooled_high, misses, engines, luck, rank_rows, seconds)
     predictions = [
         (1, "B1 to B4 all hold", b1 and b2 and b3 and b4, {"B1": b1, "B2": b2, "B3": b3, "B4": b4}),
         (2, "single lives part: fewer than 90% of the paired lives agree to within 0.001 in fitness", within < 0.9, {"within_0.001": within}),
@@ -261,6 +270,50 @@ def agree(out: Path, quick: bool, log: Any) -> Dict[str, Any]:
         f"({pooled_mean:+.5f} [{pooled_low:+.5f}, {pooled_high:+.5f}])")
     log(f"B4 (the engines rank a population alike, Spearman at least {RANK_NEED} and above one engine's under two draws of luck): "
         f"{'holds' if b4 else 'FAILS'} ({engines:.3f} against {luck:.3f})")
+    for q in summary["predictions"]:
+        log(f"prediction {q['number']}: {'holds' if q['holds'] else 'FAILS'}: {q['text']}")
+    return summary
+
+
+DOUBLE_WITHIN = 0.743  # the double engine's share of paired lives within 0.001 of the reference (D48 A.4)
+
+
+def agree_single(out: Path, quick: bool, log: Any, pair_rows: List[Dict[str, Any]], life_rows: List[Dict[str, Any]], every_d: np.ndarray,
+                 pooled_mean: float, pooled_low: float, pooled_high: float, misses: List[str], engines: float, luck: float,
+                 rank_rows: List[Dict[str, Any]], seconds: Dict[Any, float]) -> Dict[str, Any]:
+    """B's measures read against the single-precision plan's criteria (docs/prereg/fast32.md §4)."""
+    s1 = all(abs(p["difference"]) < TOLERANCE for p in pair_rows)
+    s2 = len(misses) <= MISSES_ALLOWED
+    s3 = abs(pooled_mean) < POOLED_TOLERANCE
+    s4 = engines >= RANK_NEED and engines > luck
+    only_reference = sum(bool(r["reference_survived"]) and not r["compiled_survived"] for r in life_rows)
+    only_single = sum(not r["reference_survived"] and bool(r["compiled_survived"]) for r in life_rows)
+    split = sign_test(only_reference, only_single)
+    s5 = split > 0.05
+    within, within01 = float((np.abs(every_d) < 0.001).mean()), float((np.abs(every_d) < 0.01).mean())
+    predictions = [
+        (1, "S1 to S5 all hold", s1 and s2 and s3 and s4 and s5, {"S1": s1, "S2": s2, "S3": s3, "S4": s4, "S5": s5}),
+        (2, f"single-precision lives part from the reference sooner than the double engine's: fewer than {DOUBLE_WITHIN:.0%} of the paired lives "
+            "agree to within 0.001", within < DOUBLE_WITHIN, {"within_0.001": within}),
+        (3, "and most do not part far: at least 80% agree to within 0.01", within01 >= 0.8, {"within_0.01": within01}),
+        (4, "the engines rank a population more alike (Spearman above 0.95) than the reference does under two draws of luck (below 0.9)",
+         engines > 0.95 and luck < 0.9, {"engines": engines, "luck": luck}),
+    ]
+    summary = {"precision": "single", "pairs": len(pair_rows), "lives": int(every_d.shape[0]),
+               "pooled_difference": {"mean": pooled_mean, "low": pooled_low, "high": pooled_high},
+               "largest_pair_difference": max(abs(p["difference"]) for p in pair_rows), "intervals_missing_zero": misses,
+               "survived_in_reference_only": only_reference, "survived_in_single_only": only_single, "sign_test": split,
+               "within_0.001": within, "within_0.01": within01, "ranking": rank_rows, "ranking_seconds": {f"{e} {s}": v for (e, s), v in seconds.items()},
+               "S1": s1, "S2": s2, "S3": s3, "S4": s4, "S5": s5, "S": s1 and s2 and s3 and s4 and s5,
+               "predictions": [{"number": k, "text": t, "holds": bool(h), "values": v} for k, t, h, v in predictions], "quick": quick}
+    log(f"S1 (every pair's mean fitness within {TOLERANCE}): {'holds' if s1 else 'FAILS'} (largest {summary['largest_pair_difference']:.4f})")
+    log(f"S2 (the interval holds 0 in all but {MISSES_ALLOWED} pairs at most): {'holds' if s2 else 'FAILS'} (misses: {misses or 'none'})")
+    log(f"S3 (over all {summary['lives']} lives the mean difference within {POOLED_TOLERANCE}): {'holds' if s3 else 'FAILS'} "
+        f"({pooled_mean:+.5f} [{pooled_low:+.5f}, {pooled_high:+.5f}])")
+    log(f"S4 (the engines rank a population alike, Spearman at least {RANK_NEED} and above the reference's under two draws of luck): "
+        f"{'holds' if s4 else 'FAILS'} ({engines:.3f} against {luck:.3f})")
+    log(f"S5 (the lives that survive in one engine only split with no direction, sign test above 0.05): {'holds' if s5 else 'FAILS'} "
+        f"({only_reference} in the reference only, {only_single} in the single-precision life only; p = {split:.3f})")
     for q in summary["predictions"]:
         log(f"prediction {q['number']}: {'holds' if q['holds'] else 'FAILS'}: {q['text']}")
     return summary
@@ -328,7 +381,7 @@ def follow(out: Path, quick: bool, log: Any, starts_override: Optional[int] = No
 
 # --- C: the cost -----------------------------------------------------------------------------------------------------------
 
-def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: int = 48) -> Dict[str, Any]:
+def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: int = 48, precision: str = "double") -> Dict[str, Any]:
     """One core: the reference and the compiled life on the same 48 cells of a population on one start. Then a whole
     generation as a search runs it (96 genomes on 8 starts, four worlds) with ``workers`` processes, or on the GPU.
     ``chunk`` is the genomes in a job: 48 makes 16 jobs, as the pods ran; fewer make more and smaller jobs, which
@@ -340,15 +393,15 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: in
     ticks = 400 if quick else 4000
     genomes = pop[:batch]
     row = start.take([0] * batch)
-    fast.simulate_network(cfg, row, MODE, genomes, seed=SEED, ticks=2)  # compiled before the clock starts
+    fast.simulate_network(cfg, row, MODE, genomes, seed=SEED, ticks=2, precision=precision)  # compiled before the clock starts
     t0 = time.perf_counter()
     reference(cfg, row, genomes, SEED, ticks)
     t1 = time.perf_counter()
-    got = fast.simulate_network(cfg, row, MODE, genomes, seed=SEED, ticks=ticks)
+    got = fast.simulate_network(cfg, row, MODE, genomes, seed=SEED, ticks=ticks, precision=precision)
     t2 = time.perf_counter()
     lived = int(np.where(got.death_tick > 0, got.death_tick, got.lifetime).sum())
     summary: Dict[str, Any] = {"batch": batch, "ticks": ticks, "reference_us_a_cell_tick": (t1 - t0) / (batch * ticks) * 1e6,
-                               "compiled_us_a_cell_tick": (t2 - t1) / lived * 1e6, "workers": workers, "device": device, "quick": quick}
+                               "compiled_us_a_cell_tick": (t2 - t1) / lived * 1e6, "workers": workers, "device": device, "precision": precision, "quick": quick}
     summary["one_core_ratio"] = summary["reference_us_a_cell_tick"] / summary["compiled_us_a_cell_tick"]
     log(f"one core, {batch} cells on one start: the reference {summary['reference_us_a_cell_tick']:.2f} microseconds a cell-tick, the compiled life "
         f"{summary['compiled_us_a_cell_tick']:.2f}: {summary['one_core_ratio']:.1f} times faster")
@@ -359,7 +412,7 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: in
         ready, what = fast.cuda_ready()
         if not ready:
             raise SystemExit(f"no GPU to time: {what}")
-        mapper: Any = fast.CudaMapper()
+        mapper: Any = fast.CudaMapper(precision=precision)
         evolve.evaluate(mix, MODE, ga.but(population=batch, parents=batch, chunk=batch), pop[:batch], SEED, 1, mapper)  # compiled before the clock starts
         t0 = time.perf_counter()
         ev = evolve.evaluate(mix, MODE, ga, pop, SEED, 0, mapper)
@@ -367,9 +420,9 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: in
         summary["gpu"] = what
     else:
         with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
-            list(pool.map(_warm, range(max(1, workers))))
+            list(pool.map(_warm, [precision] * max(1, workers)))
             t0 = time.perf_counter()
-            ev = evolve.evaluate(mix, MODE, ga, pop, SEED, 0, fast.Mapper(pool.map))
+            ev = evolve.evaluate(mix, MODE, ga, pop, SEED, 0, fast.Mapper(pool.map, precision=precision))
             summary["generation_seconds"] = time.perf_counter() - t0
     summary["generation_lives"] = int(ev["fitness"].size)
     log(f"a generation ({summary['generation_lives']} lives, four worlds) on "
@@ -378,16 +431,16 @@ def speed(out: Path, quick: bool, log: Any, workers: int, device: str, chunk: in
     return summary
 
 
-def _warm(_: int) -> bool:
+def _warm(precision: str) -> bool:
     """Compile (or load) the kernel in a worker before it is timed."""
     cfg = stage8.world("home", True)
-    fast.simulate_network(cfg, sample_starts(cfg, "cave", 1, 1), MODE, population(True)[:1], seed=1, ticks=2)
+    fast.simulate_network(cfg, sample_starts(cfg, "cave", 1, 1), MODE, population(True)[:1], seed=1, ticks=2, precision=precision)
     return True
 
 
 # --- the GPU's kernel beside the CPU's -------------------------------------------------------------------------------------
 
-def gpu(out: Path, quick: bool, log: Any, starts_override: Optional[int] = None) -> Dict[str, Any]:
+def gpu(out: Path, quick: bool, log: Any, starts_override: Optional[int] = None, precision: str = "double") -> Dict[str, Any]:
     """For a machine with an Nvidia GPU. The GPU's kernel against the CPU's: the first ticks (the same model, to
     rounding), then whole lives (the same outcomes, in distribution), then the time. It describes; whether to search
     on the GPU is the owner's call once these numbers exist."""
@@ -405,13 +458,13 @@ def gpu(out: Path, quick: bool, log: Any, starts_override: Optional[int] = None)
         starts = sample_starts(cfg, "cave", n, SEED)
         every = starts.take(list(range(n)) * len(names))
         genomes = np.concatenate([np.repeat(mine[c][None], n, axis=0) for c in names])
-        a = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, ticks=20 if quick else 100)
-        b = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, ticks=20 if quick else 100, device="cuda")
+        a = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, ticks=20 if quick else 100, precision=precision)
+        b = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, ticks=20 if quick else 100, device="cuda", precision=precision)
         early = max(early, float(np.abs(a.pos - b.pos).max()))
         t0 = time.perf_counter()
-        cpu = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED)
+        cpu = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, precision=precision)
         t1 = time.perf_counter()
-        dev = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, device="cuda")
+        dev = fast.simulate_network(cfg, every, MODE, genomes, seed=SEED, device="cuda", precision=precision)
         t2 = time.perf_counter()
         for c, cell in enumerate(names):
             sl = slice(c * n, (c + 1) * n)
@@ -441,15 +494,20 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser.add_argument("--chunk", type=int, default=48, help="speed: the genomes in a job (a divisor of 96)")
     parser.add_argument("--tag", default="", help="speed and gpu: a name for the machine, so each machine's numbers keep their own directory")
     parser.add_argument("--starts", type=int, default=None, help="follow and gpu: the starts, in place of the plan's (a trial: not a result)")
+    parser.add_argument("--precision", choices=list(fast.PRECISIONS), default="double", help="agree, speed and gpu: the engine's precision")
     args = parser.parse_args(argv)
-    out = args.out / (args.part if not args.tag else f"{args.part}-{args.tag}")
+    if args.precision == "single" and args.part not in ("agree", "speed", "gpu"):
+        parser.error("--precision single is for parts agree, speed and gpu")
+    name = args.part + ("-single" if args.precision == "single" else "")
+    out = args.out / (name if not args.tag else f"{name}-{args.tag}")
     out.mkdir(parents=True, exist_ok=True)
     manifest = build_manifest(protocol=f"fastcheck/{args.part}", settings={"worlds": list(worlds(args.quick)), "cells": list(cells(args.quick)),
                                                                            "starts": N_STARTS, "luck_seeds": list(LUCK_SEEDS), "population": str(POPULATION),
                                                                            "tolerances": {"pair": TOLERANCE, "survival": SURVIVAL_TOLERANCE, "pooled": POOLED_TOLERANCE,
                                                                                           "misses": MISSES_ALLOWED, "rank": RANK_NEED},
                                                                            "follow": {"world": FOLLOW_WORLD, "cell": FOLLOW_CELL, "starts": args.starts or FOLLOW_STARTS},
-                                                                           "workers": args.workers, "device": args.device, "quick": args.quick},
+                                                                           "workers": args.workers, "device": args.device, "precision": args.precision,
+                                                                           "quick": args.quick},
                               seeds=[SEED, BOOTSTRAP_SEED, *LUCK_SEEDS, FOLLOW_SEED, FOLLOW_BOOTSTRAP], extra={"out": str(out)})
     t0 = time.time()
 
@@ -459,13 +517,13 @@ def main(argv: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     if args.part == "same":
         summary = same(out, args.quick, log)
     elif args.part == "agree":
-        summary = agree(out, args.quick, log)
+        summary = agree(out, args.quick, log, args.precision)
     elif args.part == "follow":
         summary = follow(out, args.quick, log, args.starts)
     elif args.part == "speed":
-        summary = speed(out, args.quick, log, args.workers, args.device, args.chunk)
+        summary = speed(out, args.quick, log, args.workers, args.device, args.chunk, args.precision)
     else:
-        summary = gpu(out, args.quick, log, args.starts)
+        summary = gpu(out, args.quick, log, args.starts, args.precision)
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     finish_manifest(manifest, wall_seconds=time.time() - t0)
     write_manifest(out / "manifest.json", manifest)
