@@ -1,7 +1,7 @@
-# Stages 4 to 8b: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
+# Stages 4 to 8c: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2); the rate of generalists corrected on 2026-11-26 from stage 8c (D63), which has no section of its own here yet. It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2); the rate of generalists corrected on 2026-11-26 from stage 8c (D63), and stage 8c and the reading of stage 8b's cells added the same day (D64). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -32,6 +32,7 @@ Stages 4 to 6 asked four things in turn:
 | how the generalist does it | Two ways of moving in one network: it circles where its body gives no direction, and steers by its own shading where it does | D45 |
 | can the searches run faster | Yes: the same model as compiled code, 11.7 times faster on a core; a run costs about 25 cents on a pod | D47–D49, D57 |
 | is a generalist an accident of one run | No. At 400 generations 13 of 45 runs give one, about three in ten (stage 8b's 15 runs had suggested a half; stage 8c's 30 corrected it). At 800 generations, 3 of 5 | D58, D63 |
+| what the generalists are | One kind of cell, found by five runs from five random beginnings: a circler where the body gives no direction, a steerer by its own shading where it does | D61 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -260,6 +261,40 @@ Stages 4 to 6 asked four things in turn:
 - **Two of six predictions failed:** I expected fewer than three generalists at 800 generations, and one to three
   among the ten fresh runs.
 
+## 15. What the generalists are (D61)
+
+- **The probe:** nine cells on 60 fresh starts in each trained world: the five strongest generalists (runs 8102, 8103
+  and 8104 at 800 generations; fresh runs 8202 and 8210), runs 8103 and 8104 as they stood at 400 generations, and
+  runs 8101 and 8105 at 800, which never survive the spot.
+- **Five runs, from five random beginnings, found the same kind of cell** that champion 8102 is (§12). Where the body
+  gives no direction it runs 93–98% of the day turning steadily, and needs its ring's links (0.25–0.46 of fitness lost
+  without them). Where it shades itself it steers by the shading (0.12–0.15 lost without the direction across the
+  body) and needs no ring. One of the five circles the other way.
+- **Time did not give runs 8103 and 8104 the mechanism.** They circled already at 400 generations. At 800 their running
+  is hardly ever broken: fresh starts of running a life at home fell from 600 to 11 and from 84 to 16. With that they
+  follow the spot and outlast the clouds; that the one causes the other is not shown.
+- **The runs that never find the spot are the other kind:** they run a third of the day and do not circle, and starve
+  under the spot.
+- **One of six predictions failed:** I expected 8103 and 8104 not to have been circlers at 400 generations.
+
+## 16. The rate, with thirty more runs (stage 8c; D62, D63)
+
+- **The question:** stage 8b's 15 runs left the rate of generalists at 400 generations anywhere from 20% to 64%.
+- **The runs:** thirty more fresh runs of stage 8's design, on the compiled life, on six pods, for $6.44. The test is
+  stage 8's, on the reference, on fresh starts.
+- **Both criteria fail:** 7 of the 30 give a generalist, where 15 (a half) and 18 (three in five) were asked for.
+- **The rate at 400 generations, over all 45 runs made:** 13, which is 29% (95% interval 18% to 43%). About three runs
+  in ten, not the half that stage 8b's runs had suggested.
+- **What the thirty made:** 7 generalists; 8 that do the bar's job in three of the four trained worlds and fall short
+  only under the flickering clouds (0.83 to 0.89 of the gap, where 0.9 is the line); 2 that cope at home and when
+  shaded; 10 only when shaded; 3 still cells.
+- **The line under flicker is thin.** The seven close 0.90 to 0.97 of the gap there and the eight 0.83 to 0.89. Counted
+  after the fact, about half of all 45 runs do the bar's job under the spot (22).
+- **Every generalist travels** to 4 or 5 of the 5 held-back worlds.
+- **The runs' own validation lumped the fifteen together** (thirteen surviving everywhere, two nearly); the test
+  divides them seven and eight.
+- **Two of seven predictions failed:** I expected 8 to 16 generalists and a rate over the 45 runs between 30% and 50%.
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
@@ -279,16 +314,18 @@ Stages 4 to 6 asked four things in turn:
     criterion asked for 3; and the sensor and the eased-in path were designed by hand;
   - anything beyond one spoke mode (fourier1) and one sensor;
   - that no simple rule could sit higher than the bars. They are the best of those tried.
+- **Shown:** the generalists from five runs are one kind of cell: a circler where the body gives no direction and a
+  steerer by its own shading where it does (§15).
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
-  body is answered for the searched cell (§9); how the evolved cells' circling is biased is not, for champion 6301
-  (D36 B.2) or champion 8102 (D45 B.4). Whether the new generalists move as champion 8102 does, and what the runs that
-  never find the spot lack, has not been read.
+  body is answered for the searched cell (§9); how the evolved cells' circling is biased toward the light is not
+  (D36 B.2, D45 B.4, D61 B.5). Whether more time carries stage 8c's near-misses over, as it carried runs 8103 and 8104,
+  is being tested (D64).
 
 ## Cost and conduct
 
 - **RunPod,** stages 4 to 8: about $70 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30, 8 $18), each launch confirmed by
-  the owner first. Stage 8b, on the compiled life: $3.74 for fifteen runs, about 25 cents a run, where a stage 8 run
-  cost about $3.60.
+  the owner first. On the compiled life: stage 8b $3.74 for fifteen runs and stage 8c $6.44 for thirty, 21 to 25
+  cents a run, where a stage 8 run cost about $3.60.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
 - **Each stage** had a preregistration with predictions before it ran. The predictions that failed are recorded as
@@ -297,9 +334,11 @@ Stages 4 to 6 asked four things in turn:
   their log and a calculator with a wrong constant (D27); a scoring summary that misread a column (D29); a test that
   overwrote one champion's rows with another's (D33); a tolerance on survival set as if paired lives stayed paired
   (D48); a set-up script written for Linux when the owner's laptop was Windows, unasked (D51); a test that skipped on
-  any error and so hid a real one (D52).
+  any error and so hid a real one (D52); a criterion's bar described as stage 8's share when it was a half (D59); a
+  rate called "about half" from fifteen runs, which thirty more brought to three in ten (D63).
 
 ## Next
 
-The owner on D58 (D59): the new generalists read beside champion 8102, and what the runs that never find the spot
-lack; and thirty more fresh runs to pin the rate (stage 8c).
+The owner on D63 (D64): stage 8c's eight near-misses carried on to 800 generations, with runs that do not follow the
+spot as a control; the fifteen that follow the spot read beside each other; and a single-precision engine for the
+GPU, with its own plan and check.

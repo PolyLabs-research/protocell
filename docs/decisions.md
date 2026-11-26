@@ -3055,3 +3055,26 @@ clean tree with warnings as errors; seeds 65 and 66; data in `docs/data/stage8c/
 
 **Impact:** this entry; `docs/data/stage8c/test/`; `docs/prereg/stage8c.md` (its outcome); `README.md`;
 `docs/stages-4-5.md` (the rate, corrected where it is stated).
+
+## D64 — The owner's decisions on D63: all four
+
+**Date:** 2026-11-26  
+**Why:** the owner on D63 C: "Yes to all".
+
+### Decided
+1. **Stage 8c and the reading of stage 8b's cells are added to the write-up** (`docs/stages-4-5.md` §15, §16), and
+   `stage8c` is merged into `main`.
+2. **Stage 8d: stage 8c's eight near-misses are carried on to 800 generations,** as stage 8b carried stage 8's runs
+   on, to see whether time carries them over as it carried runs 8103 and 8104.
+   - The eight: 8213, 8218, 8219, 8224, 8231, 8233, 8235, 8237 (they do the bar's job in all but flicker, D63 A.3).
+   - **A control of four runs that do not follow the spot,** chosen by a rule fixed here, before any run: of stage
+     8c's runs that neither follow the spot nor are still cells, the four with the highest mean fitness over the four
+     trained worlds on stage 8c's test. They are 8212 (0.517), 8226 (0.426), 8230 (0.422) and 8225 (0.419).
+   - Its plan, criteria and predictions in `docs/prereg/stage8d.md` before any run; the launch's terms put to the
+     owner before it (his standing rule for every launch).
+3. **The fifteen runs of stage 8c that follow the spot are read beside each other** (the seven generalists and the
+   eight near-misses), with stage 8b's probe's measures; its plan and predictions first.
+4. **A single-precision engine for the GPU** (D54 C2): its plan and check first (`docs/prereg/fast32.md`), on a branch
+   of its own. Its speed can only be measured on the owner's laptop.
+
+**Impact:** this entry; `docs/stages-4-5.md`.
