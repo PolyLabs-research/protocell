@@ -3186,3 +3186,60 @@ The test, on the reference, on this machine: the twelve runs' champions at 800 a
 worlds on fresh starts (seeds 70, 71), one process. N1, N2 and the six predictions are read from it.
 
 **Impact:** this entry; `docs/data/stage8d/extend/`.
+
+## D69 — Stage 8d: time carries every near-miss well over the line, and one run of four that did not follow the spot; both criteria hold
+
+**Date:** 2026-11-26  
+**Why:** D65, D68.  
+**Ran:** `experiments/stage8d.py --phase test` (code `0083e2d`), on the reference, one process here, 6.1 hours, from a
+clean tree with warnings as errors; seeds 70 and 71; data in `docs/data/stage8d/test/`.
+
+### A. Measured
+1. **The criteria:**
+
+   | criterion | result |
+   |---|---|
+   | N1: at least 5 of the 8 near-misses are generalists at 800 generations | **holds:** all 8 |
+   | N2: at most 1 of the 4 controls is a generalist at 800 generations | **holds:** 1 (8212) |
+
+2. **The near-misses at 800 generations are well over the line, not at it:** under flicker they close 1.07 to 1.16 of
+   the gap (0.9 is the line). Each does the bar's job in all five held-back worlds and beats the bar in 6 to 8 of the
+   nine. Champion 8102 (stage 8's generalist, at 400) beats it in 6.
+3. **Every one of the twelve runs is better at 800 than at 400** over the trained worlds: the near-misses by +0.019 to
+   +0.048, the controls by +0.016 to +0.088. Under flicker the near-misses' share of the gap rose by 0.07 to 0.21.
+4. **On these starts five of the eight near-misses were generalists already at 400** (8218, 8219, 8224, 8231, 8237),
+   where stage 8c's test found none. At 400 they close 0.875 to 1.00 of the gap under flicker. Here the flicker bar
+   is a run-and-wait rule at 0.537; on stage 8c's starts it was B8 at 0.559.
+5. **The control that crossed, run 8212,** went under the spot from 0.74 of the gap to 1.23, and under flicker from
+   0.71 to 1.06. At 400 it was the control nearest to following the spot.
+6. **The other three controls still fail under the spot** (0.01 to 0.08 of the gap) and under flicker, though each is
+   better at home.
+7. **The references stand:** champion 8102 a generalist, champion 6402 not.
+8. **Predictions:** 1, 2, 3 and 6 hold. 4 and 5 fail: I expected none of the twelve champions at 400 to be a
+   generalist on these starts (five are), and no control to do the bar's job under the spot at 800 (8212 does).
+
+### B. Reading
+1. **Time carries the near-misses over, and well over.** At 800 generations all eight are generalists as strong as any
+   found, with room to spare under flicker.
+2. **"Carried over" says more than the test can at the line.** At 400 these cells sit on it, and which side a test
+   puts them depends on its starts and on the bar those starts choose. What is robust is the gain: every one is
+   better, and none is near the line at 800.
+3. **Time rarely makes a run follow the spot.** One control in four here, the one nearest to doing so already; none of
+   two in stage 8b (runs 8101 and 8105). Five of six runs that did not follow the spot at 400 still do not at 800.
+4. **What seems to matter at 400 is the kind of cell.** Stage 8b's two late arrivals were circlers that did not yet do
+   the job under the spot (D61); its two runs that never arrived were not circlers. Whether the three controls that
+   did not cross are circlers, and whether run 8212 was one at 400, has not been read.
+5. **No rate at 800 generations follows from these runs.** The twelve were chosen, eight for being near the line.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage8d` into `main`:** stage 8d, the reading of the fifteen (D66), and the single-precision engine (D70).
+2. **Add stage 8d and the reading of the fifteen to the write-up.**
+3. **What next** (recommended in this order):
+   - **Read the controls** (local, free, about 10 minutes): were run 8212 and the three that did not cross circlers at
+     400? If circling at 400 is what predicts a generalist at 800, the rate at 800 can be guessed from the readings.
+   - **The rate at 800 generations:** carry stage 8c's other eighteen runs on (its seven generalists, eight runs that
+     do not follow the spot, and three still cells), so that all thirty are at 800: about $5 on pods.
+   - **The single-precision engine on the laptop's GPU** (D70); then whether searches may use it.
+   - **How a circle climbs toward the light** (D45 C3), now a question about many cells.
+
+**Impact:** this entry; `docs/data/stage8d/test/`; `docs/prereg/stage8d.md` (its outcome); `README.md`.

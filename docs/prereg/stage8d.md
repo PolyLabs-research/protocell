@@ -85,3 +85,16 @@ Nothing about how these fifteen move.
 - On the launch, put to him with its terms (four cpu5c pods of 16 vCPUs at $0.56 an hour, three runs each, each pod
   deleted 2.2 hours after its launch, at most $4.93): **"Launch, 12 runs (Recommended)"**. Given before the launch;
   recorded here after it (D67).
+
+## 9. Outcome (2026-11-26; D68, D69)
+
+- **The runs:** twelve, on four pods, 81 to 99 minutes a pod, about $3.56 (the ceiling was $4.93). The champion's
+  re-validation before generation 401 gave stage 8c's own number for all twelve.
+- **N1 holds:** all 8 near-misses are generalists at 800 generations, each closing 1.07 to 1.16 of the gap under
+  flicker, doing the job in all five held-back worlds and beating the bar in 6 to 8 of the nine.
+- **N2 holds:** 1 of the 4 controls is (8212, the one nearest to following the spot at 400); the other three still
+  fail under the spot.
+- **All twelve are better at 800 than at 400** (+0.016 to +0.088 over the trained worlds).
+- **On these starts five of the eight near-misses were generalists already at 400:** at 400 they sit on the line.
+- **Predictions:** 1, 2, 3 and 6 hold; 4 and 5 fail (I expected none of the champions at 400 to be a generalist on
+  these starts, and no control to do the bar's job under the spot at 800).
