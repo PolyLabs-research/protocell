@@ -75,3 +75,19 @@ then a generation timed on the GPU, beside the laptop's 15.7 s on 20 processes. 
 - **That the GPU's single-precision kernel gives the CPU's outcomes.** Its library functions and fused multiply-adds
   differ again; part gpu compares them on the laptop.
 - **Agreement across machines,** for the same reason as the double engine's.
+
+## 6. Outcome of part agree (2026-11-26)
+
+Ran from `a8792eb` on this machine, one process, 37 minutes; data in `docs/data/fast/agree-single/`.
+
+- **S1 holds:** every cell-and-world pair's mean fitness within 0.006 of the reference's (0.01 allowed).
+- **S2 holds:** no pair's interval misses 0.
+- **S3 holds:** over 1,800 paired lives the mean difference is +0.0004 [−0.0008, +0.0016].
+- **S4 holds:** the engines rank run 8102's last population alike (Spearman 0.979 and 0.964, against 0.898 for the
+  reference under two draws of luck). The step a search would take agrees 0.916 and 0.912.
+- **S5 holds:** 17 lives survive in the reference only and 20 in the single-precision life only (sign test p = 0.74).
+- **Lives part sooner than the double engine's:** 61% of paired lives agree within 0.001 (the double engine 74%), 89%
+  within 0.01 (92%).
+- **All four predictions hold.**
+- **So the single-precision life may be used for searches on the owner's word** (§4). Parts gpu and speed, on the
+  laptop, are next.
