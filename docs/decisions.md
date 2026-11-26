@@ -3151,3 +3151,38 @@ each pod deleted 2.2 hours after its launch: at most $4.93), the owner chose "La
    pods run has the plan and not this answer.
 
 **Impact:** this entry; `docs/prereg/stage8d.md`.
+
+## D68 — Stage 8d's runs are made: twelve runs carried on to 800 generations on four pods, for about $3.56
+
+**Date:** 2026-11-26  
+**Why:** D67.  
+**Ran:** `experiments/stage8d.py --phase extend` (code `7ac8e0e`, a clean tree on every pod), on four cpu5c pods of 16
+vCPUs, on the compiled life, jobs from 11:52 to 13:35 UTC; data in `docs/data/stage8d/extend/`.
+
+### A. The runs, as they went
+1. **A pod's three runs took 81 to 99 minutes;** a generation 4.0 to 4.9 s (a run's mean).
+2. **Cost: about $3.56,** from each pod's launch to its deletion at $0.56 an hour, against a ceiling of $4.93. The
+   balance fell more ($47.92 to $43.40): a lattice-lab pod ran on the account at the same time.
+3. **Every job ended with exit 0, was pulled, and its pod deleted itself.** No pod is left.
+4. **The re-validation before generation 401 gave stage 8c's own number, to the last digit, for all twelve runs.** The
+   compiled life gives the same bits on the three kinds of host these runs met (EPYC 9575F, 4565P, 4564P).
+
+### B. The runs, on validation (the compiled life; 12 fixed starts in each world). Not the test.
+
+| run | at 400: flicker (surviving) | at 800: flicker (surviving) | at 800: the spot (surviving) |
+|---|---|---|---|
+| near-misses 8213, 8218, 8219, 8224, 8231, 8233, 8235, 8237 | 0.488 to 0.566 (75% to 92%) | 0.601 to 0.633 (100%) | 0.595 to 0.617 (100%) |
+| control 8212 | 0.408 (58%) | 0.609 (100%) | 0.601 (100%; at 400, 0.399 and 17%) |
+| controls 8226, 8230, 8225 | 0.379 to 0.461 (42% to 67%) | 0.488 to 0.566 (67% to 92%) | 0.141 to 0.167 (0%) |
+
+1. **All eight near-misses survive every validation start in all four worlds at 800 generations,** and gained most
+   under flicker (by 0.04 to 0.13).
+2. **One control, run 8212, now follows the spot.** At 400 generations it did the bar's job at home and when shaded
+   only; at 800 it survives every validation start in all four worlds.
+3. **The other three controls still never survive under the spot.**
+
+### C. Next
+The test, on the reference, on this machine: the twelve runs' champions at 800 and at 400 and two references in nine
+worlds on fresh starts (seeds 70, 71), one process. N1, N2 and the six predictions are read from it.
+
+**Impact:** this entry; `docs/data/stage8d/extend/`.
