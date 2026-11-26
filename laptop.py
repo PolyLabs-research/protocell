@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 NEED = (3, 11)
-TESTS = ("tests/test_fast.py", "tests/test_fastcheck.py")
+TESTS = ("tests/test_fast.py", "tests/test_fast32.py", "tests/test_fastcheck.py")
 SHOWN = ("gpu", "one_core_ratio", "compiled_us_a_cell_tick", "workers", "chunk", "device", "generation_seconds", "largest_early_position_difference",
          "pooled_difference", "largest_pair_difference")
 
