@@ -4,6 +4,7 @@ Windows, Linux or macOS; it needs only Python 3.11 or later, and uses nothing ou
     python laptop.py                 # set up .venv, test the compiled life, time the CPU, and the GPU if there is one
     python laptop.py --workers 6     # the processes to time a generation on (default: the physical cores)
     python laptop.py --no-gpu        # leave the GPU out
+    python laptop.py --double        # also time the GPU in double precision (measured once already, D54)
 
 It installs into .venv beside this file and writes its timings under docs/data/fast/ (speed-<name>/, and gpu-<name>/
 and speed-<name>-gpu/ when there is a GPU). It starts no search. An all-core run heats a laptop: mains power, and room
@@ -163,6 +164,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--workers", type=int, default=None, help="the processes to time a generation on (default: the physical cores)")
     parser.add_argument("--no-gpu", action="store_true", help="leave the GPU out")
+    parser.add_argument("--double", action="store_true", help="also time the GPU in double precision (measured already: D54)")
     parser.add_argument("--name", default="laptop", help="a name for this machine in the output's directories (default: laptop; not its host name, "
                                                          "which would go into the repository with the numbers)")
     args = parser.parse_args(argv)
@@ -194,11 +196,19 @@ def main(argv=None):
     run([py, "-m", "experiments.fastcheck", "--part", "speed", "--workers", workers, "--chunk", 12, "--tag", name + "-jobs-of-12"])
 
     if gpu:
-        print("== the GPU's kernel beside the CPU's (a few minutes), then a generation on the GPU", flush=True)
-        if run([py, "-m", "experiments.fastcheck", "--part", "gpu", "--tag", name], check=False):
-            run([py, "-m", "experiments.fastcheck", "--part", "speed", "--device", "cuda", "--tag", name + "-gpu"], check=False)
-        else:
-            print("!! the GPU part did not run: the CPU's numbers above still stand", flush=True)
+        for precision, what in (("double", "double precision"), ("single", "single precision")):
+            if precision == "double" and not args.double:
+                continue
+            print(f"== {what}: the GPU's kernel beside the CPU's (a few minutes), then a generation on the GPU", flush=True)
+            label = name + ("-single" if precision == "single" else "")
+            if run([py, "-m", "experiments.fastcheck", "--part", "gpu", "--precision", precision, "--tag", name], check=False):
+                run([py, "-m", "experiments.fastcheck", "--part", "speed", "--device", "cuda", "--precision", precision, "--tag", label + "-gpu"],
+                    check=False)
+            else:
+                print(f"!! the GPU part in {what} did not run: the CPU's numbers above still stand", flush=True)
+        print(f"== single precision on the CPU: a generation on {workers} processes", flush=True)
+        run([py, "-m", "experiments.fastcheck", "--part", "speed", "--workers", workers, "--chunk", 12, "--precision", "single",
+             "--tag", name + "-jobs-of-12"], check=False)
     show(name)
     return 0
 

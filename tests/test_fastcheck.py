@@ -92,3 +92,12 @@ def test_the_gpu_part_needs_a_gpu(tmp_path):
         pytest.skip("this machine has a GPU")
     with pytest.raises(SystemExit, match="no GPU"):
         fastcheck.main(["--part", "gpu", "--quick", "--out", str(tmp_path)])
+
+
+def test_the_agreement_part_in_single_precision(tmp_path):
+    s = fastcheck.main(["--part", "agree", "--precision", "single", "--quick", "--out", str(tmp_path)])
+    assert s["precision"] == "single" and s["pairs"] == 12 and s["lives"] == 72 and len(s["predictions"]) == 4
+    assert {"S1", "S2", "S3", "S4", "S5"} <= set(s) and s["S1"] and s["S3"]
+    assert (tmp_path / "agree-single" / "summary.json").exists() and not (tmp_path / "agree").exists()
+    with pytest.raises(SystemExit):
+        fastcheck.main(["--part", "same", "--precision", "single", "--quick", "--out", str(tmp_path)])
