@@ -1,0 +1,95 @@
+{
+ "S": true,
+ "S1": true,
+ "S2": true,
+ "S3": true,
+ "S4": true,
+ "S5": true,
+ "intervals_missing_zero": [],
+ "largest_pair_difference": 0.0057871805086045615,
+ "lives": 1800,
+ "pairs": 18,
+ "pooled_difference": {
+  "high": 0.0015968176301238606,
+  "low": -0.0007635789973939841,
+  "mean": 0.00039201311644497554
+ },
+ "precision": "single",
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "S1 to S5 all hold",
+   "values": {
+    "S1": true,
+    "S2": true,
+    "S3": true,
+    "S4": true,
+    "S5": true
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "single-precision lives part from the reference sooner than the double engine's: fewer than 74% of the paired lives agree to within 0.001",
+   "values": {
+    "within_0.001": 0.6138888888888889
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "and most do not part far: at least 80% agree to within 0.01",
+   "values": {
+    "within_0.01": 0.8861111111111111
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "the engines rank a population more alike (Spearman above 0.95) than the reference does under two draws of luck (below 0.9)",
+   "values": {
+    "engines": 0.9639717851329355,
+    "luck": 0.8982094411285947
+   }
+  }
+ ],
+ "quick": false,
+ "ranking": [
+  {
+   "spearman": 0.9794628323385783,
+   "step_cosine": 0.916180834216696,
+   "top_half_shared": 0.9375,
+   "what": "the two engines, luck 52"
+  },
+  {
+   "spearman": 0.9639717851329355,
+   "step_cosine": 0.9119340779170577,
+   "top_half_shared": 0.9166666666666666,
+   "what": "the two engines, luck 53"
+  },
+  {
+   "spearman": 0.8982094411285947,
+   "step_cosine": 0.7008181496424559,
+   "top_half_shared": 0.875,
+   "what": "the reference under two draws of luck"
+  },
+  {
+   "spearman": 0.8790287574606619,
+   "step_cosine": 0.6132317629630061,
+   "top_half_shared": 0.875,
+   "what": "the compiled under two draws of luck"
+  }
+ ],
+ "ranking_seconds": {
+  "compiled 52": 21.123069286346436,
+  "compiled 53": 20.72791290283203,
+  "reference 52": 323.9212386608124,
+  "reference 53": 247.7067859172821
+ },
+ "sign_test": 0.7428293587290682,
+ "survived_in_reference_only": 17,
+ "survived_in_single_only": 20,
+ "within_0.001": 0.6138888888888889,
+ "within_0.01": 0.8861111111111111
+}
