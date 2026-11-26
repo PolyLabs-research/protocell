@@ -3098,3 +3098,56 @@ clean tree with warnings as errors; seeds 65 and 66; data in `docs/data/stage8c/
 
 **Impact:** this entry; `docs/prereg/stage8d.md`; `experiments/stage8d.py`, `experiments/stage8d_read.py`,
 `tests/test_stage8d.py`, `tests/test_stage8d_read.py`; `experiments/stage8b.py`.
+
+## D66 — The reading of the fifteen: the near-misses move as the generalists do; what keeps them under the line is not broken running
+
+**Date:** 2026-11-26  
+**Why:** D65, item 2.  
+**Ran:** `experiments/stage8d_read.py` (code `7ac8e0e`), seed 72, 60 fresh starts in each of the four trained worlds,
+one process here, 51 minutes, from a clean tree with warnings as errors; data in `docs/data/stage8d/read/`.
+
+### A. Measured
+1. **Fourteen of the fifteen are circlers at home** by D44's rule. The fifteenth, generalist 8215, runs 98% of the day
+   there but turns only 0.018 rad a tick, under the rule's 0.03.
+2. **The eight near-misses move as the seven generalists do** (medians, generalists against near-misses):
+
+   | world | running by day | fresh onsets a life | fitness |
+   |---|---|---|---|
+   | home | 0.917 / 0.933 | 22.5 / 21.5 | 0.614 / 0.610 |
+   | flicker | 0.823 / 0.823 | 285 / 242 | 0.557 / 0.542 |
+   | spot | 0.928 / 0.928 | 8.1 / 8.5 | 0.555 / 0.547 |
+   | shaded | 0.830 / 0.667 | 124 / 165 | 0.612 / 0.627 |
+
+3. **Under flicker the near-misses do not break their running more often:** their median is lower (242 against 285).
+   What differs is fitness, 0.015 lower; survival is alike (77% to 88% against 85% to 93%).
+4. **One cell in each group runs in broken spells in every world:** near-miss 8219 (about 440 fresh onsets a life at
+   home) and generalist 8238 (about 136).
+5. **When shaded they move in two ways,** as stage 8b's did (D61 A.5): some run most of the day with few onsets, some
+   run half of it in hundreds of short spells; both kinds are among the generalists and among the near-misses.
+6. **Predictions:** 5 holds. 3 holds only nominally: the two medians agree to three digits (0.823). 1, 2 and 4 fail: I
+   expected all fifteen to be circlers, and the near-misses' running to break more often under flicker and at home.
+
+### B. Reading
+1. **The near-misses are the generalists' kind of cell,** circlers that follow the spot, and fall short of the line
+   under flicker by a little fitness, not by moving differently.
+2. **So D61's account of runs 8103 and 8104** (time made their running unbroken, and with that they arrived) **does not
+   describe what keeps these eight under the line.** Their running is already unbroken.
+3. **Whether time carries them over is what stage 8d's runs test.** If it does, it will be by small gains under
+   flicker that these measures cannot see.
+4. **The line under flicker separates cells that move alike,** as D63 B.5 suspected from the counts.
+
+**Impact:** this entry; `docs/data/stage8d/read/`.
+
+## D67 — The owner's OK on stage 8d's launch; the launch
+
+**Date:** 2026-11-26  
+**Why:** D65, item 4. Asked with the launch's terms (four cpu5c pods of 16 vCPUs at $0.56 an hour, three runs each,
+each pod deleted 2.2 hours after its launch: at most $4.93), the owner chose "Launch, 12 runs (Recommended)".
+
+### Decided, and done
+1. **Launched 11:49 to 11:57 UTC; all four pods up on the first try,** none on a slow host: three on an EPYC 9575F, one
+   on an EPYC 4565P. Each passed the tests there (29 of 29) and staged commit `7ac8e0e`.
+2. **The answer was given before the launch and is recorded after it** (`docs/prereg/stage8d.md` §8): the commit the
+   pods run has the plan and not this answer.
+
+**Impact:** this entry; `docs/prereg/stage8d.md`.

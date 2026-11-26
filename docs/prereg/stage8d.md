@@ -82,3 +82,6 @@ Nothing about how these fifteen move.
 
 - On D63: "Yes to all" (D64): carry the eight on, with runs that do not follow the spot as a control; read the
   fifteen.
+- On the launch, put to him with its terms (four cpu5c pods of 16 vCPUs at $0.56 an hour, three runs each, each pod
+  deleted 2.2 hours after its launch, at most $4.93): **"Launch, 12 runs (Recommended)"**. Given before the launch;
+  recorded here after it (D67).
