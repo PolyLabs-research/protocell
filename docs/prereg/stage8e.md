@@ -39,6 +39,18 @@ For each of the thirty runs, whether it will be a generalist at 800 generations:
 (stage 8c's seven generalists and eight near-misses) will be; a run that did not will be if and only if it circled at
 400 in §2's reading. The list is added here, dated, once the reading is in and before the launch.
 
+**The forecast, 2026-11-27, after the reading (D73) and before any run:**
+- **Generalists at 800 (15):** 8211, 8213, 8215, 8218, 8219, 8220, 8223, 8224, 8227, 8231, 8233, 8235, 8237, 8238, 8240
+  (the runs that followed the spot at 400).
+- **Not generalists at 800 (15):** 8212, 8214, 8216, 8217, 8221, 8222, 8225, 8226, 8228, 8229, 8230, 8232, 8234, 8236,
+  8239 (no run that did not follow the spot circled at 400 by D44's rule).
+- **Said with it:** the rule as written puts run 8212 among the runs that do not circle (it runs 94% of the day at home
+  but turns 0.018 rad a tick, under the rule's 0.03), though stage 8d's test found it a generalist at 800 (D69). The
+  forecast for 8212 is likely to fail.
+- **A second forecast, written after seeing the reading and so not a prediction:** a run is a generalist at 800 if it
+  ran more than 80% of the day at home at 400. It differs from the registered one only for 8212, whose outcome at 800
+  is already known.
+
 ## 4. The runs, and the test
 
 - **The runs:** the eighteen of stage 8c's runs not carried on before (its seven generalists, the eight runs that cope

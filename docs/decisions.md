@@ -3317,3 +3317,32 @@ stage 8d's test so the log stays in order).
 
 **Impact:** this entry; `docs/prereg/stage8e.md`; `experiments/stage8e.py`, `experiments/stage8e_read.py`,
 `tests/test_stage8e.py`, `tests/test_stage8e_read.py`.
+
+## D73 — Stage 8e's reading: no run that failed to follow the spot circles at 400; what marks the runs that did, or came to, is running nearly all day; the forecast, before any run
+
+**Date:** 2026-11-27  
+**Why:** D72, item 2.  
+**Ran:** `experiments/stage8e_read.py` (code `5629e9e`), seed 73, 60 fresh starts at home and under the spot, one
+process here, 33 minutes, from a clean tree with warnings as errors; data in `docs/data/stage8e/read/`.
+
+### A. Measured
+1. **None of the seventeen is a circler by D44's rule** (at home: running more than 80% of the day, turning more than
+   0.03 rad a tick).
+2. **The control that crossed, 8212, runs as the generalists do:** 94% of the day at home, 13.5 fresh onsets a life
+   (D66's fifteen: 86% to 99%, 2 to 136). It turns 0.018 rad a tick, under the rule's 0.03, as generalist 8215 does.
+3. **Every other run that did not follow the spot runs 16% to 67% of the day at home, in broken spells** (104 to 746
+   fresh onsets a life): the three controls that did not cross, the eight runs that cope only when shaded, and stage
+   8b's runs 8101 and 8105 at 400 (44% and 24%). The still cells do not run.
+4. **Predictions:** 2, 3, 4 and 5 hold. 1 fails: I expected 8212 to be a circler at 400 by the rule.
+
+### B. Reading
+1. **The runs that followed the spot, or came to with time, run nearly all day in unbroken spells; the others do
+   not.** The rule's turning threshold does not separate them: it puts 8212 and generalist 8215 on the wrong side.
+2. **The forecast follows the rule as registered** (`docs/prereg/stage8e.md` §3): the fifteen runs that followed the
+   spot at 400 will be generalists at 800, the fifteen that did not will not, 8212 among them. Exactly 15 of 30 at 800
+   is H's bar. The forecast for 8212 is likely to fail, since stage 8d's test found it a generalist at 800.
+3. **A second forecast, written after this reading and so not a prediction:** running more than 80% of the day at home
+   at 400 foretells a generalist at 800. It differs from the registered one only for 8212, whose outcome is known.
+   For the eleven runs not yet carried on that did not follow the spot, both forecast no generalist.
+
+**Impact:** this entry; `docs/data/stage8e/read/`; `docs/prereg/stage8e.md` §3 (the forecast).
