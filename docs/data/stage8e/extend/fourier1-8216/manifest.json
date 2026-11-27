@@ -1,0 +1,170 @@
+{
+ "command": "/root/protocell/experiments/stage8e.py --phase extend --replicate 9 --workers 16",
+ "created_at": "2026-11-27T16:47:05+00:00",
+ "git": {
+  "branch": "stage8e",
+  "dirty": false,
+  "sha": "38bb16d2f9c95e399ffd7521abce48f9bce163e9"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8e/extend/fourier1-8216",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.12.3",
+  "release": "6.8.0-147-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8e/extend",
+ "seeds": [
+  8216
+ ],
+ "settings": {
+  "adapt_tau": 10.0,
+  "alpha_range": [
+   -3.141592653589793,
+   3.141592653589793
+  ],
+  "background": 0.0,
+  "c0": 1.6666666666666667e-05,
+  "c1": 1.6666666666666667e-05,
+  "cave_cycle": true,
+  "cave_falloff": 600.0,
+  "cave_path": "mouth",
+  "cave_sweep": true,
+  "cave_sweep_deg": 60.0,
+  "champion_from": 101,
+  "clamp_radius": 4999.0,
+  "cloud_shade": 1.0,
+  "cloud_shade_mean": 300.0,
+  "cloud_sun_mean": 600.0,
+  "cma": {
+   "chunk": 48,
+   "generations": 800,
+   "population": 96,
+   "sigma0": 0.05,
+   "train_starts": 8,
+   "validate_every": 10,
+   "validate_top": 3,
+   "validation_seed": 44,
+   "validation_starts": 48
+  },
+  "damage_rate": 0.00015765288372808237,
+  "damage_repair": 0.0001388888888888889,
+  "damage_threshold": Infinity,
+  "day_ticks": 86400,
+  "device": "cpu",
+  "dish_radius": 5000.0,
+  "energy_start": 0.5,
+  "engine": "the compiled life (protocell/fast.py)",
+  "eta": 5.500000000000001e-05,
+  "fade_generations": 50,
+  "fill_light": 4.0,
+  "gain_end": 0.55,
+  "gain_range": [
+   0.0,
+   20.0
+  ],
+  "genome_length": 135,
+  "keep_at": [
+   600
+  ],
+  "lamp_peak": 4.0,
+  "lamp_scale": 20.0,
+  "lamp_start_min": 60.0,
+  "level_floor": 0.015,
+  "lifetime": 172800,
+  "log_tau_range": [
+   0.0,
+   8.1886891244442
+  ],
+  "mode": "fourier1",
+  "mouth_light": 10.0,
+  "n_core": 8,
+  "n_wall": 16,
+  "numba": "0.68.1",
+  "omega_max": 1.0,
+  "path_period": 21600,
+  "path_radius": 2500.0,
+  "quick": false,
+  "rest_below": 0.01,
+  "retreat_on": "max",
+  "rotation_noise_sd": 0.158113883008419,
+  "search": "CMA-ES",
+  "sense_contrast": 1.0,
+  "sense_floor": 0.01,
+  "sensing": "relative",
+  "sensor_noise_sd": 0.0031622776601683794,
+  "shade_floor": 1.0,
+  "soak_threshold": 1.0,
+  "spot_centre_within": 10.0,
+  "spot_peak": 4.0,
+  "spot_sigma": 16.0,
+  "spot_start_min": 38.0,
+  "tighten_generations": 50,
+  "trained": [
+   "home",
+   "flicker",
+   "spot",
+   "shaded"
+  ],
+  "v_max": 10.0,
+  "validation_each": 12,
+  "weight_range": [
+   -8.0,
+   8.0
+  ],
+  "world": "stage 4b's path, then four worlds at once",
+  "worlds": {
+   "flicker": {
+    "changes": {
+     "cloud_shade": 0.3,
+     "cloud_shade_mean": 60.0,
+     "cloud_sun_mean": 120.0
+    },
+    "gain": 0.55
+   },
+   "home": {
+    "changes": {
+     "cave_sweep": true
+    },
+    "gain": 0.55
+   },
+   "shaded": {
+    "changes": {
+     "cave_sweep": true,
+     "shade_floor": 0.3
+    },
+    "gain": 0.55
+   },
+   "spot": {
+    "changes": {
+     "cave_path": "circle",
+     "path_period": 7200,
+     "path_radius": 2500.0
+    },
+    "gain": 0.45
+   }
+  }
+ },
+ "timing": {
+  "generations": 800,
+  "wall_seconds": 1603.9233136177063,
+  "workers": 16
+ }
+}

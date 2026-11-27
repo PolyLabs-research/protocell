@@ -1,0 +1,9 @@
+{
+ "source": "docs/data/stage8c/fresh/fourier1-8211",
+ "generation": 400,
+ "champion_generation": 380,
+ "reference_validation_fitness": 0.6069939863222359,
+ "reference_validation_survival": 1.0,
+ "compiled_validation_fitness": 0.6069939863222359,
+ "compiled_validation_survival": 1.0
+}
