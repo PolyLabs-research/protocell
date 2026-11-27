@@ -3478,3 +3478,43 @@ of the felt trend over speed in the falling third (dim light / bright):
 2. **Stage 8e** runs on; its test follows.
 
 **Impact:** this entry; `docs/data/circle/wave/`.
+
+## D78 — Stage 8e's runs are made: eighteen runs carried on to 800 generations on six pods, for about $4.70
+
+**Date:** 2026-11-27  
+**Why:** D71, D73, D74.  
+**Ran:** `experiments/stage8e.py --phase extend` (code `38bb16d`, a clean tree on every pod), on six cpu5c pods of 16
+vCPUs, on the compiled life, jobs from 16:14 to 17:48 UTC; data in `docs/data/stage8e/extend/`.
+
+### A. The runs, as they went
+1. **A pod's three runs took 69 to 91 minutes** from its campaign's start to the last pull; a generation 3.8 to 4.7 s (a run's mean), 2.1 to 2.3 s for the
+   three still cells.
+2. **Cost: about $4.70,** from each pod's launch to its deletion at $0.56 an hour, against a ceiling of $7.39. It
+   includes a pod turned away after a minute for a slow host (13.7 s on the speed gate) and launched again.
+3. **Every job ended with exit 0, was pulled, and its pod deleted itself.** No pod is left.
+4. **The re-validation before generation 401 gave stage 8c's own number, to the last digit, for all eighteen runs.**
+
+### B. The runs, on validation (the compiled life; 12 fixed starts in each world). Not the test.
+
+| run | at 400: the spot (surviving) | at 800: the spot (surviving) | at 800: flicker (surviving) |
+|---|---|---|---|
+| stage 8c's generalists 8211, 8215, 8220, 8223, 8227, 8238, 8240 | (generalists at 400) | 0.594 to 0.613 (100%) | 0.585 to 0.628 (92% to 100%) |
+| 8216, 8229, 8234 (coped only when shaded at 400) | 0.134 to 0.142 (0%) | 0.585 to 0.598 (100%) | 0.590 to 0.611 (100%) |
+| 8214, 8221, 8232, 8236, 8239 (coped only when shaded at 400) | 0.145 to 0.178 (0%) | 0.135 to 0.175 (0%) | 0.445 to 0.575 (67% to 100%) |
+| still cells 8217, 8222, 8228 | 0.135 to 0.141 (0%) | 0.135 to 0.140 (0%) | 0.168 to 0.185 (0% to 8%) |
+
+1. **Stage 8c's seven generalists survive every validation start in all four worlds at 800 generations,** but for
+   one start of twelve under flicker (8238).
+2. **Three of the eight runs that coped only when shaded now follow the spot.** At 400 generations runs 8216, 8229 and
+   8234 never survived it; at 800 they survive every validation start in all four worlds. None of the three circled at
+   400 (D73: they ran 22%, 67% and 51% of the day at home), so §3's forecast says none would be a generalist at 800.
+3. **The other five still never survive under the spot, and the three still cells are still.**
+4. **On these numbers prediction 4 is in doubt and H is not:** if the test agrees with validation, 19 of the 30 are
+   generalists. The test decides; validation has differed from it before (D63).
+
+### C. Next
+The test, on the reference, on this machine: the thirty champions at 800 and champions 8102 and 6402 in nine worlds on
+fresh starts (seeds 75, 76), one process. H, the rate at 800, the forecast's accuracy and the six predictions are read
+from it.
+
+**Impact:** this entry; `docs/data/stage8e/extend/`.
