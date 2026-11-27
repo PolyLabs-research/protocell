@@ -3366,3 +3366,54 @@ process here, 33 minutes, from a clean tree with warnings as errors; data in `do
 
 **Impact:** this entry; `docs/prereg/stage8e.md`; `docs/prereg/circle.md`; `experiments/circle_read.py`,
 `tests/test_circle_read.py`.
+
+## D75 — How a circle climbs: by speed, not curvature. The circlers swim faster while the light they feel rises and slower while it falls; the network alone on steady ramps does not, so the response is not yet shown
+
+**Date:** 2026-11-27  
+**Why:** D74, item 2.  
+**Ran:** `experiments/circle_read.py` (code `255ee3b`), seed 77, the five circling generalists at home (60 fresh starts),
+one process here, 7 minutes, from a clean tree with warnings as errors; data in `docs/data/circle/`.
+
+### A. Measured
+1. **All five climb at home:** their velocity toward the source while moving averages +0.20 to +0.35 R a tick.
+2. **Sorted by the trend of the light each felt, the curvature hardly changes and the speed does** (falling third /
+   middle / rising, speed as a share of full speed):
+
+   | cell | speed | curvature, rising over falling |
+   |---|---|---|
+   | 8102 at 800 | 0.57 / 0.61 / 0.68 | 1.03 |
+   | 8103 at 800 | 0.50 / 0.57 / 0.71 | 1.08 |
+   | 8104 at 800 | 0.65 / 0.63 / 0.66 | 0.98 |
+   | fresh 8202 | 0.52 / 0.59 / 0.78 | 1.05 |
+   | fresh 8210 | 0.63 / 0.70 / 0.80 | 1.06 |
+
+   In four of the five the falling third is slower than the middle and the rising third faster, so the difference is
+   not just that fast moves make big trends in both directions. Toward the source the rising third moves at 3.7 to 4.3
+   R a tick, and away from it the falling third at 2.3 to 2.8: the circle is faster on the side that faces the light.
+   The turning rises with the speed (both come from the total beat), so the curvature stays put.
+3. **The network alone does not do it on steady ramps:** with the light even across the wall and rising or falling by
+   0.2% a tick for 200 ticks, curvature changes by under 6% and speed by under 17%, and in dim light four of the five
+   swim slightly slower on a rise, not faster.
+4. **Predictions:** 4 holds. 1, 2 and 3 fail: I expected the curvature to fall while the light rises, the speed to
+   change little, and the same in open loop.
+5. **Disclosed:** part B does not depend on the length of the day, so the smoke test that ran before the plan was
+   written gave its real numbers, and I saw them before committing the plan (whose §4 wrongly says those numbers were no
+   guide). The predictions had been written in the probe's code before that smoke test and were not changed after it;
+   prediction 3 already looked likely to fail there.
+
+### B. Reading
+1. **These circles climb by speed, not by curvature:** each cell swims faster on the half of its circle that faces the
+   light and slower on the half that faces away, so its circles drift toward the light. That is not how a sea urchin's
+   sperm steers.
+2. **The response that makes this is not shown.** Steady ramps do not evoke it. In closed loop the felt light rises and
+   falls with each turn of the circle (about every 70 to 120 ticks at these turning rates), and a network can answer an
+   oscillating light differently from a steady ramp. Or the speed differs around the circle for reasons of the
+   network's own rhythm that the light only phase-locks.
+3. **So the next probe is the oscillating light:** the network alone, the light rising and falling at a circle's period,
+   to see whether its speed locks to the rising half.
+
+### C. Decisions this surfaces (the owner's)
+1. **The oscillating-light probe** (local, free, minutes): plan and predictions first.
+2. Stage 8e runs on (D74); its test follows.
+
+**Impact:** this entry; `docs/data/circle/`.
