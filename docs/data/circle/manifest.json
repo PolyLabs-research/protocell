@@ -1,0 +1,62 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/circle_read.py",
+ "created_at": "2026-11-27T16:26:10+00:00",
+ "git": {
+  "branch": "stage8e",
+  "dirty": false,
+  "sha": "255ee3bb2c54a90c00759e07a2e62374039e6229"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/circle",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "circle/read",
+ "seeds": [
+  77
+ ],
+ "settings": {
+  "cells": {
+   "8102 at 800": "docs/data/stage8b/extend/fourier1-8102/champion.json",
+   "8103 at 800": "docs/data/stage8b/extend/fourier1-8103/champion.json",
+   "8104 at 800": "docs/data/stage8b/extend/fourier1-8104/champion.json",
+   "8202": "docs/data/stage8b/fresh/fourier1-8202/champion.json",
+   "8210": "docs/data/stage8b/fresh/fourier1-8210/champion.json"
+  },
+  "hold": 600,
+  "levels": [
+   0.05,
+   1.0
+  ],
+  "moving": 0.1,
+  "quick": false,
+  "ramp": 0.002,
+  "ramp_ticks": 200,
+  "settle": 50,
+  "starts": 60,
+  "trend_ticks": 10,
+  "world": "home"
+ },
+ "timing": {
+  "wall_seconds": 401.8181836605072
+ }
+}
