@@ -1,0 +1,71 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/stage8e_read.py",
+ "created_at": "2026-11-27T14:01:59+00:00",
+ "git": {
+  "branch": "stage8e",
+  "dirty": false,
+  "sha": "5629e9ee297f9b86f5b8e4b814c810eda82084b9"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/stage8e/read",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "stage8e/read",
+ "seeds": [
+  73
+ ],
+ "settings": {
+  "cells": {
+   "8101": "stage 8",
+   "8105": "stage 8",
+   "8212": "control",
+   "8214": "shaded",
+   "8216": "shaded",
+   "8217": "still",
+   "8221": "shaded",
+   "8222": "still",
+   "8225": "control",
+   "8226": "control",
+   "8228": "still",
+   "8229": "shaded",
+   "8230": "control",
+   "8232": "shaded",
+   "8234": "shaded",
+   "8236": "shaded",
+   "8239": "shaded"
+  },
+  "circler": [
+   0.8,
+   0.03
+  ],
+  "quick": false,
+  "starts": 60,
+  "worlds": [
+   "home",
+   "spot"
+  ]
+ },
+ "timing": {
+  "wall_seconds": 1994.8840284347534
+ }
+}

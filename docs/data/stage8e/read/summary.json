@@ -1,0 +1,483 @@
+{
+ "circlers": [],
+ "movement": {
+  "home": {
+   "8101": {
+    "cell": "8101",
+    "fitness": 0.5499723587098146,
+    "fresh_onsets_a_life": 410.0833333333333,
+    "group": "stage 8",
+    "running_by_day": 0.44427348890775303,
+    "running_in_dim": 0.40054622504073456,
+    "survival": 0.8666666666666667,
+    "toward_in_dim": 0.5060235852969889,
+    "turning_during_runs": -0.007726816775503934,
+    "world": "home"
+   },
+   "8105": {
+    "cell": "8105",
+    "fitness": 0.41666718036546196,
+    "fresh_onsets_a_life": 236.06666666666666,
+    "group": "stage 8",
+    "running_by_day": 0.24292636728869563,
+    "running_in_dim": 0.3126745798324034,
+    "survival": 0.55,
+    "toward_in_dim": 0.23562593263508946,
+    "turning_during_runs": -0.019760272780044937,
+    "world": "home"
+   },
+   "8212": {
+    "cell": "8212",
+    "fitness": 0.5923906824684182,
+    "fresh_onsets_a_life": 13.466666666666667,
+    "group": "control",
+    "running_by_day": 0.9373505001359766,
+    "running_in_dim": 0.9335750097423756,
+    "survival": 1.0,
+    "toward_in_dim": 0.5362200702568262,
+    "turning_during_runs": -0.01818048044362827,
+    "world": "home"
+   },
+   "8214": {
+    "cell": "8214",
+    "fitness": 0.506370001570818,
+    "fresh_onsets_a_life": 458.9166666666667,
+    "group": "shaded",
+    "running_by_day": 0.3958044689067165,
+    "running_in_dim": 0.548574097551211,
+    "survival": 0.8166666666666667,
+    "toward_in_dim": 0.32615568795547645,
+    "turning_during_runs": 0.0044606926050887,
+    "world": "home"
+   },
+   "8216": {
+    "cell": "8216",
+    "fitness": 0.4991413743491051,
+    "fresh_onsets_a_life": 230.68333333333334,
+    "group": "shaded",
+    "running_by_day": 0.2243653341864968,
+    "running_in_dim": 0.2753452408412143,
+    "survival": 0.75,
+    "toward_in_dim": 0.304030455518637,
+    "turning_during_runs": -0.015244274710372539,
+    "world": "home"
+   },
+   "8217": {
+    "cell": "8217",
+    "fitness": 0.14278818228874093,
+    "fresh_onsets_a_life": 1.0,
+    "group": "still",
+    "running_by_day": 0.013295376272258673,
+    "running_in_dim": 0.013295359928296977,
+    "survival": 0.0,
+    "toward_in_dim": -0.0027497002350990608,
+    "turning_during_runs": 7.981445306234215e-05,
+    "world": "home"
+   },
+   "8221": {
+    "cell": "8221",
+    "fitness": 0.486339810484237,
+    "fresh_onsets_a_life": 745.8833333333333,
+    "group": "shaded",
+    "running_by_day": 0.46614490703960165,
+    "running_in_dim": 0.5640902425080988,
+    "survival": 0.6666666666666666,
+    "toward_in_dim": 0.3759834664050389,
+    "turning_during_runs": -0.02021067971934833,
+    "world": "home"
+   },
+   "8222": {
+    "cell": "8222",
+    "fitness": 0.14327209583160466,
+    "fresh_onsets_a_life": 1.0,
+    "group": "still",
+    "running_by_day": 0.004096718840731002,
+    "running_in_dim": 0.004126761269618412,
+    "survival": 0.0,
+    "toward_in_dim": 0.0018687152997559021,
+    "turning_during_runs": -0.027269606763518094,
+    "world": "home"
+   },
+   "8225": {
+    "cell": "8225",
+    "fitness": 0.5183059725623231,
+    "fresh_onsets_a_life": 461.8666666666667,
+    "group": "control",
+    "running_by_day": 0.3867088002349129,
+    "running_in_dim": 0.4799961378881221,
+    "survival": 0.7833333333333333,
+    "toward_in_dim": 0.3397907797988021,
+    "turning_during_runs": 0.015494874300057842,
+    "world": "home"
+   },
+   "8226": {
+    "cell": "8226",
+    "fitness": 0.5215500385348145,
+    "fresh_onsets_a_life": 389.0833333333333,
+    "group": "control",
+    "running_by_day": 0.3045703983471291,
+    "running_in_dim": 0.4709967866727457,
+    "survival": 0.8166666666666667,
+    "toward_in_dim": 0.40264896177476706,
+    "turning_during_runs": -0.020190700406760246,
+    "world": "home"
+   },
+   "8228": {
+    "cell": "8228",
+    "fitness": 0.1475348071165169,
+    "fresh_onsets_a_life": 0.03333333333333333,
+    "group": "still",
+    "running_by_day": 3.1942962645899483e-05,
+    "running_in_dim": 6.291421143956524e-05,
+    "survival": 0.0,
+    "toward_in_dim": 0.0005713942941600486,
+    "turning_during_runs": 0.03811923242562121,
+    "world": "home"
+   },
+   "8229": {
+    "cell": "8229",
+    "fitness": 0.3710408902218258,
+    "fresh_onsets_a_life": 394.48333333333335,
+    "group": "shaded",
+    "running_by_day": 0.6668444169649963,
+    "running_in_dim": 0.6905368613982953,
+    "survival": 0.43333333333333335,
+    "toward_in_dim": 0.10000483984938222,
+    "turning_during_runs": 0.020057851682933656,
+    "world": "home"
+   },
+   "8230": {
+    "cell": "8230",
+    "fitness": 0.5256759785924667,
+    "fresh_onsets_a_life": 451.06666666666666,
+    "group": "control",
+    "running_by_day": 0.399025891789207,
+    "running_in_dim": 0.5555497111397487,
+    "survival": 0.8166666666666667,
+    "toward_in_dim": 0.40854470723779973,
+    "turning_during_runs": -0.012159740801732526,
+    "world": "home"
+   },
+   "8232": {
+    "cell": "8232",
+    "fitness": 0.49355662999513134,
+    "fresh_onsets_a_life": 344.53333333333336,
+    "group": "shaded",
+    "running_by_day": 0.3998800991867139,
+    "running_in_dim": 0.5533843616348986,
+    "survival": 0.8,
+    "toward_in_dim": 0.33206386104421576,
+    "turning_during_runs": -8.46031971567196e-05,
+    "world": "home"
+   },
+   "8234": {
+    "cell": "8234",
+    "fitness": 0.3067050341968783,
+    "fresh_onsets_a_life": 423.48333333333335,
+    "group": "shaded",
+    "running_by_day": 0.5112136165343631,
+    "running_in_dim": 0.3337991827739773,
+    "survival": 0.3,
+    "toward_in_dim": 0.09555550277236348,
+    "turning_during_runs": -0.017260525925238145,
+    "world": "home"
+   },
+   "8236": {
+    "cell": "8236",
+    "fitness": 0.47533452763274264,
+    "fresh_onsets_a_life": 692.5,
+    "group": "shaded",
+    "running_by_day": 0.360671643305934,
+    "running_in_dim": 0.642840839439177,
+    "survival": 0.7,
+    "toward_in_dim": 0.32879757819293287,
+    "turning_during_runs": -0.04010326150792857,
+    "world": "home"
+   },
+   "8239": {
+    "cell": "8239",
+    "fitness": 0.4290172849294972,
+    "fresh_onsets_a_life": 103.63333333333334,
+    "group": "shaded",
+    "running_by_day": 0.162821272779779,
+    "running_in_dim": 0.21166108226029334,
+    "survival": 0.5666666666666667,
+    "toward_in_dim": 0.25699344936969676,
+    "turning_during_runs": 0.0025463856838338845,
+    "world": "home"
+   }
+  },
+  "spot": {
+   "8101": {
+    "cell": "8101",
+    "fitness": 0.15293222304177642,
+    "fresh_onsets_a_life": 169.68333333333334,
+    "group": "stage 8",
+    "running_by_day": 0.413494997997031,
+    "running_in_dim": 0.36046607513936074,
+    "survival": 0.0,
+    "toward_in_dim": 0.44871751174090785,
+    "turning_during_runs": -0.003510924306709331,
+    "world": "spot"
+   },
+   "8105": {
+    "cell": "8105",
+    "fitness": 0.13632555990427225,
+    "fresh_onsets_a_life": 189.16666666666666,
+    "group": "stage 8",
+    "running_by_day": 0.2542201551507541,
+    "running_in_dim": 0.2971680484838098,
+    "survival": 0.0,
+    "toward_in_dim": 0.28344072075897087,
+    "turning_during_runs": -0.017328263696152445,
+    "world": "spot"
+   },
+   "8212": {
+    "cell": "8212",
+    "fitness": 0.4017677983895699,
+    "fresh_onsets_a_life": 11.4,
+    "group": "control",
+    "running_by_day": 0.9257678218600094,
+    "running_in_dim": 0.9227149519775634,
+    "survival": 0.16666666666666666,
+    "toward_in_dim": 0.36058227567968065,
+    "turning_during_runs": -0.01674568916532347,
+    "world": "spot"
+   },
+   "8214": {
+    "cell": "8214",
+    "fitness": 0.14884748996092972,
+    "fresh_onsets_a_life": 202.36666666666667,
+    "group": "shaded",
+    "running_by_day": 0.4025630962173632,
+    "running_in_dim": 0.47166202436312776,
+    "survival": 0.0,
+    "toward_in_dim": 0.3502588408152683,
+    "turning_during_runs": 0.0019630019562797657,
+    "world": "spot"
+   },
+   "8216": {
+    "cell": "8216",
+    "fitness": 0.1381864612547577,
+    "fresh_onsets_a_life": 145.28333333333333,
+    "group": "shaded",
+    "running_by_day": 0.23533686773765924,
+    "running_in_dim": 0.2587298383884519,
+    "survival": 0.0,
+    "toward_in_dim": 0.2650950591483819,
+    "turning_during_runs": -0.01107673487227468,
+    "world": "spot"
+   },
+   "8217": {
+    "cell": "8217",
+    "fitness": 0.12750281020373502,
+    "fresh_onsets_a_life": 1.0,
+    "group": "still",
+    "running_by_day": 0.011327523488584882,
+    "running_in_dim": 0.012242792525515757,
+    "survival": 0.0,
+    "toward_in_dim": 0.001910057283823393,
+    "turning_during_runs": 7.699767823130516e-05,
+    "world": "spot"
+   },
+   "8221": {
+    "cell": "8221",
+    "fitness": 0.1817983102138072,
+    "fresh_onsets_a_life": 416.1333333333333,
+    "group": "shaded",
+    "running_by_day": 0.4630866357209068,
+    "running_in_dim": 0.5074351792094425,
+    "survival": 0.0,
+    "toward_in_dim": 0.3899196840892511,
+    "turning_during_runs": -0.0104802746106642,
+    "world": "spot"
+   },
+   "8222": {
+    "cell": "8222",
+    "fitness": 0.1342583760469765,
+    "fresh_onsets_a_life": 1.0,
+    "group": "still",
+    "running_by_day": 0.0032014266650887387,
+    "running_in_dim": 0.005269622159566306,
+    "survival": 0.0,
+    "toward_in_dim": 0.0004538873146164085,
+    "turning_during_runs": -0.02723767328610247,
+    "world": "spot"
+   },
+   "8225": {
+    "cell": "8225",
+    "fitness": 0.15728172533134988,
+    "fresh_onsets_a_life": 219.43333333333334,
+    "group": "control",
+    "running_by_day": 0.38193447586436957,
+    "running_in_dim": 0.42388373337943924,
+    "survival": 0.0,
+    "toward_in_dim": 0.3469948049255154,
+    "turning_during_runs": 0.00830246626637648,
+    "world": "spot"
+   },
+   "8226": {
+    "cell": "8226",
+    "fitness": 0.14379356032557553,
+    "fresh_onsets_a_life": 238.78333333333333,
+    "group": "control",
+    "running_by_day": 0.31586311602616945,
+    "running_in_dim": 0.3998716739212589,
+    "survival": 0.0,
+    "toward_in_dim": 0.34207821725355,
+    "turning_during_runs": -0.014593456698430285,
+    "world": "spot"
+   },
+   "8228": {
+    "cell": "8228",
+    "fitness": 0.1344532117816216,
+    "fresh_onsets_a_life": 0.016666666666666666,
+    "group": "still",
+    "running_by_day": 3.784856482333927e-05,
+    "running_in_dim": 0.00011851491205873215,
+    "survival": 0.0,
+    "toward_in_dim": -0.0007778164675294951,
+    "turning_during_runs": 0.0037480565826700438,
+    "world": "spot"
+   },
+   "8229": {
+    "cell": "8229",
+    "fitness": 0.1287184641821647,
+    "fresh_onsets_a_life": 304.8,
+    "group": "shaded",
+    "running_by_day": 0.7250936638439712,
+    "running_in_dim": 0.6805982496428765,
+    "survival": 0.0,
+    "toward_in_dim": 0.0768243774321006,
+    "turning_during_runs": 0.016321329855874037,
+    "world": "spot"
+   },
+   "8230": {
+    "cell": "8230",
+    "fitness": 0.15569754186842208,
+    "fresh_onsets_a_life": 224.81666666666666,
+    "group": "control",
+    "running_by_day": 0.3966250337518939,
+    "running_in_dim": 0.47719284196437,
+    "survival": 0.0,
+    "toward_in_dim": 0.3388139460947877,
+    "turning_during_runs": -0.006122358493217828,
+    "world": "spot"
+   },
+   "8232": {
+    "cell": "8232",
+    "fitness": 0.1732530508031732,
+    "fresh_onsets_a_life": 214.48333333333332,
+    "group": "shaded",
+    "running_by_day": 0.39956795204560897,
+    "running_in_dim": 0.4937229978815326,
+    "survival": 0.0,
+    "toward_in_dim": 0.2746218721926219,
+    "turning_during_runs": 0.0049572452702818575,
+    "world": "spot"
+   },
+   "8234": {
+    "cell": "8234",
+    "fitness": 0.1303726296128476,
+    "fresh_onsets_a_life": 235.88333333333333,
+    "group": "shaded",
+    "running_by_day": 0.5080246022800403,
+    "running_in_dim": 0.3657510517198713,
+    "survival": 0.0,
+    "toward_in_dim": 0.1277677321555093,
+    "turning_during_runs": -0.012326375274105935,
+    "world": "spot"
+   },
+   "8236": {
+    "cell": "8236",
+    "fitness": 0.14478555669593934,
+    "fresh_onsets_a_life": 348.85,
+    "group": "shaded",
+    "running_by_day": 0.37187577281905365,
+    "running_in_dim": 0.5537926806486327,
+    "survival": 0.0,
+    "toward_in_dim": 0.31996484555236,
+    "turning_during_runs": -0.023466658131592464,
+    "world": "spot"
+   },
+   "8239": {
+    "cell": "8239",
+    "fitness": 0.1427381323208338,
+    "fresh_onsets_a_life": 68.45,
+    "group": "shaded",
+    "running_by_day": 0.16324020296352587,
+    "running_in_dim": 0.1797781386858413,
+    "survival": 0.0,
+    "toward_in_dim": 0.200969964406077,
+    "turning_during_runs": 0.00043309673743839177,
+    "world": "spot"
+   }
+  }
+ },
+ "predictions": [
+  {
+   "holds": false,
+   "number": 1,
+   "text": "control 8212, the one that crossed, was a circler at 400 generations",
+   "values": {
+    "8212": {
+     "running_by_day": 0.9373505001359766,
+     "turning": -0.01818048044362827
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "the three controls that did not cross were not circlers at 400",
+   "values": {
+    "8225": {
+     "running_by_day": 0.3867088002349129,
+     "turning": 0.015494874300057842
+    },
+    "8226": {
+     "running_by_day": 0.3045703983471291,
+     "turning": -0.020190700406760246
+    },
+    "8230": {
+     "running_by_day": 0.399025891789207,
+     "turning": -0.012159740801732526
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "stage 8b's runs 8101 and 8105 were not circlers at 400",
+   "values": {
+    "8101": {
+     "running_by_day": 0.44427348890775303,
+     "turning": -0.007726816775503934
+    },
+    "8105": {
+     "running_by_day": 0.24292636728869563,
+     "turning": -0.019760272780044937
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 4,
+   "text": "at most two of stage 8c's eight other runs that cope only when shaded are circlers at 400",
+   "values": {
+    "circlers": []
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "no still cell is a circler",
+   "values": {
+    "8217": 0.013295376272258673,
+    "8222": 0.004096718840731002,
+    "8228": 3.1942962645899483e-05
+   }
+  }
+ ],
+ "quick": false
+}
