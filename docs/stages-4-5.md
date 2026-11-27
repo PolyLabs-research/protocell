@@ -1,7 +1,7 @@
-# Stages 4 to 8c: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
+# Stages 4 to 8d: a world with room, a cell that can use it, cells that beat every simple rule there, and how far that travels
 
 **Written:** 2026-11-13, at the owner's request (D31 C1), from the decisions log and the data under `docs/data/`; stage 6
-added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2); the rate of generalists corrected on 2026-11-26 from stage 8c (D63), and stage 8c and the reading of stage 8b's cells added the same day (D64). It adds no result; each number is from the entry named beside it.
+added on 2026-11-14 (D33 C1) stage 6b on 2026-11-15 (D37 C1) stage 7 the same day (D40 C1) stage 8 on 2026-11-16 (D42 C1) the reading of champion 8102 on 2026-11-24 (D45 C1) and the compiled life and stage 8b on 2026-11-25 (D58 C2); the rate of generalists corrected on 2026-11-26 from stage 8c (D63), and stage 8c and the reading of stage 8b's cells added the same day (D64); stage 8d, the reading of the fifteen and the single-precision engine on 2026-11-27 (D71). It adds no result; each number is from the entry named beside it.
 
 ## The question
 
@@ -33,6 +33,7 @@ Stages 4 to 6 asked four things in turn:
 | can the searches run faster | Yes: the same model as compiled code, 11.7 times faster on a core; a run costs about 25 cents on a pod | D47–D49, D57 |
 | is a generalist an accident of one run | No. At 400 generations 13 of 45 runs give one, about three in ten (stage 8b's 15 runs had suggested a half; stage 8c's 30 corrected it). At 800 generations, 3 of 5 | D58, D63 |
 | what the generalists are | One kind of cell, found by five runs from five random beginnings: a circler where the body gives no direction, a steerer by its own shading where it does | D61 |
+| does more time carry the near-misses over | Yes: all 8 are generalists at 800 generations, well over the line; time made 1 of 6 runs that did not follow the spot follow it | D69 |
 
 ## 1. A world with room (stage 4a; D16, D17)
 
@@ -233,6 +234,12 @@ Stages 4 to 6 asked four things in turn:
 - **On a GPU** (the owner's laptop, an NVIDIA RTX 2000 Ada): the same model and the same outcomes, and too slow to
   help. The kernel is double precision, which that card does slowly: 75 whole lives take 36 to 40 s on it and 6 to 15 s
   on one of the laptop's CPU cores.
+- **So a single-precision engine was built** (D70): the cell's place, heading, reserve and the outcome's sums stay in
+  double, everything else is single. Checked on this machine's CPU against criteria written first, on the double
+  engine's starts and luck: every pair's mean fitness within 0.006 of the reference's, the ranking alike (Spearman 0.964
+  to 0.979), and the lives that survive in one engine only split 17 to 20. It is 1.4 times faster than the double
+  engine on a CPU core. Its speed on the GPU waits for the owner's laptop; searches stay on the double engine until he
+  says otherwise.
 
 ## 14. How reliably a generalist emerges (stage 8b; D55–D58)
 
@@ -295,6 +302,26 @@ Stages 4 to 6 asked four things in turn:
   divides them seven and eight.
 - **Two of seven predictions failed:** I expected 8 to 16 generalists and a rate over the 45 runs between 30% and 50%.
 
+## 17. More time for the near-misses (stage 8d; D65–D69)
+
+- **The reading first** (D66): the eight near-misses move as the seven generalists do: the same share of the day
+  running, the same unbroken spells; under flicker they break their running less often, not more. What keeps them
+  under the line is 0.015 of fitness under flicker, not how they move.
+- **The runs:** the eight near-misses and four runs that do not follow the spot (a control, chosen by a rule fixed
+  beforehand), carried on from 400 to 800 generations on four pods, for about $3.56. Each run's champion, validated
+  again on a pod before generation 401, gave stage 8c's own number to the last digit.
+- **Both criteria hold:** all 8 near-misses are generalists at 800 generations (5 were asked for), and 1 of the 4
+  controls is (at most 1 was allowed).
+- **Well over the line, not at it:** under flicker the eight close 1.07 to 1.16 of the gap at 800 generations. Each
+  does the bar's job in all five held-back worlds and beats it in 6 to 8 of the nine.
+- **At 400 they sat on the line:** on these starts five of the eight were generalists already, where stage 8c's test
+  found none. Which side a test puts such a cell depends on its starts and on the bar they choose. What is robust is
+  the gain: all twelve runs are better at 800, the near-misses by 0.02 to 0.05 over the trained worlds.
+- **Time rarely makes a run follow the spot:** the control that crossed was the one already nearest to following it;
+  the other three still fail under the spot, as stage 8b's two such runs did. One of six in all.
+- **Two of six predictions failed:** I expected no champion at 400 to be a generalist on these starts, and no control
+  to manage the spot.
+
 ## What this does and does not show
 
 - **Shown:** in this world, a cell of interacting parts does better than every simple rule tried, on fresh starts: in
@@ -303,13 +330,14 @@ Stages 4 to 6 asked four things in turn:
 - **Shown, as a limit:** cells made in one world mostly beat the best simple rule only there; the simple rules, with
   one parameter re-tuned per world, hold up across worlds better (stage 7).
 - **Shown:** evolved in four worlds at once, a cell that copes with all of them emerges in about three runs of ten at
-  400 generations: 13 of 45 (18% to 43%; stages 8, 8b and 8c, D63). At 800 generations, 3 of 5 (stage 8b). Each such
-  cell also copes with worlds it never met, and beats each world's re-tuned best simple rule in most of the nine
-  worlds.
+  400 generations: 13 of 45 (18% to 43%; stages 8, 8b and 8c, D63). Given 800 generations, every run of stage 8c that
+  had come within a little of it got there, and one run in six that did not follow the spot did (stages 8b and 8d).
+  Each such cell also copes with worlds it never met, and beats each world's re-tuned best simple rule in most of the
+  nine worlds.
   *Corrected 2026-11-26:* after stage 8b this said "about half the runs", from 6 of 15. Stage 8c's thirty more runs
   gave 7.
 - **Not shown:**
-  - the rate at 800 generations beyond five runs, two of whose criteria held by one run;
+  - the rate at 800 generations from random genomes: the runs carried that far were chosen (being tested: D71);
   - that a cell beating B8 emerges from nothing in most runs at home alone: 2 of 5 did at 400 generations, where the
     criterion asked for 3; and the sensor and the eased-in path were designed by hand;
   - anything beyond one spoke mode (fourier1) and one sensor;
@@ -318,14 +346,14 @@ Stages 4 to 6 asked four things in turn:
   steerer by its own shading where it does (§15).
 - **Open:** how the champions' fresh runs come to begin aimed at the mouth without reading the direction across the
   body is answered for the searched cell (§9); how the evolved cells' circling is biased toward the light is not
-  (D36 B.2, D45 B.4, D61 B.5). Whether more time carries stage 8c's near-misses over, as it carried runs 8103 and 8104,
-  is being tested (D64).
+  (D36 B.2, D45 B.4, D61 B.5). Whether a cell's circling at 400 generations foretells a generalist at 800 is being
+  tested (D71).
 
 ## Cost and conduct
 
 - **RunPod,** stages 4 to 8: about $70 in all (stage 4b $5.90, 4c $3.90, 4d $2.80, 5c $9.40, 6 $11.40, 6b $18.30, 8 $18), each launch confirmed by
-  the owner first. On the compiled life: stage 8b $3.74 for fifteen runs and stage 8c $6.44 for thirty, 21 to 25
-  cents a run, where a stage 8 run cost about $3.60.
+  the owner first. On the compiled life: stage 8b $3.74 for fifteen runs, stage 8c $6.44 for thirty, stage 8d about
+  $3.56 for twelve carried on, 21 to 30 cents a run, where a stage 8 run cost about $3.60.
 - **This machine** ran the checks, probes, hand-writing and tests as one process, after an all-core run tripped the
   CPU's thermal limit (D23).
 - **Each stage** had a preregistration with predictions before it ran. The predictions that failed are recorded as
@@ -335,10 +363,11 @@ Stages 4 to 6 asked four things in turn:
   overwrote one champion's rows with another's (D33); a tolerance on survival set as if paired lives stayed paired
   (D48); a set-up script written for Linux when the owner's laptop was Windows, unasked (D51); a test that skipped on
   any error and so hid a real one (D52); a criterion's bar described as stage 8's share when it was a half (D59); a
-  rate called "about half" from fifteen runs, which thirty more brought to three in ten (D63).
+  rate called "about half" from fifteen runs, which thirty more brought to three in ten (D63); a commit made while pods
+  were being set up, so that two commits ran one stage (D62).
 
 ## Next
 
-The owner on D63 (D64): stage 8c's eight near-misses carried on to 800 generations, with runs that do not follow the
-spot as a control; the fifteen that follow the spot read beside each other; and a single-precision engine for the
-GPU, with its own plan and check.
+The owner on D69 (D71): the rest of stage 8c's runs carried on to 800 generations, so that all thirty are there and
+the rate at 800 can be read from runs nobody chose; before they run, each run's circling at 400 read and its outcome
+at 800 foretold from it.

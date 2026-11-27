@@ -3274,3 +3274,25 @@ stage 8d's test so the log stays in order).
 **Impact:** this entry; the merge of `fast32` (`protocell/fast32.py`, `protocell/fast32_cuda.py`, `protocell/fast.py`,
 `experiments/fastcheck.py`, `laptop.py`, `tests/test_fast32.py`, `tests/test_fastcheck.py`, `docs/prereg/fast32.md`,
 `docs/data/fast/agree-single/`).
+
+## D71 — The owner's decisions on D69: merge, the write-up, and on as recommended
+
+**Date:** 2026-11-27  
+**Why:** the owner on D69 C: "merge, add stage 8, carry on as recommended".
+
+### Decided
+1. **Stage 8d, the reading of the fifteen and the single-precision engine are added to the write-up**
+   (`docs/stages-4-5.md` §13, §17), and `stage8d` is merged into `main`.
+2. **As recommended, in order:**
+   - **The circling of stage 8c's runs that do not follow the spot is read at 400 generations,** with stage 8b's
+     runs 8101 and 8105 beside them. From it, before any of them is carried on, each run's outcome at 800 generations
+     is foretold: a circler at 400 becomes a generalist at 800, a run that does not circle does not.
+   - **Stage 8e: the other eighteen of stage 8c's runs are carried on to 800 generations** (its seven generalists, its
+     eight other runs that do not follow the spot, its three still cells), so that all thirty are at 800, and all
+     thirty champions at 800 are tested together on fresh starts: the rate at 800 generations from runs nobody chose.
+     Its plan, criteria and predictions in `docs/prereg/stage8e.md` before any run; the launch's terms put to the
+     owner before it.
+   - **Then how a circle climbs toward the light** (D45 C3).
+3. **The single-precision engine's speed on a GPU** waits for the owner's laptop.
+
+**Impact:** this entry; `docs/stages-4-5.md`.
