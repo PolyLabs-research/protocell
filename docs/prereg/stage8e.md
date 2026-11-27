@@ -86,3 +86,5 @@ For each of the thirty runs, whether it will be a generalist at 800 generations:
 ## 8. The owner's answers
 
 - On D69: "merge, add stage 8, carry on as recommended" (D71).
+- On the launch, put to him with its terms (six cpu5c pods of 16 vCPUs at $0.56 an hour, three runs each, each pod
+  deleted 2.2 hours after its launch, at most $7.39): **"Launch, 18 runs (Recommended)"**, before the launch.
