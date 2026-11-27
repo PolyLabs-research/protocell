@@ -3432,3 +3432,49 @@ one process here, 7 minutes, from a clean tree with warnings as errors; data in 
    tests run before this is committed. D75 A.5 is the reason.
 
 **Impact:** this entry; `docs/prereg/circle.md` §5; `experiments/circle_wave.py`, `tests/test_circle_wave.py`.
+
+## D77 — How a circle climbs, part C: the network alone answers an oscillating light with oscillating speed, late, so whether it is faster while the light rises depends on how fast the light rises and falls
+
+**Date:** 2026-11-27  
+**Why:** D76.  
+**Ran:** `experiments/circle_wave.py` (code `3807243`), one process here, 4 seconds, from a clean tree with warnings as
+errors; data in `docs/data/circle/wave/`.
+
+### A. Measured
+Each network alone, the light even across its wall, multiplied by exp(0.04 sin(2 pi t / P)); speed in the rising third
+of the felt trend over speed in the falling third (dim light / bright):
+
+| cell | P = half its circle | P = its circle | P = twice its circle |
+|---|---|---|---|
+| 8102 at 800 | 1.90 / 2.14 | 1.15 / 1.10 | 0.73 / 0.62 |
+| 8103 at 800 | 2.06 / 2.44 | 1.28 / 0.85 | 0.72 / 0.77 |
+| 8104 at 800 | 1.32 / 1.82 | 1.01 / 0.97 | 0.75 / 0.77 |
+| fresh 8202 | 2.14 / 2.11 | 0.91 / 0.78 | 0.84 / 0.86 |
+| fresh 8210 | 1.43 / 1.74 | 1.89 / 1.45 | 0.67 / 0.72 |
+
+1. **Every network answers the oscillating light with oscillating speed,** strongly: at half its circle's period it
+   swims 1.3 to 2.4 times as fast in the rising third as in the falling one; at twice the period, 0.62 to 0.86 times.
+2. **At its own circle's period the lean is mixed:** 1.15, 1.28, 1.01, 0.91 and 1.89 in dim light; four of the five
+   lean the way they lean in closed loop (D75), 8202 the other way.
+3. **The curvature changes by up to 12%** between the thirds.
+4. **Predictions:** 2 holds. 1 and 3 fail: I expected at least 4 of the 5 to be 10% faster in the rising third at their
+   own period, and the curvature to stay within 5%.
+
+### B. Reading
+1. **The response the closed loop needs exists, and it is a delayed one.** A network's speed follows the light's
+   change late. On a slow swing the peak of speed falls after the rise is over; on a fast one, within it. A steady
+   ramp, once the senses have adapted, is no swing at all, which is why D75's ramps showed nothing.
+2. **So whether a circle climbs depends on its period and its delay together.** In closed loop the felt light swings
+   once a turn, and these cells are faster on the side that faces the light. That fits a delay matched to the circle,
+   but the timing in closed loop is set by the geometry of the circle as well, and has not been measured. It is a
+   reading, not shown.
+3. **Not a sperm's steering, and not a bacterium's either:** neither curvature nor straight runs, but a circling speed
+   that swings with the light, late.
+
+### C. Decisions this surfaces (the owner's)
+1. **Measure the delay and the circle's timing in closed loop:** the phase of each cell's speed against the felt light
+   over one turn, beside the open loop's phase at that period (local, free). It would show whether the delay is matched
+   to the circle, which is the claim B.2 stops short of.
+2. **Stage 8e** runs on; its test follows.
+
+**Impact:** this entry; `docs/data/circle/wave/`.
