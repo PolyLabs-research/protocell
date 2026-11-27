@@ -3346,3 +3346,23 @@ process here, 33 minutes, from a clean tree with warnings as errors; data in `do
    For the eleven runs not yet carried on that did not follow the spot, both forecast no generalist.
 
 **Impact:** this entry; `docs/data/stage8e/read/`; `docs/prereg/stage8e.md` §3 (the forecast).
+
+## D74 — Stage 8e's launch; how a circle climbs: its plan and predictions, before it runs
+
+**Date:** 2026-11-27  
+**Why:** D72, D73; D71, item 2 (how a circle climbs, the third recommendation).
+
+### Decided, and done
+1. **Stage 8e's launch, on the owner's word** ("Launch, 18 runs (Recommended)", given before it and recorded in
+   `docs/prereg/stage8e.md` §8): six cpu5c pods of 16 vCPUs at $0.56 an hour, each deleted 2.2 hours after its launch,
+   at most $7.39. Launched 16:10 to 16:23 UTC; one slow host given back; all six staged commit `38bb16d` and passed the
+   tests there (31).
+2. **How a circle climbs** (`docs/prereg/circle.md`, `experiments/circle_read.py`): a probe, no criterion. The five
+   circling generalists of D61, at home, 60 fresh starts at seed 77, closed loop (speed, turning and curvature sorted
+   by the trend of the light the cell felt) and open loop (the network alone on rising and falling light, dim and
+   bright). Four predictions: they curve less while the light rises; speed changes less; the same open loop; all five
+   climb.
+3. **It runs on this machine while the pods run,** one process.
+
+**Impact:** this entry; `docs/prereg/stage8e.md`; `docs/prereg/circle.md`; `experiments/circle_read.py`,
+`tests/test_circle_read.py`.
