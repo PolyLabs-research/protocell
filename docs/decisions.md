@@ -3296,3 +3296,24 @@ stage 8d's test so the log stays in order).
 3. **The single-precision engine's speed on a GPU** waits for the owner's laptop.
 
 **Impact:** this entry; `docs/stages-4-5.md`.
+
+## D72 — Stage 8e preregistered and built: all thirty of stage 8c's runs to 800 generations, and a forecast from circling first
+
+**Date:** 2026-11-27  
+**Why:** D71, item 2.
+
+### Decided
+1. **Stage 8e** (`docs/prereg/stage8e.md`, `experiments/stage8e.py`): the eighteen of stage 8c's runs not carried on
+   before, carried on to 800 generations; then all thirty champions at 800 tested together on the reference (seeds 75
+   and 76). Criterion H: at least 15 of the 30 are generalists at 800. Six predictions.
+2. **The reading first** (`experiments/stage8e_read.py`, the draft's §2, seed 73): the circling at 400 of stage 8c's
+   fifteen runs that did not follow the spot and of stage 8b's runs 8101 and 8105. Five predictions.
+3. **The forecast** (the draft's §3): from the reading, before any run, each run's outcome at 800 generations is
+   written down: a run that followed the spot at 400 will be a generalist at 800; a run that did not will be if and only
+   if it circled at 400. The test scores it.
+4. **Tried here:** a quick stage 8c run carried on by stage 8e's runner and read by its test, with a stand-in reading;
+   the reading at the smoke test's size (5 tests pass).
+5. **The launch waits for the reading, the forecast, and the owner's word on its terms.**
+
+**Impact:** this entry; `docs/prereg/stage8e.md`; `experiments/stage8e.py`, `experiments/stage8e_read.py`,
+`tests/test_stage8e.py`, `tests/test_stage8e_read.py`.
