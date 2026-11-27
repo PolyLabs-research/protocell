@@ -1,0 +1,62 @@
+{
+ "command": "/home/michael/Documents/dev/protocell/experiments/circle_wave.py",
+ "created_at": "2026-11-27T16:35:32+00:00",
+ "git": {
+  "branch": "stage8e",
+  "dirty": false,
+  "sha": "3807243857bf40c85d71dcd4623f0ae4c75b160c"
+ },
+ "manifest_version": 1,
+ "out": "docs/data/circle/wave",
+ "platform": {
+  "blas_runtime": [
+   {
+    "architecture": "SkylakeX",
+    "internal_api": "openblas",
+    "num_threads": 1,
+    "version": "0.3.31.188.0"
+   }
+  ],
+  "blas_threads": {
+   "MKL_NUM_THREADS": "1",
+   "NUMEXPR_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1"
+  },
+  "machine": "x86_64",
+  "numpy": "2.4.6",
+  "numpy_loaded_before_pin": false,
+  "python": "3.11.15",
+  "release": "7.0.0-42-generic",
+  "system": "Linux"
+ },
+ "protocol": "circle/wave",
+ "seeds": [],
+ "settings": {
+  "amplitude": 0.04,
+  "cells": [
+   "8102 at 800",
+   "8103 at 800",
+   "8104 at 800",
+   "8202",
+   "8210"
+  ],
+  "factors": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "hold": 600,
+  "levels": [
+   0.05,
+   1.0
+  ],
+  "periods_from": "docs/data/circle/summary.json",
+  "quick": false,
+  "skip": 600,
+  "wave": 3000
+ },
+ "timing": {
+  "wall_seconds": 3.778115749359131
+ }
+}
