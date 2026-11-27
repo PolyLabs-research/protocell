@@ -3417,3 +3417,18 @@ one process here, 7 minutes, from a clean tree with warnings as errors; data in 
 2. Stage 8e runs on (D74); its test follows.
 
 **Impact:** this entry; `docs/data/circle/`.
+
+## D76 — How a circle climbs, part C: the oscillating light, its plan and predictions before it runs
+
+**Date:** 2026-11-27  
+**Why:** D75 C1. Part of the question the owner said to carry on with (D71, "how a circle climbs").
+
+### Decided
+1. **The probe** (`experiments/circle_wave.py`, `docs/prereg/circle.md` §5): the network alone under light that rises
+   and falls by 4% at the period of the cell's own circle (and at half and twice it), dim and bright. Three predictions:
+   faster in the rising third at its own period in dim light, for at least 4 of the 5; the same lean as in closed loop;
+   curvature unchanged.
+2. **Its smoke test computes real numbers** (part C does not depend on the length of the day), so neither it nor the
+   tests run before this is committed. D75 A.5 is the reason.
+
+**Impact:** this entry; `docs/prereg/circle.md` §5; `experiments/circle_wave.py`, `tests/test_circle_wave.py`.

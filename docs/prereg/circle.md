@@ -44,3 +44,20 @@ The five circling generalists D61 read: runs 8102, 8103 and 8104 at 800 generati
 
 The probe at the smoke test's size (four starts, a 2,000-tick day), to see that it runs: not a result, and its numbers
 are not a guide to the real ones.
+
+## 5. Part C: the oscillating light (planned after D75, before it ran)
+
+`experiments/circle_wave.py`, no criterion. Steady ramps did not evoke the speed change the closed loop shows (D75 A.3),
+but a circling cell feels the light rise and fall once a turn. So: each network alone, noiseless, the light even
+across its wall, held for 600 ticks, then multiplied by exp(0.04 sin(2 pi t / P)) for 3,000 ticks. P is the cell's own
+circle (2 pi over its mean turning in closed loop, middle third, from `docs/data/circle/`), and also half and twice
+that; at the dim level (0.05) and the bright one (1.0). From the oscillation's 601st tick: speed, turning and
+curvature in the thirds of the felt ten-tick trend, sorted as the closed loop sorted them.
+
+Predictions (written before part C ran; its smoke test computes real numbers, so it is not run before this is
+committed):
+1. In dim light at its own circle's period, at least 4 of the 5 swim at least 10% faster in the rising third than in
+   the falling one.
+2. At least 4 of the 5 lean the same way open loop, at their own period in dim light, as in closed loop (faster while
+   rising, or slower).
+3. The curvature stays within 5% between the rising and the falling third, for at least 4 of the 5.
