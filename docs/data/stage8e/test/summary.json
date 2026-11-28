@@ -1,0 +1,4829 @@
+{
+ "H": true,
+ "by_group": {
+  "control": {
+   "generalists": 1,
+   "runs": 4
+  },
+  "generalist at 400": {
+   "generalists": 7,
+   "runs": 7
+  },
+  "near-miss": {
+   "generalists": 8,
+   "runs": 8
+  },
+  "shaded only": {
+   "generalists": 3,
+   "runs": 8
+  },
+  "still": {
+   "generalists": 0,
+   "runs": 3
+  }
+ },
+ "forecast": {
+  "8211 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8212 at 800": {
+   "forecast": false,
+   "generalist": true,
+   "right": false
+  },
+  "8213 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8214 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8215 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8216 at 800": {
+   "forecast": false,
+   "generalist": true,
+   "right": false
+  },
+  "8217 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8218 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8219 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8220 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8221 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8222 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8223 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8224 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8225 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8226 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8227 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8228 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8229 at 800": {
+   "forecast": false,
+   "generalist": true,
+   "right": false
+  },
+  "8230 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8231 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8232 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8233 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8234 at 800": {
+   "forecast": false,
+   "generalist": true,
+   "right": false
+  },
+  "8235 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8236 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8237 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8238 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  },
+  "8239 at 800": {
+   "forecast": false,
+   "generalist": false,
+   "right": true
+  },
+  "8240 at 800": {
+   "forecast": true,
+   "generalist": true,
+   "right": true
+  }
+ },
+ "forecast_right": 26,
+ "forecast_right_non_followers": 11,
+ "generalists": [
+  "8211 at 800",
+  "8212 at 800",
+  "8213 at 800",
+  "8215 at 800",
+  "8216 at 800",
+  "8218 at 800",
+  "8219 at 800",
+  "8220 at 800",
+  "8223 at 800",
+  "8224 at 800",
+  "8227 at 800",
+  "8229 at 800",
+  "8231 at 800",
+  "8233 at 800",
+  "8234 at 800",
+  "8235 at 800",
+  "8237 at 800",
+  "8238 at 800",
+  "8240 at 800"
+ ],
+ "predictions": [
+  {
+   "holds": true,
+   "number": 1,
+   "text": "H holds: at least 15 of the 30 are generalists at 800 generations",
+   "values": {
+    "generalists": 19,
+    "of": 30
+   }
+  },
+  {
+   "holds": true,
+   "number": 2,
+   "text": "between 15 and 19 of the 30 are generalists at 800 generations",
+   "values": {
+    "generalists": 19
+   }
+  },
+  {
+   "holds": true,
+   "number": 3,
+   "text": "all 7 of stage 8c's generalists at 400 are generalists at 800",
+   "values": {
+    "generalists": 7,
+    "runs": 7
+   }
+  },
+  {
+   "holds": false,
+   "number": 4,
+   "text": "the forecast from circling is right for at least 13 of the 15 runs that did not follow the spot at 400",
+   "values": {
+    "8212 at 800": {
+     "forecast": false,
+     "generalist": true
+    },
+    "8214 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8216 at 800": {
+     "forecast": false,
+     "generalist": true
+    },
+    "8217 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8221 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8222 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8225 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8226 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8228 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8229 at 800": {
+     "forecast": false,
+     "generalist": true
+    },
+    "8230 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8232 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8234 at 800": {
+     "forecast": false,
+     "generalist": true
+    },
+    "8236 at 800": {
+     "forecast": false,
+     "generalist": false
+    },
+    "8239 at 800": {
+     "forecast": false,
+     "generalist": false
+    }
+   }
+  },
+  {
+   "holds": true,
+   "number": 5,
+   "text": "no still cell is a generalist at 800 generations",
+   "values": {
+    "generalists": 0,
+    "runs": 3
+   }
+  },
+  {
+   "holds": true,
+   "number": 6,
+   "text": "every generalist at 800 travels",
+   "values": {
+    "8211 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8212 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8213 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8215 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8216 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8218 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8219 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8220 at 800": [
+     "fixed mouth",
+     "tighter",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8223 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8224 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8227 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8229 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8231 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8233 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8234 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8235 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8237 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8238 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ],
+    "8240 at 800": [
+     "fixed mouth",
+     "tighter",
+     "sweep and flicker",
+     "slow clouds",
+     "slow spot"
+    ]
+   }
+  }
+ ],
+ "quick": false,
+ "rate": {
+  "count": 19,
+  "high": 0.7812607919389929,
+  "low": 0.45513563654794864,
+  "of": 30
+ },
+ "reading": {
+  "8211 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8212 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "control",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8213 at 800": {
+   "beats": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8214 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8215 at 800": {
+   "beats": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8216 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8217 at 800": {
+   "beats": [],
+   "generalist": false,
+   "held": [],
+   "kind": "still",
+   "trained": [],
+   "travels": false
+  },
+  "8218 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8219 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8220 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8221 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8222 at 800": {
+   "beats": [],
+   "generalist": false,
+   "held": [],
+   "kind": "still",
+   "trained": [],
+   "travels": false
+  },
+  "8223 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8224 at 800": {
+   "beats": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8225 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "kind": "control",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8226 at 800": {
+   "beats": [
+    "home",
+    "shaded",
+    "tighter"
+   ],
+   "generalist": false,
+   "held": [
+    "tighter"
+   ],
+   "kind": "control",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8227 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8228 at 800": {
+   "beats": [],
+   "generalist": false,
+   "held": [],
+   "kind": "still",
+   "trained": [],
+   "travels": false
+  },
+  "8229 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8230 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [
+    "tighter"
+   ],
+   "kind": "control",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8231 at 800": {
+   "beats": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8232 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [
+    "tighter"
+   ],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8233 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8234 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8235 at 800": {
+   "beats": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8236 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [
+    "tighter"
+   ],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8237 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "near-miss",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8238 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "8239 at 800": {
+   "beats": [
+    "shaded"
+   ],
+   "generalist": false,
+   "held": [],
+   "kind": "shaded only",
+   "trained": [
+    "home",
+    "shaded"
+   ],
+   "travels": false
+  },
+  "8240 at 800": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "generalist at 400",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  },
+  "champion6402": {
+   "beats": [
+    "home",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "generalist": false,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "reference",
+   "trained": [
+    "home",
+    "flicker"
+   ],
+   "travels": true
+  },
+  "champion8102": {
+   "beats": [
+    "home",
+    "spot",
+    "shaded",
+    "tighter",
+    "slow spot"
+   ],
+   "generalist": true,
+   "held": [
+    "fixed mouth",
+    "tighter",
+    "sweep and flicker",
+    "slow clouds",
+    "slow spot"
+   ],
+   "kind": "reference",
+   "trained": [
+    "home",
+    "flicker",
+    "spot",
+    "shaded"
+   ],
+   "travels": true
+  }
+ },
+ "runs": 30,
+ "worlds": {
+  "fixed mouth": {
+   "bar": "B5 (tau=30)",
+   "bar_fitness": 0.6462724246893535,
+   "bar_survival": 1.0,
+   "ceiling": 0.6829163985610082,
+   "cells": {
+    "8211 at 800": {
+     "beats": false,
+     "fitness": 0.6400148125594641,
+     "gap_high": 0.9927475730592726,
+     "gap_low": 0.9817301214141114,
+     "gap_share": 0.9873122620442154,
+     "high": -0.0036049195542855877,
+     "less_bar": -0.0062576121298893025,
+     "low": -0.008982515875941547,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": false,
+     "fitness": 0.6353819159406621,
+     "gap_high": 0.9868023190987699,
+     "gap_low": 0.9677051027964912,
+     "gap_share": 0.9779187462660747,
+     "high": -0.006460302678958504,
+     "less_bar": -0.010890508748691385,
+     "low": -0.015691153483206894,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": false,
+     "fitness": 0.6404218186503375,
+     "gap_high": 0.9959509938819165,
+     "gap_low": 0.9795326360446379,
+     "gap_share": 0.9881374948199485,
+     "high": -0.0019659106093071832,
+     "less_bar": -0.005850606039015996,
+     "low": -0.010284196548693612,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.5672559384829863,
+     "gap_high": 0.879418567824231,
+     "gap_low": 0.7947386209798135,
+     "gap_share": 0.839788652546131,
+     "high": -0.05983763197564988,
+     "less_bar": -0.07901648620636718,
+     "low": -0.10092097619915426,
+     "survival": 0.88,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": false,
+     "fitness": 0.6420228784754842,
+     "gap_high": 0.997377896335685,
+     "gap_low": 0.9851774869322011,
+     "gap_share": 0.9913837534712265,
+     "high": -0.001270529003356616,
+     "less_bar": -0.004249546213869253,
+     "low": -0.00734633750289317,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": false,
+     "fitness": 0.6350508274715536,
+     "gap_high": 0.9864160746577562,
+     "gap_low": 0.9667411209845328,
+     "gap_share": 0.9772474416775137,
+     "high": -0.006748244834233322,
+     "less_bar": -0.011221597217799997,
+     "low": -0.016572954544528593,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.1444423864203606,
+     "gap_high": 0.008126869459232381,
+     "gap_low": -0.04369953460310153,
+     "gap_share": -0.017494835367956124,
+     "high": -0.48495366459094436,
+     "less_bar": -0.5018300382689929,
+     "low": -0.5182280429932344,
+     "survival": 0.01,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": false,
+     "fitness": 0.6394790681198398,
+     "gap_high": 0.9944631021442311,
+     "gap_low": 0.977075085109201,
+     "gap_share": 0.9862260034330824,
+     "high": -0.0027270512610862076,
+     "less_bar": -0.006793356569513809,
+     "low": -0.011243408844912891,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": false,
+     "fitness": 0.6301686596785974,
+     "gap_high": 0.978397418647245,
+     "gap_low": 0.9547049607060202,
+     "gap_share": 0.9673485114901779,
+     "high": -0.010830038196921292,
+     "less_bar": -0.016103765010756135,
+     "low": -0.022163502368581833,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": false,
+     "fitness": 0.6278499053588741,
+     "gap_high": 0.9796569335609765,
+     "gap_low": 0.9389920846279052,
+     "gap_share": 0.9626470780069536,
+     "high": -0.010177698383468674,
+     "less_bar": -0.018422519330479295,
+     "low": -0.030114045952579174,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.5544839419502076,
+     "gap_high": 0.8584699901922984,
+     "gap_low": 0.7643284087421637,
+     "gap_share": 0.8138925532327735,
+     "high": -0.07001757955489774,
+     "less_bar": -0.09178848273914593,
+     "low": -0.11504634939631331,
+     "survival": 0.88,
+     "verdict": "partly"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.15050311362347546,
+     "gap_high": 0.015196720089805589,
+     "gap_low": -0.024307336911949775,
+     "gap_share": -0.005206295110352206,
+     "high": -0.47620329154490004,
+     "less_bar": -0.49576931106587807,
+     "low": -0.5142239563957134,
+     "survival": 0.02,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": false,
+     "fitness": 0.637124002880466,
+     "gap_high": 0.9901361818864918,
+     "gap_low": 0.9717437531784477,
+     "gap_share": 0.981450947068814,
+     "high": -0.00488715612002208,
+     "less_bar": -0.009148421808887528,
+     "low": -0.01391049787051392,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": false,
+     "fitness": 0.6427025982519186,
+     "gap_high": 0.9985926058233783,
+     "gap_low": 0.9866200710468568,
+     "gap_share": 0.9927619319565261,
+     "high": -0.0006831159172927406,
+     "less_bar": -0.0035698264374350126,
+     "low": -0.006552221142563525,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.5456673837078734,
+     "gap_high": 0.8495455625831851,
+     "gap_low": 0.7399531754341823,
+     "gap_share": 0.796016376453401,
+     "high": -0.07460150034615116,
+     "less_bar": -0.10060504098148007,
+     "low": -0.12830414018647487,
+     "survival": 0.85,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.5899205468921732,
+     "gap_high": 0.924186717313639,
+     "gap_low": 0.8410351756534251,
+     "gap_share": 0.8857427012147432,
+     "high": -0.037097189068402564,
+     "less_bar": -0.05635187779718021,
+     "low": -0.07793647662052446,
+     "survival": 0.94,
+     "verdict": "partly"
+    },
+    "8227 at 800": {
+     "beats": false,
+     "fitness": 0.6370167974457667,
+     "gap_high": 0.9888519223464121,
+     "gap_low": 0.9728330462046177,
+     "gap_share": 0.9812335806941223,
+     "high": -0.005444499974595651,
+     "less_bar": -0.009255627243586768,
+     "low": -0.013232401490529158,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.15229231334927587,
+     "gap_high": 0.014625818693819634,
+     "gap_low": -0.01684153043195355,
+     "gap_share": -0.001578569901388431,
+     "high": -0.47469899586102765,
+     "less_bar": -0.4939801113400776,
+     "low": -0.512386926125446,
+     "survival": 0.02,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": false,
+     "fitness": 0.6366470061991025,
+     "gap_high": 0.9877524919573047,
+     "gap_low": 0.972282831084785,
+     "gap_share": 0.9804838035684984,
+     "high": -0.006007537135512328,
+     "less_bar": -0.009625418490251145,
+     "low": -0.013572682688747064,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.5585351476963383,
+     "gap_high": 0.8693859110379625,
+     "gap_low": 0.7704750790730731,
+     "gap_share": 0.8221066508541907,
+     "high": -0.06500412571967834,
+     "less_bar": -0.08773727699301524,
+     "low": -0.11298911874193597,
+     "survival": 0.83,
+     "verdict": "partly"
+    },
+    "8231 at 800": {
+     "beats": false,
+     "fitness": 0.6414484286867753,
+     "gap_high": 0.9977385428261796,
+     "gap_low": 0.9812073204719531,
+     "gap_share": 0.9902190171090796,
+     "high": -0.0010818973815834188,
+     "less_bar": -0.004823996002578208,
+     "low": -0.009053521643957018,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.5833735334356642,
+     "gap_high": 0.9095746216806275,
+     "gap_low": 0.8297574944551996,
+     "gap_share": 0.872468182212133,
+     "high": -0.04509069904106328,
+     "less_bar": -0.06289889125368925,
+     "low": -0.08401253114637748,
+     "survival": 0.93,
+     "verdict": "partly"
+    },
+    "8233 at 800": {
+     "beats": false,
+     "fitness": 0.6400205746873232,
+     "gap_high": 0.9956882718005159,
+     "gap_low": 0.9781072742819332,
+     "gap_share": 0.9873239451538147,
+     "high": -0.0021715302146755777,
+     "less_bar": -0.006251850002030344,
+     "low": -0.01076998892190433,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": false,
+     "fitness": 0.6348045621956225,
+     "gap_high": 0.9824985694771448,
+     "gap_low": 0.9709477841506899,
+     "gap_share": 0.976748121933214,
+     "high": -0.008638594451672022,
+     "less_bar": -0.011467862493730902,
+     "low": -0.01433398145100726,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": false,
+     "fitness": 0.6380335173115737,
+     "gap_high": 0.9896891373233468,
+     "gap_low": 0.9761954365207086,
+     "gap_share": 0.983295049983691,
+     "high": -0.005036488658080172,
+     "less_bar": -0.00823890737777977,
+     "low": -0.01178484842493077,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.5585025485451255,
+     "gap_high": 0.8729208185338586,
+     "gap_low": 0.7637720851079297,
+     "gap_share": 0.8220405538383349,
+     "high": -0.06265869501353474,
+     "less_bar": -0.08776987614422808,
+     "low": -0.11659745364495404,
+     "survival": 0.86,
+     "verdict": "partly"
+    },
+    "8237 at 800": {
+     "beats": false,
+     "fitness": 0.6355634746737201,
+     "gap_high": 0.9852168095932805,
+     "gap_low": 0.9709315697333482,
+     "gap_share": 0.9782868690548971,
+     "high": -0.007368691807484562,
+     "less_bar": -0.010708950015633528,
+     "low": -0.014227784978834946,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": false,
+     "fitness": 0.6379793095543747,
+     "gap_high": 0.9910689266803127,
+     "gap_low": 0.9741535616563897,
+     "gap_share": 0.9831851400365361,
+     "high": -0.004359729828973862,
+     "less_bar": -0.008293115134978893,
+     "low": -0.01269219953624403,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.5775881215153251,
+     "gap_high": 0.8986246516418749,
+     "gap_low": 0.8161686871959846,
+     "gap_share": 0.8607378625809555,
+     "high": -0.04983285579955095,
+     "less_bar": -0.06868430317402831,
+     "low": -0.09019761031225283,
+     "survival": 0.93,
+     "verdict": "partly"
+    },
+    "8240 at 800": {
+     "beats": false,
+     "fitness": 0.6347249912583743,
+     "gap_high": 0.9854229143259036,
+     "gap_low": 0.9666405217627503,
+     "gap_share": 0.9765867863982295,
+     "high": -0.007298145847436435,
+     "less_bar": -0.011547433430979121,
+     "low": -0.01653371120989698,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.6403712255232067,
+     "gap_high": 0.9946496786644339,
+     "gap_low": 0.9814262712001923,
+     "gap_share": 0.9880349137832726,
+     "high": -0.002673693384750388,
+     "less_bar": -0.005901199166146636,
+     "low": -0.009095963095459885,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": false,
+     "fitness": 0.6285144197202236,
+     "gap_high": 0.974584552584608,
+     "gap_low": 0.9525396145802244,
+     "gap_share": 0.963994426469858,
+     "high": -0.012562891064224209,
+     "less_bar": -0.017758004969129815,
+     "low": -0.023617750249959435,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.23392370778204888,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.6462724246893535,
+     "param": "tau=30"
+    },
+    "B6": {
+     "fitness": 0.44593515786442905,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.6154919406776928,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.15307086648437612
+  },
+  "flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.5337278809316356,
+   "bar_survival": 0.82,
+   "ceiling": 0.6694155570337545,
+   "cells": {
+    "8211 at 800": {
+     "beats": false,
+     "fitness": 0.5491440832625227,
+     "gap_high": 1.0950256204719429,
+     "gap_low": 0.9951372225051569,
+     "gap_share": 1.039521281723718,
+     "high": 0.034368151549744465,
+     "less_bar": 0.015416202330887092,
+     "low": -0.002034933577371072,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": false,
+     "fitness": 0.5365526825888554,
+     "gap_high": 1.061469638430882,
+     "gap_low": 0.9611146054924552,
+     "gap_share": 1.0072417174938688,
+     "high": 0.02205563969315595,
+     "less_bar": 0.0028248016572197444,
+     "low": -0.015775690346612817,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.5664047629315134,
+     "gap_high": 1.1434557129983196,
+     "gap_low": 1.0374772284006688,
+     "gap_share": 1.0837711020944771,
+     "high": 0.051964481221049276,
+     "less_bar": 0.03267688199987776,
+     "low": 0.015127955534892575,
+     "survival": 0.93,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.417973110653755,
+     "gap_high": 0.7811704881923034,
+     "gap_low": 0.6203809533241968,
+     "gap_share": 0.7032487775636818,
+     "high": -0.0836849356464996,
+     "less_bar": -0.11575477027788081,
+     "low": -0.15031513332008023,
+     "survival": 0.58,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.5806813927030209,
+     "gap_high": 1.1911353131066373,
+     "gap_low": 1.0657359963273556,
+     "gap_share": 1.1203709530275763,
+     "high": 0.06877271727798401,
+     "less_bar": 0.04695351177138525,
+     "low": 0.02634301484085358,
+     "survival": 0.97,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": false,
+     "fitness": 0.5431866777006958,
+     "gap_high": 1.0705669780404268,
+     "gap_low": 0.9830512256746462,
+     "gap_share": 1.024248758796351,
+     "high": 0.026710656540008114,
+     "less_bar": 0.009458796769060241,
+     "low": -0.006764319550867715,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.13717331373503888,
+     "gap_high": 0.006366593085676478,
+     "gap_low": -0.040940104740464923,
+     "gap_share": -0.01661514506743468,
+     "high": -0.36253856209056645,
+     "less_bar": -0.39655456719659676,
+     "low": -0.42880012315324717,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": false,
+     "fitness": 0.5392415423968674,
+     "gap_high": 1.0633992684338927,
+     "gap_low": 0.9697221370139661,
+     "gap_share": 1.0141349317698072,
+     "high": 0.022793774257407043,
+     "less_bar": 0.005513661465231706,
+     "low": -0.012358700016349231,
+     "survival": 0.85,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": false,
+     "fitness": 0.5417305558488364,
+     "gap_high": 1.0719843715593491,
+     "gap_low": 0.9755321043530103,
+     "gap_share": 1.0205158159680061,
+     "high": 0.026796611415007273,
+     "less_bar": 0.008002674917200851,
+     "low": -0.00951590038300243,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": false,
+     "fitness": 0.5309643533642961,
+     "gap_high": 1.0442760838764713,
+     "gap_low": 0.9475553199503359,
+     "gap_share": 0.9929153659769203,
+     "high": 0.01677221858270599,
+     "less_bar": -0.002763527567339508,
+     "low": -0.02126354988903375,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.3447112027724387,
+     "gap_high": 0.5934324426359622,
+     "gap_low": 0.43628662136888635,
+     "gap_share": 0.515433099042553,
+     "high": -0.15556498071696687,
+     "less_bar": -0.189016678159197,
+     "low": -0.22479936988213414,
+     "survival": 0.44,
+     "verdict": "partly"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.14379484285066158,
+     "gap_high": 0.023101071835961693,
+     "gap_low": -0.018772076060270634,
+     "gap_share": 0.00035993816016501707,
+     "high": -0.3548445564661005,
+     "less_bar": -0.389933038080974,
+     "low": -0.4220646599089446,
+     "survival": 0.01,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": false,
+     "fitness": 0.5421804961809772,
+     "gap_high": 1.0755515322191784,
+     "gap_low": 0.9776042006477494,
+     "gap_share": 1.0216692919177717,
+     "high": 0.027299258705825013,
+     "less_bar": 0.008452615249341532,
+     "low": -0.009106724222298582,
+     "survival": 0.85,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5880768350166283,
+     "gap_high": 1.2098315844554641,
+     "gap_low": 1.0845135459859894,
+     "gap_share": 1.1393300554624213,
+     "high": 0.07581638509641386,
+     "less_bar": 0.05434895408499269,
+     "low": 0.03437115012867345,
+     "survival": 0.93,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.40057218673684536,
+     "gap_high": 0.7414348641813253,
+     "gap_low": 0.5760461947802143,
+     "gap_share": 0.6586394242604164,
+     "high": -0.09919749076700239,
+     "less_bar": -0.13315569419479018,
+     "low": -0.1675973276784948,
+     "survival": 0.55,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.4794207776425998,
+     "gap_high": 0.942811643981045,
+     "gap_low": 0.7788034745113968,
+     "gap_share": 0.8607772340672488,
+     "high": -0.021323742336926174,
+     "less_bar": -0.054307103289035846,
+     "low": -0.08858269301032441,
+     "survival": 0.72,
+     "verdict": "partly"
+    },
+    "8227 at 800": {
+     "beats": false,
+     "fitness": 0.5327223230656969,
+     "gap_high": 1.0466140299446174,
+     "gap_low": 0.9488635478026026,
+     "gap_share": 0.997422131932607,
+     "high": 0.01737528840284965,
+     "less_bar": -0.001005557865938924,
+     "low": -0.019821551135064407,
+     "survival": 0.85,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.14276343141910772,
+     "gap_high": 0.011359731149155637,
+     "gap_low": -0.014639369652064135,
+     "gap_share": -0.0022842086202539947,
+     "high": -0.35757489219505384,
+     "less_bar": -0.39096444951252785,
+     "low": -0.4230242132610636,
+     "survival": 0.01,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": false,
+     "fitness": 0.5425551756806305,
+     "gap_high": 1.0767935800002568,
+     "gap_low": 0.9779975757696625,
+     "gap_share": 1.0226298277062926,
+     "high": 0.028242017490089276,
+     "less_bar": 0.008827294748994794,
+     "low": -0.009340019450521238,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.42424399165279014,
+     "gap_high": 0.7941187495862961,
+     "gap_low": 0.6402596841214204,
+     "gap_share": 0.7193249323325014,
+     "high": -0.07987263547649052,
+     "less_bar": -0.1094838892788455,
+     "low": -0.14035261913094477,
+     "survival": 0.61,
+     "verdict": "partly"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.5615793036609483,
+     "gap_high": 1.129573608769201,
+     "gap_low": 1.0251283318494209,
+     "gap_share": 1.0714004591056887,
+     "high": 0.047451205855123225,
+     "less_bar": 0.027851422729312715,
+     "low": 0.010390362109538101,
+     "survival": 0.9,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.4483515837704654,
+     "gap_high": 0.8550454415498557,
+     "gap_low": 0.7014143577496255,
+     "gap_share": 0.781127633108828,
+     "high": -0.05619756411163783,
+     "less_bar": -0.08537629716117025,
+     "low": -0.11776429653399953,
+     "survival": 0.64,
+     "verdict": "partly"
+    },
+    "8233 at 800": {
+     "beats": false,
+     "fitness": 0.5456733119795752,
+     "gap_high": 1.0843353484250786,
+     "gap_low": 0.9859351695967732,
+     "gap_share": 1.0306235436992803,
+     "high": 0.03175796462665917,
+     "less_bar": 0.01194543104793973,
+     "low": -0.005694780794249056,
+     "survival": 0.89,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": false,
+     "fitness": 0.5372567938978454,
+     "gap_high": 1.0562953575933447,
+     "gap_low": 0.9705542054158184,
+     "gap_share": 1.0090467911955612,
+     "high": 0.02039052389663187,
+     "less_bar": 0.003528912966209628,
+     "low": -0.012271132527234045,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.560387362825907,
+     "gap_high": 1.129980657702302,
+     "gap_low": 1.0202860776109681,
+     "gap_share": 1.0683447759660551,
+     "high": 0.047571907095192295,
+     "less_bar": 0.0266594818942713,
+     "low": 0.008158371661666722,
+     "survival": 0.87,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.42938947838111624,
+     "gap_high": 0.8372326027463335,
+     "gap_low": 0.6331835752996541,
+     "gap_share": 0.7325160040524407,
+     "high": -0.060921786805335096,
+     "less_bar": -0.10433840255051939,
+     "low": -0.14816169178169636,
+     "survival": 0.59,
+     "verdict": "partly"
+    },
+    "8237 at 800": {
+     "beats": false,
+     "fitness": 0.5443046998636837,
+     "gap_high": 1.0760245536922843,
+     "gap_low": 0.987409432612468,
+     "gap_share": 1.0271149425638195,
+     "high": 0.02771287542897157,
+     "less_bar": 0.010576818932048053,
+     "low": -0.005709966819175037,
+     "survival": 0.87,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": false,
+     "fitness": 0.552332341627563,
+     "gap_high": 1.1035973079496082,
+     "gap_low": 0.9989786368241237,
+     "gap_share": 1.0476947640346175,
+     "high": 0.037710533701840944,
+     "less_bar": 0.01860446069592736,
+     "low": -0.0001974303810989299,
+     "survival": 0.89,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.3786841647150612,
+     "gap_high": 0.6865782368102041,
+     "gap_low": 0.5169560167724115,
+     "gap_share": 0.6025268573563924,
+     "high": -0.11923341643168375,
+     "less_bar": -0.1550437162165745,
+     "low": -0.19273729629650216,
+     "survival": 0.49,
+     "verdict": "partly"
+    },
+    "8240 at 800": {
+     "beats": false,
+     "fitness": 0.5252351006338352,
+     "gap_high": 1.024804475082959,
+     "gap_low": 0.9325370313041146,
+     "gap_share": 0.978227740168243,
+     "high": 0.009057353049982595,
+     "less_bar": -0.008492780297800519,
+     "low": -0.027036728409317205,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.5254236168887377,
+     "gap_high": 1.0302582659629465,
+     "gap_low": 0.9302613339014043,
+     "gap_share": 0.9787110241742253,
+     "high": 0.011155785645933447,
+     "less_bar": -0.00830426404289782,
+     "low": -0.02858842897096654,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": false,
+     "fitness": 0.5372483911948943,
+     "gap_high": 1.0728433080748931,
+     "gap_low": 0.9528663981248301,
+     "gap_share": 1.0090252498598,
+     "high": 0.027077778284524165,
+     "less_bar": 0.0035205102632587366,
+     "low": -0.019346874750622228,
+     "survival": 0.85,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.20421797127783275,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.5268382647808375,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.3642250997185718,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.5337278809316356,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.14365444053419568
+  },
+  "home": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.5387200928815653,
+   "bar_survival": 0.88,
+   "ceiling": 0.6829163985610082,
+   "cells": {
+    "8211 at 800": {
+     "beats": true,
+     "fitness": 0.6213148425908852,
+     "gap_high": 1.3036744426219424,
+     "gap_low": 1.1434364191461406,
+     "gap_share": 1.2133159350181126,
+     "high": 0.10851135632164392,
+     "less_bar": 0.08259474970931983,
+     "low": 0.058555277052824616,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": true,
+     "fitness": 0.6153999187005053,
+     "gap_high": 1.2825176035805477,
+     "gap_low": 1.1324154663214163,
+     "gap_share": 1.1980395703014943,
+     "high": 0.10129833154431513,
+     "less_bar": 0.07667982581893995,
+     "low": 0.05430102580418045,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.6228611037636419,
+     "gap_high": 1.310094127941984,
+     "gap_low": 1.1470707895928107,
+     "gap_share": 1.2173094351983254,
+     "high": 0.10958261622934654,
+     "less_bar": 0.08414101088207648,
+     "low": 0.060974250181335836,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.5295792688370643,
+     "gap_high": 1.0562513793466262,
+     "gap_low": 0.9051543636548197,
+     "gap_share": 0.9763921625193961,
+     "high": 0.021104727093630784,
+     "less_bar": -0.009140824044501084,
+     "low": -0.03764481112095533,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.6289908438708,
+     "gap_high": 1.3282028110290738,
+     "gap_low": 1.1595219592761945,
+     "gap_share": 1.2331406017915805,
+     "high": 0.11722457307157723,
+     "less_bar": 0.09027075098923466,
+     "low": 0.06646709268360332,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": true,
+     "fitness": 0.6127515205536526,
+     "gap_high": 1.2811034227165399,
+     "gap_low": 1.119057740053508,
+     "gap_share": 1.1911996013084971,
+     "high": 0.10028712610571316,
+     "less_bar": 0.07403142767208719,
+     "low": 0.0491893596668968,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.14817814959650882,
+     "gap_high": 0.007042653191469441,
+     "gap_low": -0.024839469564724527,
+     "gap_share": -0.008645465829676603,
+     "high": -0.35853902152555145,
+     "less_bar": -0.39054194328505665,
+     "low": -0.42153484445906136,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.6202304739891923,
+     "gap_high": 1.302200065610358,
+     "gap_low": 1.1404643837499167,
+     "gap_share": 1.2105153562526525,
+     "high": 0.1077314814570892,
+     "less_bar": 0.08151038110762684,
+     "low": 0.05849375179670087,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": true,
+     "fitness": 0.610515861065438,
+     "gap_high": 1.2701854457793622,
+     "gap_low": 1.1196709704105818,
+     "gap_share": 1.1854256048282246,
+     "high": 0.09677233015222882,
+     "less_bar": 0.07179576818387248,
+     "low": 0.04879910439828779,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": true,
+     "fitness": 0.6157198635803153,
+     "gap_high": 1.2862632346745402,
+     "gap_low": 1.1315573462477637,
+     "gap_share": 1.198865886035014,
+     "high": 0.10251981541106396,
+     "less_bar": 0.0769997706987498,
+     "low": 0.05429211719070569,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.5217705917987228,
+     "gap_high": 1.0312725951401998,
+     "gap_low": 0.8908817853890161,
+     "gap_share": 0.9562248365144075,
+     "high": 0.011383656236694795,
+     "less_bar": -0.016949501082842548,
+     "low": -0.043175793680947795,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.1505073240036677,
+     "gap_high": 0.0085425506078987,
+     "gap_low": -0.013912815733281124,
+     "gap_share": -0.002629950094936257,
+     "high": -0.356051012992875,
+     "less_bar": -0.38821276887789763,
+     "low": -0.41861415791515383,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.6177390908248129,
+     "gap_high": 1.2942661418133783,
+     "gap_low": 1.1348087240714202,
+     "gap_share": 1.204080906955714,
+     "high": 0.10506462202797476,
+     "less_bar": 0.07901899794324754,
+     "low": 0.05594588988819711,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.6277231272708277,
+     "gap_high": 1.3225706389556802,
+     "gap_low": 1.1562532240800203,
+     "gap_share": 1.229866493536361,
+     "high": 0.11559989355650424,
+     "less_bar": 0.08900303438926233,
+     "low": 0.06430785319675657,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.5059386335093771,
+     "gap_high": 0.9883592923330953,
+     "gap_low": 0.8443627497099921,
+     "gap_share": 0.9153359301669082,
+     "high": -0.004209282138134324,
+     "less_bar": -0.03278145937218834,
+     "low": -0.06153361897588425,
+     "survival": 0.75,
+     "verdict": "carries B8"
+    },
+    "8226 at 800": {
+     "beats": true,
+     "fitness": 0.5784241656384502,
+     "gap_high": 1.1878482041267395,
+     "gap_low": 1.025970424082138,
+     "gap_share": 1.1025429756003775,
+     "high": 0.06824958261277977,
+     "less_bar": 0.039704072756884756,
+     "low": 0.010300545566372015,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "8227 at 800": {
+     "beats": true,
+     "fitness": 0.6169108355809587,
+     "gap_high": 1.2919088008330442,
+     "gap_low": 1.1322038513876203,
+     "gap_share": 1.201941787430584,
+     "high": 0.10346684464573269,
+     "less_bar": 0.07819074269939333,
+     "low": 0.05435683665324376,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.1475483909348325,
+     "gap_high": 0.0024967880324643994,
+     "gap_low": -0.023745110739049856,
+     "gap_share": -0.010271931897120641,
+     "high": -0.3588255348965612,
+     "less_bar": -0.3911717019467329,
+     "low": -0.4212588161375448,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": true,
+     "fitness": 0.6209036645346722,
+     "gap_high": 1.3012457554619803,
+     "gap_low": 1.1412708567189382,
+     "gap_share": 1.2122539930444556,
+     "high": 0.10939440338568607,
+     "less_bar": 0.08218357165310675,
+     "low": 0.058030957593739725,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.5353383051883559,
+     "gap_high": 1.0697358536571466,
+     "gap_low": 0.9221843811483577,
+     "gap_share": 0.9912659193671688,
+     "high": 0.024227062145522487,
+     "less_bar": -0.0033817876932093973,
+     "low": -0.030850092742740427,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.6244156009845547,
+     "gap_high": 1.316186766397266,
+     "gap_low": 1.1503000736105393,
+     "gap_share": 1.2213242064680379,
+     "high": 0.11313869169766132,
+     "less_bar": 0.08569550810298932,
+     "low": 0.06166199389593907,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.5520119617312617,
+     "gap_high": 1.1106396673880925,
+     "gap_low": 0.9672090549675262,
+     "gap_share": 1.0343286642527492,
+     "high": 0.04045672889098994,
+     "less_bar": 0.013291868849696417,
+     "low": -0.012588733122496,
+     "survival": 0.89,
+     "verdict": "carries B8"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.6249027375357039,
+     "gap_high": 1.31512235425032,
+     "gap_low": 1.1483652648566656,
+     "gap_share": 1.2225823250440442,
+     "high": 0.11293319113115548,
+     "less_bar": 0.0861826446541385,
+     "low": 0.06207572072301921,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": true,
+     "fitness": 0.6158484440799804,
+     "gap_high": 1.285596037244387,
+     "gap_low": 1.1300604525001483,
+     "gap_share": 1.1991979685173473,
+     "high": 0.1027758440925916,
+     "less_bar": 0.07712835119841496,
+     "low": 0.05391587541379718,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.6198893994612171,
+     "gap_high": 1.3030309809303713,
+     "gap_low": 1.1390630086161295,
+     "gap_share": 1.2096344693669614,
+     "high": 0.10791065696818146,
+     "less_bar": 0.0811693065796517,
+     "low": 0.057444798120094655,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.540551647239691,
+     "gap_high": 1.0873036700798004,
+     "gap_low": 0.9296880454539754,
+     "gap_share": 1.0047303216223196,
+     "high": 0.03172671782530298,
+     "less_bar": 0.00183155435812544,
+     "low": -0.027933193619655922,
+     "survival": 0.88,
+     "verdict": "carries B8"
+    },
+    "8237 at 800": {
+     "beats": true,
+     "fitness": 0.6144203611121354,
+     "gap_high": 1.2830024540697293,
+     "gap_low": 1.1268039610853986,
+     "gap_share": 1.1955096850048792,
+     "high": 0.10216464248395189,
+     "less_bar": 0.07570026823056994,
+     "low": 0.05270660258867182,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.6214677135929485,
+     "gap_high": 1.304497925460011,
+     "gap_low": 1.142047115562805,
+     "gap_share": 1.213710752132482,
+     "high": 0.10831621197022305,
+     "less_bar": 0.08274762071138313,
+     "low": 0.05912027042624431,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.5391746896387234,
+     "gap_high": 1.0831028702611494,
+     "gap_low": 0.923921234317379,
+     "gap_share": 1.0011740786508907,
+     "high": 0.031535551608141754,
+     "less_bar": 0.00045459675715800175,
+     "low": -0.03005325733299529,
+     "survival": 0.88,
+     "verdict": "carries B8"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.6189149383191509,
+     "gap_high": 1.2972652261859188,
+     "gap_low": 1.1363951105185546,
+     "gap_share": 1.2071177465681124,
+     "high": 0.10679762386534324,
+     "less_bar": 0.08019484543758545,
+     "low": 0.056363614787055615,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.63120785390231,
+     "gap_high": 1.3360957290197726,
+     "gap_low": 1.1641812604945039,
+     "gap_share": 1.238866432664372,
+     "high": 0.11984656990329534,
+     "less_bar": 0.09248776102074467,
+     "low": 0.06739249599304943,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": true,
+     "fitness": 0.6125138372847166,
+     "gap_high": 1.2766968031414407,
+     "gap_low": 1.122811229691973,
+     "gap_share": 1.190585741118477,
+     "high": 0.09942357052388526,
+     "less_bar": 0.07379374440315134,
+     "low": 0.050522360161477195,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.19502511108013418,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.5174434292730998,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.3869275660635513,
+     "param": "cycle=100,run=36"
+    },
+    "B8": {
+     "fitness": 0.5387200928815653,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.15152562612826434
+  },
+  "shaded": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.5854583886508855,
+   "bar_survival": 1.0,
+   "ceiling": 0.6545243289454562,
+   "cells": {
+    "8211 at 800": {
+     "beats": true,
+     "fitness": 0.6320710360910373,
+     "gap_high": 1.1166705426549057,
+     "gap_low": 1.092157907221453,
+     "gap_share": 1.1039350736596616,
+     "high": 0.051317841404674616,
+     "less_bar": 0.04661264744015193,
+     "low": 0.04182972862643902,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": true,
+     "fitness": 0.6260458268956367,
+     "gap_high": 1.1044822674881036,
+     "gap_low": 1.0775489110626995,
+     "gap_share": 1.0905002958487064,
+     "high": 0.04593285471572642,
+     "less_bar": 0.040587438244751174,
+     "low": 0.0352255369129959,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.6238145869622305,
+     "gap_high": 1.098114878261389,
+     "gap_low": 1.0738560176914975,
+     "gap_share": 1.0855251635709549,
+     "high": 0.04312454113481481,
+     "less_bar": 0.03835619831134497,
+     "low": 0.03358221714069955,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": true,
+     "fitness": 0.6112952536123148,
+     "gap_high": 1.0680612842373518,
+     "gap_low": 1.0477835610812247,
+     "gap_share": 1.05761003955737,
+     "high": 0.03010943795220701,
+     "less_bar": 0.025836864961429437,
+     "low": 0.021634013851040548,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.6248662053756447,
+     "gap_high": 1.1013009322380403,
+     "gap_low": 1.0756072773421042,
+     "gap_share": 1.0878700215282378,
+     "high": 0.04455846144313314,
+     "less_bar": 0.039407816724759306,
+     "low": 0.034390529998404695,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": true,
+     "fitness": 0.6218841800616558,
+     "gap_high": 1.0946133170619379,
+     "gap_low": 1.0685393396982636,
+     "gap_share": 1.0812208171237387,
+     "high": 0.04167898162366996,
+     "less_bar": 0.03642579141077034,
+     "low": 0.03132777542825851,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.13397238609726764,
+     "gap_high": 0.0002780115533532744,
+     "gap_low": -0.013743254125969087,
+     "gap_share": -0.006705980216335136,
+     "high": -0.4367762834791068,
+     "less_bar": -0.45148600255361787,
+     "low": -0.4663024591657501,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.6347358414431005,
+     "gap_high": 1.123250822710247,
+     "gap_low": 1.0972224783853577,
+     "gap_share": 1.1098769532946031,
+     "high": 0.054337568145968664,
+     "less_bar": 0.049277452792215,
+     "low": 0.044217458965541016,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": true,
+     "fitness": 0.6277643312992643,
+     "gap_high": 1.107331008670472,
+     "gap_low": 1.0818162276187897,
+     "gap_share": 1.0943321503256447,
+     "high": 0.04730794600653349,
+     "less_bar": 0.04230594264837888,
+     "low": 0.0374050514865763,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": true,
+     "fitness": 0.614908866519538,
+     "gap_high": 1.0778050502124725,
+     "gap_low": 1.0544659064943425,
+     "gap_share": 1.0656675334847847,
+     "high": 0.03417703829425326,
+     "less_bar": 0.029450477868652545,
+     "low": 0.024772878556416127,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": true,
+     "fitness": 0.6267227484407435,
+     "gap_high": 1.1060605701239326,
+     "gap_low": 1.0784840473737194,
+     "gap_share": 1.0920096692594918,
+     "high": 0.04679040887811971,
+     "less_bar": 0.041264359789858075,
+     "low": 0.03595664457561129,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.13634839948892105,
+     "gap_high": 0.0032513402311111677,
+     "gap_low": -0.006072791579850043,
+     "gap_share": -0.0014080376955866105,
+     "high": -0.4339023056646363,
+     "less_bar": -0.44910998916196443,
+     "low": -0.4644144106220369,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.636145174067822,
+     "gap_high": 1.1274925755775271,
+     "gap_low": 1.099561966763267,
+     "gap_share": 1.113019428528379,
+     "high": 0.05610092711830957,
+     "less_bar": 0.05068678541693652,
+     "low": 0.045420092241011616,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.6323639980521762,
+     "gap_high": 1.1191686261997094,
+     "gap_low": 1.0913736543644523,
+     "gap_share": 1.1045883088797712,
+     "high": 0.05245557313586712,
+     "less_bar": 0.046905609401290654,
+     "low": 0.041485157109170744,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": true,
+     "fitness": 0.6210673302168463,
+     "gap_high": 1.092119687194198,
+     "gap_low": 1.0674586988349823,
+     "gap_share": 1.0793994370165874,
+     "high": 0.04046601009876969,
+     "less_bar": 0.035608941565960846,
+     "low": 0.03072962873556654,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8226 at 800": {
+     "beats": true,
+     "fitness": 0.6287185432340071,
+     "gap_high": 1.1105384876433724,
+     "gap_low": 1.083893426466982,
+     "gap_share": 1.0964598150941338,
+     "high": 0.048727781716552,
+     "less_bar": 0.043260154583121616,
+     "low": 0.038038778446583744,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8227 at 800": {
+     "beats": true,
+     "fitness": 0.6246077630939465,
+     "gap_high": 1.0999848213315422,
+     "gap_low": 1.0753512214485235,
+     "gap_share": 1.0872937569506986,
+     "high": 0.04395723335763373,
+     "less_bar": 0.03914937444306098,
+     "low": 0.03439822093021181,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.13376961142291416,
+     "gap_high": -0.0010383845387393746,
+     "gap_low": -0.013810838804098578,
+     "gap_share": -0.007158119321763602,
+     "high": -0.43661349985198,
+     "less_bar": -0.45168877722797135,
+     "low": -0.4664294407209869,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": true,
+     "fitness": 0.6301721000477785,
+     "gap_high": 1.11345539739047,
+     "gap_low": 1.0868250669307564,
+     "gap_share": 1.099700899709673,
+     "high": 0.0501581971039781,
+     "less_bar": 0.04471371139689296,
+     "low": 0.03952898499771341,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": true,
+     "fitness": 0.6219070346103802,
+     "gap_high": 1.0941749560551854,
+     "gap_low": 1.0692439877079505,
+     "gap_share": 1.0812717773102027,
+     "high": 0.041538138043821775,
+     "less_bar": 0.03644864595949481,
+     "low": 0.03134485627233721,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.6298088083207701,
+     "gap_high": 1.1126662883073573,
+     "gap_low": 1.0860892763970464,
+     "gap_share": 1.0988908459049618,
+     "high": 0.049675904738040406,
+     "less_bar": 0.04435041966988464,
+     "low": 0.03925262954795631,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": true,
+     "fitness": 0.6263866962432464,
+     "gap_high": 1.1050255748070894,
+     "gap_low": 1.0785988153706643,
+     "gap_share": 1.091260353101357,
+     "high": 0.0462460576911082,
+     "less_bar": 0.04092830759236092,
+     "low": 0.03564035056650442,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.5901175091457143,
+     "gap_high": 1.0205543627241749,
+     "gap_low": 1.0008750591511995,
+     "gap_share": 1.0103887262022826,
+     "high": 0.009099052724153019,
+     "less_bar": 0.004659120494828664,
+     "low": 0.0002971052603354254,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": true,
+     "fitness": 0.6212330102192202,
+     "gap_high": 1.0914789416866104,
+     "gap_low": 1.0687811081833798,
+     "gap_share": 1.0797688638609384,
+     "high": 0.040400498946144496,
+     "less_bar": 0.03577462156833467,
+     "low": 0.03123099343502446,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.6240178136214983,
+     "gap_high": 1.0991550749535637,
+     "gap_low": 1.0737291750955165,
+     "gap_share": 1.0859783104948177,
+     "high": 0.0437291338773272,
+     "less_bar": 0.03855942497061276,
+     "low": 0.03352278380156261,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": true,
+     "fitness": 0.6281546161839536,
+     "gap_high": 1.1094406523114209,
+     "gap_low": 1.082104894343618,
+     "gap_share": 1.095202392426579,
+     "high": 0.04814099401055491,
+     "less_bar": 0.04269622753306808,
+     "low": 0.0373447228421218,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8237 at 800": {
+     "beats": true,
+     "fitness": 0.6177982188596621,
+     "gap_high": 1.0833083436383606,
+     "gap_low": 1.0619693649610722,
+     "gap_share": 1.072110099285946,
+     "high": 0.03657725613743597,
+     "less_bar": 0.03233983020877665,
+     "low": 0.028242160536754483,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.6275272590809385,
+     "gap_high": 1.1072526880783966,
+     "gap_low": 1.0809112898720525,
+     "gap_share": 1.0938035358866989,
+     "high": 0.047373571151513985,
+     "less_bar": 0.042068870430053106,
+     "low": 0.036884172208449514,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": true,
+     "fitness": 0.6259879096070297,
+     "gap_high": 1.1044203132360892,
+     "gap_low": 1.0769203025560845,
+     "gap_share": 1.090371154124558,
+     "high": 0.04629156028318555,
+     "less_bar": 0.04052952095614413,
+     "low": 0.03499664232914305,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.6278804391406304,
+     "gap_high": 1.1068233888143981,
+     "gap_low": 1.0830996596189413,
+     "gap_share": 1.0945910430877506,
+     "high": 0.047018348026782994,
+     "less_bar": 0.042422050489744886,
+     "low": 0.03783429410210995,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.49800658726718283,
+     "gap_high": 0.816700577579453,
+     "gap_low": 0.793800916678287,
+     "gap_share": 0.8050033645877884,
+     "high": -0.0812785108212944,
+     "less_bar": -0.08745180138370262,
+     "low": -0.09364686433898532,
+     "survival": 0.92,
+     "verdict": "partly"
+    },
+    "champion8102": {
+     "beats": true,
+     "fitness": 0.6205097025482172,
+     "gap_high": 1.0897225112961608,
+     "gap_low": 1.0671540048189607,
+     "gap_share": 1.0781560604654477,
+     "high": 0.0395958070024229,
+     "less_bar": 0.03505131389733176,
+     "low": 0.03069097275969945,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.5239849317792162,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.46871636039870374,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.5854583886508855,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.5710399333272888,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.13697987414300883
+  },
+  "slow clouds": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.540242298044729,
+   "bar_survival": 0.91,
+   "ceiling": 0.6693103326535472,
+   "cells": {
+    "8211 at 800": {
+     "beats": false,
+     "fitness": 0.5513800917348799,
+     "gap_high": 1.0697565308246597,
+     "gap_low": 0.9922994132028944,
+     "gap_share": 1.0280240056672574,
+     "high": 0.02643593391240916,
+     "less_bar": 0.01113779369015081,
+     "low": -0.003246228990536041,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": false,
+     "fitness": 0.5378448734628736,
+     "gap_high": 1.0393314486764929,
+     "gap_low": 0.9510672734760971,
+     "gap_share": 0.9939677963214428,
+     "high": 0.015131716008954351,
+     "less_bar": -0.0023974245818555377,
+     "low": -0.019695374198428088,
+     "survival": 0.92,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.5665569118454645,
+     "gap_high": 1.1121644163175755,
+     "gap_low": 1.0261798593819442,
+     "gap_share": 1.066210679313949,
+     "high": 0.04284386398039442,
+     "less_bar": 0.026314613800735367,
+     "low": 0.010401688521693457,
+     "survival": 0.95,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.42630571705724285,
+     "gap_high": 0.7705812937823034,
+     "gap_low": 0.6531554336907288,
+     "gap_share": 0.7133220923166519,
+     "high": -0.09148089927290286,
+     "less_bar": -0.11393658098748624,
+     "low": -0.1371755776472721,
+     "survival": 0.58,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.577646434766082,
+     "gap_high": 1.1452205283162709,
+     "gap_low": 1.0529150487390204,
+     "gap_share": 1.0941132300183476,
+     "high": 0.05499855126472895,
+     "less_bar": 0.03740413672135294,
+     "low": 0.021828542220235354,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": false,
+     "fitness": 0.5422745749012832,
+     "gap_high": 1.052906047541749,
+     "gap_low": 0.9604337431274682,
+     "gap_share": 1.0051134488328575,
+     "high": 0.02007410322453525,
+     "less_bar": 0.002032276856554167,
+     "low": -0.01624249278899362,
+     "survival": 0.93,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.1401728610065514,
+     "gap_high": 0.004282153220084122,
+     "gap_low": -0.017930158053175136,
+     "gap_share": -0.006622000977512425,
+     "high": -0.3757775377001945,
+     "less_bar": -0.40006943703817766,
+     "low": -0.42334167842832904,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.5641347737921739,
+     "gap_high": 1.1026629309711131,
+     "gap_low": 1.025335046547726,
+     "gap_share": 1.0601162936195614,
+     "high": 0.03899732611688529,
+     "less_bar": 0.02389247574744478,
+     "low": 0.010464621342930589,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": false,
+     "fitness": 0.5395007136187143,
+     "gap_high": 1.0388259820393628,
+     "gap_low": 0.9614565189967517,
+     "gap_share": 0.9981340859118478,
+     "high": 0.014352172042147154,
+     "less_bar": -0.000741584426014793,
+     "low": -0.015627185831870713,
+     "survival": 0.92,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": false,
+     "fitness": 0.5407554355705957,
+     "gap_high": 1.045413744558247,
+     "gap_low": 0.9621332883135051,
+     "gap_share": 1.0012911146797132,
+     "high": 0.017738172530338162,
+     "less_bar": 0.0005131375258665905,
+     "low": -0.015586599036182397,
+     "survival": 0.95,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.40803916454545686,
+     "gap_high": 0.7289274481081176,
+     "gap_low": 0.6025365066725871,
+     "gap_share": 0.6673612866712555,
+     "high": -0.10732176841717173,
+     "less_bar": -0.13220313349927226,
+     "low": -0.15849460369643195,
+     "survival": 0.48,
+     "verdict": "partly"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.14220499300145892,
+     "gap_high": 0.00538613957670322,
+     "gap_low": -0.008877952533539245,
+     "gap_share": -0.0015089166336838397,
+     "high": -0.37334213433457675,
+     "less_bar": -0.3980373050432701,
+     "low": -0.42130453436441156,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.5551653825268243,
+     "gap_high": 1.0799780944598798,
+     "gap_low": 1.0013093048256736,
+     "gap_share": 1.0375482448080375,
+     "high": 0.030763808801503093,
+     "less_bar": 0.014923084482095299,
+     "low": 4.77136002273709e-05,
+     "survival": 0.96,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5811404648308907,
+     "gap_high": 1.150383183334946,
+     "gap_low": 1.0651531264529357,
+     "gap_share": 1.1029046227359514,
+     "high": 0.05666808751862431,
+     "less_bar": 0.04089816678616158,
+     "low": 0.026375048625535434,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.4094496345582809,
+     "gap_high": 0.7397536041583184,
+     "gap_low": 0.6020785282389706,
+     "gap_share": 0.670910195973448,
+     "high": -0.1029240676526616,
+     "less_bar": -0.1307926634864482,
+     "low": -0.15952089606588069,
+     "survival": 0.51,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.47356469718715083,
+     "gap_high": 0.9072420061644795,
+     "gap_low": 0.7575181048033944,
+     "gap_share": 0.8322312734195934,
+     "high": -0.03578507435526184,
+     "less_bar": -0.06667760085757825,
+     "low": -0.09837531205512749,
+     "survival": 0.73,
+     "verdict": "partly"
+    },
+    "8227 at 800": {
+     "beats": false,
+     "fitness": 0.5504802756389072,
+     "gap_high": 1.0726954322085653,
+     "gap_low": 0.9840136945246517,
+     "gap_share": 1.025759961990876,
+     "high": 0.02796681090821235,
+     "less_bar": 0.010237977594178249,
+     "low": -0.006191953216523335,
+     "survival": 0.96,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.1395594967500755,
+     "gap_high": 0.0008144915476869321,
+     "gap_low": -0.017746726082979496,
+     "gap_share": -0.00816529796053824,
+     "high": -0.3759599172270581,
+     "less_bar": -0.40068280129465356,
+     "low": -0.42343089280649143,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": false,
+     "fitness": 0.552194198065748,
+     "gap_high": 1.0728525074112552,
+     "gap_low": 0.991876365094689,
+     "gap_share": 1.0300723934417744,
+     "high": 0.028266244380217537,
+     "less_bar": 0.011951900021018882,
+     "low": -0.0030552119291438994,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.4242733159120724,
+     "gap_high": 0.7694244369744203,
+     "gap_low": 0.6437253792554691,
+     "gap_share": 0.7082083307589421,
+     "high": -0.09145708725729357,
+     "less_bar": -0.11596898213265665,
+     "low": -0.1421720558849071,
+     "survival": 0.55,
+     "verdict": "partly"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.5672959725586986,
+     "gap_high": 1.112840197153967,
+     "gap_low": 1.0320310985399173,
+     "gap_share": 1.0680702434423843,
+     "high": 0.04243383157503683,
+     "less_bar": 0.027053674513969544,
+     "low": 0.013154443658373805,
+     "survival": 0.96,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.43052710063165894,
+     "gap_high": 0.7913355091266167,
+     "gap_low": 0.6578104844344346,
+     "gap_share": 0.7239435924543064,
+     "high": -0.08232477216847514,
+     "less_bar": -0.10971519741307009,
+     "low": -0.13691119473320007,
+     "survival": 0.55,
+     "verdict": "partly"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.5617731886118343,
+     "gap_high": 1.1004505186982423,
+     "gap_low": 1.0159031419543634,
+     "gap_share": 1.0541742661122577,
+     "high": 0.03800564470589263,
+     "less_bar": 0.021530890567105217,
+     "low": 0.007025979243828951,
+     "survival": 0.98,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": false,
+     "fitness": 0.5490278099311967,
+     "gap_high": 1.0677196998064267,
+     "gap_low": 0.9853591123252297,
+     "gap_share": 1.022105386555494,
+     "high": 0.025432380392793875,
+     "less_bar": 0.00878551188646763,
+     "low": -0.005897792712107204,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.56132257278869,
+     "gap_high": 1.1006382214980592,
+     "gap_low": 1.0115336563354087,
+     "gap_share": 1.0530404634280943,
+     "high": 0.038717005866919056,
+     "less_bar": 0.021080274743960934,
+     "low": 0.004878699006622097,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.4280276905411517,
+     "gap_high": 0.7868216228050554,
+     "gap_low": 0.646721155303416,
+     "gap_share": 0.7176547811789534,
+     "high": -0.08378408721570367,
+     "less_bar": -0.11221460750357741,
+     "low": -0.1417771674903656,
+     "survival": 0.57,
+     "verdict": "partly"
+    },
+    "8237 at 800": {
+     "beats": false,
+     "fitness": 0.5466547126243201,
+     "gap_high": 1.056073829450761,
+     "gap_low": 0.9822040089180858,
+     "gap_share": 1.0161343931768259,
+     "high": 0.02208287890376947,
+     "less_bar": 0.0064124145795909785,
+     "low": -0.007612169389270042,
+     "survival": 0.93,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.566373526920219,
+     "gap_high": 1.1165096149756275,
+     "gap_low": 1.024289484509884,
+     "gap_share": 1.0657492611617243,
+     "high": 0.04368203225977551,
+     "less_bar": 0.02613122887548992,
+     "low": 0.009959568136638869,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.40067598542989935,
+     "gap_high": 0.7287254621132667,
+     "gap_low": 0.5676007195570545,
+     "gap_share": 0.648834657519749,
+     "high": -0.10550439168274396,
+     "less_bar": -0.13956631261482966,
+     "low": -0.1741532295133264,
+     "survival": 0.51,
+     "verdict": "partly"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.5580143993803698,
+     "gap_high": 1.0899591186140298,
+     "gap_low": 1.0074913528497924,
+     "gap_share": 1.0447167080307378,
+     "high": 0.03429508647329504,
+     "less_bar": 0.01777210133564072,
+     "low": 0.003110156996011089,
+     "survival": 0.94,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5787082751943307,
+     "gap_high": 1.1510982832604306,
+     "gap_low": 1.0534961129920353,
+     "gap_share": 1.09678494606973,
+     "high": 0.05726340279130203,
+     "less_bar": 0.03846597714960171,
+     "low": 0.022461061035866463,
+     "survival": 0.99,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": false,
+     "fitness": 0.5427909466235582,
+     "gap_high": 1.0502602937897558,
+     "gap_low": 0.9698425836193927,
+     "gap_share": 1.0064127011330903,
+     "high": 0.01966322993159176,
+     "less_bar": 0.0025486485788291046,
+     "low": -0.012775409683509688,
+     "survival": 0.96,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.17846217330101852,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.4750672139019956,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.3234584923755793,
+     "param": "cycle=100,run=36"
+    },
+    "B8": {
+     "fitness": 0.540242298044729,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.1428046932142391
+  },
+  "slow spot": {
+   "bar": "B6 (cycle=50,run=18)",
+   "bar_fitness": 0.5202466151188687,
+   "bar_survival": 0.89,
+   "ceiling": 0.650538852741613,
+   "cells": {
+    "8211 at 800": {
+     "beats": true,
+     "fitness": 0.5736047236428004,
+     "gap_high": 1.2015409906383256,
+     "gap_low": 1.0945690249260613,
+     "gap_share": 1.1415915298810833,
+     "high": 0.07165154544245675,
+     "less_bar": 0.05335810852393157,
+     "low": 0.03702985934667762,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": true,
+     "fitness": 0.5769822336463927,
+     "gap_high": 1.2076654775855293,
+     "gap_low": 1.1048180137423287,
+     "gap_share": 1.1505541191074764,
+     "high": 0.07472813338849951,
+     "less_bar": 0.056735618527524005,
+     "low": 0.040580890846135906,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.5915444016166522,
+     "gap_high": 1.2484729147812343,
+     "gap_low": 1.1395261588244519,
+     "gap_share": 1.1891964116911722,
+     "high": 0.08941284659139496,
+     "less_bar": 0.07129778649778364,
+     "low": 0.0546652396725016,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.41459953262124377,
+     "gap_high": 0.7689291883613706,
+     "gap_low": 0.6718374100256764,
+     "gap_share": 0.7196540047591344,
+     "high": -0.08453707754043073,
+     "less_bar": -0.10564708249762488,
+     "low": -0.12734810810505587,
+     "survival": 0.39,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.5724310842015575,
+     "gap_high": 1.1984728006975247,
+     "gap_low": 1.0882267999818351,
+     "gap_share": 1.1384771502935869,
+     "high": 0.07172225222921695,
+     "less_bar": 0.05218446908268877,
+     "low": 0.03488467031035198,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": true,
+     "fitness": 0.5809331421157838,
+     "gap_high": 1.2226479045527405,
+     "gap_low": 1.1115952979639516,
+     "gap_share": 1.1610382833718509,
+     "high": 0.0798572300897662,
+     "less_bar": 0.06068652699691523,
+     "low": 0.04358166487075867,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.14015659626434718,
+     "gap_high": 0.00019005644987883186,
+     "gap_low": -0.017266707902037295,
+     "gap_share": -0.008610101649382829,
+     "high": -0.3587518980068649,
+     "less_bar": -0.3800900188545215,
+     "low": -0.4008981109948214,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.6022785825462954,
+     "gap_high": 1.2797367901841292,
+     "gap_low": 1.1656896420776537,
+     "gap_share": 1.2176807253577042,
+     "high": 0.1005927329453031,
+     "less_bar": 0.08203196742742681,
+     "low": 0.06519298521882261,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": true,
+     "fitness": 0.5738139667326319,
+     "gap_high": 1.2029143448543982,
+     "gap_low": 1.0932344421207374,
+     "gap_share": 1.1421467791210933,
+     "high": 0.07248736007651826,
+     "less_bar": 0.05356735161376319,
+     "low": 0.03704663569915953,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": true,
+     "fitness": 0.576032340458876,
+     "gap_high": 1.205983686346345,
+     "gap_low": 1.100996116549265,
+     "gap_share": 1.1480334744788574,
+     "high": 0.0739609897509281,
+     "less_bar": 0.055785725340007294,
+     "low": 0.039519365334183786,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.39215911499598816,
+     "gap_high": 0.7093418153724455,
+     "gap_low": 0.6123874223890202,
+     "gap_share": 0.6601059219910714,
+     "high": -0.10560798618297738,
+     "less_bar": -0.12808750012288048,
+     "low": -0.1501868975110007,
+     "survival": 0.21,
+     "verdict": "partly"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.14252689204317337,
+     "gap_high": 0.0050893504643379495,
+     "gap_low": -0.009652439232904875,
+     "gap_share": -0.0023202646428077496,
+     "high": -0.35649020817179844,
+     "less_bar": -0.37771972307569535,
+     "low": -0.39864894065311773,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.5945073359018397,
+     "gap_high": 1.2588856901581504,
+     "gap_low": 1.145752137422752,
+     "gap_share": 1.1970588792707462,
+     "high": 0.0929898922833641,
+     "less_bar": 0.074260720782971,
+     "low": 0.057602713507774204,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5821609404995938,
+     "gap_high": 1.2254689120426305,
+     "gap_low": 1.112871764435521,
+     "gap_share": 1.1642963795892458,
+     "high": 0.08122568527075837,
+     "less_bar": 0.06191432538072506,
+     "low": 0.044337446055514665,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.40851475070338866,
+     "gap_high": 0.7511308132249577,
+     "gap_low": 0.655675334881189,
+     "gap_share": 0.7035073757916657,
+     "high": -0.0901710426343183,
+     "less_bar": -0.11173186441547996,
+     "low": -0.13365604463164507,
+     "survival": 0.37,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.448077649122352,
+     "gap_high": 0.8706015065348063,
+     "gap_low": 0.7492750170514413,
+     "gap_share": 0.8084918189931795,
+     "high": -0.046553475968735256,
+     "less_bar": -0.0721689659965166,
+     "low": -0.09695570885467167,
+     "survival": 0.52,
+     "verdict": "partly"
+    },
+    "8227 at 800": {
+     "beats": true,
+     "fitness": 0.5787194820763477,
+     "gap_high": 1.2149320781758781,
+     "gap_low": 1.1064118855611964,
+     "gap_share": 1.1551640962934278,
+     "high": 0.07701520305205425,
+     "less_bar": 0.05847286695747907,
+     "low": 0.04172861080937447,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.1392335095435713,
+     "gap_high": -0.002561836906001544,
+     "gap_low": -0.019604168846774753,
+     "gap_share": -0.01105961241022525,
+     "high": -0.35931182981654136,
+     "less_bar": -0.38101310557529744,
+     "low": -0.4009410254217735,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": true,
+     "fitness": 0.5697720599907684,
+     "gap_high": 1.1894024863246568,
+     "gap_low": 1.0846138418024318,
+     "gap_share": 1.1314211410681547,
+     "high": 0.06842418941996144,
+     "less_bar": 0.04952544487189967,
+     "low": 0.03305764756882889,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.4340726036691946,
+     "gap_high": 0.827082508730818,
+     "gap_low": 0.7177487042176571,
+     "gap_share": 0.7713279114517929,
+     "high": -0.06308350591071313,
+     "less_bar": -0.08617401144967408,
+     "low": -0.1097205763781524,
+     "survival": 0.5,
+     "verdict": "partly"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.5941078329052684,
+     "gap_high": 1.2579931807122742,
+     "gap_low": 1.144358076731377,
+     "gap_share": 1.195998754726578,
+     "high": 0.09241825489923115,
+     "less_bar": 0.0738612177863997,
+     "low": 0.056949336243857014,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.42042624243580706,
+     "gap_high": 0.7900926504282778,
+     "gap_low": 0.6823680126714423,
+     "gap_share": 0.7351158114018326,
+     "high": -0.07581117272423839,
+     "less_bar": -0.09982037268306174,
+     "low": -0.12406891760992958,
+     "survival": 0.42,
+     "verdict": "partly"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.6021524779862798,
+     "gap_high": 1.2813985160257106,
+     "gap_low": 1.1656612647719324,
+     "gap_share": 1.2173460932264024,
+     "high": 0.10103525495225019,
+     "less_bar": 0.08190586286741108,
+     "low": 0.06497885796851172,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": true,
+     "fitness": 0.5574927358369206,
+     "gap_high": 1.1538240791905252,
+     "gap_low": 1.053261940264924,
+     "gap_share": 1.0988366222209536,
+     "high": 0.05578060839895114,
+     "less_bar": 0.037246120718051876,
+     "low": 0.0213854367106838,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.5750382005535776,
+     "gap_high": 1.2044992732367057,
+     "gap_low": 1.0975892057149093,
+     "gap_share": 1.1453954163842026,
+     "high": 0.07425786328100126,
+     "less_bar": 0.05479158543470893,
+     "low": 0.03800874281081712,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.3529815218620947,
+     "gap_high": 0.6117934352272713,
+     "gap_low": 0.501808215686415,
+     "gap_share": 0.5561439281659226,
+     "high": -0.14210123043519213,
+     "less_bar": -0.16726509325677405,
+     "low": -0.19220707137565135,
+     "survival": 0.17,
+     "verdict": "partly"
+    },
+    "8237 at 800": {
+     "beats": true,
+     "fitness": 0.5675603365338115,
+     "gap_high": 1.1830439733827072,
+     "gap_low": 1.0781927530753599,
+     "gap_share": 1.1255520929214435,
+     "high": 0.0658244039570567,
+     "less_bar": 0.04731372141494284,
+     "low": 0.030855930099350795,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.5886167391949905,
+     "gap_high": 1.241544806929117,
+     "gap_low": 1.1311815175646476,
+     "gap_share": 1.1814275418281686,
+     "high": 0.0873815009398005,
+     "less_bar": 0.06837012407612174,
+     "low": 0.051621535002244166,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.42049628071732414,
+     "gap_high": 0.7947737884137039,
+     "gap_low": 0.6785228921796281,
+     "gap_share": 0.7353016655804115,
+     "high": -0.07440891078806346,
+     "less_bar": -0.0997503344015445,
+     "low": -0.12476216474563114,
+     "survival": 0.39,
+     "verdict": "partly"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.572973018214316,
+     "gap_high": 1.1983721522090534,
+     "gap_low": 1.0917579702822444,
+     "gap_share": 1.1399152309917933,
+     "high": 0.07181264710025473,
+     "less_bar": 0.0527264030954473,
+     "low": 0.03581027357932837,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5739914557628957,
+     "gap_high": 1.2015318102578325,
+     "gap_low": 1.0938918199684367,
+     "gap_share": 1.1426177655189882,
+     "high": 0.0728334786595779,
+     "less_bar": 0.05374484064402695,
+     "low": 0.03739048799576567,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": true,
+     "fitness": 0.5698354667542235,
+     "gap_high": 1.1890357490485124,
+     "gap_low": 1.0854095684896201,
+     "gap_share": 1.1315893977940914,
+     "high": 0.06795232413264893,
+     "less_bar": 0.04958885163535477,
+     "low": 0.033815933575449264,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.1413492164664106,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.30701842370225124,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.5202466151188687,
+     "param": "cycle=50,run=18"
+    },
+    "B8": {
+     "fitness": 0.474486470821466,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.1434012729663766
+  },
+  "spot": {
+   "bar": "B6 (cycle=20,run=10)",
+   "bar_fitness": 0.5004399854170637,
+   "bar_survival": 0.83,
+   "ceiling": 0.650538852741613,
+   "cells": {
+    "8211 at 800": {
+     "beats": true,
+     "fitness": 0.5708789993814566,
+     "gap_high": 1.236310376963955,
+     "gap_low": 1.159594143535012,
+     "gap_share": 1.1964563165820137,
+     "high": 0.08269506216091167,
+     "less_bar": 0.07043901396439299,
+     "low": 0.058988880795044246,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": true,
+     "fitness": 0.5769227639691615,
+     "gap_high": 1.2539426285103514,
+     "gap_low": 1.176958622585816,
+     "gap_share": 1.213312539609064,
+     "high": 0.08894181644402754,
+     "less_bar": 0.07648277855209804,
+     "low": 0.06498761453287652,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.5888250024625958,
+     "gap_high": 1.287964533077363,
+     "gap_low": 1.210452828584688,
+     "gap_share": 1.2465082049357077,
+     "high": 0.10039274912454056,
+     "less_bar": 0.08838501704553219,
+     "low": 0.07681494197677724,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.1713223312874312,
+     "gap_high": 0.0962690845863578,
+     "gap_low": 0.06856095901259225,
+     "gap_share": 0.08208195411274272,
+     "high": -0.31445216911479523,
+     "less_bar": -0.3291176541296324,
+     "low": -0.3427675292154243,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.5713615032910444,
+     "gap_high": 1.2417032282550429,
+     "gap_low": 1.1599826564622822,
+     "gap_share": 1.1978020330462158,
+     "high": 0.08443101091015552,
+     "less_bar": 0.0709215178739808,
+     "low": 0.05872712880998982,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": true,
+     "fitness": 0.5727434567750574,
+     "gap_high": 1.2444347035159236,
+     "gap_low": 1.1650695736829249,
+     "gap_share": 1.20165633871969,
+     "high": 0.08473364274220974,
+     "less_bar": 0.07230347135799377,
+     "low": 0.060314617142847346,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.13964746205370981,
+     "gap_high": 0.0021010812698153904,
+     "gap_low": -0.014622373608717702,
+     "gap_share": -0.006260113551910566,
+     "high": -0.34659206980077917,
+     "less_bar": -0.3607925233633539,
+     "low": -0.3752918373698459,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.5912109438164423,
+     "gap_high": 1.297751348018486,
+     "gap_low": 1.2141502586854422,
+     "gap_share": 1.2531626599539782,
+     "high": 0.10352896170098563,
+     "less_bar": 0.09077095839937872,
+     "low": 0.07866213346319265,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": true,
+     "fitness": 0.5696839962903337,
+     "gap_high": 1.2336696079108385,
+     "gap_low": 1.1572258186904059,
+     "gap_share": 1.1931234206146624,
+     "high": 0.08182230483724591,
+     "less_bar": 0.06924401087327002,
+     "low": 0.05753368108895552,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": true,
+     "fitness": 0.5720619307900402,
+     "gap_high": 1.2410447973775425,
+     "gap_low": 1.1635464354057439,
+     "gap_share": 1.1997555443000079,
+     "high": 0.08426938668974612,
+     "less_bar": 0.0716219453729766,
+     "low": 0.06012444216775888,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.18277906385278048,
+     "gap_high": 0.1306779595944891,
+     "gap_low": 0.09791116998714476,
+     "gap_share": 0.11403509134705266,
+     "high": -0.30350339552344313,
+     "less_bar": -0.31766092156428316,
+     "low": -0.3319817419703709,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.14087672341901197,
+     "gap_high": 0.003893693846383674,
+     "gap_low": -0.009410359479115558,
+     "gap_share": -0.0028316703305742174,
+     "high": -0.3455035745751837,
+     "less_bar": -0.3595632619980516,
+     "low": -0.37360695263355853,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.5860792630773793,
+     "gap_high": 1.2835507987724892,
+     "gap_low": 1.199894864270135,
+     "gap_share": 1.2388502634689733,
+     "high": 0.09925423823490923,
+     "less_bar": 0.08563927766031569,
+     "low": 0.07308180456330318,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5828143841148254,
+     "gap_high": 1.2734774306582928,
+     "gap_low": 1.1904214486620708,
+     "gap_share": 1.2297444276690335,
+     "high": 0.09613279745664112,
+     "less_bar": 0.08237439869776184,
+     "low": 0.06996568971522997,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.17066797103038062,
+     "gap_high": 0.09188334252867988,
+     "gap_low": 0.06864889980226475,
+     "gap_share": 0.08025692564367863,
+     "high": -0.31572835605452415,
+     "less_bar": -0.32977201438668297,
+     "low": -0.3435489238189225,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.14524404116917797,
+     "gap_high": 0.018967302886305156,
+     "gap_low": -0.00035444622450394225,
+     "gap_share": 0.009348897088705286,
+     "high": -0.34031615488502226,
+     "less_bar": -0.35519594424788564,
+     "low": -0.3697925091853914,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8227 at 800": {
+     "beats": true,
+     "fitness": 0.5759302853022935,
+     "gap_high": 1.252723325324564,
+     "gap_low": 1.174014472630143,
+     "gap_share": 1.210544489742868,
+     "high": 0.088390450704907,
+     "less_bar": 0.07549029988522982,
+     "low": 0.06371700828423543,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.1392655231932033,
+     "gap_high": 0.0011294295914193358,
+     "gap_low": -0.01590788987998707,
+     "gap_share": -0.0073253513721414625,
+     "high": -0.3464796549832358,
+     "less_bar": -0.3611744622238603,
+     "low": -0.3753247837181104,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": true,
+     "fitness": 0.5614597383635473,
+     "gap_high": 1.2128116972879326,
+     "gap_low": 1.1339260060489849,
+     "gap_share": 1.1701857426435651,
+     "high": 0.07394099461692537,
+     "less_bar": 0.06101975294648386,
+     "low": 0.04887111425514979,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.15522558861996902,
+     "gap_high": 0.048914191398297266,
+     "gap_low": 0.02564923286512439,
+     "gap_share": 0.037187703108367304,
+     "high": -0.3302492044717319,
+     "less_bar": -0.3452143967970946,
+     "low": -0.3594020720845399,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.5889682641118198,
+     "gap_high": 1.2898421128687405,
+     "gap_low": 1.2093580712539744,
+     "gap_share": 1.2469077655531835,
+     "high": 0.1013291357655196,
+     "less_bar": 0.0885282786947562,
+     "low": 0.07655775449349835,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.16134494740008073,
+     "gap_high": 0.06417637911647829,
+     "gap_low": 0.04468645236316217,
+     "gap_share": 0.054254760384215325,
+     "high": -0.3248939531831319,
+     "less_bar": -0.3390950380169829,
+     "low": -0.35291131732322745,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.5910562334264893,
+     "gap_high": 1.2987675110371155,
+     "gap_low": 1.2125047140050464,
+     "gap_share": 1.2527311684887157,
+     "high": 0.10439694325769655,
+     "less_bar": 0.09061624800942558,
+     "low": 0.07806923027920729,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": true,
+     "fitness": 0.5558128789228161,
+     "gap_high": 1.1924539426789693,
+     "gap_low": 1.120203538769356,
+     "gap_share": 1.1544364988148081,
+     "high": 0.06721467164270009,
+     "less_bar": 0.055372893505752405,
+     "low": 0.04411393350005685,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.5742361758627086,
+     "gap_high": 1.2479206584568605,
+     "gap_low": 1.16857982458998,
+     "gap_share": 1.2058195726599015,
+     "high": 0.08641015650096506,
+     "less_bar": 0.07379619044564502,
+     "low": 0.062110742023130036,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.1353154541151635,
+     "gap_high": -0.009088611093037506,
+     "gap_low": -0.027364796312615364,
+     "gap_share": -0.01834220095082079,
+     "high": -0.3500555760026749,
+     "less_bar": -0.3651245313019001,
+     "low": -0.37977166078965663,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8237 at 800": {
+     "beats": true,
+     "fitness": 0.5683344889494548,
+     "gap_high": 1.231486506267291,
+     "gap_low": 1.1525092370094614,
+     "gap_share": 1.189359608112638,
+     "high": 0.08058681527207988,
+     "less_bar": 0.0678945035323912,
+     "low": 0.0555961551044207,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.5854851964793644,
+     "gap_high": 1.2809939778936652,
+     "gap_low": 1.1997590445549238,
+     "gap_share": 1.2371933956469816,
+     "high": 0.09754173427402744,
+     "less_bar": 0.0850452110623008,
+     "low": 0.0731694216353642,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.16424844071069575,
+     "gap_high": 0.0756338769412923,
+     "gap_low": 0.04980473365488434,
+     "gap_share": 0.06235268181895156,
+     "high": -0.3215386918794333,
+     "less_bar": -0.3361915447063678,
+     "low": -0.35046953348918813,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.5744497025599028,
+     "gap_high": 1.2492023571704696,
+     "gap_low": 1.168685214333251,
+     "gap_share": 1.2064151043980929,
+     "high": 0.08698024789261509,
+     "less_bar": 0.07400971714283928,
+     "low": 0.061861419042349326,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.43751388607233027,
+     "gap_high": 0.859802490694426,
+     "gap_low": 0.7922963604544975,
+     "gap_share": 0.824497405650946,
+     "high": -0.04944547576577101,
+     "less_bar": -0.06292609934473331,
+     "low": -0.07632596979415658,
+     "survival": 0.37,
+     "verdict": "partly"
+    },
+    "champion8102": {
+     "beats": true,
+     "fitness": 0.5700820179452221,
+     "gap_high": 1.2361454708658741,
+     "gap_low": 1.1575710056711785,
+     "gap_share": 1.1942335137837514,
+     "high": 0.08243020217783954,
+     "less_bar": 0.06964203252815838,
+     "low": 0.058009027958222055,
+     "survival": 1.0,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.11430732898549464,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.16377837659756814,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.5004399854170637,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.2611451076738709,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.1418920130743823
+  },
+  "sweep and flicker": {
+   "bar": "B8 (tau=10)",
+   "bar_fitness": 0.5091716813131391,
+   "bar_survival": 0.81,
+   "ceiling": 0.6694155570337545,
+   "cells": {
+    "8211 at 800": {
+     "beats": false,
+     "fitness": 0.4851036786015608,
+     "gap_high": 0.985863612998091,
+     "gap_low": 0.8869970697756961,
+     "gap_share": 0.9342592003992488,
+     "high": -0.005564107826123755,
+     "less_bar": -0.024068002711578114,
+     "low": -0.042536504213124576,
+     "survival": 0.75,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": false,
+     "fitness": 0.48389270104386384,
+     "gap_high": 0.9798356615297796,
+     "gap_low": 0.880190049294119,
+     "gap_share": 0.9309514629897269,
+     "high": -0.0073521330730237835,
+     "less_bar": -0.025278980269275216,
+     "low": -0.044290251871748745,
+     "survival": 0.73,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": false,
+     "fitness": 0.506487119139772,
+     "gap_high": 1.0544004926308495,
+     "gap_low": 0.9361496854666576,
+     "gap_share": 0.9926672243654775,
+     "high": 0.01874104685529766,
+     "less_bar": -0.0026845621733670266,
+     "low": -0.02412218157951057,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.37329017564302375,
+     "gap_high": 0.7077262747085482,
+     "gap_low": 0.5477268754735367,
+     "gap_share": 0.6288450296122803,
+     "high": -0.10490901993042104,
+     "less_bar": -0.1358815056701152,
+     "low": -0.16727207046561005,
+     "survival": 0.45,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.537787216757581,
+     "gap_high": 1.141873480363921,
+     "gap_low": 1.0227575398233817,
+     "gap_share": 1.0781622057993316,
+     "high": 0.049815217518304374,
+     "less_bar": 0.028615535444442015,
+     "low": 0.007870914353902324,
+     "survival": 0.89,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": false,
+     "fitness": 0.48355535125307525,
+     "gap_high": 0.987239504909086,
+     "gap_low": 0.8736613571602864,
+     "gap_share": 0.9300300053491675,
+     "high": -0.004310681540549638,
+     "less_bar": -0.025616330060063728,
+     "low": -0.047421385717475326,
+     "survival": 0.74,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.14074295952465601,
+     "gap_high": 0.006148718451360228,
+     "gap_low": -0.01903287111245871,
+     "gap_share": -0.006348514104404955,
+     "high": -0.340135975161188,
+     "less_bar": -0.3684287217884829,
+     "low": -0.3943369964438906,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": false,
+     "fitness": 0.4851938873249708,
+     "gap_high": 0.9841446874129749,
+     "gap_low": 0.8872815565381224,
+     "gap_share": 0.9345056019672977,
+     "high": -0.0058917165399481,
+     "less_bar": -0.02397779398816807,
+     "low": -0.04274033626947913,
+     "survival": 0.77,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": false,
+     "fitness": 0.5013874911392388,
+     "gap_high": 1.030478035719449,
+     "gap_low": 0.9338310631174465,
+     "gap_share": 0.9787377917308304,
+     "high": 0.010710329322409498,
+     "less_bar": -0.007784190173900148,
+     "low": -0.02527185027468165,
+     "survival": 0.82,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": false,
+     "fitness": 0.46009924325764046,
+     "gap_high": 0.9136413346169516,
+     "gap_low": 0.8140099977651876,
+     "gap_share": 0.8659605720180982,
+     "high": -0.030509413773639766,
+     "less_bar": -0.049072438055498484,
+     "low": -0.0680348753633554,
+     "survival": 0.69,
+     "verdict": "partly"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.31039784001989684,
+     "gap_high": 0.536612929746304,
+     "gap_low": 0.3772747848550107,
+     "gap_share": 0.4570570968049533,
+     "high": -0.1673907398311924,
+     "less_bar": -0.1987738412932421,
+     "low": -0.23070518042063087,
+     "survival": 0.29,
+     "verdict": "does not"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.14251518328316884,
+     "gap_high": 0.006294307344036144,
+     "gap_low": -0.009747807740591596,
+     "gap_share": -0.001507754846054277,
+     "high": -0.3385099331527488,
+     "less_bar": -0.3666564980299702,
+     "low": -0.393367170799159,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": false,
+     "fitness": 0.48195889420389443,
+     "gap_high": 0.9848047173973313,
+     "gap_low": 0.8675386794685915,
+     "gap_share": 0.9256693459209999,
+     "high": -0.005529440243482039,
+     "less_bar": -0.027212787109244505,
+     "low": -0.04940749375411644,
+     "survival": 0.77,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5370916478748492,
+     "gap_high": 1.1295357237831476,
+     "gap_low": 1.026933603889948,
+     "gap_share": 1.076262286845683,
+     "high": 0.04613020585021871,
+     "less_bar": 0.027919966561710162,
+     "low": 0.010677131197107692,
+     "survival": 0.9,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.3496138636545232,
+     "gap_high": 0.6432002573341802,
+     "gap_low": 0.48269264385438965,
+     "gap_share": 0.5641741177641567,
+     "high": -0.1277647843233406,
+     "less_bar": -0.1595578176586157,
+     "low": -0.1916745445881955,
+     "survival": 0.42,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": false,
+     "fitness": 0.43214979426152167,
+     "gap_high": 0.8669382707993761,
+     "gap_low": 0.7117223658876036,
+     "gap_share": 0.7896177550663059,
+     "high": -0.04813594171408225,
+     "less_bar": -0.07702188705161722,
+     "low": -0.10619040428263841,
+     "survival": 0.61,
+     "verdict": "partly"
+    },
+    "8227 at 800": {
+     "beats": false,
+     "fitness": 0.480660845872953,
+     "gap_high": 0.9736872765345482,
+     "gap_low": 0.8699897234732505,
+     "gap_share": 0.9221237781304722,
+     "high": -0.008723824446625063,
+     "less_bar": -0.028510835440185945,
+     "low": -0.04869278668654877,
+     "survival": 0.72,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.1400082783392971,
+     "gap_high": 0.001557667494493246,
+     "gap_low": -0.019247109472577014,
+     "gap_share": -0.008355266769173756,
+     "high": -0.34187224463462895,
+     "less_bar": -0.3691634029738418,
+     "low": -0.3960686379892544,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": false,
+     "fitness": 0.5027939831447609,
+     "gap_high": 1.0374326791383728,
+     "gap_low": 0.9301718012773282,
+     "gap_share": 0.9825795691389161,
+     "high": 0.013662615721586576,
+     "less_bar": -0.006377698168378115,
+     "low": -0.025778211237329825,
+     "survival": 0.83,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.37469810458908015,
+     "gap_high": 0.7052656880013081,
+     "gap_low": 0.5559213091265683,
+     "gap_share": 0.6326907319667289,
+     "high": -0.10703428864561682,
+     "less_bar": -0.1344735767240587,
+     "low": -0.16405238839443365,
+     "survival": 0.43,
+     "verdict": "partly"
+    },
+    "8231 at 800": {
+     "beats": false,
+     "fitness": 0.5138794996023321,
+     "gap_high": 1.0689722111284068,
+     "gap_low": 0.9589944310793073,
+     "gap_share": 1.0128592198702764,
+     "high": 0.024839318789104697,
+     "less_bar": 0.004707818289193216,
+     "low": -0.014730402470249655,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.3713811933367833,
+     "gap_high": 0.7071044776367855,
+     "gap_low": 0.5368471254116164,
+     "gap_share": 0.623630719777773,
+     "high": -0.10433727296570978,
+     "less_bar": -0.1377904879763556,
+     "low": -0.17121111487833202,
+     "survival": 0.43,
+     "verdict": "partly"
+    },
+    "8233 at 800": {
+     "beats": false,
+     "fitness": 0.4991345483476543,
+     "gap_high": 1.0263299122245464,
+     "gap_low": 0.9237833102713837,
+     "gap_share": 0.9725839674044661,
+     "high": 0.009273666281843071,
+     "less_bar": -0.010037132965484545,
+     "low": -0.028683021181880573,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": false,
+     "fitness": 0.47610029901339473,
+     "gap_high": 0.9625834238897207,
+     "gap_low": 0.8592427507582249,
+     "gap_share": 0.9096668243584075,
+     "high": -0.013144459827297289,
+     "less_bar": -0.03307138229974415,
+     "low": -0.05236578724432363,
+     "survival": 0.71,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": false,
+     "fitness": 0.5052069765862864,
+     "gap_high": 1.0390226416470634,
+     "gap_low": 0.9444589558741081,
+     "gap_share": 0.989170565499447,
+     "high": 0.013648434471188998,
+     "less_bar": -0.003964704726852585,
+     "low": -0.02141172959416245,
+     "survival": 0.85,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.3919809834777495,
+     "gap_high": 0.759394401151485,
+     "gap_low": 0.6008288226034052,
+     "gap_share": 0.6798982336094591,
+     "high": -0.08596620624742596,
+     "less_bar": -0.11719069783538943,
+     "low": -0.14917415425710143,
+     "survival": 0.45,
+     "verdict": "partly"
+    },
+    "8237 at 800": {
+     "beats": false,
+     "fitness": 0.48087945911980085,
+     "gap_high": 0.9780555739559188,
+     "gap_low": 0.8710793921108945,
+     "gap_share": 0.9227209115870085,
+     "high": -0.008121772453757885,
+     "less_bar": -0.028292222193338004,
+     "low": -0.04833240326338244,
+     "survival": 0.76,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": false,
+     "fitness": 0.4957462254841433,
+     "gap_high": 1.020557076968177,
+     "gap_low": 0.9109546668187147,
+     "gap_share": 0.9633288972176257,
+     "high": 0.007750978634368976,
+     "less_bar": -0.013425455828995618,
+     "low": -0.033126995252539704,
+     "survival": 0.83,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.31237443624181077,
+     "gap_high": 0.5367847700181754,
+     "gap_low": 0.39095252358748445,
+     "gap_share": 0.46245609138184585,
+     "high": -0.16630454586691815,
+     "less_bar": -0.19679724507132818,
+     "low": -0.2289364858748201,
+     "survival": 0.29,
+     "verdict": "does not"
+    },
+    "8240 at 800": {
+     "beats": false,
+     "fitness": 0.4861975037037493,
+     "gap_high": 0.9926660320421093,
+     "gap_low": 0.8855658616768378,
+     "gap_share": 0.937246940499787,
+     "high": -0.0024988069744965595,
+     "less_bar": -0.02297417760938962,
+     "low": -0.04307140911009275,
+     "survival": 0.76,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": false,
+     "fitness": 0.4711643685994013,
+     "gap_high": 0.9678140211886576,
+     "gap_low": 0.8298845343078491,
+     "gap_share": 0.8961845252213256,
+     "high": -0.010935015665582007,
+     "less_bar": -0.03800731271373774,
+     "low": -0.06477662331760743,
+     "survival": 0.71,
+     "verdict": "partly"
+    },
+    "champion8102": {
+     "beats": false,
+     "fitness": 0.47915075100763005,
+     "gap_high": 0.9746115792861656,
+     "gap_low": 0.8645176041328497,
+     "gap_share": 0.9179990135993645,
+     "high": -0.009695760680415246,
+     "less_bar": -0.03002093030550885,
+     "low": -0.05015383832258173,
+     "survival": 0.72,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.17676849289923496,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.45167034006303003,
+     "param": "tau=10"
+    },
+    "B6": {
+     "fitness": 0.32101444571481863,
+     "param": "cycle=100,run=36"
+    },
+    "B8": {
+     "fitness": 0.5091716813131391,
+     "param": "tau=10"
+    }
+   },
+   "still": 0.14306717912051206
+  },
+  "tighter": {
+   "bar": "B8 (tau=3)",
+   "bar_fitness": 0.40658648864295976,
+   "bar_survival": 0.45,
+   "ceiling": 0.6505387578998345,
+   "cells": {
+    "8211 at 800": {
+     "beats": true,
+     "fitness": 0.48793720905577265,
+     "gap_high": 1.4030557828575303,
+     "gap_low": 1.2091412502166776,
+     "gap_share": 1.2934863887849384,
+     "high": 0.10089817525607704,
+     "less_bar": 0.08135072041281294,
+     "low": 0.06329446098224369,
+     "survival": 0.72,
+     "verdict": "carries B8"
+    },
+    "8212 at 800": {
+     "beats": true,
+     "fitness": 0.48269182081814604,
+     "gap_high": 1.370204231058499,
+     "gap_low": 1.2000835510871146,
+     "gap_share": 1.2745627696230661,
+     "high": 0.09362951383658663,
+     "less_bar": 0.07610533217518631,
+     "low": 0.05974633099414741,
+     "survival": 0.74,
+     "verdict": "carries B8"
+    },
+    "8213 at 800": {
+     "beats": true,
+     "fitness": 0.4986490819285511,
+     "gap_high": 1.4341154592561973,
+     "gap_low": 1.252171462857085,
+     "gap_share": 1.332131269501446,
+     "high": 0.1097956937857373,
+     "less_bar": 0.09206259328559142,
+     "low": 0.07545943472174471,
+     "survival": 0.83,
+     "verdict": "carries B8"
+    },
+    "8214 at 800": {
+     "beats": false,
+     "fitness": 0.3760025085460345,
+     "gap_high": 0.9745607256649805,
+     "gap_low": 0.8136367318761829,
+     "gap_share": 0.889663154453107,
+     "high": -0.00716714936467554,
+     "less_bar": -0.03058398009692521,
+     "low": -0.05378404146734215,
+     "survival": 0.36,
+     "verdict": "partly"
+    },
+    "8215 at 800": {
+     "beats": true,
+     "fitness": 0.5085364223789653,
+     "gap_high": 1.4883713611252205,
+     "gap_low": 1.2731666991067838,
+     "gap_share": 1.3678015110033548,
+     "high": 0.12258396966196418,
+     "less_bar": 0.10194993373600562,
+     "low": 0.08193044195089129,
+     "survival": 0.88,
+     "verdict": "carries B8"
+    },
+    "8216 at 800": {
+     "beats": true,
+     "fitness": 0.48895544150858383,
+     "gap_high": 1.4000965616313887,
+     "gap_low": 1.216778400254005,
+     "gap_share": 1.2971598333961567,
+     "high": 0.10037153521967762,
+     "less_bar": 0.08236895286562403,
+     "low": 0.06544496992855413,
+     "survival": 0.76,
+     "verdict": "carries B8"
+    },
+    "8217 at 800": {
+     "beats": false,
+     "fitness": 0.12692568456377276,
+     "gap_high": 0.005926811072109183,
+     "gap_low": -0.023689888083931358,
+     "gap_share": -0.008923326768296406,
+     "high": -0.25063788850228763,
+     "less_bar": -0.279660804079187,
+     "low": -0.3078173448510137,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8218 at 800": {
+     "beats": true,
+     "fitness": 0.5078767554606558,
+     "gap_high": 1.4734355256433658,
+     "gap_low": 1.2803504234736773,
+     "gap_share": 1.3654216517879338,
+     "high": 0.11936420848077298,
+     "less_bar": 0.101290266817696,
+     "low": 0.08417939372835699,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "8219 at 800": {
+     "beats": true,
+     "fitness": 0.4754508124345664,
+     "gap_high": 1.3483441127157252,
+     "gap_low": 1.1741883350383955,
+     "gap_share": 1.248439615570167,
+     "high": 0.08676855115272115,
+     "less_bar": 0.06886432379160652,
+     "low": 0.05180762526025064,
+     "survival": 0.62,
+     "verdict": "carries B8"
+    },
+    "8220 at 800": {
+     "beats": true,
+     "fitness": 0.47791932452962016,
+     "gap_high": 1.3489158797641727,
+     "gap_low": 1.1824113325639771,
+     "gap_share": 1.2573451876016488,
+     "high": 0.0884747078640435,
+     "less_bar": 0.07133283588666034,
+     "low": 0.05460067308091606,
+     "survival": 0.69,
+     "verdict": "carries B8"
+    },
+    "8221 at 800": {
+     "beats": false,
+     "fitness": 0.3607817985280256,
+     "gap_high": 0.9113634066357448,
+     "gap_low": 0.7650519509578552,
+     "gap_share": 0.8347518863627927,
+     "high": -0.02309511100682866,
+     "less_bar": -0.04580469011493413,
+     "low": -0.06764426826551165,
+     "survival": 0.29,
+     "verdict": "partly"
+    },
+    "8222 at 800": {
+     "beats": false,
+     "fitness": 0.1291352198271726,
+     "gap_high": 0.008846616727286118,
+     "gap_low": -0.011108921545799356,
+     "gap_share": -0.0009520571586659772,
+     "high": -0.24815019349206535,
+     "less_bar": -0.2774512688157872,
+     "low": -0.30542414958297326,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8223 at 800": {
+     "beats": true,
+     "fitness": 0.4929682219311772,
+     "gap_high": 1.4122624711298295,
+     "gap_low": 1.232664464184501,
+     "gap_share": 1.3116366128178707,
+     "high": 0.10446347835550936,
+     "less_bar": 0.08638173328821735,
+     "low": 0.06903693770768198,
+     "survival": 0.8,
+     "verdict": "carries B8"
+    },
+    "8224 at 800": {
+     "beats": true,
+     "fitness": 0.5090331687984666,
+     "gap_high": 1.4903072784477058,
+     "gap_low": 1.2745210700886813,
+     "gap_share": 1.369593607152737,
+     "high": 0.12270228361308844,
+     "less_bar": 0.1024466801555068,
+     "low": 0.0836596114626064,
+     "survival": 0.83,
+     "verdict": "carries B8"
+    },
+    "8225 at 800": {
+     "beats": false,
+     "fitness": 0.3659457832500936,
+     "gap_high": 0.9326166330547137,
+     "gap_low": 0.778801410670381,
+     "gap_share": 0.8533818286685233,
+     "high": -0.01754764454820457,
+     "less_bar": -0.040640705392866065,
+     "low": -0.06414748972645087,
+     "survival": 0.35,
+     "verdict": "partly"
+    },
+    "8226 at 800": {
+     "beats": true,
+     "fitness": 0.4486689334740758,
+     "gap_high": 1.2542043084484882,
+     "gap_low": 1.0586748974254503,
+     "gap_share": 1.1518194885312953,
+     "high": 0.06642251087755877,
+     "less_bar": 0.04208244483111601,
+     "low": 0.017549653862101014,
+     "survival": 0.63,
+     "verdict": "carries B8"
+    },
+    "8227 at 800": {
+     "beats": true,
+     "fitness": 0.4878287566954772,
+     "gap_high": 1.3994898374915294,
+     "gap_low": 1.2124950912009538,
+     "gap_share": 1.293095128677876,
+     "high": 0.10035668596988603,
+     "less_bar": 0.0812422680525175,
+     "low": 0.06353544405432195,
+     "survival": 0.74,
+     "verdict": "carries B8"
+    },
+    "8228 at 800": {
+     "beats": false,
+     "fitness": 0.12659748427122955,
+     "gap_high": 0.0030240965370424856,
+     "gap_low": -0.023614998000164672,
+     "gap_share": -0.010107364453124296,
+     "high": -0.2509969493290151,
+     "less_bar": -0.27998900437173024,
+     "low": -0.3084497505282049,
+     "survival": 0.0,
+     "verdict": "does not"
+    },
+    "8229 at 800": {
+     "beats": true,
+     "fitness": 0.4948253088365652,
+     "gap_high": 1.4311245236115133,
+     "gap_low": 1.2299606801735519,
+     "gap_share": 1.3183363657734244,
+     "high": 0.10799061368293718,
+     "less_bar": 0.0882388201936055,
+     "low": 0.0696256318572912,
+     "survival": 0.78,
+     "verdict": "carries B8"
+    },
+    "8230 at 800": {
+     "beats": false,
+     "fitness": 0.39098394618665794,
+     "gap_high": 1.0319287280987168,
+     "gap_low": 0.8652338159432381,
+     "gap_share": 0.9437112072502007,
+     "high": 0.008446409013500716,
+     "less_bar": -0.015602542456301754,
+     "low": -0.0401397261310002,
+     "survival": 0.37,
+     "verdict": "carries B8"
+    },
+    "8231 at 800": {
+     "beats": true,
+     "fitness": 0.5078140902119758,
+     "gap_high": 1.4778783345876663,
+     "gap_low": 1.2736338178785456,
+     "gap_share": 1.365195576377119,
+     "high": 0.12135621914610521,
+     "less_bar": 0.10122760156901592,
+     "low": 0.08260748101371128,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8232 at 800": {
+     "beats": false,
+     "fitness": 0.3976316795899473,
+     "gap_high": 1.0543686015817664,
+     "gap_low": 0.8896681327304363,
+     "gap_share": 0.9676940221562761,
+     "high": 0.014389294469547847,
+     "less_bar": -0.008954809053012486,
+     "low": -0.032504058538975936,
+     "survival": 0.43,
+     "verdict": "carries B8"
+    },
+    "8233 at 800": {
+     "beats": true,
+     "fitness": 0.513912199624318,
+     "gap_high": 1.5006590763551795,
+     "gap_low": 1.295854923193958,
+     "gap_share": 1.387195530412706,
+     "high": 0.12557623851278193,
+     "less_bar": 0.10732571098135825,
+     "low": 0.08956294793007921,
+     "survival": 0.86,
+     "verdict": "carries B8"
+    },
+    "8234 at 800": {
+     "beats": true,
+     "fitness": 0.4714433698533702,
+     "gap_high": 1.3324461936919996,
+     "gap_low": 1.155597616451498,
+     "gap_share": 1.2339820933079173,
+     "high": 0.08411086114455885,
+     "less_bar": 0.06485688121041039,
+     "low": 0.04728131107319722,
+     "survival": 0.59,
+     "verdict": "carries B8"
+    },
+    "8235 at 800": {
+     "beats": true,
+     "fitness": 0.4943814974643189,
+     "gap_high": 1.4258601708747385,
+     "gap_low": 1.2267409887396334,
+     "gap_share": 1.316735241698784,
+     "high": 0.10801983925003109,
+     "less_bar": 0.08779500882135913,
+     "low": 0.06882706724562303,
+     "survival": 0.78,
+     "verdict": "carries B8"
+    },
+    "8236 at 800": {
+     "beats": false,
+     "fitness": 0.3882493056686311,
+     "gap_high": 1.0119252488239783,
+     "gap_low": 0.8617111927228213,
+     "gap_share": 0.9338455322298936,
+     "high": 0.0032757727321524053,
+     "less_bar": -0.0183371829743287,
+     "low": -0.04000115957225143,
+     "survival": 0.42,
+     "verdict": "carries B8"
+    },
+    "8237 at 800": {
+     "beats": true,
+     "fitness": 0.4753544767450029,
+     "gap_high": 1.348287149411766,
+     "gap_low": 1.1692040710743408,
+     "gap_share": 1.2480920683880692,
+     "high": 0.0886805554410614,
+     "less_bar": 0.06876798810204324,
+     "low": 0.050440251592076726,
+     "survival": 0.63,
+     "verdict": "carries B8"
+    },
+    "8238 at 800": {
+     "beats": true,
+     "fitness": 0.5015287347355698,
+     "gap_high": 1.4520365257372525,
+     "gap_low": 1.256343680600253,
+     "gap_share": 1.3425201007127452,
+     "high": 0.1136558662629596,
+     "less_bar": 0.09494224609261012,
+     "low": 0.07707016409378574,
+     "survival": 0.84,
+     "verdict": "carries B8"
+    },
+    "8239 at 800": {
+     "beats": false,
+     "fitness": 0.37593397819126795,
+     "gap_high": 0.9873457955322982,
+     "gap_low": 0.8014534572311999,
+     "gap_share": 0.8894159196868932,
+     "high": -0.0037029280016009154,
+     "less_bar": -0.030652510451691796,
+     "low": -0.05856802629193236,
+     "survival": 0.41,
+     "verdict": "partly"
+    },
+    "8240 at 800": {
+     "beats": true,
+     "fitness": 0.48483892535642953,
+     "gap_high": 1.3892522290177893,
+     "gap_low": 1.1999016475982032,
+     "gap_share": 1.282308809905032,
+     "high": 0.09681091560408046,
+     "less_bar": 0.07825243671346961,
+     "low": 0.06039944200127127,
+     "survival": 0.74,
+     "verdict": "carries B8"
+    },
+    "champion6402": {
+     "beats": true,
+     "fitness": 0.5130440435192806,
+     "gap_high": 1.5089597573813005,
+     "gap_low": 1.2863933774207752,
+     "gap_share": 1.3840635114351714,
+     "high": 0.1275538363264492,
+     "less_bar": 0.1064575548763208,
+     "low": 0.08598787830139241,
+     "survival": 0.93,
+     "verdict": "carries B8"
+    },
+    "champion8102": {
+     "beats": true,
+     "fitness": 0.4773543588356261,
+     "gap_high": 1.353945143543664,
+     "gap_low": 1.1756804033264387,
+     "gap_share": 1.2553069789603943,
+     "high": 0.08932670705419962,
+     "less_bar": 0.07076787019266627,
+     "low": 0.052672895303294436,
+     "survival": 0.68,
+     "verdict": "carries B8"
+    }
+   },
+   "rules": {
+    "B2r": {
+     "fitness": 0.1524270324536994,
+     "param": "k=100"
+    },
+    "B5": {
+     "fitness": 0.3721189209175833,
+     "param": "tau=3"
+    },
+    "B6": {
+     "fitness": 0.2735003668194154,
+     "param": "cycle=20,run=10"
+    },
+    "B8": {
+     "fitness": 0.40658648864295976,
+     "param": "tau=3"
+    }
+   },
+   "still": 0.12939911804763968
+  }
+ }
+}
