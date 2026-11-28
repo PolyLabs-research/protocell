@@ -88,3 +88,18 @@ For each of the thirty runs, whether it will be a generalist at 800 generations:
 - On D69: "merge, add stage 8, carry on as recommended" (D71).
 - On the launch, put to him with its terms (six cpu5c pods of 16 vCPUs at $0.56 an hour, three runs each, each pod
   deleted 2.2 hours after its launch, at most $7.39): **"Launch, 18 runs (Recommended)"**, before the launch.
+
+## 9. Outcome (2026-11-28; D78, D79)
+
+- **The runs:** eighteen, on six pods, about $4.70 (the ceiling was $7.39). The re-validation before generation 401 gave
+  stage 8c's own number for all eighteen.
+- **H holds:** 19 of the 30 runs' champions are generalists at 800 generations, 63% (95% interval 46% to 78%); 7 of the
+  same thirty were at 400 on stage 8c's test.
+- **By what each run was at 400:** generalists 7 of 7, near-misses 8 of 8, stage 8d's controls 1 of 4, the other runs
+  that did not follow the spot 3 of 8 (8216, 8229, 8234), still cells 0 of 3.
+- **The forecast is right for 26 of the 30,** and for 11 of the 15 runs that did not follow the spot: wrong for 8212
+  (as §3 said it likely would be) and for 8216, 8229 and 8234, none of which circled at 400.
+- **Every generalist travels:** 18 of 19 do the bar's job in all five held-back worlds, 8220 in four; each beats the bar
+  in 5 to 8 of the nine.
+- **Predictions:** 1, 2, 3, 5 and 6 hold; 4 fails (I expected the forecast to be right for at least 13 of the 15 runs
+  that did not follow the spot).

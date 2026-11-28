@@ -3518,3 +3518,76 @@ fresh starts (seeds 75, 76), one process. H, the rate at 800, the forecast's acc
 from it.
 
 **Impact:** this entry; `docs/data/stage8e/extend/`.
+
+## D79 — Stage 8e: given 800 generations, 19 of stage 8c's 30 runs give a generalist, and H holds; circling at 400 does not foretell which runs, so prediction 4 fails
+
+**Date:** 2026-11-28  
+**Why:** D71, D73, D78.  
+**Ran:** `experiments/stage8e.py --phase test` (code `3739238`), on the reference, one process here, 7.4 hours, from a
+clean tree with warnings as errors; seeds 75 and 76; data in `docs/data/stage8e/test/`.
+
+### A. Measured
+1. **The criterion:**
+
+   | criterion | result |
+   |---|---|
+   | H: at least 15 of the 30 runs' champions are generalists at 800 generations | **holds:** 19 |
+
+2. **The rate at 800 generations, from runs nobody chose:** 19 of 30, 63% (95% interval 46% to 78%). The same thirty
+   runs at 400 generations, on stage 8c's test: 7.
+3. **By what each run was at 400 (stage 8c's test):**
+
+   | at 400 | generalists at 800 |
+   |---|---|
+   | generalists | 7 of 7 |
+   | near-misses (short only under flicker) | 8 of 8 |
+   | stage 8d's four controls (did not follow the spot) | 1 of 4 (8212) |
+   | the other eight that did not follow the spot | 3 of 8 (8216, 8229, 8234) |
+   | still cells | 0 of 3 |
+
+4. **The thirty split cleanly:** under the spot the nineteen generalists close 1.15 to 1.25 of the gap and the other
+   eleven 0.11 or less. Every run that follows the spot at 800 is a generalist, and every run that followed it at 400
+   is one at 800.
+5. **The three runs that crossed are well over the line,** not at it: 8216, 8229 and 8234 close 1.15 to 1.20 of the
+   gap under the spot and 1.01 to 1.02 under flicker. At 400 none survived a validation start under the spot (D78);
+   at home they ran 22%, 67% and 51% of the day and did not circle (D73).
+6. **Every generalist travels:** 18 of the 19 do the bar's job in all five held-back worlds, 8220 in four (0.87 of the
+   gap under the sweep with clouds). Each beats the bar in 5 to 8 of the nine worlds; all nineteen beat it at home,
+   under the spot, when shaded, in the tighter economy and under the slow spot, and none at the fixed mouth (0.96 to
+   0.99 of the gap there). At home they score 0.611 to 0.629, the home specialist 6402 0.631, the bar 0.539.
+7. **On fresh starts the earlier verdicts stand:** stage 8d's eight near-misses and control 8212 are generalists
+   again and its other three controls are not; champion 8102 is a generalist and 6402 is not.
+8. **The forecast (`docs/prereg/stage8e.md` §3) is right for 26 of the 30:** for all fifteen runs that followed the
+   spot at 400, and for 11 of the 15 that did not. It is wrong for 8212, as it said it would likely be, and for 8216,
+   8229 and 8234. The second forecast written there (running over 80% of the day at 400; not a prediction) is right
+   for 8212 and wrong for the other three.
+9. **Predictions:** 1, 2, 3, 5 and 6 hold (19 is the top of prediction 2's range). 4 fails: I expected the forecast
+   from circling to be right for at least 13 of the 15 runs that did not follow the spot; it is right for 11.
+
+### B. Reading
+1. **Given 800 generations, about two runs in three give a generalist** (19 of 30, 46% to 78%), from runs nobody
+   chose. Doubling the time took the same thirty runs from 7 to 19.
+2. **Circling at 400 does not foretell which runs get there.** No run that failed to follow the spot circled at 400,
+   and four of them became generalists anyway: 8212, which ran nearly all day, and three that ran 22% to 67% of it.
+   What marks those four at 400, if anything does, is not shown.
+3. **Following the spot looks all or nothing.** At 800 no run sits near the line under the spot: it follows the spot as
+   well as any generalist or not at all. That fits a search that either finds the mechanism or does not, more than one
+   that improves a run by degrees; it is a reading.
+4. **Whether the chance of crossing falls with time is not shown.** Half the thirty followed the spot by generation
+   400; of the fifteen that had not, four did in the next 400 generations (27%, interval 11% to 52%).
+5. **Generality still costs little at home:** the generalists score within 0.02 of the home specialist there.
+
+### C. Decisions this surfaces (the owner's)
+1. **Merge `stage8e` into `main`:** stage 8e, the climbing probes (D74–D77) and this.
+2. **Add stage 8e and the climbing probes to the write-up.**
+3. **What next,** as put to the owner on 2026-11-27 with the progress page, recommended in this order:
+   - **A stronger bar** (local, free): a hand-written rule that does what the generalists do (runs all day in loops,
+     swims faster after the light rises, steers by its shading where it can), its few parameters tuned per world as
+     the other rules' were. If it matches the generalists, evolution found a better simple rule; if not, the network
+     does more than the caricature.
+   - **A data step** (pods, a few dollars): more training starts a generation (8 to 16), or worlds a circler cannot
+     solve.
+   - **The circle's timing in closed loop** (D77 C1; local, free).
+   - **The single-precision engine on the laptop's GPU** (D70).
+
+**Impact:** this entry; `docs/data/stage8e/test/`; `docs/prereg/stage8e.md` (its outcome); `README.md`.
